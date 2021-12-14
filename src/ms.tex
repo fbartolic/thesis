@@ -1,25 +1,149 @@
+\RequirePackage[l2tabu, orthodox]{nag} 
 % Define document class
-\documentclass[twocolumn]{aastex631}
-
-% Filler text
-\usepackage{blindtext}
+\documentclass[]{report}
+\usepackage{style}
 
 % Begin!
 \begin{document}
 
 % Title
-\title{An open source scientific article}
+\title{\vspace{-15pt}\begin{center}\includegraphics[width=0.4\linewidth]{static/misc/logo.jpg}\end{center}
+\vspace{20pt}
+\begin{center}
+School of Physics \& Astronomy
+\end{center}
+\vspace{20pt}
+\begin{center}
+\LARGE\textbf{Probabilistic modeling of astrophysical time series:
+gravitational microlensing and occultation mapping of planets and moons}
+\end{center}
+\vspace{20pt}
+\begin{center}
+Supervisor: Dr. Martin Dominik
+\end{center}
+}
 
-% Author list
-\author[0000-0000-0000-0000]{First Author}
+\maketitle
+\tableofcontents
 
-% Abstract with filler text
+% Abstract 
 \begin{abstract}
-    \blindtext
+    Here goes the abstract.
 \end{abstract}
 
-% Main body with filler text
-\section{Introduction}
-\Blindtext[4]
+\clearpage
+\thispagestyle{empty}
+
+% CHAPTER 1: Introduction
+\chapter{Introduction}
+\section{Context}
+\section{Gravitational microlensing}
+\section{Occultation and phase curve mapping}
+
+% CHAPTER 2: The theoretical minimum
+\chapter{The theoretical minimum}
+
+\section{Gravitational microlensing}
+\subsection{Deflection of light by gravity}
+\subsection{The different scales of lensing}
+%% Read the "scales of lensing" paper by that Italian guy
+\subsection{Microlensing}
+\subsection{The point mass lens and the lens equation}
+\subsection{Parallax}
+\subsection{Finite source effects}
+\subsection{The binary lens}
+\subsection{Multiple lenses}
+\subsection{Solving the lens equation}
+
+\section{Occultation and phase curve mapping}
+\subsection{The Starry framework}
+\subsection{Mapping Solar System bodies}
+\subsection{Mapping stars and exoplanets}
+\subsection{The future of mapping exoplanets}
+
+% In this and the following sections make sure to use microlensing and occultation
+% mapping as examples
+\section{Bayesian statistics}
+\subsection{Probability theory}
+\subsection{The meaning of probability}
+\subsection{Probability as frequency of events in repeated trials}
+\subsection{Probability as degrees of belief}
+\subsection{The likelihood function}
+% mention the likelihood principle
+\subsection{Priors}
+\subsection{On machine learning and the difference between explanation and prediction}
+% mention that even if we have a model focused on inference, it might be best if we judge 
+% its quality through its predictive performance
+
+\section{Inference}
+% check that paper on physics and ML by that MIT guy, there's a good stuff there. 
+% check also Ian Murray's lecture notes  on MLPR
+\subsection{The curse of dimensionality}
+\subsection{There's no free lunch}
+% exploration vs. explotation 
+\subsection{Optimization vs. sampling}
+
+\subsection{Sampling and optimization methods}
+\subsubsection{Maximum likelihood}
+\subsubsection{The Laplace approximation}
+\subsubsection{Variational inference}
+\subsubsection{Importance sampling}
+\subsubsection{Rejection sampling}
+\subsubsection{Markov Chain Monte Carlo}
+\subsubsection{Hamiltonian Monte Carlo}
+\subsubsection{Other notable methods}
+
+\section{Model validation and comparison}
+\subsection{Cross validation}
+% discuss vanilla k-fold CV, stress out just how important and central CV is to science
+\subsubsection{Pareto smoothed importance sampling LOO}
+\subsection{Model comparison}
+% don't do it!
+
+\section{Putting it all together -- \emph{probabilistic programming}}
+\subsection{The success of machine learning}
+% that quote from Yann LeCun on differentiable code 
+\subsection{Automatic differentiation}
+\subsubsection{Forward mode autodiff}
+\subsubsection{Reverse mode autodiff or backpropagation}
+\subsubsection{Jacobian vector products}
+\subsection{JAX}
+\subsection{Numpyro}
+
+% CHAPTER 3: Modeling microlensing events 
+\chapter{Modeling microlensing events}
+\section{Dealing with multimodal posteriors}
+\section{A differentiable solver for the lens equation}
+\section{Population level inference in microlensing}
+
+% CHAPTER 4: Mapping the surface of Io 
+\chapter{Mapping the surface of Io}
+\section{The data}
+\section{Information content}
+\section{Pixel sampling}
+\section{A static map model}
+\section{A dynamic map model}
+\section{Future work}
+\subsection{Mapping Pluto and Charon}
+
+% CHAPTER 5: Mapping the surfaces of exoplanets
+\chapter{Mapping the surfaces of exoplanets}
+\section{Previous work}
+\section{What can we learn using eclipse mapping?}
+\section{Time dependent maps}
+
+% CHAPTER 6: Conclusion
+\chapter{Conclusion}
+\section{Summary of the thesis}
+\subsection{Microlensing}
+\subsection{Occultation mapping}
+\section{Future work}
+\subsection{Microlensing in the era of the Roman telescope}
+\subsection{Mapping exoplanets with JWST and beyond}
+
+\appendix
+
+\chapter{First appendix}
+\chapter{Second appendix}
 
 \end{document}
