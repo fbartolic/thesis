@@ -1,4 +1,4 @@
-\RequirePackage[l2tabu, orthodox]{nag} 
+\RequirePackage[l2tabu, orthodox]{nag}
 % Define document class
 \documentclass[]{report}
 \usepackage{style}
@@ -8,19 +8,19 @@
 
 % Title
 \title{\vspace{-15pt}\begin{center}\includegraphics[width=0.4\linewidth]{static/misc/logo.jpg}\end{center}
-\vspace{20pt}
-\begin{center}
-School of Physics \& Astronomy
-\end{center}
-\vspace{20pt}
-\begin{center}
-\LARGE\textbf{Probabilistic modeling of astrophysical time series:
-gravitational microlensing and occultation mapping of planets and moons}
-\end{center}
-\vspace{20pt}
-\begin{center}
-Supervisor: Dr. Martin Dominik
-\end{center}
+    \vspace{20pt}
+    \begin{center}
+        School of Physics \& Astronomy
+    \end{center}
+    \vspace{20pt}
+    \begin{center}
+        \LARGE\textbf{Probabilistic modeling of astrophysical time series:
+            gravitational microlensing and occultation mapping of planets and moons}
+    \end{center}
+    \vspace{20pt}
+    \begin{center}
+        Supervisor: Dr. Martin Dominik
+    \end{center}
 }
 
 \maketitle
@@ -28,7 +28,52 @@ Supervisor: Dr. Martin Dominik
 
 % Abstract 
 \begin{abstract}
-    Here goes the abstract.
+    Scientific progress in modern astronomy research commonly relies on gathering large quantities of
+    data using exceedingly precise instruments.
+    The process which ``generates'' these data consists of the physical phenomenon of
+    interest -- for instance, an exoplanet blocking or twisting the light of a distant star, and
+    the noise introduced by the measurement process and the presence of an atmosphere
+    The task for an astronomer is to first construct a \emph{model} which describes the entire process
+    which generated the data and to then ``fit'' that model to data.
+    All models only approximate reality and the researcher has to make a series of decisions during the
+    model building process, everything from how to process the raw data to which results to put in
+    the abstract of a paper.
+    Advancements in computational statistics and machine learning in the past decade or
+    so have made it possible to fit ever more complex models to data.
+    These models are generally expressed in computer code which may contain complex numerical algorithms,
+    such as iterative solvers and numerical integrals.
+    In this thesis, I mostly focused on developing methods which enable \emph{statistical inference}
+    with these kinds of complex models in two particular domains within astronomy, gravitational
+    microlensing and occultation mapping.
+    The common theme between these two topics is that both deal with accurately measuring
+    the brightness of distant stars as a function of time with the goal of inferring properties of
+    exoplanets and stars.
+    Broadly speaking, I believe the biggest contribution of this thesis is providing a new lens
+    for looking at a particular set of old problems, a lens which incorporates recent advancements
+    from statistics, machine learning and computer science.
+    More specifically, I have developed a an open-source software
+    package \textsf{caustics}\footnote{\url{https://github.com/fbartolic/caustics}} which enables
+    fast and accurate computation of binary lens and triple lens microlensing light curves and
+    simultaneously provides exact \emph{gradients} of the code outputs with respect to all its inputs.
+    This is significant because it for the first time enables the use of modern gradient based
+    statistical inference algorithms such as Hamiltonian Monte Carlo with microlensing light curves.
+    Microlensing is one of the major goals for the upcoming \emph{NASA Roman} telescope and the existing
+    modeling methods are completely inadequate for dealing with the scale of data which will come
+    from \emph{Roman}.
+    I also propose a framework for dealing with issues which have plagued the field for
+    decades -- various pathologies in microlensing models and questions about the interpretation
+    of statistical results.
+    Besides microlensing, I have also delved into the field of occultation mapping of Solar System
+    objects and exoplanets.
+    Together with collaborators, I have developed  a novel statistical method for reconstructing
+    spatial maps of volcanic emission on Jupiter's moon Io using infra-red occultation
+    light curves.
+    I applied the same method to exoplanets to explore the exciting possibility of
+    detecting weather changes on Hot Jupiters by reconstructing two dimensional maps of
+    the emission surface from simulated \emph{JWST} secondary eclipse light curves.
+    I found that planetary scale changes in the emission pattern should be detectable with
+    \emph{JWST}.
+
 \end{abstract}
 
 \clearpage
