@@ -254,22 +254,30 @@ considered the deflection of light from a distant star passing close
 to a massive object in the foreground and derived an expression for the deflection angle of the light ray
 which was off by a factor of 2 relative to the correct value.
 He corrected the error in 1915 using GR.
-The first experimental confirmation of this prediction came in 1919 during the
-Solar eclipse when the astronomer Arthur Eddington famously measured the
-deflection of light from distant stars passing close to the limb of the Sun
-\footnote{Weather the data was actually good enough to make the claim that the
-    deflection angle is equal to the one Einstein predicted is contested}.
-Much later in 1936 a young amateur scientist R.W. Mandl convinced Einstein to
-write a short a paper on the lensing effect by a massive star acting as the lens
-instead of the Sun.
-In the paper \citep{1936Sci....84..506E} Einstein derived an expression for the
-magnification of the distant star when it is closely aligned to the foreground lens
-star relative to an observer and he predicted that a luminous ring would form
-if the two stars were perfectly aligned.
-He considered this effect curious but useless, stating that
-\emph{``Of course, there is no hope of observing this phenomenon directly.
-    First, we shall scarcely ever approach closely enough to such a central line.
-    Second, [the angles] will defy the resolving power of our instruments''}.
+The same year Albert Einstein published his General theory of Relativity (1916),
+English physicist Sir Oliver Lodge suggested the light bending phenomenon could produce
+a \emph{gravitational lens}.
+He warned that it wouldn't be a lens in the usual sense,  because it does not have a
+focal length.
+
+The first experimental confirmation of the deflection of light by a mass came
+in 1919 during the Solar eclipse when the astronomer Arthur Eddington famously
+measured the deflection of light from distant stars passing close to the limb
+of the Sun \footnote{He concluded that the observed deflection was in agreement
+    with GR, although it is doubtful that the data was actually good enough to
+    distinguish between the GR prediction for the deflection of light and the
+    Newtonian prediction which is derived using the equivalence principle and is
+    equal to one half the GR value.}. Much later in 1936 a young amateur scientist
+R.W. Mandl convinced Einstein to write a short a paper on the lensing effect by
+a massive star acting as the lens instead of the Sun. In the paper
+\citep{1936Sci....84..506E} Einstein derived an expression for the
+magnification of the distant star when it is closely aligned to the foreground
+lens star relative to an observer and he predicted that a luminous ring would
+form if the two stars were perfectly aligned. He considered this effect curious
+but useless, stating that \emph{``Of course, there is no hope of observing this
+    phenomenon directly. First, we shall scarcely ever approach closely enough to
+    such a central line. Second, [the angles] will defy the resolving power of our
+    instruments''}.
 
 In this matter, Einstein was wrong. The famous astronomer Fritz Zwicky noticed
 the phenomenon is likely to be observable at galactic scales if the lens was a
@@ -507,6 +515,23 @@ Io sets a sort of upper limit on what is possible with exoplanets.
 
 \section{Gravitational microlensing}
 \label{sec:microlensing}
+Gravitational lensing is generally divided into multiple classes depending
+on weather the effect is discernible at the level of individual objects or a
+a statistical sample of object. The main division is between \emph{weak lensing}
+and \emph{strong lensing}.
+The former refers to lensing by galaxies and clusters of galaxies on cosmological
+scales where the deflection  is impossible to detect in a single background source
+but one can tease out the effect in a statistical sense.
+Strong lensing refers to lensing of individual objects and it is further divided into
+\emph{macrolensing} -- lensing of galaxies where the multiple images of the source
+are resolved, and \emph{microlensing}  -- the images are generally not resolved,
+and the observable is the total magnification of the source as a function of time (a light curve).
+In case of microlensing the light source is either a quasar or a star (sometimes a binary star)
+and the lenses are stars, brown dwarfs, planets, and compact objects such as black holes, neutron
+stars and white dwarfs. In this thesis we focus specifically on microlensing
+with stars as the light source instead of quasars\footnote{Quasar microlensing
+    is a somewhat separate community from the rest of the microlensing community.}.
+
 \subsection{Deflection of light by gravity}
 Gravitational lensing is a phenomenon fully described by Einstein's General
 Theory of Relativity (GR) in which light changes its direction of propagation
@@ -514,8 +539,9 @@ when passing close to a massive body. GR predicts the following:
 \begin{itemize}
     \item the presences of mass changes the spacetime geometry from the flat (Minkowski)
           metric $\eta_{\mu\nu}$ to a curved metric, specified by the tensor $g_{\mu\nu}$
-    \item massless particles such as photons follow the null geodesics of the curved
-          spacetime which are obtained by solving the \emph{geodesic equation}
+    \item massless particles such as photons follow the null geodesics -- minimum
+          distance paths in curved spacetime which are obtained by solving the
+          \emph{geodesic equation}
 \end{itemize}
 If we restrict ourselves to the regime where the metric is time independent
 and the particles are allowed to travel at any velocity less than $c$,
@@ -530,7 +556,7 @@ where $h_{\mu\nu}=
     the metric sign convention $(-,+,+,+)$} \citep{carroll_2019}.
 The (static) Newtonian gravitational potential $\Phi$ obeys the Poisson equation
 \begin{equation}
-    \nabla^2\Phi=4\pi G\rho
+    \nabla^2\Phi=4\pi G\rho\quad,
 \end{equation}
 where $\rho$ is the mass density of the distribution of mass located between the observer
 and the light source.
@@ -553,78 +579,618 @@ plane  perpendicular to the wave vector $\vec{k}$ pointing in the direction of
 photon propagation.
 The deflection angle is given by \citep{carroll_2019}
 \begin{equation}
-    \hat\alpha=2\int\nabla_\perp\Phi ds
+    \hat\alpha=2\int\nabla_\perp\Phi \ud s\quad,
     \label{eq:deflection_angle_general}
 \end{equation}
 where $\nabla_\perp\Phi$ is the gradient of the potential in the direction transverse
 to the path of the photon and $s$ is the spatial distance traveled.
 For a point mass $M$, the potential is given by the potential is
 \begin{equation}
-    \Phi=- \frac{GM}{(b^2+x^2)^{1/2}}
+    \Phi=- \frac{GM}{(b^2+x^2)^{1/2}}\quad,
 \end{equation}
 where $x$ parametrizes the straight line distance between the observer and the lens and
 $b$ is the impact parameter of the light ray.
-The deflection angle (in SI units) is then given by
+Integrating from $-\infty$ to $\infty$ (i.e. assuming that both
+the source and the observer are located far away from the deflecting mass), we obtain
+the deflection angle:
 \begin{equation}
-    \hat\alpha= \frac{4GM}{c^2b}= \frac{2R_s}{b}
+    \hat\alpha= \frac{4GM}{c^2b}= \frac{2R_s}{b}\quad,
 \end{equation}
-where the integral has been taken from $-\infty$ to $\infty$ (i.e. assuming that both
-the source and the observer are located far away from the deflecting mass) and
-$R_s=2GM/c^2$
-is the Schwarzschild radius.
-The deflection angle $\hat\alpha$ is directly proportional to the mass of the lens and
-it does not depend on the wavelength of the light.
-It also increases with the proximity of
-the light ray to the lensing mass
-which is the opposite behaviour to that of a
-classical convex lens for which the deflection angle
-vanishes at the center of the lens.
-The same year Albert Einstein published his General theory of Relativity (1916),
-English
-physicist Sir Oliver Lodge suggested the light bending phenomenon could produce
-a \emph{gravitational lens}.
-He warned that it wouldn't be a lens in the usual sense,  because it does not have a
-focal length.
-In 1936, Einstein showed that a bright background light source perfectly aligned
-with a foreground massive body would distort the source in the form of a ring
-around the massive body.
-However, he concluded that that there is no great chance of discovering such a
-phenomenon.
-Once astronomers started finding such ring like images in their data the name
-\emph{gravitational lensing} caught on.
-
+where $R_s=2GM/c^2$ is the Schwarzschild radius.
+$\hat\alpha$ is directly proportional to the mass of the lens and
+it does not depend on the wavelength of the light. It also increases with the proximity of
+the light ray to the lensing mass which is the opposite behavior to that of a
+classical convex lens for which the deflection angle vanishes at the center of the lens.
+The gravitational lens does not have a focal length and so it is not a lens in the usual
+sense.
 The resulting deflection angle is very small, for example, for the Sun we have
 $GM/c^2=1.48\times 10^5\si{\centi\meter}$ (2.95 km), $R=6.96\times
-    10^{10}\si{\centi\meter}$ and $\hat\alpha=1.75$ arc seconds. This deflection
-effect was famously claimed to have been observed by Eddington when during a
-total solar eclipse in 1919 \citet{2001ASPC..252...21C}, he observed the
-position of background stars very close to the Sun's radius in the sky and
-compared them to previous measurements taken when the stars weren't close to
-the Sun in the sky. He concluded that the observed deflection was in agreement
-with GR, although it is doubtful that his data is actually good enough to
-distinguish between the GR prediction for the deflection of light and the
-Newtonian prediction\footnote{ Gravitational bending on light can be predicted
-    in Newtonian mechanics, assuming that light is a massless particle and using
-    the equivalence principle which says that that all particles independent of
-    their mass accelerate towards massive bodies.} , which is half of the GR value.
+    10^{10}\si{\centi\meter}$ and $\hat\alpha=1.75$ arc seconds. This is the angle
+that was claimed to have been observed by Eddington when during the 1919 total
+solar eclipse.
 
-It is important to note that Eq.~\ref{eq:deflection_angle_general} is only
-valid when the linearized approximation of GR is sufficient. Also, in this
-approximation, the deflection angles are additive and the total deflection due
-to several massive bodies is just the sum of the individual deflection angles.
-The linearized approximation breaks down when the impact parameter $b$
-approaches the Schwarzschild radius of the lensing mass and the linearized
-metric is no longer sufficient. For most cases of astrophysical interest this
-is not an issue.
+Equation~\ref{eq:deflection_angle_general} is only valid when the linearized
+approximation of GR is sufficient. In this approximation, the deflection angles
+are additive and the total deflection caused by a group massive bodies is just
+the sum of the individual deflection angles. The linearized approximation
+breaks down when the impact parameter $b$ approaches the Schwarzschild radius
+of the lensing mass and the linearized metric is no longer sufficient. Except
+for modeling lensing in the close vicinity of a black, the linearized
+approximation is sufficient.
 
-\subsection{The different scales of lensing}
-%% Read the "scales of lensing" paper by that Italian guy
-\subsection{Microlensing}
-\subsection{The point mass lens and the lens equation}
+\subsection{The magnification of a point source by a point lens}
+Consider a system consisting of an observer $O$, a point mass $M$, and a point
+light source $S$. The geometry of this system is shown in
+Figure~\ref{fig:lens_geometry}. The lens is located in the \emph{lens plane}, a
+plane perpendicular to the observer--lens axis, at a distance $D_L$ away from
+the source. The light source is located in the \emph{source plane}
+perpendicular to the observer--source axis, at a distance $D_S$ away from the
+observer, and the observer is in the \emph{observer plane}. The assumption that
+the location of the source, observer, and the lens can be parametrized using
+angular coordinates (or Cartesian coordinates if the distances to the lens and
+the source are known) in their respective planes is justifiable because the
+deflection angles involved are very small and the distance between the observer
+and any point of interest in the lens plane is approximately constant.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.4\linewidth]{static/microlensing/lens_geometry.pdf}
+    \caption{The geometry of a system consisting of a point mass lens $M$ located at distance
+        $D_L$ at angular separation $\beta$ from the observer, and a single light source $S$ located at distance $D_S$, emitting a light ray which gets
+        deflected by an angle $\hat\alpha$ from its
+        original trajectory. As a result the observer sees the source at angular separation
+        $\theta$. Figure adapted from \citet{1992grle.book.....S}.}
+
+    \label{fig:lens_geometry}
+\end{figure}
+Let $\theta$ be the apparent angular position of the source in the sky with respect to the
+observer--lens axis and $\beta$ be the actual angular position of the source.
+Assuming a metric for spacetime in between the source and the observer that is
+approximately Euclidian\footnote{This is a valid assumption for galactic sources but not for
+    extragalactric source such as quasars and galaxies which require a cosmological
+    model for the metric.} the distance from the lens to the
+source is $D_S-D_L$.
+
+From Figure~\ref{fig:lens_geometry} it follows that the relationship between
+the observed and the actual location of the source is given by
+\begin{equation}
+    \beta=\theta-2 R_s \frac{D_S-D_L}{D_LD_S}
+    \frac{1}{\theta}\quad,
+    \label{eq:lens_equation}
+\end{equation}
+which is known as the \emph{lens equation} or sometimes also the \emph{ray-tracing}
+equation. If the source and the lens are perfectly aligned with respect to the observer,
+then $\beta=0$ and we have
+\begin{equation}
+    \theta \equiv \theta_E= \sqrt{ \frac{4GM}{c^2} \left( \frac{1}{D_L} - \frac{1}{D_S} \right)}
+\end{equation}
+The distance term $D_L^{-1}-D_\textrm{s}^{-1}$ is proportional to the
+lens-source parallax.
+
+The image of the source forms a ring (the Einstein ring) around the lens star
+with angular radius $\theta_E$ -- the \emph{Einstein radius}. $\theta_E$
+depends on the mass of the lens and the distances to the lens and the source.
+The angular Einstein radius sets the characteristic scale of a microlensing
+event, it is a natural unit for most microlensing parameters. For an M-dwarf
+star lens in the galactic disc ($D_L\sim 3\,\textrm{kpc}$) and a source star in
+the galactic bulge ($D_S\sim 8\,\textrm{kpc}$) we have $\theta_E\sim
+    1\,\textrm{mas}$ so the typical scale of microlensing is on the order of
+miliarcseconds. The images of the source star are only rarely observable using
+the most advanced optical interferometers such as the GRAVITY instrument on
+ESO's Very Large Telescope whose lower resolution limit is $2\,\textrm{mas}$
+\citep{arXiv:1705.02345}. \cite{2019ApJ...871...70D} were the first to resolve
+the images of a microlensing event, finding the value of
+$\theta_E=1.87\,\textrm{mas}$ using the GRAVITY instrument.
+
+We can rewrite Equation~\ref{eq:lens_equation} by defining new dimensionless
+angular coordinates scaled by the angular Einstein radius:
+\begin{equation}
+    x= \frac{\theta}{D_L\theta_E}, \quad y=\frac{\beta}{D_S\theta_E}
+\end{equation}
+The lens equation then takes the very simple form
+\begin{equation}
+    y= x- \frac{ 1}{x}
+    \label{eq:lens_equation_dimensionless}
+\end{equation}
+Equation~\ref{eq:lens_equation_dimensionless} is a nonlinear mapping between the
+source plane $y$ and the image plane $x$.
+If we solve for $x$, we obtain two solutions for the position of the images, given by
+
+\begin{equation}
+    x_\pm= \frac{1}{2} \left( y\pm\sqrt{y^2 +4}\right)
+    \label{eq:images_location}
+\end{equation}
+For non zero $y$ the so called \emph{minor image} is always located
+within the Einstein radius ($\lvert x_-\rvert<1$) while the \emph{major image}
+is located outside of it ($\lvert x_+\rvert>1$).
+
+Since gravitational lensing does not involve any additional emission or
+absorption along a deflected ray of light and since the wavelength of the light
+ray does not change when it encounters the lens, the \emph{surface brightness}
+(flux density per unit angular area) $I$ of the source image is identical to
+the surface brightness of the unlensed source. The flux of an infinitesimal
+source is a product of the surface brightness and the solid angle $\Delta
+    \omega$ subtended by the source in the sky which changes throughout the
+microlensing event because the source and the lens are in motion relative to an
+observer. The ratio of the original and the lensed source flux, the
+\emph{magnification} $A$, is then given by the ratio of the two solid angles
+\begin{equation}
+    A= \frac{\Delta \omega}{(\Delta\omega)_0}\quad,
+    \label{eq:magnification}
+\end{equation}
+where $0$ denotes the unlensed solid angle.
+Assuming an infinitesimal source size at angular location $\mathbf y =(y_1,y_2)$ subtending an angle
+$\Delta (\omega)_0$, and an image of the source at location $\mathbf x=(x_1,x_2)$ subtending an angle
+$\Delta \omega$; the ratio between the solid angle of the source and the image
+is given by the determinant of the Jacobian matrix of the
+lens mapping $\mathbf{x}\rightarrow\mathbf{y}$, evaluated at the location of the images
+\begin{equation}
+    \frac{(\Delta\omega)_0}{\Delta\omega} =\left\lvert\textrm{det}
+    \frac{\partial \mathbf y}{\partial \mathbf x} \right\rvert
+\end{equation}
+The magnification $A$ is then given by the inverse Jacobian determinant of the lens mapping:
+\begin{equation}
+    A= \left\lvert\det
+    \frac{\partial \mathbf y}{\partial \mathbf x} \right\rvert^{-1} \label{eq:magnification_general}
+\end{equation}
+The images for which the determinant of the Jacobian of the lens mapping is
+positive are said to have positive \emph{parity} and vice versa.
+
+Looking at Equation~\ref{eq:magnification_general}, we see that the
+magnification diverges when the Jacobian determinant of the lens mapping
+vanishes. Curves in the lens plane for which the determinant of the lens
+mapping vanishes, that is,
+\begin{equation}
+    \left\lvert\det
+    \frac{\partial \mathbf y}{\partial \mathbf x} \right\rvert=0
+\end{equation}
+are called \emph{critical curves}.
+The critical curves in the lens plane can be mapped to the source plane using
+the lens equation $\mathbf{x}\rightarrow \mathbf{y}$ and these curves are
+are called \emph{caustic curves}.
+Although the magnification factor in Equation~\ref{eq:magnification_general} formally
+diverges at the points of critical curves or caustics,
+the divergence is not physical because light sources aren't truly point like.
+If the finite angular size of the source is taken into
+account, the magnification is an integral of Equation~\ref{eq:magnification_general} over the
+extent of the source, weighted by the source brightness and that integral is always finite.
+Both the critical and the caustic curves are closed and one can prove that \textbf{the
+    number of images changes by two if and only if the source crosses a caustic curve}
+\citep[][Chapter 6]{1992grle.book.....S}.
+
+We can derive a simpler expression for Equation~\ref{eq:magnification} by
+switching to polar coordinates $(v,\phi)$ in the lens plane. The lens equation
+for the two vector components of the apparent source position is given by
+\begin{align}
+    y_1= & x_1- \frac{x_1}{x_1^2+x_2^2} \\
+    y_2= & x_2- \frac{x_2}{x_1^2+x_2^2}
+\end{align}
+Introducing polar coordinates $x_1=v\cos\phi,\;x_2=v\sin\phi$, we have
+\begin{equation}
+    \left\lvert\textrm{det}
+    \frac{\partial \mathbf y}{\partial \mathbf x} \right\rvert =1- \frac{1}{v^4}\quad,
+\end{equation}
+By substituting in the locations of the source images Equation~\ref{eq:images_location} into the
+above expression, we obtain the magnification of the source for both images
+\begin{equation}
+    A_\pm=\left(1- \frac{1}{x^4_\pm} \right)^{-1}
+\end{equation}
+The total magnification is then the sum of the two magnifications, and is given by
+\citep{1936Sci....84..506E}
+\begin{equation}
+    A(u)=\lvert A_-\rvert+\lvert A_+\rvert= \frac{u^2+2}{u\sqrt{u^2+4}}\quad,
+    \label{eq:magnification_point_lens}
+\end{equation}
+where $u = \sqrt{y_1^2+y_2^2}$ is the the magnitude of the position
+vector of the source star.
+The critical curve of the point lens is the Einstein
+ring corresponding to $v=\sqrt{x_1^2+x_2^2}=1$ and the caustic curve is mapped to a
+a single point in the source plane at $u=0$.
+For source separations much smaller than the angular Einstein radius ($u\ll 1$), the
+magnification is approximately $A(u)\simeq 1/u$, in the opposite case ($u\gg 1$)
+we have $A(u)\simeq 1+ 2/u^4$, that is, the magnification falls off rapidly the further
+away the source is from the lens.
+
+%The angular Einstein radius determines a characteristic timescale
+%$t_E=\theta_E/|\boldsymbol{\mu}_{LS}|$ on which the magnification of of the
+%source changes, where $\boldsymbol{\mu}_{LS}$ is the relative proper motion
+%vector between the source and the lens
+%$\boldsymbol{\mu}_{LS}\equiv\boldsymbol{\mu}_L- \boldsymbol{\mu}_S$. The
+%predicted flux of a star undergoing a microlensing event is then given by the
+%following expression
+%\begin{equation}
+%    f=F_SA(t)+F_B
+%    \label{eq:flux_paczynski}
+%\end{equation}
+%where $F_S$ is the intrinsic flux of the star and
+%$F_B$ is any background flux due to other stars in the field which
+%might be blended with the source star, usually called the \emph{blending flux}.
+%$A(t)$ is a non-linear time-dependant magnification mapping which depends
+%on the properties of the lens and the geometry of the lensing event.
+%In the simplest case, that of a point source being magnified by a point lens,
+%the magnification is given by
+%\begin{equation}
+%    A(t)= \frac{u(t)^2+2}{u(t)\sqrt{u(t)^2+4}}
+%\end{equation}
+%where $u(t)$ is the separation between the lens and the source expressed in
+%units of the angular Einstein radius.
+
+To be able to evaluate Equation~\ref{eq:magnification_point_lens} in practice
+we have to parametrize the position of the source on the sky $u$ as a function
+of time. To derive an expression for $u(t)$ we assume the the motion of the
+observer, lens and the source is rectilinear (acceleration can be neglected).
+We take $\boldsymbol{\theta}_S$ to be the angular position of the source star
+on the plane of the sky and $\boldsymbol{\mu}_L$ to be its proper motion
+vector. Likewise for the lens. We thus have
+\begin{align}
+    \boldsymbol{\theta}_S(t) & =\boldsymbol{\theta}_{S, 0}+
+    \left(t-t_{0}\right) \boldsymbol{\mu}_S
+    \label{eq:source_position}                              \\
+    \boldsymbol{\theta}_L(t) & =\boldsymbol{\theta}_{L, 0}
+    +\left(t-t_{0}\right) \boldsymbol{\mu}_L\quad,
+    \label{eq:lens_position}
+\end{align}
+where $t_0$ is some reference time.
+The relative position vector of the lens with respect to the source is then
+\begin{equation}
+    \boldsymbol{u}(t) \equiv \frac{\boldsymbol{\theta}_L(t)
+        -\boldsymbol{\theta}_S(t)}{\theta_E}=
+    \frac{\boldsymbol{\theta}_{LS, 0}}{\theta_E}
+    +\frac{t-t_{0}}{\theta_E} \boldsymbol{\mu}_{LS}
+    \label{eq:relative_trajectory_no_parallax}
+\end{equation}
+where
+$\boldsymbol{\theta}_{L S, 0}\equiv\boldsymbol{\theta}_{L,0}-\boldsymbol{\theta}_{S, 0}$
+is the relative position at $t_0$ and
+$\boldsymbol{\mu}_{LS}\equiv \boldsymbol{\mu}_{L}- \boldsymbol{\mu}_{S}$ is the
+relative proper motion.
+Since $\boldsymbol{\mu}_{LS}$ and $\boldsymbol{\theta}_{L S, 0}$ are
+perpendicular to each other, it follows that the magnitude of the relative
+separation is
+\begin{equation}
+    u(t)=\sqrt{u_0^2+ \left(\frac{t-t_0}{t_E}\right)^2}
+\end{equation}
+where we have defined $u_0\equiv |\boldsymbol{\theta}_{L S, 0}|/\theta_E$
+and $t_E\equiv \theta_E/|\boldsymbol{\mu}_{LS}|$.
+The model for the light curve is then characterized by
+the parameters $\{F_S,F_B, t_0, u_0, t_E\}$ and is known in the
+literature as the Paczy\'nski curve.
+
+The magnification as a function of time for different impact parameters $u_0$
+is shown in Figure~\ref{fig:single_lens_mag}. Notice the very steep fall off in
+magnification as as we move away from the Einstein ring ($A(u)\propto
+    1+2u^{-4}$). The curves shown in Figure~\ref{fig:paczynski_curve} are often
+called \emph{Paczyński curves} \citep{1986ApJ...304....1P,1986ApJ...301..503P},
+in honour of the late Polish astronomer Bohdan Paczyński, one of the key
+figures of gravitational microlensing.
+
+\begin{figure}[t]
+    \begin{centering}
+        \includegraphics[width=0.7\linewidth]{figures/paczynski_curve.pdf}
+        \caption{
+            Magnification of a point source by a point lens as a function of time. The
+            various magnification curves correspond to different impact parameters $u_0$. The inset figure
+            shows the source trajectories in the lens plane, the dashed circle corresponds
+            to the Einstein radius $v=1$.}
+        \label{fig:paczynski_curve}
+    \end{centering}
+\end{figure}
+
+\subsection{Magnification of an extended source}
+For a relatively small subset of microlensing events the source star passes
+very close to the caustic and the variation of magnification over the extent of
+the source star disc is non-negligible. For those events the point source
+approximation breaks down and we have to take into account the finite angular
+radius $\theta_\star$. This will generally happen when $u_0 \lesssim
+    \rho_\star/2$ \citep{1997ApJ...477..580G} where
+$\rho_\star=\theta_\star/\theta_E$. The effect of finite source effects on the
+magnification curve thus matters only near the peak of an event and it results
+in a rounder top of the curves shown in Figure~\ref{fig:paczynski_curve}.
+Unfortunately there are no analytic solutions for the magnification of an
+extended source lensed by a single point lens with a general surface brightness
+profile. \citet{1994ApJ...421L..71G} derived an approximate solution valid for
+uniform brightness sources with $\rho_\star\lesssim 0.1$ and
+\citet{1994ApJ...430..505W} derived a general solution (also for a uniform
+brightness source) involving solutions to elliptic integrals of the first,
+second and third kind. A general solution involving Fast Fourier Transforms
+which is applicable to any source profile was recently proposed by
+\citet{2022arXiv220306637S}.
+
+\begin{figure}[t]
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/single_lens_images.pdf}
+        \caption{Images of an extended limb-darkened source star lensed by a single
+            point lens for varying position of the source star. The top panels show the magnification map with a logarithmic scale
+            colormap  consisting of a single point caustic. The semi-transparent circle
+            is the source star disc with radius $\rho_\star=0.15$. The bottom row shows
+            the two images merging into the Einstein ring as the source moves over the caustic.}
+        \label{fig:single_lens_images}
+    \end{centering}
+\end{figure}
+
+In Figure~\ref{fig:single_lens_images} we show the magnification map and the
+images of an extended limb-darkened source with $\rho_\star=0.15$ as it
+approaches the point caustic for a single lens. The top panels show the
+magnification map in the source plane using a logarithmic scale colormap. The
+source disc is shown (semi-transparent grey circle) at different positions
+relative to the caustic. The bottom panels show the resulting images in the
+image plane, this is what we would see on the sky if we could resolve the
+microlensing event. As the source moves closer to the caustic the area (and
+hence the magnification) of the two images increases and eventually they merge
+forming an Einstein ring.
+
+To produce these plots I evaluated the lens mapping
+(Eq.~\ref{eq:lens_equation_dimensionless}) on a regular grid in the image plane
+and then plotted the surface brightness of the corresponding point on the
+source disc in the source plane. I will discuss all of this in far greater
+detail In Chapter~\ref{ch:microlensing} but for now I should mention a few key
+points:
+\begin{itemize}
+    \item Every point inside the two images maps to a single point on the source disc via
+          the lens equation. The inverse mapping is one-to-many because each point on the
+          source disc maps to two points (point lens images) in the image plane. The
+          points on the limbs of the two images correspond to the points on the limb of
+          the source disc. We cannot predict the location of the images without inverting
+          the lens mapping
+    \item To numerically compute the magnification of an extended source, we could either
+          integrate the magnification function convolved with the source brightness
+          profile over the entire source disc (a two-dimensional integral), or we could
+          do the same integral in the image plane. The first approach is highly
+          numerically unstable because we would need to integrate over a function which
+          diverges as $1/r$ approaching the caustic and this would require a very large
+          number of lens equation evaluations. Hence it is much better to integrate in
+          the image plane where the function is smooth.
+    \item Decreasing the source radius $\rho_\star$ results in narrower arcs of the
+          images (smaller radial extent).
+\end{itemize}
+
 \subsection{Parallax}
-\subsection{Finite source effects}
-\subsection{The binary lens}
-\subsection{Multiple lenses}
+In Equation~\ref{eq:relative_trajectory_no_parallax} we have assumed that the
+relative motion of the lens with respect to the source on the plane of the sky
+is rectilinear. This is a reasonable approximation in a barycentric frame of
+reference if the acceleration of the source and the lens can be neglected.
+However, most microlensing events are observed from a non-inertial geocentric
+frame so that the observed trajectory is modified due the local acceleration of
+the Earth and this effect needs to be taken into account in a realistic model.
+In order to include the parallax effect, we need to modify
+Equations~\ref{eq:source_position} and \ref{eq:lens_position} to include the
+projected motion of the Sun relative to the Earth on the plane of the sky. We
+project $\mathbf s$ -- the position vector of the Sun relative to Earth, onto a
+plane perpendicular to the line of sight towards the source star (plane of the
+sky) which is defined by the unit vector $\boldsymbol{\hat n}$ normal to the
+plane. The unit vector $\boldsymbol{\hat n}$ depends on the sky coordinates of
+the source star $(\alpha,\delta)$ (right ascension and declination).
+
+We choose to work in geocentric equatorial coordinates defined by the spherical
+unit vectors $\hat{\mathbf e}_n$, pointing North, and $\hat{\mathbf e}_e$
+pointing eastward such that the coordinate system is right-handed. The unit
+vectors are defined by
+\begin{align}
+    \hat{\mathbf e}_e & = \hat{\mathbf z}\times \hat{\mathbf n}  \\
+    \hat{\mathbf e}_n & = \hat{\mathbf n}\times\hat{\mathbf e}_e
+\end{align}
+The two components of $\mathbf s$ projected onto the plane of the sky are then
+\begin{align}
+    \zeta_e(t;\alpha,\delta)\equiv \mathbf s\cdot \hat{\mathbf e}_e \\
+    \zeta_n(t;\alpha,\delta)\equiv \mathbf s\cdot \hat{\mathbf e}_n
+\end{align}
+In practice, we can retrieve $\mathbf{s}$ using NASA's JPL Horizons system and compute
+the projected separation at any time $t$.
+The angular positions of the source and the lens
+(Equations~\ref{eq:source_position} and \ref{eq:lens_position}) then become
+\begin{align}
+    \boldsymbol{\theta}_S(t) & = \boldsymbol{\theta}_{S,0}+(t-t_0)\boldsymbol{\mu}_S
+    +\pi_S\,\boldsymbol{\zeta}(t)                                                    \\
+    \boldsymbol{\theta}_L(t) & = \boldsymbol{\theta}_{L,0}+(t-t_0)\boldsymbol{\mu}_L
+    +\pi_L\,\boldsymbol{\zeta}(t)
+\end{align}
+where  $\pi_S\equiv 1\,\mathrm{au}/D_S$ is the source parallax, and $\pi_L$ is the
+lens parallax.
+The relative separation is then
+\begin{equation}
+    \boldsymbol{u}(t)= \frac{\boldsymbol\theta_{LS, 0}}{\theta_E}
+    +\frac{t-t_0}{\theta_E}\boldsymbol{\mu}_{LS}+\pi_{E}\,\boldsymbol{\zeta}(t)
+    \label{eq:relative_separation_parallax}
+\end{equation}
+with $\pi_E\equiv\pi_{LS}/\theta_E\equiv (\pi_L-\pi_S)/\theta_E$.
+
+Since annual parallax is a higher order effect affecting the apparent
+trajectory of the lens on the sky, it makes sense to decompose the trajectory
+as a sum of rectilinear motion plus a deviation due to parallax. Following
+\citet{2004ApJ...606..319G} we define the position offset of the Sun on the
+plane of the sky relative to its position at a particular time $t_0'$ as
+
+\begin{equation}
+    \delta\boldsymbol \zeta (t)=\boldsymbol \zeta (t)-\boldsymbol \zeta (t_0')-(t-t_0')
+    \boldsymbol{\dot \zeta} (t_0')
+\end{equation}
+By construction, we have $\delta\boldsymbol \zeta (t_0')=0$ and
+$\delta\dot{\boldsymbol \zeta} (t_0')=0$.
+Equation~\ref{eq:relative_separation_parallax} then takes the form
+\begin{equation}
+    \boldsymbol{u}(t)=\mathbf{u}_0 + (t-t_0')\,\dot{\mathbf{u}}_0 +
+    \pi_E\,\delta\boldsymbol \zeta(t)
+    \label{eq:relative_separation_parallax_decomposed}
+\end{equation}
+where
+\begin{align}
+    \mathbf{u}_0       & \equiv \mathbf{u}(t_0) =\frac{\boldsymbol\theta_{LS, 0}}{\theta_E}
+    + \frac{(t_0'-t_0)}{\theta_E}\boldsymbol\mu_{LS}+
+    \pi_E\,\boldsymbol \zeta(t_0)                                                           \\
+    \dot{\mathbf{u}}_0 & \equiv\dot{\mathbf{u}}(t_0)=
+    \frac{\boldsymbol\mu_{LS}}{\theta_E}  + \pi_E\,\dot{\boldsymbol \zeta}
+    (t_0')
+\end{align}
+In what follows, we set the reference time to $t_0'\equiv t_0$ in order to ensure that
+the vectors $\mathbf{u}_0$ and $\dot{\mathbf{u}}_0$ are perpendicular to each other,
+which is the case at $t=t_0$ because at $t_0$ the trajectory has a local extremum
+\footnote{In CITE, $t_0'$ is fixed to a particular value. It is not clear
+    to me how this ensures that the two vectors are perpendicular to each other
+    (TODO: show that this is true).}
+
+\subsubsection{$\mathbf{u}(t)$ in the $(\mathbf{\hat e}_\bot,
+        \mathbf{\hat e}_\parallel)$ coordinate system}%
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.3\linewidth]{static/microlensing/microlensing_parallax_coordinates.pdf}
+    \caption{A coordinate system
+        $(\mathbf{\hat e}_\bot,\mathbf{\hat e}_\parallel)$ parallel to the lens trajectory at time $t_0$. The orange curve
+        represents the lens trajectory relative to the source star at the origin. The
+        coordinate system $(\mathbf{\hat e}_\bot,\mathbf{\hat e}_\parallel)$ is related to the equatorial coordinates $(\mathbf{\hat
+                e}_e,\mathbf{\hat e}_n)$ by a rotation through an angle $\psi$.}
+    \label{fig:parallax2}
+\end{figure}
+
+To evaluate Equation~\ref{eq:relative_separation_parallax_decomposed}, we need
+to choose a suitable basis. A natural coordinate system for describing the
+trajectory of the lens relative to the source is one defined by unit vectors
+$(\mathbf{\hat e}_\bot,\mathbf{\hat e}_\parallel)$ where $\mathbf{\hat e}_\parallel$ is parallel to the trajectory $\mathbf{u}(t)$ at time $t_0$
+(Figure~\ref{fig:parallax2}). We define the unit vectors as
+\begin{equation}
+    \mathbf{\hat e}_\bot\equiv \frac{\mathbf{u}_0}{|\mathbf{u}_0|}\quad
+    \mathbf{\hat e}_\parallel\equiv \frac{\mathbf{\hat n}\times\mathbf{u}_0}{|\mathbf{u}_0|}\quad
+\end{equation}
+and the coordinate system $(\mathbf{\hat e}_\bot,\mathbf{\hat e}_\parallel)$ is related to ecliptic coordinates via a simple rotation through an
+angle $\psi$
+\begin{equation}
+    \begin{pmatrix}
+        \mathbf{\hat e}_\bot \\
+        \mathbf{\hat e}_\parallel
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        \cos\psi & -\sin\psi \\
+        \sin\psi & \cos\psi
+    \end{pmatrix}
+    \begin{pmatrix}
+        \mathbf{\hat e}_e \\
+        \mathbf{\hat e}_n
+    \end{pmatrix}
+    \label{eq:ecliptic_to_parallel}
+\end{equation}
+By construction, at time $t_0$ we have
+$\mathbf{\dot u}_0\,\bot\,\dot{\mathbf{u}}_0$ and the two components of
+$\mathbf{u}(t)$ are then
+\begin{align}
+    u_\bot(t)      & \equiv \mathbf{u}(t)\cdot \mathbf{\hat e}_\bot= u_0 +
+    \pi_E\,\delta\boldsymbol \zeta(t)\cdot\mathbf{\hat e}_\bot                                                                                                                                       \\
+    u_\parallel(t) & \equiv \mathbf{u}(t)\cdot \mathbf{\hat e}_\parallel= (t-t_0)\,\dot{\mathbf{u}}_0\cdot\mathbf{\hat e}_\parallel+ \pi_E\,\delta\boldsymbol \zeta(t)\cdot\mathbf{\hat e}_\parallel
+\end{align}
+using the definitions of the unit vectors and
+$\delta\boldsymbol \zeta(t)=
+    \delta \zeta_e(t)\,\mathbf{\hat e}_e+\delta \zeta_n(t)\,\mathbf{\hat e}_n$, we have
+\begin{align}
+    u_\bot(t)      & = u_0 + \pi_E\,\cos\psi\,\delta \zeta_e(t) - \pi_E\,\sin\psi\,\delta \zeta_n(t)
+    \label{eq:u_t_parallel1}                                                                         \\
+    u_\parallel(t) & =(t-t_0)/t_E' + \pi_E\,\sin\psi\,\delta \zeta_e(t) +
+    \pi_E\,\cos\psi\,\delta \zeta_n(t) \label{eq:u_t_parallel2}
+\end{align}
+where $t_E' =|\dot{\mathbf{u}}_0|=|\boldsymbol\mu_{LS}/\theta_E  + \pi_E\,\dot{\boldsymbol \zeta}(t_0')|$.
+The model parameters which determine the magnification $A(t)$ are then
+$\left(u_0,t_0,t'_E,\pi_E,\psi\right)$.
+An alternative parametrization which is more commonly used is obtained by
+defining components of a "microlensing parallax vector" as
+\begin{align}
+    \pi_{E,N} & \equiv \pi_E\cos\psi \\
+    \pi_{E,E} & \equiv \pi_E\sin\psi
+\end{align}
+in which case we have
+\begin{align}
+    u_\bot(t)      & = u_0 + \pi_{E,N}\,\delta \zeta_e(t) - \pi_{E,E}\,\delta \zeta_n(t) \\
+    u_\parallel(t) & =(t-t_0)\omega_E + \pi_{E,E}\,\delta\zeta_e(t) +
+    \pi_{E,N}\,\delta\zeta_n(t)
+\end{align}
+and the model parameters are $\left(u_0,t_0,t_E',\pi_{E,E},\pi_{E,N}\right)$.
+
+For reference, we can also write down the components of $\mathbf{u}(t)$ in
+equatorial coordinates by inverting the rotation matrix in
+Equation~\ref{eq:ecliptic_to_parallel} and applying it to
+Equations~\ref{eq:u_t_parallel1} and \ref{eq:u_t_parallel2}, the two components
+are then
+\begin{align}
+    u_e & =u_0\cos\psi + (t-t_0)\omega_E\sin\psi + \pi_E\,\delta\zeta_e(t)  \\
+    u_n & =-u_0\sin\psi + (t-t_0)\omega_E\cos\psi + \pi_E\,\delta\zeta_n(t)
+\end{align}
+
+\subsubsection{$\mathbf{u}(t)$ in the $(\mathbf{\hat e}_\parallel, \mathbf{\hat e}_\bot)$ coordinates using acceleration parameters} There
+exist another parametrization of the trajectory in which we fit for the local
+acceleration of the lens at $t_0$ instead of $\pi_E$ and the angle $\psi$. We
+define the position, velocity and acceleration such that at $t=t_0$ we have
+\begin{align}
+    \mathbf{u}(t_0)       & \equiv \widetilde{u}_0 \,\hat{\mathbf e}_\bot
+    \label{eq:u_primed_def}                                               \\
+    \dot{\mathbf{u}}(t_0) & \equiv \frac{1}{\widetilde{t_E'}}\,
+    \hat{\mathbf e}_\parallel \label{eq:u_dot_primed_def}                 \\ \ddot{\mathbf{u}}(t_0) & \equiv
+       a_\bot\,\hat{\mathbf e}_\bot + a_\parallel\,\hat{\mathbf e}_\parallel \label{eq:u_ddot_primed_def}
+\end{align}
+where $a_\parallel$ and $a_\bot$ are the two components of the instantaneous acceleration of
+the lens at $t_0$. From Equations~\ref{eq:u_t_parallel1} and
+\ref{eq:u_t_parallel2} it follows that
+\begin{align}
+    \mathbf{u}(t_0)       & = u_0\,\hat{\mathbf e}_\bot                    \\
+    \dot{\mathbf{u}}(t_0) & =\frac{1}{t_E'}\,\hat{\mathbf e}_\parallel     \\ \ddot{\mathbf{u}}(t_0) &
+       =\left[\pi_E\cos\psi\,\delta\ddot{\zeta}_e(t_0)
+    -\pi_E\sin\psi\,\delta\ddot{\zeta}_n(t_0)\right]\,\hat{\mathbf e}_\bot \\  &
+       +\left[\pi_E\sin\psi\,\delta\ddot{\zeta}_e(t_0)
+           +\pi_E\cos\psi\,\delta\ddot{\zeta}_n(t_0)\right]\,\hat{\mathbf e}_\parallel
+\end{align}
+By equating the components of the position, velocity and acceleration vectors, we obtain the expressions for the old parameters in terms of the new parameters as
+\begin{equation}
+    \widetilde{u}_0=u_0,\quad \widetilde{t_E'}=t_E'\,\quad
+    \pi_E=\sqrt{\frac{a_\parallel^2 + a_\bot^2}{1} \left[\delta\ddot{\boldsymbol{\zeta}}_e(t_0)\right]^2 +
+        \left[\delta\ddot{\boldsymbol{\zeta}}_n(t_0)\right]^2}
+\end{equation}
+Similarly, we have
+\begin{align}
+    \pi_{E,N}=\pi_E\cos\psi & = \frac{a_\parallel\,\delta\ddot{\zeta}_n(t_0) + a_\bot\,\delta\ddot{\zeta}_e(t_0)
+    }{[\delta\ddot{\zeta}_e(t_0)]^2 + [\delta\ddot{\zeta}_n(t_0)]^2}                                              \\
+    \pi_{E,E}=\pi_E\sin\psi & = \frac{ a_\parallel\,\delta\ddot{\zeta}_e(t_0) - a_\bot\,\delta\ddot{\zeta}_n(t_0)
+    }{[\delta\ddot{\zeta}_e(t_0)]^2 + [\delta\ddot{\zeta}_n(t_0)]^2}
+\end{align}
+To obtain the trajectory in terms of these new parameters, we plug in the above expressions
+into Equations~\ref{eq:u_t_parallel1} and \ref{eq:u_t_parallel2}.
+The new parameter set is then $\left(u_0,t_0,t_E',a_\parallel,a_\bot\right)$. This parametrization makes it obvious that the parallax
+effect depends on the apparent local acceleration of the lens at time $t_0$.
+
+%\subsection{Binary and triple lens}
+%Microlensing with more than one lens is considerably more complex than the case
+%of a single lens. Consider a system with $N$ point mass lenses with a total
+%mass $M=\sum_{i=1}^Nm_i$. As before, we have the angular source position in the
+%source plane, given by the the dimensionless vector
+%$\mathbf{y}=\bm\beta/(D_\textrm{S}\theta_E)$ and the position of the images in
+%the lens plane, given by given by
+%$\mathbf{x}=\bm\theta/(D_\textrm{L}\theta_E)$, where $\theta_E$ now refers to
+%the angular Einstein radius corresponding to the total mass $M$. The lens
+%equation then contains a sum over the deflection angles $\bm\alpha_i$
+%corresponding to each point mass $m_i$\footnote{This is because we working
+%    within the linearized GR framework so the deflection angles are additive.}:
+%\begin{equation}
+%    \mathbf{y}=\mathbf{x}-\sum_{i=1}^N\bm\alpha_i(\mathbf{x},\mathbf{x}_i)
+%\end{equation}
+%where $\bm\alpha_i$ is the deflection angle due to the $i$th lens.
+%Using Equation~\ref{eq:lens_equation_dimensionless}, we obtain
+%\begin{equation}
+%    \mathbf{y}=\mathbf{x}-\sum_{i=1}^N\epsilon_i\frac{\mathbf{x}-\mathbf{x}_i}
+%    {\lvert \mathbf{x}-\mathbf{x}_i\rvert^2}
+%    \label{eq:lens_equation_general}
+%\end{equation}
+%where $\epsilon_i\equiv m_i/M$.
+
+%It is useful to rewrite Equation~\ref{eq:lens_equation_general} in complex form
+%by introducing complex variables \citep{1990A&A...236..311W}
+%\begin{equation}
+%    w= y_1+iy_2,\quad z=x_1+ix_2
+%\end{equation}
+%The lens equation then takes the form
+%\begin{equation}
+%    w=z-\sum_{i=1}^N \frac{\epsilon_i}{\bar z-\bar z_i}
+%    \label{eq:lens_equation_complex}
+%\end{equation}
+%The mapping from the image plane $z$ to the source plane $w$ is one-to-one and it is
+%straightforward to compute using Equation~\ref{eq:lens_equation_complex}. The inverse
+%mapping is not as easy. It turns out that it is possible to rewrite Equation~\ref{eq:lens_equation_complex}
+%as a complex polynomial of degree $N^2 + 1$ (see Appendix~\ref{app:complex_poly}).
+
 \subsection{Solving the lens equation}
 
 \section{Occultation and phase curve mapping}
@@ -725,6 +1291,8 @@ is not an issue.
 \appendix
 
 \chapter{First appendix}
+\label{app:complex_poly}
+
 \chapter{Second appendix}
 
 \bibliography{bib.bib}
