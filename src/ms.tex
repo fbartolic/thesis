@@ -1,5 +1,5 @@
 % Define document class
-\documentclass[11pt]{report}
+\documentclass[12pt]{report}
 \usepackage{aas_macros}
 
 % Citations
@@ -313,7 +313,7 @@ wrote that \emph{``the primary effect of planetary deflectors bound to stars
 saying that \emph{``associated pulses would be so weak and infrequent and of
     such fleeting duration – perhaps a few hours – as to defy detection''}.
 Gravitational lensing as a method for discovering exoplanets really took off
-with the work of Paczyński
+with the work of Paczy\'nski
 \citep{1986ApJ...304....1P,1986ApJ...301..503P,1991ApJ...374L..37M} who also
 coined the term \emph{microlensing}, which refers to gravitational lensing in a
 regime where the images of the background object cannot be resolved but one can
@@ -659,12 +659,18 @@ the observed and the actual location of the source is given by
 \end{equation}
 which is known as the \emph{lens equation} or sometimes also the \emph{ray-tracing}
 equation. If the source and the lens are perfectly aligned with respect to the observer,
-then $\beta=0$ and we have
+then $\beta=0$ and $\theta\equiv\theta_E$ where
 \begin{equation}
-    \theta \equiv \theta_E= \sqrt{ \frac{4GM}{c^2} \left( \frac{1}{D_L} - \frac{1}{D_S} \right)}
+    \theta_E= \sqrt{ \frac{4GM}{c^2} \left( \frac{1}{D_L} - \frac{1}{D_S} \right)}=
+    \sqrt{\kappa M\pi_{LS}}
+    \label{eq:angular_einstein_radius}
 \end{equation}
-The distance term $D_L^{-1}-D_\textrm{s}^{-1}$ is proportional to the
-lens-source parallax.
+where $\kappa \equiv \frac{4 G}{c^{2} \mathrm{au}} \simeq 8.1 \frac{\mathrm{mas}}{M_{\odot}}$
+and
+\begin{equation}
+    \pi_{LS}\equiv\pi_L - \pi_S=\frac{1\mathrm{au}}{D_L}-\frac{1\mathrm{au}}{D_S}
+\end{equation}
+is the relative lens-source parallax.
 
 The image of the source forms a ring (the Einstein ring) around the lens star
 with angular radius $\theta_E$ -- the \emph{Einstein radius}. $\theta_E$
@@ -790,30 +796,6 @@ magnification is approximately $A(u)\simeq 1/u$, in the opposite case ($u\gg 1$)
 we have $A(u)\simeq 1+ 2/u^4$, that is, the magnification falls off rapidly the further
 away the source is from the lens.
 
-%The angular Einstein radius determines a characteristic timescale
-%$t_E=\theta_E/|\boldsymbol{\mu}_{LS}|$ on which the magnification of of the
-%source changes, where $\boldsymbol{\mu}_{LS}$ is the relative proper motion
-%vector between the source and the lens
-%$\boldsymbol{\mu}_{LS}\equiv\boldsymbol{\mu}_L- \boldsymbol{\mu}_S$. The
-%predicted flux of a star undergoing a microlensing event is then given by the
-%following expression
-%\begin{equation}
-%    f=F_SA(t)+F_B
-%    \label{eq:flux_paczynski}
-%\end{equation}
-%where $F_S$ is the intrinsic flux of the star and
-%$F_B$ is any background flux due to other stars in the field which
-%might be blended with the source star, usually called the \emph{blending flux}.
-%$A(t)$ is a non-linear time-dependant magnification mapping which depends
-%on the properties of the lens and the geometry of the lensing event.
-%In the simplest case, that of a point source being magnified by a point lens,
-%the magnification is given by
-%\begin{equation}
-%    A(t)= \frac{u(t)^2+2}{u(t)\sqrt{u(t)^2+4}}
-%\end{equation}
-%where $u(t)$ is the separation between the lens and the source expressed in
-%units of the angular Einstein radius.
-
 To be able to evaluate Equation~\ref{eq:magnification_point_lens} in practice
 we have to parametrize the position of the source on the sky $u$ as a function
 of time. To derive an expression for $u(t)$ we assume the the motion of the
@@ -851,29 +833,64 @@ separation is
 \end{equation}
 where we have defined $u_0\equiv |\boldsymbol{\theta}_{L S, 0}|/\theta_E$
 and $t_E\equiv \theta_E/|\boldsymbol{\mu}_{LS}|$.
-The model for the light curve is then characterized by
-the parameters $\{F_S,F_B, t_0, u_0, t_E\}$ and is known in the
-literature as the Paczy\'nski curve.
-
+The magnification is then a function of three parameters $(t_0, u_0, t_E)$
+and the resulting curve as a function of time is often called the Paczy\'nski curve
+\citep{1986ApJ...304....1P,1986ApJ...301..503P}.
 The magnification as a function of time for different impact parameters $u_0$
-is shown in Figure~\ref{fig:single_lens_mag}. Notice the very steep fall off in
+is shown in Figure~\ref{fig:paczynski_curve}. Notice the very steep fall off in
 magnification as as we move away from the Einstein ring ($A(u)\propto
-    1+2u^{-4}$). The curves shown in Figure~\ref{fig:paczynski_curve} are often
-called \emph{Paczyński curves} \citep{1986ApJ...304....1P,1986ApJ...301..503P},
-in honour of the late Polish astronomer Bohdan Paczyński, one of the key
-figures of gravitational microlensing.
+    1+2u^{-4}$).
+In the limits of $u_0\rightarrow 0$ and $u_0\gg 1$  there is a continuous
+mathematical degeneracy between the parameters $t_0$, $u_0$ and $t_E$
+\citep{1997ApJ...487...55W}.
 
 \begin{figure}[t]
     \begin{centering}
         \includegraphics[width=0.7\linewidth]{figures/paczynski_curve.pdf}
         \caption{
             Magnification of a point source by a point lens as a function of time. The
-            various magnification curves correspond to different impact parameters $u_0$. The inset figure
+            various magnification curves correspond to different impact parameters $u_0$.
+            The inset figure
             shows the source trajectories in the lens plane, the dashed circle corresponds
             to the Einstein radius $v=1$.}
         \label{fig:paczynski_curve}
     \end{centering}
 \end{figure}
+
+\subsection{Observed flux}
+The magnification $A(t)$ is not a direct observable in microlensing events. We
+can only measure the flux of the source star which is usually contaminated with
+the flux of other nearby stars in the dense stellar field and potentially also
+with light from the lens and possible companions to the lens. The observed flux
+is thus given by
+\begin{equation}
+    F(t)=F_S(t)+F_B(t)
+    \label{eq:flux_observed}
+\end{equation}
+where $F_s$ is the flux of the source star and $F_B$ is the contamination flux also
+called the \emph{blending flux}. To quantify the strength of the blending e can
+define the emph{source flux fraction} $b_S$ as the fraction of total (unmagnified)
+flux that is coming from the source star:
+\begin{equation}
+    b_S\equiv F_S/(F_S + F_B)
+\end{equation}
+For highly blended events $b_S\approx 0$ and in absence of blending $b_S=1$.
+The source flux $F_S$ and the blending flux $F_B$ are generally highly correlated
+and it is often preferable to use a slightly different parametrization proposed by
+\citet{2009MNRAS.393..816D}. In this parametrization we use the
+\emph{baseline flux} $F_\mathrm{base}$ and the difference between
+the baseline flux and the flux at peak magnification $\Delta F\equiv F_S[A(u_0)-1]$
+as the new parameters.
+Equation~\ref{eq:flux_observed} then takes the form
+\begin{equation}
+    f=\Delta F\frac{A(t) - 1}{A(t_0)-1}+F_\mathrm{base}
+    \label{eq:flux_dominik}
+\end{equation}
+It is generally straightforward to measure the flux difference $\Delta F$, the
+baseline flux $F_\mathrm{base}$ and the center of the curve $t_0$ but getting a
+good estimate of $t_E$ even outside of the regime $u_0\rightarrow 0$ and
+$u_0\gg 1$ requires good photometric sampling along the ``wings'' of the light
+curve \citep{2009MNRAS.393..816D}.
 
 \subsection{Magnification of an extended source}
 For a relatively small subset of microlensing events the source star passes
@@ -943,27 +960,50 @@ points:
           images (smaller radial extent).
 \end{itemize}
 
-\subsection{Parallax}
+\subsection{Annual parallax}
+\label{ssec:single_lens_parallax}
 In Equation~\ref{eq:relative_trajectory_no_parallax} we have assumed that the
 relative motion of the lens with respect to the source on the plane of the sky
-is rectilinear. This is a reasonable approximation in a barycentric frame of
+is rectilinear.
+This is a reasonable approximation in a barycentric frame of
 reference if the acceleration of the source and the lens can be neglected.
 However, most microlensing events are observed from a non-inertial geocentric
-frame so that the observed trajectory is modified due the local acceleration of
-the Earth and this effect needs to be taken into account in a realistic model.
-In order to include the parallax effect, we need to modify
-Equations~\ref{eq:source_position} and \ref{eq:lens_position} to include the
-projected motion of the Sun relative to the Earth on the plane of the sky. We
-project $\mathbf s$ -- the position vector of the Sun relative to Earth, onto a
-plane perpendicular to the line of sight towards the source star (plane of the
-sky) which is defined by the unit vector $\boldsymbol{\hat n}$ normal to the
-plane. The unit vector $\boldsymbol{\hat n}$ depends on the sky coordinates of
-the source star $(\alpha,\delta)$ (right ascension and declination).
+frame (Earth) and sometimes also from multiple locations simultaneously. In those
+cases we have to take into account parallax effects.
+We differentiate between two kinds of parallax. First is the \emph{annual
+    parallax} (sometimes also called the orbital parallax) which modifies the
+lens-source relative motion vector $\boldsymbol\mu_{LS}$ due to the local
+acceleration of Earth in its orbit. It is important for long timescale events
+when the event timescale is equal to some substantial fraction of a year. The
+effect of annual parallax is usually a slight modification of the shape of the
+Paczy\'nski curve.
 
-We choose to work in geocentric equatorial coordinates defined by the spherical
-unit vectors $\hat{\mathbf e}_n$, pointing North, and $\hat{\mathbf e}_e$
-pointing eastward such that the coordinate system is right-handed. The unit
-vectors are defined by
+The second kind of parallax is the \emph{satellite parallax} which refers to a
+difference in viewpoint when conducting simultaneous observations of the source
+star from different locations separated by a substantial fraction of the
+Einstein ring projected onto the observer plane $\tilde{r}_E\equiv
+    D_{LS}\theta_E$ (where $D_{LS}^{-1}=D_L^{-1} - D_S^{-1}$). In practice this
+means observing a microlensing event from Earth and a space based telescope
+simultaneously. It was first proposed by \citet{1966MNRAS.134..315R}. There is
+also the ``terrestrial parallax'' which is identical to the satellite parallax
+except that it involves only ground-based observations separated by a large
+fraction of Earth's diameter. A measurement of these parallax effects allows
+for a partial breaking of the degeneracy in the event timescale $t_E$ by
+providing a relationship between the mass and the distance to the lens
+(assuming one can estimate the distance to the source star).
+
+In this section I will describe the annual parallax effect. We start by
+modifying Equations~\ref{eq:source_position} and \ref{eq:lens_position} to
+include the projected motion of the Sun relative to the Earth on the plane of
+the sky. We project $\mathbf s$ -- the position vector of the Sun relative to
+Earth, onto a plane perpendicular to the line of sight towards the source star
+(plane of the sky) which is defined by the unit vector $\boldsymbol{\hat n}$
+normal to the plane. The unit vector $\boldsymbol{\hat n}$ depends on the sky
+coordinates of the source star $(\alpha,\delta)$ (right ascension and
+declination). We choose to work in geocentric equatorial coordinates defined by
+the spherical unit vectors $\hat{\mathbf e}_n$, pointing North, and
+$\hat{\mathbf e}_e$ pointing eastward such that the coordinate system is
+right-handed. The unit vectors are defined by
 \begin{align}
     \hat{\mathbf e}_e & = \hat{\mathbf z}\times \hat{\mathbf n}  \\
     \hat{\mathbf e}_n & = \hat{\mathbf n}\times\hat{\mathbf e}_e
@@ -991,10 +1031,14 @@ The relative separation is then
     +\frac{t-t_0}{\theta_E}\boldsymbol{\mu}_{LS}+\pi_{E}\,\boldsymbol{\zeta}(t)
     \label{eq:relative_separation_parallax}
 \end{equation}
-with $\pi_E\equiv\pi_{LS}/\theta_E\equiv (\pi_L-\pi_S)/\theta_E$.
+where
+\begin{equation}
+    \pi_E\equiv \frac{\pi_{LS}}{\theta_E}
+    \label{eq:pi_E}
+\end{equation}
 
 Since annual parallax is a higher order effect affecting the apparent
-trajectory of the lens on the sky, it makes sense to decompose the trajectory
+trajectory of the source on the sky, it makes sense to decompose the trajectory
 as a sum of rectilinear motion plus a deviation due to parallax. Following
 \citet{2004ApJ...606..319G} we define the position offset of the Sun on the
 plane of the sky relative to its position at a particular time $t_0'$ as
@@ -1034,8 +1078,8 @@ which is the case at $t=t_0$ because at $t_0$ the trajectory has a local extremu
     \centering
     \includegraphics[width=0.3\linewidth]{static/microlensing/microlensing_parallax_coordinates.pdf}
     \caption{A coordinate system
-        $(\mathbf{\hat e}_\bot,\mathbf{\hat e}_\parallel)$ parallel to the lens trajectory at time $t_0$. The orange curve
-        represents the lens trajectory relative to the source star at the origin. The
+        $(\mathbf{\hat e}_\bot,\mathbf{\hat e}_\parallel)$ parallel to the source trajectory at time $t_0$. The orange curve
+        represents the source trajectory relative to the lens at the origin. The
         coordinate system $(\mathbf{\hat e}_\bot,\mathbf{\hat e}_\parallel)$ is related to the equatorial coordinates $(\mathbf{\hat
                 e}_e,\mathbf{\hat e}_n)$ by a rotation through an angle $\psi$.}
     \label{fig:parallax2}
@@ -1043,11 +1087,11 @@ which is the case at $t=t_0$ because at $t_0$ the trajectory has a local extremu
 
 To evaluate Equation~\ref{eq:relative_separation_parallax_decomposed}, we need
 to choose a suitable basis. A natural coordinate system for describing the
-trajectory of the lens relative to the source is one defined by unit vectors
+trajectory of the source relative to the lens is one defined by unit vectors
 $(\mathbf{\hat e}_\bot,\mathbf{\hat e}_\parallel)$ where $\mathbf{\hat e}_\parallel$ is parallel to the trajectory $\mathbf{u}(t)$ at time $t_0$
 (Figure~\ref{fig:parallax2}). We define the unit vectors as
 \begin{equation}
-    \mathbf{\hat e}_\bot\equiv \frac{\mathbf{u}_0}{|\mathbf{u}_0|}\quad
+    \mathbf{\hat e}_\bot\equiv \frac{\mathbf{u}_0}{|\mathbf{u}_0|}\quad,
     \mathbf{\hat e}_\parallel\equiv \frac{\mathbf{\hat n}\times\mathbf{u}_0}{|\mathbf{u}_0|}\quad
 \end{equation}
 and the coordinate system $(\mathbf{\hat e}_\bot,\mathbf{\hat e}_\parallel)$ is related to ecliptic coordinates via a simple rotation through an
@@ -1069,7 +1113,7 @@ angle $\psi$
     \label{eq:ecliptic_to_parallel}
 \end{equation}
 By construction, at time $t_0$ we have
-$\mathbf{\dot u}_0\,\bot\,\dot{\mathbf{u}}_0$ and the two components of
+$\mathbf{u}_0\,\bot\,\dot{\mathbf{u}}_0$ and the two components of
 $\mathbf{u}(t)$ are then
 \begin{align}
     u_\bot(t)      & \equiv \mathbf{u}(t)\cdot \mathbf{\hat e}_\bot= u_0 +
@@ -1087,7 +1131,8 @@ $\delta\boldsymbol \zeta(t)=
 \end{align}
 where $t_E' =|\dot{\mathbf{u}}_0|=|\boldsymbol\mu_{LS}/\theta_E  + \pi_E\,\dot{\boldsymbol \zeta}(t_0')|$.
 The model parameters which determine the magnification $A(t)$ are then
-$\left(u_0,t_0,t'_E,\pi_E,\psi\right)$.
+$\left(u_0,t_0,t'_E,\pi_E,\psi\right)$. Notice that $u_0$ in this case can also be negative.
+
 An alternative parametrization which is more commonly used is obtained by
 defining components of a "microlensing parallax vector" as
 \begin{align}
@@ -1097,7 +1142,7 @@ defining components of a "microlensing parallax vector" as
 in which case we have
 \begin{align}
     u_\bot(t)      & = u_0 + \pi_{E,N}\,\delta \zeta_e(t) - \pi_{E,E}\,\delta \zeta_n(t) \\
-    u_\parallel(t) & =(t-t_0)\omega_E + \pi_{E,E}\,\delta\zeta_e(t) +
+    u_\parallel(t) & =(t-t_0)/t_E' + \pi_{E,E}\,\delta\zeta_e(t) +
     \pi_{E,N}\,\delta\zeta_n(t)
 \end{align}
 and the model parameters are $\left(u_0,t_0,t_E',\pi_{E,E},\pi_{E,N}\right)$.
@@ -1108,8 +1153,8 @@ Equation~\ref{eq:ecliptic_to_parallel} and applying it to
 Equations~\ref{eq:u_t_parallel1} and \ref{eq:u_t_parallel2}, the two components
 are then
 \begin{align}
-    u_e & =u_0\cos\psi + (t-t_0)\omega_E\sin\psi + \pi_E\,\delta\zeta_e(t)  \\
-    u_n & =-u_0\sin\psi + (t-t_0)\omega_E\cos\psi + \pi_E\,\delta\zeta_n(t)
+    u_e & =u_0\cos\psi + (t-t_0)/t_E'\sin\psi + \pi_E\,\delta\zeta_e(t)  \\
+    u_n & =-u_0\sin\psi + (t-t_0)/t_E'\cos\psi + \pi_E\,\delta\zeta_n(t)
 \end{align}
 
 \subsubsection{$\mathbf{u}(t)$ in the $(\mathbf{\hat e}_\parallel, \mathbf{\hat e}_\bot)$ coordinates using acceleration parameters} There
@@ -1152,50 +1197,389 @@ into Equations~\ref{eq:u_t_parallel1} and \ref{eq:u_t_parallel2}.
 The new parameter set is then $\left(u_0,t_0,t_E',a_\parallel,a_\bot\right)$. This parametrization makes it obvious that the parallax
 effect depends on the apparent local acceleration of the lens at time $t_0$.
 
-%\subsection{Binary and triple lens}
-%Microlensing with more than one lens is considerably more complex than the case
-%of a single lens. Consider a system with $N$ point mass lenses with a total
-%mass $M=\sum_{i=1}^Nm_i$. As before, we have the angular source position in the
-%source plane, given by the the dimensionless vector
-%$\mathbf{y}=\bm\beta/(D_\textrm{S}\theta_E)$ and the position of the images in
-%the lens plane, given by given by
-%$\mathbf{x}=\bm\theta/(D_\textrm{L}\theta_E)$, where $\theta_E$ now refers to
-%the angular Einstein radius corresponding to the total mass $M$. The lens
-%equation then contains a sum over the deflection angles $\bm\alpha_i$
-%corresponding to each point mass $m_i$\footnote{This is because we working
-%    within the linearized GR framework so the deflection angles are additive.}:
-%\begin{equation}
-%    \mathbf{y}=\mathbf{x}-\sum_{i=1}^N\bm\alpha_i(\mathbf{x},\mathbf{x}_i)
-%\end{equation}
-%where $\bm\alpha_i$ is the deflection angle due to the $i$th lens.
-%Using Equation~\ref{eq:lens_equation_dimensionless}, we obtain
-%\begin{equation}
-%    \mathbf{y}=\mathbf{x}-\sum_{i=1}^N\epsilon_i\frac{\mathbf{x}-\mathbf{x}_i}
-%    {\lvert \mathbf{x}-\mathbf{x}_i\rvert^2}
-%    \label{eq:lens_equation_general}
-%\end{equation}
-%where $\epsilon_i\equiv m_i/M$.
+\subsection{Measuring the lens mass}
+Notice that only quantity of physical interest in single lens microlensing --
+the lens mass $M$, is buried inside of the definition of the angular Einstein
+radius $\theta_E$ which, when combined with the magnitude of the relative
+proper motion $|\boldsymbol\mu_{LS}|$ forms the observable $t_E$. In practice,
+depending on the microlensing event there are several possible channels which
+enable an estimate of the lens mass. For example, a measurement of $\theta_E$
+from finite-source effects or from a direct measurement of
+$|\boldsymbol\mu_{LS}|$ can be combined with a measurement of $\pi_E$ to yield
+(via Equations \ref{eq:angular_einstein_radius} and \ref{eq:pi_E})
+\begin{equation}
+    M = \frac{\theta_E}{\kappa \pi_E}
+\end{equation}
+With an estimate of the distance to the source star one can also obtain the distance
+to the lens.
+An alternative, less direct approach is to use a measurement of $\theta_E$ combined
+with the measurement of the lens flux to estimate the mass and distance to the lens
+\citep{2007ApJ...660..781B}.
+It should be noted that either of these approaches is possible for only a small subset
+of all detected microlensing events.
 
-%It is useful to rewrite Equation~\ref{eq:lens_equation_general} in complex form
-%by introducing complex variables \citep{1990A&A...236..311W}
-%\begin{equation}
-%    w= y_1+iy_2,\quad z=x_1+ix_2
-%\end{equation}
-%The lens equation then takes the form
-%\begin{equation}
-%    w=z-\sum_{i=1}^N \frac{\epsilon_i}{\bar z-\bar z_i}
-%    \label{eq:lens_equation_complex}
-%\end{equation}
-%The mapping from the image plane $z$ to the source plane $w$ is one-to-one and it is
-%straightforward to compute using Equation~\ref{eq:lens_equation_complex}. The inverse
-%mapping is not as easy. It turns out that it is possible to rewrite Equation~\ref{eq:lens_equation_complex}
-%as a complex polynomial of degree $N^2 + 1$ (see Appendix~\ref{app:complex_poly}).
+\subsection{A system with $N$ lenses}
+Microlensing with more than one lens is considerably more complex than the case
+of a single lens. Consider a system with $N$ point mass lenses with a total
+mass $M=\sum_{i=1}^Nm_i$. As before, we have the angular source position in the
+source plane, given by the the dimensionless vector
+$\mathbf{y}=\bm\beta/(D_\textrm{S}\theta_E)$ and the position of the images in
+the lens plane, given by given by
+$\mathbf{x}=\bm\theta/(D_\textrm{L}\theta_E)$, where $\theta_E$ now refers to
+the angular Einstein radius corresponding to the total mass $M$. The lens
+equation then contains a sum over the deflection angles $\bm\alpha_i$
+corresponding to each point mass $m_i$\footnote{This is because we are working
+    within the linearized GR framework so the deflection angles are additive.}:
+\begin{equation}
+    \mathbf{y}=\mathbf{x}-\sum_{i=1}^N\bm\alpha_i(\mathbf{x},\mathbf{x}_i)
+\end{equation}
+where $\bm\alpha_i$ is the deflection angle due to the $i$th lens.
+Using Equation~\ref{eq:lens_equation_dimensionless}, we obtain
+\begin{equation}
+    \mathbf{y}=\mathbf{x}-\sum_{i=1}^N\epsilon_i\frac{\mathbf{x}-\mathbf{x}_i}
+    {\lvert \mathbf{x}-\mathbf{x}_i\rvert^2}
+    \label{eq:lens_equation_general}
+\end{equation}
+where $\epsilon_i\equiv m_i/M$.
 
-\subsection{Solving the lens equation}
+It is useful to rewrite Equation~\ref{eq:lens_equation_general} in complex form
+by introducing complex variables \citep{1990A&A...236..311W}
+\begin{equation}
+    w= y_1+iy_2,\quad z=x_1+ix_2
+\end{equation}
+The lens equation then takes the form
+\begin{equation}
+    w=z-\sum_{i=1}^N \frac{\epsilon_i}{\bar z-\bar z_i}
+    \label{eq:lens_equation_complex}
+\end{equation}
+The mapping from the image plane $z$ to the source plane $w$ is one-to-one and it is
+straightforward to compute using Equation~\ref{eq:lens_equation_complex}. The inverse
+mapping is not as easy. It turns out that it is possible to rewrite Equation~\ref{eq:lens_equation_complex}
+as a complex polynomial of degree $N^2 + 1$ (see Appendix~\ref{app:complex_poly}).
+From the Fundamental Theorem of Algebra, it follows that such a polynomial has exactly $N^2+1$ complex roots.
+However, not all of these roots are necessarily solutions to the lens equations so in practice one first has to
+compute all of the polynomial roots and then discard those which do not satisfy
+Equation~\ref{eq:lens_equation_complex}.
+In the case of binary lens, there are always either 3 or 5 real images and for $N\geq 2$ the maximum number
+of images is $5(N-1)$ \citep{arXiv:astro-ph/0103463,astro-ph/0305166,arXiv:math/0401188v2}.
+As before, the magnification is given by the inverse Jacobian determinant of the mapping $z\rightarrow w$
+evaluated at the images. We have
+\begin{equation}
+    \mathbf{J}=
+    \renewcommand\arraystretch{2}
+    \begin{pmatrix}
+        \frac{\partial w}{\partial z} & \frac{\partial w}{\partial \bar{z}} \\ \frac{\partial \bar{w}}{\partial z} & \frac{\partial \bar{w}}{\partial \bar{z}}
+    \end{pmatrix}
+\end{equation}
+and
+\begin{equation}
+    \mathrm{det}\,\mathbf{J}=\frac{\partial w}{\partial z}\frac{\partial \bar{w}}{\partial \bar{z}} - \frac{\partial w}{\partial \bar{z}}\frac{\partial \bar{w}}{\partial z} = \left|\frac{\partial w}{\partial z}\right|^2 - \left|\frac{\partial w}{\partial \bar{z}}\right|^2
+\end{equation}
+where we have used the identities
+$\overline{\frac{\partial\bar a}{\partial{\bar b}}}=\frac{\partial a}{\partial{b}}$ and $a\bar a=|a|^2$. Finally, by evaluating the partial derivatives
+using Equation~\ref{eq:lens_equation_complex} we obtain
+\begin{equation}
+    \mathrm{det} \,\mathbf J=1-\left|\sum_{i=0}^{N} \frac{\epsilon_{i}}{\left(\bar{z}-\bar{z}_i\right)^{2}}\right|^{2}
+\end{equation}
+so the magnification is given by
+\begin{equation}
+    A = \sum_j \frac{1}{\left|\mathrm{det}\,\mathbf J\right|_j}
+\end{equation}
+where $j$ denotes the $j$-th image. The points in the image plane where the Jacobian determinant vanishes
+($\mathrm{det}\,\mathbf J=0$) are the critical curves:
+\begin{equation}
+    \left|\sum_{i=0}^{N} \frac{\epsilon_{i}}{\left(\bar{z}-\bar{z}_i\right)^{2}}\right|^{2}=1
+    \label{eq:critical_curves_complex}
+\end{equation}
+The points on the critical curve mapped to the source plane via
+the lens equation (Equation~\ref{eq:lens_equation_complex}) are the caustic curves.
+The difference compared to the case of a single lens lens equation is that the caustics are closed curves
+rather than a single point. The caustic curves are comprised of concave segments called \emph{folds} which are connected
+at points called \emph{cusps}.
+Equation~\ref{eq:critical_curves_complex} can also be written as a complex polynomial, of
+degree $2N$ (see Appendix~\ref{app:complex_poly_crit}) so there are at most $2N$ critical and caustic curves.
+The complexity of microlensing events involving multiple lenses is a direct consequence of the
+non-smooth nature of caustic curves.
+
+\subsection{Binary lens}
+In this section we will focus specifically on the binary lens. We choose a
+coordinate system whose origin is at the midpoint of the line connecting the
+two lenses and both lenses are on the real axis. If the first lens is at
+distance $a$ ($z_1=a$) then the second lens is at $-a$ and the lens equation
+takes the form
+\begin{equation}
+    w=z+\frac{\epsilon_{1}}{\bar{z} - a}+\frac{1 - \epsilon_{1}}{\bar{z} + a}
+\end{equation}
+The above equation can be rewritten as a 5th order complex polynomial
+(see Appendix~\ref{app:complex_poly}). Either 3 or 5 of the complex roots of that
+polynomial are also solutions to the lens equation
+(5 inside the caustics and 3 outside).
+It is common to use the mass ratio $q\equiv \epsilon_2/\epsilon_1$ with
+$\epsilon_2 \leq \epsilon_1$ instead  of $\epsilon_1$ as a parameter and the
+separation between the lenses $s\equiv 2a$ instead of half the separation $a$.
+As a reminder all angular quantities are expressed in the units of the angular Einstein
+radius of the total mass of the system.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/binary_lens_topology.pdf}
+    \caption{The three different topologies of the binary lens. The left panels show the
+        critical curves in the lens plane, the right panels show the caustic curves in the
+        source plane. The figure shows all three topologies and the transitions between
+        them for an equal mass binary lens with $q=1$. In this case the transition between
+        the close and intermediate topology occurs at $s=1/\sqrt{2}$ and the one between
+        the intermediate and wide topology at $s=2.0$. Figure adapted from
+        \citet{dominik1999}.
+    }
+    \label{fig:binary_lens_topology}
+\end{figure}
+
+Depending on the separation between the two lenses, $s$, the critical and the
+caustic curves can have three distinct topologies which are labeled
+\emph{close}, \emph{intermediate}, and \emph{wide}. These are shown in
+Figure~\ref{fig:binary_lens_topology} for a system with $q=1$ where on the left
+we see the critical curves in the lens plane, and on the right the caustic
+curves in the source plane. The critical and caustic curves are symmetric with
+respect to the x-axis. The sharp structure of the caustic curves compared to
+the smooth critical curves is due to the nonlinearity of the lens mapping. The
+number of different topologies does not depend on the mass ratio.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figures/planetary_caustics.pdf}
+    \caption{Caustic structure for a binary lens with $q=0.003$, shown for different
+        values of the separation $s$. The orange star denotes the position of the star and
+        the blue dot designates the planet.
+        The transition between the close and intermediate
+        topologies occurs at $s\approx 0.92$ and the one between intermediate and wide
+        topologies at $s\approx 1.21$. The vertical gray dashed line shows the angular
+        Einstein radius at $y_1=1$. }
+    \label{fig:planetary_caustics}
+\end{figure}
+
+Caustics shown in Figure~\ref{fig:binary_lens_topology} corresponds to an equal
+mass binary lens, systems with $q\ll 1$ are of more interest because these
+correspond to planetary systems. The lower mass ratio does not change the
+topological structure of the caustics (except for shifting the boundaries
+between the different topologies) but it does change their shape and size. In
+Figure~\ref{fig:planetary_caustics} we show point source \emph{magnification
+    maps} (computed using the \textsf{caustics} code which is the subject of
+Chapter~\ref{ch:microlensing}) for a binary lens with $q=5\times 10^{-3}$,
+roughly corresponding to a gas giant planet orbiting an M dwarf. For the close
+topology (first two panels from the top in Figure~\ref{fig:planetary_caustics})
+we see one caustic centered on the star which is called a \emph{central
+    caustic} and two additional caustics on the opposite side of the planet,
+symmetric with respect to the star-planet axis, which are called
+\emph{planetary caustics} because they are associated with the planet rather
+than the star. Notice that the magnification in the vicinity of these planetary
+caustics is significantly smaller than the magnification around the central
+caustic. Because of this it is easier to search for binary events with
+trajectory passing close to the central caustic rather than the planetary
+caustics. As the separation $s$ approaches $s_c$, the critical value between
+the close and wide topologies, the two planetary caustics merge with the
+central caustic into a single caustic, often called the \emph{resonant
+    caustic}, with a much larger cross section than either the central or the
+planetary caustics (third panel from the top). Finally, as the separation $s$
+increases further beyond the intermediate/wide boundary, the resonant caustic
+separates into a smaller central caustic centered on the star and a single,
+larger, planetary caustic located on the star-planet axis (bottom panel). The
+size of this planetary caustic scales as $q^{1/2}s^{-2}$ \citep[see references
+    in review by][]{Gaudi2012}.
+
+Given caustics such as the ones shown in Figure~\ref{fig:planetary_caustics}
+the magnification as a function of time depends on the source trajectory in the
+source plane. Absent parallax, it is just a slice through the magnification map
+convolved with the source star brightness profile. \textbf{Herein lies the
+    complexity of microlensing. The trajectory of the source star over the caustic
+    patterns is completely random and the magnification response is highly
+    non-linear}. The consequence of this fact is there is a large variety of
+possible light curve morphologies and the parameter space of the models is
+highly complex.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figures/close_wide_degeneracy.pdf}
+    \caption{Illustration of the ``close/wide'' degeneracy in binary microlensing events.
+        The two panels on the left show the magnification maps (on a logarithmic scale) for
+        a binary lens with $q=5\times 10^{-3}$, $s=0.7$ (top panel), and $s=1/0.7$
+        (bottom panel). The dashed grey line indicates the source trajectory. The panel
+        on the right shows the corresponding magnification as a function of time.
+        We see that trajectories through two very different configurations of the binary lens
+        result in nearly identical magnification curves. In absence of good
+        photometric coverage near the central caustic crossing this approximate degeneracy
+        can become exact.}
+    \label{fig:close_wide_degeneracy}
+\end{figure}
+
+One notable feature of the binary lens is that in the limit $q\ll 1$ and
+$\lvert s-1\rvert \gg q$, the structure of the caustic curves are invariant to
+the $s\rightarrow s^{-1}$ transformation \citet{dominik1999} which is known in
+the literature as the \emph{close/wide degeneracy} and it often arises for
+microlensing events involving planets. Figure~\ref{fig:close_wide_degeneracy}
+illustrates this (approximate) degeneracy. The two panels on the left show the
+magnification maps of a binary lens with $q=5\times 10^{-3}$ and two different
+values of the separation $s$ related by the transformation $s\rightarrow
+    s^{-1}$ . The dashed grey line shows the trajectory of the source passing close
+to the central caustic. The panel on the right shows that the magnification as
+a function of time is nearly identical for the two different configurations of
+the binary lens. In the absence of good photometric coverage near the peak of
+the event such approximate degeneracies can become exact. These kinds of data
+dependent degeneracies (rather than exact mathematical symmetries) are a very
+common feature of microlensing \citep{erdl1993}.
+
+\subsubsection{Parametrizing the trajectory}
+To parametrize the trajectory $\mathbf u(t)$ including annual parallax effect
+we have use an additional angle to specify the orientation of the axis
+containing both lenses. We can build on the work done in
+Section~\ref{ssec:single_lens_parallax} and instead of interpreting the origin
+of the coordinate system as the location of the single lens, we interpret it as
+the midpoint between the two lenses which lie on the same axis. $\mathbf u_0$
+is then the point on the trajectory closest to the midpoint and $\dot{\mathbf
+        u}_0$ is the velocity vector at that point. To specify the trajectory of the
+source in this new coordinate system we just need to rotate the coordinate
+system $(\hat{\mathbf e}_\parallel, \hat{\mathbf e}_\bot)$ by $\alpha$ where $\alpha$ is the angle between
+the $\hat{\mathbf e}_\parallel$ and the axis containing the two lenses. Using
+Equations~\ref{eq:u_t_parallel1} and~\ref{eq:u_t_parallel2} we have
+\begin{equation}
+    \mathbf u(t)  =
+    \mathbf R(\alpha)
+    \begin{pmatrix}
+        u_\bot (t) \\
+        u_\parallel (t)
+    \end{pmatrix}
+    =
+    \mathbf R(\alpha)
+    \renewcommand\arraystretch{2}
+    \begin{pmatrix}
+        u_0 + \pi_E\,\cos\psi\,\delta \zeta_e(t) - \pi_E\,\sin\psi\,\delta \zeta_n(t) \\
+        (t-t_0)/t_E' + \pi_E\,\sin\psi\,\delta \zeta_e(t) +
+        \pi_E\,\cos\psi\,\delta \zeta_n(t)
+    \end{pmatrix}
+\end{equation}
+where $\mathbf R (\alpha)$ is the rotation matrix  given by
+\begin{equation}
+    \mathbf R (\alpha)=
+    \begin{pmatrix}
+        \cos\alpha & -\sin\alpha \\
+        \sin\alpha & \cos\alpha
+    \end{pmatrix}
+\end{equation}
+The magnification of a binary lens is then fully parametrized by the following parameters
+\begin{equation}
+    (u_0,t_0,t'_E,\pi_E,\psi, a, q, \alpha)
+\end{equation}
+
+\subsection{Triple lens}
+The first detected triple lens microlensing event was OGLE-2006-BLG-109Lb,c
+\citep{2008Sci...319..927G,2010ApJ...713..837B}, a system consisting of two
+massive planets and a star, similar to Jupiter and Saturn in the Solar System.
+A circumbinary planet has also been detected \citep{2016AJ....152..125B} and
+there is a also possibility of detecting exomoons although none have been
+confirmed so far \citep{2010A&A...520A..68L}. To parametrize a triple lens
+system, we use the same coordinate system as for the binary lens with the
+addition of a third lens at an arbitrary location $z_3$ in the source plane.
+The lens equation is then
+\begin{equation}
+    w=z+\frac{\epsilon_{1}}{\bar{z} - a}+\frac{\epsilon_{2}}{\bar{z} + a} +
+    \frac{1 - \epsilon_1 - \epsilon_2}{\bar{z} - \bar{z}_3}
+\end{equation}
+The complex polynomial derived from the triple lens lens equation is a 10th degree
+polynomial.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/triple_lens_caustics.pdf}
+    \caption{Caustic structure for a triple lens with
+        $\epsilon_1=0.9$, $\epsilon_2=\epsilon_e=0.05$, $s=0.8$ and $z_3=0.3-i0.8$.
+        The caustics are considerably more complex than in the binary case and they
+        can be nested and self-intersecting.
+    }
+    \label{fig:triple_lens_caustics}
+\end{figure}
+
+The caustic/critical curve structure of a triple lens system is vastly more
+complex than the binary lens system. \citet{2019ApJ...880...72D} investigate
+three different kinds of systems: equal masses for all three lenses, two equal
+mass lenses and a low-mass third component and a hierarchical combination of
+the three masses. They find 11 different kinds of topologies of the caustics.
+Depending on the mass ratios, there could even be more kinds of topologies. In
+Figure~\ref{fig:triple_lens_caustics} we illustrate an example caustic
+structure for a triple lens system with $\epsilon_1=0.9$,
+$\epsilon_2=\epsilon_e=0.05$, $s=0.8$ and $z_3=0.3-i0.8$. The key features to
+note are that the caustic pattern is no longer symmetric about the x-axis and
+the caustics can be nested and self-intersecting.
+
+\subsection{Other effects}
+There are a few other effects which often need to be taken into account when
+modeling real microlensing events. I won't cover these in detail except for the
+first one because the focus on this thesis is on core but I describe them below
+for completeness.
+\begin{itemize}
+    \item \textbf{Finite source effects:} accurately computing the magnification
+          of a limb-darkened extended source is highly non-trivial, this is the subject
+          of Chapter~\ref{ch:microlensing}.
+    \item \textbf{Multiple sources:} instead of a single source star we could have
+          a multiple source stars \citep{1998A&A...333..893D}.  Events with a binary source
+          star can sometimes mimic binary lens events with a single source star.
+          Modeling these events requires specifying the trajectory and separation of
+          the binary and the total flux is then the sum of the flux from the primary and the
+          secondary star.
+          There is a paucity of binary source events in the microlensing literature, partly due to
+          their intrinsic rarity \citep{1998MNRAS.301..231H} and partly because there is a
+          bias in the community towards fitting binary lens models and
+          simply not putting as much effort into testing binary source models as
+          for the binary lens models \citep{2017AJ....153..129J,2019MNRAS.484.5608D}.
+    \item \textbf{Orbital motion of the lenses:} if the orbital timescale of
+          the lens in binary or triple lens systems is comparable to the event timescale
+          (this is true for a small subset of events) then one needs to take into account
+          the orbital motion of the lens projected onto the plane of the sky.
+          In the general case of a Keplerian orbit five additional parameters are needed
+          for the binary lens: the mass of the primary lens, the three components of the
+          secondary's velocity relative to the primary and the projected separation
+          of the secondary along the line of sight in units of $\theta_E$
+          \citep{1998A&A...329..361D}. In practice only two additional parameters
+          can be measured: the sky-projection of the two components of the velocity of
+          the secondary relative to the primary. These are parametrized by
+          $\gamma_\parallel\equiv \dot{s}/s$ -- the fractional rate of change of the projected
+          separation between the two lenses, and $\gamma_{\perp} \equiv-\dot{\alpha}$ --
+          the angular rotation rate of the projected separation axis. The effect of
+          $\gamma_\perp$ is to simply rotate the magnification pattern on the sky while a
+          nonzero value of $\gamma_\parallel$ changes the magnification pattern itself. These new parameters are
+          partially degenerate with other parameters such as parallax and it is very
+          rarely possible to constrain the full Keplerian orbit
+          \citep{2011ApJ...738...87S,2020A&A...633A..98W}.
+    \item \textbf{Orbital motion of the sources:} the effect of the orbital motion of a binary
+          source star is less dramatic than for the orbital motion of lens stars because
+          the caustic structure stays fixed. \citet{1998A&A...329..361D} showed that six
+          additional parameters are needed to describe the full Keplerian orbit of a
+          binary source star. \citet{1992ApJ...397..362G,1993ApJ...407..440G} pointed out
+          that such events should be rare although it is not clear if that is still the
+          case today with the advent of new microlensing surveys.
+          There is also a possibility that the secondary source is not a star but a large
+          planet resulting in subtle deviations in the primary
+          source position as it orbits the barycentar. This is an alternative channel for
+          detecting planets using microlensing and it is often
+          called \emph{xallarap} (inverse parallax) in the literature
+          \citep{2009MNRAS.392.1193R,2021AJ....162...59R,2021AJ....161...84M}.
+    \item \textbf{Fine structure in the source profiles:} microlensing in principle allows for
+          the measurement of the intensity and shape profile
+          of source stars and their possible planets. \citet{1997ApJ...490...38H} investigates
+          microlensing of elliptical sources by a single lens as a model for oblate stars and inclined
+          accretion discs. \citet{1999ApJ...513..619G} discusses the sensitivity of binary and single lens
+          caustic crossing events to spatial and spectral structure stellar atmospheres.
+          \citet{2003ApJ...586..527G} focused specifically on the
+          possibility of inferring
+          intensity and shape profiles of caustic crossings \emph{planets} in the source plane. Deviations
+          in the light curve due to a non-uniform surface brightness profile or shape of the planet are only
+          resolved during a short time window when the planet is within about one radius from the caustic.
+          \citet{2003ApJ...586..527G} find that there is a possibility of detecting ring-like structures
+          around the planet with a $\sim 30$m class telescope and high cadence observations but
+          detecting features such as spots and zonal bands will be very difficult to detect. Detecting
+          differences in \emph{phase} of the planet may be easier \citep{2001MNRAS.325..305A}.
+\end{itemize}
 
 \section{Occultation and phase curve mapping}
 \label{sec:occultations}
-\subsection{History}
 \subsection{The Starry framework}
 \subsection{Reflected vs. emitted light}
 
@@ -1234,6 +1618,13 @@ effect depends on the apparent local acceleration of the lens at time $t_0$.
 
 \section{Model validation and comparison}
 \label{sec:model_comparison}
+
+``Furthermore, in the future, a blind search for planetary signals will not
+turn up all potential competing models unless those models
+are specifically considered.''\citep{2017AJ....153..129J}.
+\citet{2021AJ....162...59R}
+\citet{2020AJ....160...17H}
+
 \subsection{Cross validation}
 % discuss vanilla k-fold CV, stress out just how important and central CV is to science
 \subsubsection{Pareto smoothed importance sampling LOO}
@@ -1290,10 +1681,81 @@ effect depends on the apparent local acceleration of the lens at time $t_0$.
 
 \appendix
 
-\chapter{First appendix}
+\chapter{Complex polynomial coefficients}
 \label{app:complex_poly}
+\section{Lens equation}
+In this appendix we (partially) derive the coefficients of the complex
+polynomial derived from the lens equation
+(Equation~\ref{eq:lens_equation_complex}). Taking the complex conjugate of
+Equation~\ref{eq:lens_equation_complex}, have
+\begin{equation}
+    w=z-\sum_{i=1}^{N} \frac{\epsilon_{i}}{\bar{z}-\bar{z}_{i}}
+\end{equation}
+Let's define $z_i\equiv z - z_j$ and two polynomials $G$ and $H$
+\begin{align}
+    G & =\sum_{k=0}^{N-1} G_{k} z^{k} =\sum_{j=1}^{N} \epsilon_{j} \prod_{i=1, i \neq j}^{N} z_{i} \\
+    H & =\sum_{k=0}^{N} H_{k} z^{k}   =\prod_{i=1}^{N} z_{i}
+\end{align}
+it follows that
+\begin{equation}
+    \frac{G}{H}=\frac{\sum_{j=1}^{N} \epsilon_{j}
+        \prod_{i \neq j} z_{i}}{\prod_{j=1}^{N} z_{j}}=\sum_{j=1}^{N} \frac{\epsilon_{j}}{z_{j}}
+\end{equation}
+and
+\begin{equation}
+    \bar{z}=\bar{w}+G / H
+\end{equation}
+Defining $\omega_{j} \equiv \bar{r}_{j}-\bar{w}_{i}$, we obtain
+\begin{equation}
+    z-w=\sum_{j=1}^{N} \frac{\epsilon_{j}}{G / H+\bar{w}-\bar{r}_{j}}
+\end{equation}
+Multiplying the above equation with $\prod_{j=1}^{N}\left(G-\varpi_{j} H\right)$
+results in
+\begin{equation}
+    0=(z-w) \prod_{j=1}^{N}\left(G-\varpi_{j} H\right)-
+    H \sum_{j=1}^{N}\left[\epsilon_{j} \prod_{i=1, j \neq i}^{N}\left(G-\varpi_{i} H\right)\right]
+    \label{eq:complex_poly}
+\end{equation}
+Equation~\ref{eq:complex_poly} is complex polynomial of degree $N^2+1$. To obtain coefficients of this
+polynomial in terms of fundamental parameters we use a computer algebra software package \textsf{SymPy}\footnote{
+    \url{https://www.sympy.org}
+}\citep{10.7717/peerj-cs.103}. A Jupyter notebook with the complete derivation is available
+\href{https://github.com/fbartolic/caustics/blob/main/notebooks/ComplexPolynomialCoefficients.ipynb}{here}.
+I have managed to derive the coefficient for the binary and triple lens case but \textsf{SymPy} fails to
+converge for the quadruple lens case because the number of coefficients becomes very large.
+It is possible that an alternative computer algebra system such as Wolfram Mathematica would work.
 
-\chapter{Second appendix}
+\section{Critical curve equation}
+\label{app:complex_poly_crit}
+Similarly to the lens equation, we can derive the coefficients of the complex
+polynomial equation whose roots are points on the critical curve. To solve for
+these points we need to solve the following equation
+\citep{1990A&A...236..311W}:
+\begin{equation}
+    \sum_{i=1}^{N} \frac{\epsilon_{i}}{\left(\bar{z}-\bar{r}_{i}\right)^{2}}=e^{i \phi}
+\end{equation}
+for each value of the parameter $\phi\in[0,2\pi]$.
+Taking the complex conjugate of the above equation we have
+\begin{equation}
+    \sum_{i=1}^{N} \frac{\epsilon_{i}}{\left(z-r_{i}\right)^{2}}=e^{-i \phi}
+\end{equation}
+We define polynomials $G'$ and $H'$
+\begin{align}
+    G' & = \sum_{j=1}^N\epsilon_j\prod_{i=1,\;i\neq j}^Nz^2_i \\
+    H' & = \prod_{i=1}^Nz^2_i
+\end{align}
+and
+\begin{equation}
+    e^{-i\phi}=\frac{G'}{H'}
+\end{equation}
+Finally, we obtain the polynomial
+\begin{equation}
+    e^{-i\phi}H' - G' = 0
+    \label{eq:complex_poly_critical}
+\end{equation}
+Equation~\ref{eq:complex_poly_critical} is a complex polynomial of degree $2N$. We can
+obtain its coefficients with \textsf{SymPy} as before and their values are available
+\href{https://github.com/fbartolic/caustics/blob/main/notebooks/ComplexPolynomialCoefficients.ipynb}{here}.
 
 \bibliography{bib.bib}
 
