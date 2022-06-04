@@ -26,12 +26,14 @@
 \usepackage{amsmath,amssymb,bm}
 \DeclareMathOperator*{\argmax}{arg\,max}
 \usepackage{siunitx} % for proper units 
+\usepackage{esint} % various fancy integral symbols
+\usepackage[bbgreekl]{mathbbol}
 
 % Other packages
 \usepackage{url}
 \usepackage{epstopdf}
 \usepackage[font=scriptsize]{caption} % smaller font for fig captions
-\usepackage{placeins}
+\usepackage[section]{placeins}
 %\usepackage{import}
 % of references  
 
@@ -425,13 +427,13 @@ reflected light attempting to constrain variations in the \emph{albedo} of the
 surface with inconclusive results.
 
 Later works such as
-\citet{1992Icar...97..211B,1993Icar..102..134Y,1999AJ....117.1063Y} went a step
-further by using not only phase curves but also light curves of mutual
-\emph{occultations} of Pluto by its moon Charon to reconstruct albedo maps with
-greater success. The major advantage of occultations relative to just phase
-curves is that more information about the surface is encoded into the light
-curve because of the sharp limb of the occultor sweeping over the disc of an
-occulted body and blocking the reflected light. More importantly for this
+\citet{1986AJ.....92.1201D,1992Icar...97..211B,1993Icar..102..134Y,1999AJ....117.1063Y}
+went a step further by using not only phase curves but also light curves of
+mutual \emph{occultations} of Pluto by its moon Charon to reconstruct albedo
+maps with greater success. The major advantage of occultations relative to just
+phase curves is that more information about the surface is encoded into the
+light curve because of the sharp limb of the occultor sweeping over the disc of
+an occulted body and blocking the reflected light. More importantly for this
 thesis, \citet{1994Icar..107..195S} was the first to observe the occultations
 of Jupiter's moon Io by another of Jupiter's moons -- Europa, and also
 occultations of Io by Jupiter itself. These observations were conducted using
@@ -893,6 +895,17 @@ $u_0\gg 1$ requires good photometric sampling along the ``wings'' of the light
 curve \citep{2009MNRAS.393..816D}.
 
 \subsection{Magnification of an extended source}
+\begin{figure}[t]
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/single_lens_images.pdf}
+        \caption{Images of an extended limb-darkened source star lensed by a single
+            point lens for varying position of the source star. The top panels show the magnification map with a logarithmic scale
+            colormap  consisting of a single point caustic. The semi-transparent circle
+            is the source star disc with radius $\rho_\star=0.15$. The bottom row shows
+            the two images merging into the Einstein ring as the source moves over the caustic.}
+        \label{fig:single_lens_images}
+    \end{centering}
+\end{figure}
 For a relatively small subset of microlensing events the source star passes
 very close to the caustic and the variation of magnification over the extent of
 the source star disc is non-negligible. For those events the point source
@@ -911,18 +924,6 @@ brightness source) involving solutions to elliptic integrals of the first,
 second and third kind. A general solution involving Fast Fourier Transforms
 which is applicable to any source profile was recently proposed by
 \citet{2022arXiv220306637S}.
-
-\begin{figure}[t]
-    \begin{centering}
-        \includegraphics[width=\linewidth]{figures/single_lens_images.pdf}
-        \caption{Images of an extended limb-darkened source star lensed by a single
-            point lens for varying position of the source star. The top panels show the magnification map with a logarithmic scale
-            colormap  consisting of a single point caustic. The semi-transparent circle
-            is the source star disc with radius $\rho_\star=0.15$. The bottom row shows
-            the two images merging into the Einstein ring as the source moves over the caustic.}
-        \label{fig:single_lens_images}
-    \end{centering}
-\end{figure}
 
 In Figure~\ref{fig:single_lens_images} we show the magnification map and the
 images of an extended limb-darkened source with $\rho_\star=0.15$ as it
@@ -1302,6 +1303,19 @@ The complexity of microlensing events involving multiple lenses is a direct cons
 non-smooth nature of caustic curves.
 
 \subsection{Binary lens}
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/binary_lens_topology.pdf}
+    \caption{The three different topologies of the binary lens. The left panels show the
+        critical curves in the lens plane, the right panels show the caustic curves in the
+        source plane. The figure shows all three topologies and the transitions between
+        them for an equal mass binary lens with $q=1$. In this case the transition between
+        the close and intermediate topology occurs at $s=1/\sqrt{2}$ and the one between
+        the intermediate and wide topology at $s=2.0$. Figure adapted from
+        \citet{dominik1999}.
+    }
+    \label{fig:binary_lens_topology}
+\end{figure}
 In this section we will focus specifically on the binary lens. We choose a
 coordinate system whose origin is at the midpoint of the line connecting the
 two lenses and both lenses are on the real axis. If the first lens is at
@@ -1319,20 +1333,6 @@ $\epsilon_2 \leq \epsilon_1$ instead  of $\epsilon_1$ as a parameter and the
 separation between the lenses $s\equiv 2a$ instead of half the separation $a$.
 As a reminder all angular quantities are expressed in the units of the angular Einstein
 radius of the total mass of the system.
-
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=0.8\linewidth]{figures/binary_lens_topology.pdf}
-    \caption{The three different topologies of the binary lens. The left panels show the
-        critical curves in the lens plane, the right panels show the caustic curves in the
-        source plane. The figure shows all three topologies and the transitions between
-        them for an equal mass binary lens with $q=1$. In this case the transition between
-        the close and intermediate topology occurs at $s=1/\sqrt{2}$ and the one between
-        the intermediate and wide topology at $s=2.0$. Figure adapted from
-        \citet{dominik1999}.
-    }
-    \label{fig:binary_lens_topology}
-\end{figure}
 
 Depending on the separation between the two lenses, $s$, the critical and the
 caustic curves can have three distinct topologies which are labeled
@@ -1567,8 +1567,7 @@ for completeness.
           microlensing of elliptical sources by a single lens as a model for oblate stars and inclined
           accretion discs. \citet{1999ApJ...513..619G} discusses the sensitivity of binary and single lens
           caustic crossing events to spatial and spectral structure stellar atmospheres.
-          \citet{2003ApJ...586..527G} focused specifically on the
-          possibility of inferring
+          \citet{2003ApJ...586..527G} focused specifically on the possibility of inferring
           intensity and shape profiles of caustic crossings \emph{planets} in the source plane. Deviations
           in the light curve due to a non-uniform surface brightness profile or shape of the planet are only
           resolved during a short time window when the planet is within about one radius from the caustic.
@@ -1580,13 +1579,383 @@ for completeness.
 
 \section{Occultation and phase curve mapping}
 \label{sec:occultations}
+In this section I will briefly review the theory behind modeling phase curves and
+occultation light curves of spherical bodies for the case of emitted light
+(isotropic blackbody emission from the body itself) and reflected light
+(starlight scattered from the surface or atmosphere of the body). The following is
+mostly a short summary of the papers introducing the \textsf{starry} framework
+\citep{2019AJ....157...64L,2021arXiv210306275L}.
 \subsection{The Starry framework}
-\subsection{Reflected vs. emitted light}
+\begin{figure}[t]
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/spherical_harmonics.pdf}
+        \caption{Real spherical harmonics up to degree $l=5$ computed from
+            Equation~\ref{eq:spherical_harmonics}. Figure adapted from Figure 1 in
+            \citet{2019AJ....157...64L}.}
+        \label{fig:spherical_harmonics}
+    \end{centering}
+\end{figure}
+\subsubsection{Emitted light}
+Consider a spherical body of unit radius emitting light isotropically (a
+Lambertian emitter) at each point $(\theta,\phi)$ where $\theta$ is the
+inclination angle and $\phi$ is the azimuthal angle. To compute a phase curve
+or an occultation light curve we need to be able to integrate the flux over the
+entire projected disc of the body given the distribution of specific intensity
+$I(\theta, \phi)$, the 3D orientation of the body in space, and the location of
+a possible occultor relative to the body. These two-dimensional integrals can
+always be computed numerically (see for instance the approaches presented in
+\citet{2018AJ....156..146F,2018MNRAS.477.2613L}) but
+\citet{2019AJ....157...64L} showed that it is possible to compute them
+analytically if the specific intensity is first expanded in a basis of
+spherical harmonics and then mapped to a different basis more suitable for
+evaluating the integrals.
 
-% In this and the following sections make sure to use microlensing and occultation
-% mapping as examples
+Following \citet{2019AJ....157...64L}, we start by setting up a cartesian
+coordinate system on the units sphere, such that
+\begin{align}
+     & x=\sin \theta \cos \phi \\
+     & y=\sin \theta \sin \phi \\
+     & z=\cos \theta
+\end{align}
+and the observer is located on the $z$-axis at $\infty$ such that the projected disc
+of the body is centered at the origin of the $xy$ plane with the unit vector
+$\hat{\mathbf{x}}$ pointing to the right and $\hat{\mathbf{y}}$ pointing up.
+We introduce spherical harmonics $Y_{l m}(\theta, \phi)$ of degree $l\geq 0$ and order
+$m\in [-l, l]$ defined  as
+\begin{equation}
+    Y_{l m}(\theta, \phi)= \begin{cases}\bar{P}_{l m}(\cos \theta) \cos (m \phi) & m \geqslant 0 \\ \bar{P}_{l|m|}(\cos \theta) \sin (|m| \phi) & m<0\end{cases}
+    \label{eq:spherical_harmonics}
+\end{equation}
+When the spherical harmonics defined above are rewritten in terms of $x$, $y$, and $z$
+they become polynomials in these variables (see Appendix A in \citet{2019AJ....157...64L}).
+We can expand the specific intensity distribution $I(x,y)$ in a spherical harmonic basis
+as
+\begin{equation}
+    I(x, y)=\tilde{\mathbf{y}}^{\top}(x, y) \mathbf{y}
+    \label{eq:sh_expansion}
+\end{equation}
+where $\tilde{\mathbf{y}}$ is the basis vector of spherical harmonics  arranged in
+increasing order:
+\begin{align}
+     & \tilde{\mathbf{y}}=\left(\begin{array}{lllll}
+                                    Y_{0,0} & Y_{1,-1} & Y_{1,0} & Y_{1,1} & Y_{2,-2}
+                                \end{array}\right. \\
+     & \left.\begin{array}{lllll}
+                 Y_{2,-1} & Y_{2,0} & Y_{2,1} & Y_{2,2} & \cdots
+             \end{array}\right)^{\top} \quad,
+\end{align}
+and $\mathbf{y}$ is a vector of scalar \emph{spherical harmonic coefficients}.
+$\mathbf{y}$ is a central quantity which defines the \emph{map} (the specific
+intensity at every point) of the body.
+\citet{2019AJ....157...64L} shows that we can represent $y$ in a polynomial basis (see
+\citet{2019AJ....157...64L} for the general expression)
+\begin{equation}
+    \tilde{\boldsymbol{p}}=\left(\begin{array}{llllllllll}
+        1 & x & z & y & x^{2} & x z & x y & y z & y^{2} & \cdots
+    \end{array}\right)^{\top}
+\end{equation}
+such that
+\begin{align}
+    I(x, y) & =\tilde{\mathbf{p}}^{\top}(x, y) \mathbf{p}                    \\
+            & =\tilde{\mathbf{p}}^{\top}(x, y) \mathbf{A}_1 \mathbf{y}\quad,
+    \label{eq:intensity_poly_basis}
+\end{align}
+and also in the Green's basis
+\begin{equation}
+    \tilde{\boldsymbol{g}}=\left(\begin{array}{llllllllll}
+        1 & 2 x & z & y & 3 x^{2} & -3 x z & 2 x y & 3 y z & y^{2} & \cdots
+    \end{array}\right)^{\top}
+\end{equation}
+such that
+\begin{align}
+    I(x, y) & =\tilde{\mathbf{g}}^{\top}(x, y) \mathbf{g}              \\
+            & =\tilde{\mathbf{g}}^{\top}(x, y) \mathbf{A}_2 \mathbf{p} \\
+            & =\tilde{\mathbf{g}}^{\top}(x, y) \mathbf{A} \mathbf{y}
+\end{align}
+where $\mathbf{A}_1$ is the change-of-basis matrix from $\mathbf{y}$ to $\mathbf{p}$,
+$\mathbf{A}_2$ is the change-of-basis matrix from $\mathbf{p}$ to $\mathbf{g}$, and
+$\mathbf{A}\equiv \mathbf{A}_1 \mathbf{A}_2$.
+
+To compute rotational light curves we also need to be able to specify the
+orientation of a surface map with coefficients $\mathbf y$. We can rotate the
+map using the Wigner rotation matrix $\mathbf{R}(\mathrm{I}, \Lambda, \Theta)$
+that rotates $y$ given the body's inclination $\mathrm{I}$, obliquity $\Lambda$
+and rotational phase $\Theta$. The rotated map is then $\mathbf{R}(\mathrm{I},
+    \Lambda, \Theta) \mathbf{y}$ and Equation~\ref{eq:intensity_poly_basis} can be
+rewritten more generally as
+\begin{equation}
+    I(x, y)=\tilde{\mathbf{p}}^{\top}(x, y) \mathbf{A}_1 \mathbf{R}\mathbf{y}
+\end{equation}
+The total flux measured by an observer is is given by an integral of the specific
+intensity over a region S of the projected disc of the body:
+\begin{align}
+    F & =\oiint I(x, y) \ud S                                                            \\
+      & =\oiint \tilde{\mathbf{p}}^{\top}(x, y) \mathbf{A}_{1} \mathbf{R} \mathbf{y} d S \\
+      & =\mathbf{r}^{\top} \mathbf{A}_{1} \mathbf{R} \mathbf{y}
+\end{align}
+where $\mathbf{r}$ is a column vector whose $n$-th element is \citep{2019AJ....157...64L}
+\begin{equation}
+    r_{n} \equiv \oiint \tilde{p}_{n}(x, y) \ud S
+\end{equation}
+When the entire disc is visible (no occultor)
+\begin{equation}
+    r_{n}=\int_{-1}^{1} \int_{-\sqrt{1-x^{2}}}^{\sqrt{1+x^{2}}} \tilde{p}_{n}(x, y) \mathrm{d}y \mathrm{d} x
+\end{equation}
+and the solution to this integral can be expressed in terms of Gamma functions
+\citep[Equation 20 in ][]{2019AJ....157...64L}.
+$\mathbf{r}$ and $\mathbf{A}_1$ are independent of the map coefficients $\mathbf{y}$
+so they can be pre-computed.
+
+Computing the occultation light curves is more complicated because the the body
+is partially occulted by an occultor of radius $r$, centered at $(x_o, y_o)$
+and the exposed portion of the disc is a function of $(r, x_o, y_o)$. The
+general expression for the flux is
+\begin{align}
+    F & =\oiint I(x, y) \mathrm{d} S                         \\
+      & =\mathbf{s}^\top  \mathbf{A} \mathbf{R} \mathbf{y} .
+\end{align}
+where the vector
+\begin{equation}
+    \mathbf{s}^\top \equiv \oiint \tilde{\mathbf{g}}^{\top}(x, y) \mathrm{d} S
+\end{equation}
+is defined to be the solution to the integral.
+\citet{2019AJ....157...64L} solves this integral in two steps.  First, we rotate
+the coordinate system about the  $z$-axis  so that the occultor lies at along the
+$+y$ axis and its center is at
+a distance $b=\sqrt{x_o^{2}+y_o^{2}}$ from the origin. This substantially simplifies
+the limits of integration.
+The second step is to use Green's theorem to express the surface integral of
+$\tilde{\mathbf{g}}_n$ as a line integral of a vector function $\mathbf{G}_n$
+along the boundary of the visible portion of the occulted disc.
+The $n$-th element of the solution vector $\mathbf{s}^\top$ is
+\begin{equation}
+    s_{n}=\oiint \tilde{g}_{n}(x, y) \mathrm{d} S=\oint \mathbf{G}_{n}(x, y) \cdot \ud \mathbf{r}
+\end{equation}
+where
+$\mathbf{G}_{n}(x, y)=G_{n x}(x, y) \hat{\mathbf{x}}+G_{n y}(x, y) \hat{\mathbf{y}}$
+is constructed such that
+\begin{equation}
+    \mathbf{D} \wedge \mathbf{G}_{n}=\tilde{g}_{n}(x, y)
+    \label{eq:G_n}
+\end{equation}
+were $\mathbf{D} \wedge \mathbf{G}_{n}$ is the exterior derivative of $\mathbf{G}_n$
+given by
+\begin{equation}
+    \mathbf{D} \wedge \mathbf{G}_{n} \equiv \frac{\ud G_{n y}}{\ud x}-\frac{\ud G_{n_{x}}}{\ud y}
+\end{equation}
+in Cartesian coordinates.
+\citet{2019AJ....157...64L} provides one possible expression for $\mathbf{G}_n$
+which satisfies Equation~\ref{eq:G_n} and shows that the final solution can be written as
+\begin{equation}
+    s_{n}=\mathcal{Q}\left(\mathbf{G}_{n}\right)-\mathcal{P}\left(\mathbf{G}_{n}\right)
+\end{equation}
+where $\mathcal{P}(\mathbf{G}_n)$ is the  line integral along the arc of the occultor
+of radius $r$ and $\mathcal{Q}(\mathbf{G}_n)$ is the line integral along the arc of the
+occulted body of unit radius. Solutions to these integrals are long but they consist of
+analytic functions such as sines, cosines and complete elliptic integrals and importantly
+they only need to be evaluated once for an arbitrary map with fixed geometry of an
+occultation \citep{2019AJ....157...64L}.
+
+The final expression for the total flux for a particular geometrical
+arrangement of the occulted body and the occultor can then be written
+succinctly as
+\begin{equation}
+    f = \mathbf{s}^T\mathbf{A}\mathbf{R}'\mathbf{R}\mathbf{y}
+    \label{eq:starry}
+\end{equation}
+Where $\mathbf{R}'$ is a rotation matrix which rotates the map such that the occultor
+is placed symmetrically on the $+y$ axis at distance $b$.
+Notice that Equation~\ref{eq:starry} defines a linear operation acting on a vector
+of spherical harmonic coefficients $\mathbf{y}$.
+It is also trivial to generalize this expression to a case of \emph{spectral map}. In
+that case we define a matrix $Y$ whose columns are the spherical harmonic coefficients
+at different wavelengths and the total flux (spectrum) is then
+\begin{equation}
+    \mathbf{f} = \mathbf{s}^T\mathbf{A}\mathbf{R}'\mathbf{R}\mathbf{Y}
+    \label{eq:starry_mw}
+\end{equation}
+where $\mathbf{f}$ is a vector of fluxes, one per wavelength bin.
+
+The formalism above can also be extended to account for limb-darkening which is
+important when modeling transits of planets across stars or the light curves of
+eclipsing binaries. \citet{2020AJ....159..123A} show how a limb-darkening
+profile that is an order $l$ polynomial function of
+$\mu=z=\sqrt{1-x^{2}-y^{2}}$ can be expressed in terms of the $m=0$ spherical
+harmonics up to order $l$. In the case of quadratic limb-darkening
+$(l_\mathrm{max}=2)$, the limb darkening profile is
+\begin{equation}
+    \frac{I(\mu)}{I(1)}=1-u_{1}(1-\mu)-u_{2}(1-\mu)^{2}
+\end{equation}
+which can be expressed as a sum of spherical harmonics
+\citep[Equation 38 in][]{2019AJ....157...64L}. Limb-darkening needs to be
+treated separately from the map coefficients $\mathbf{y}$ because it does not rotate along with the map
+when rotations $\mathbf{R}$ and $\mathbf{R}'$ are applied. The limb-darkening
+coefficients are applied to the map $\mathbf{y}$ as a multiplicative filter
+following any rotations which results in another set of spherical harmonic
+coefficients because products of spherical harmonics are also spherical
+harmonics. Applying limb-darkening raises the degree of the map by the degree
+of the limb-darkening.
+
+\subsubsection{Reflected light}
+The results derived in the previous section are valid only for light emitted
+from the occulted body. Equation~\ref{eq:starry} is a good model for stellar
+light curves and secondary eclipse light curves and phase curves of planets
+observed in the mid to far infrared wavelengths where the contribution of
+scattered starlight to total flux is negligible. Modeling reflected light phase
+curves and occultations is far more complicated because one has to take into
+account the the nonuniform illumination of the body and the possible presence
+of a terminator line (boundary between day and night).
+\citet{2021arXiv210306275L} extends the formalism described in the previous
+section to the case of reflected light phase curves and occultations for a body
+whose spatial \emph{albedo} (specifically the \emph{spherical albedo} -- the
+fraction of power incident on a body at a given wavelength that is scattered
+into space in all directions) distribution is expanded in a basis of spherical
+harmonics. Thus, analogous to Equation~\ref{eq:sh_expansion} we have
+\begin{equation}
+    A(x, y)=\tilde{\mathbf{y}}^{\top}(x, y) \mathbf{y}
+\end{equation}
+where $A$ is the albedo. We work under the assumption of isotropic (Lambertian)
+scattering of light at every point on the body which means that the illumination
+profile $\mathcal{I}$ of the surface is given by Lambert's law:
+\begin{equation}
+    \mathcal{I}\left(\vartheta_{\mathrm{i}}\right)=\mathcal{I}_{0} \max \left(0, \cos \vartheta_{\mathrm{i}}\right)
+\end{equation}
+where $\vartheta_i$ is the angle between the incident radiation at the surface normal
+and $\mathcal{I}_0$ is the maximum illumination. In case of, for example, a planet illuminated
+by its host star \citep[Appendix A.2 in][]{2021arXiv210306275L}
+\begin{equation}
+    \mathcal{I}_{0}=\frac{f_{s}}{\pi r_{\mathrm{s}}^{2}}
+\end{equation}
+where $r_s$ is the distance between the planet and the star in units of planet's radius
+and $f_s$ is the stellar flux measured at the observer in some arbitrary units.
+We assume that $f_s=1$ so that all fluxes are defined as the fraction of the flux
+of the illumination source at the observer.
+It is the presence of the day/night terminator that complicates the calculation
+of total flux the most. The limits of integration end up depending on a
+solution to a quartic equation specifying the points of intersection between
+the occultor and the day/night terminator line and the solution to those
+integrals are a function of \emph{incomplete} elliptic integrals as opposed to
+complete elliptic integrals as was the case for occultations in emitted light.
+The full derivation of the total flux is provided by \citet{2021arXiv210306275L} and
+I will only briefly summarize  the result here for completeness.
+
+Under the Lambertian scattering assumption the observed intensity at any point
+of the surface of the body is is proportional to the cosine of the angle
+$\vartheta_i$ between the incident light rays and the surface normal. All
+points for which $\vartheta_i\geq \pi/2$ have intensity of zero (they're
+unilluminated). Let's assume that the point source is placed at sky coordinates
+$\left(x_{\mathrm{s}}, y_{\mathrm{s}}, z_{\mathrm{s}}\right)$ in units of the
+radius of the illuminated body. The day/night terminator on the body is a
+half-ellipse with a semi-major axis equal to unity and a (signed) semi-minor
+axis equal to
+\begin{equation}
+    b=-\frac{z_{\mathrm{s}}}{r_{\mathrm{s}}}
+\end{equation}
+where $r_{\mathrm{s}}=\sqrt{x_{\mathrm{s}}^{2}+y_{\mathrm{s}}^{2}+z_{\mathrm{s}}^{2}}$
+is the distance to the source. The angle by which the semi-major axis of this ellipse is
+rotated away from the $+x$-axis is  is
+\begin{equation}
+    \theta=-\arctan 2\left(x_{\mathrm{s}}, y_{\mathrm{s}}\right)
+\end{equation}
+Under the assumption that $rs \gg 1$, the illumination $\mathcal{I}$ at point
+$(x,y)$ on the projected disc is \citep{2021arXiv210306275L}
+\begin{equation}
+    \mathcal{I}\left(b, \theta, r_{\mathrm{s}} ; x, y\right)=\max \left(0, I\left(b, \theta, r_{\mathrm{s}} ; x, y\right)\right)
+    \label{eq:illumination}
+\end{equation}
+where
+\begin{align}
+    I\left(b, \theta, r_{\mathrm{s}} ; x, y\right) & =\frac{1}{\pi r_{\mathrm{s}}^{2}} \cos \vartheta_{\mathrm{i}}                                                      \\
+                                                   & =\frac{1}{\pi r_{\mathrm{s}}^{2}}\left(-b_{\mathrm{c}} \sin \theta x+b_{\mathrm{c}} \cos \theta y-b z(x, y)\right)
+\end{align}
+with  $b_{\mathrm{c}} \equiv \sqrt{1-b^{2}}$  and $z(x, y)=\sqrt{1-x^{2}-y^{2}}$.
+The illumination $\mathcal{I}$ is a dimensionless quantity normalized such that the
+integral of $A\,\mathcal{I}$ over the units disc is equal to the flux measured by the
+observer as a fraction of the flux of the illumination source.
+To compute the total flux, we need to weigh each of the terms in the Green's basis
+and integrate them over the visible portion of the body's disc to obtain
+the reflected light solution vector $\mathbb{s}^\top$.
+Evaluating these integrals is unfortunately intractable because of the piecewise
+function in Equation~\ref{eq:illumination}. It is more tractable to weight the basis
+terms by the function $I$ and modify the limits of integration such that the nightside
+of the body is excluded. \citet{2021arXiv210306275L} shows that $I$ can be expressed
+in the form of a linear operator $\mathbf{I}$ to weight a map vector  in the polynomial
+basis $\tilde{\mathbf{p}}$ by the illumination profile. The total flux is then
+\begin{equation}
+    f=\mathbb{s}^\top\left(b, \theta^{\prime}, b_{\mathrm{o}}, r_{\mathrm{o}}\right) \mathbf{A}_{\mathbf{2}} \mathbf{I}\left(b, \theta^{\prime}, r_{\mathrm{s}}\right) \mathbf{A}_{\mathbf{1}} \mathbf{R}^{\prime}\left(x_{\mathrm{o}}, y_{\mathrm{o}}\right) \mathbf{R}(\mathrm{I}, \Lambda, \Theta) \mathbf{y}
+\end{equation}
+where
+\begin{equation}
+    \theta^{\prime}=\arctan 2\left(x_{\mathrm{o}}, y_{\mathrm{o}}\right)-\arctan 2\left(x_{\mathrm{s}}, y_{\mathrm{s}}\right)
+    \label{eq:starry_ref}
+\end{equation}
+is the angle of the terminator in frame $\mathcal{F}^\prime$.
+In case the illuminated body is not occulted we have
+\begin{equation}
+    f_{0}=\mathbb{r}^{\top}(b) \mathbf{I}\left(b, \theta^{\prime \prime}, r_{\mathrm{s}}\right) \mathbf{A}_{\mathbf{1}} \mathbf{R}^{\prime \prime}\left(x_{\mathrm{s}}, y_{\mathrm{s}}\right) \mathbf{R}(\mathrm{I}, \Lambda, \Theta) \mathbf{y}
+    \label{eq:starry_ref_phase}
+\end{equation}
+where $\theta^{\prime\prime}=0$ is the angle of the terminator in frame
+$\mathcal{F}^{\prime\prime}$ by construction. $\mathbf{R}^{\prime\prime}$ rotates the
+body through an angle $\arctan 2\left(x_{\mathrm{s}}, y_{\mathrm{s}}\right)$ so the
+semi-major axis of the terminator is aligned with the $x^{\prime \prime}$ axis.
+The solutions to integrals
+$\mathbb{r}^{\top}(b)$ and $\mathbb{s}^{\top}\left(b, \theta^{\prime}, b_{\mathrm{o}}, r_{\mathrm{o}}\right)$
+are anything but trivial, they are derived in the appendices of
+\citet{2021arXiv210306275L}. The key point is that the model is once again linear and
+the matrices in Equations~\ref{eq:starry_ref} and \ref{eq:starry_ref_phase} need to be
+computed only once for a specific occultation/illumination geometry.
+\citet{2021arXiv210306275L} also derives a solution for the total flux in case the
+light source is extended (the assumption that $r_s\gg 1$ is not satisfied) and
+in case the body is not a perfect Lambertian reflector.
+
+\subsection{The starry code}
+The method described in the previous section is implemented in the
+\textsf{Python} package
+\textsf{starry}\footnote{\url{https://starry.readthedocs.io/en/latest/}}.
+\textsf{starry} is many orders of magnitude faster and more accurate than
+similar codes which rely on numerical integration. It enables computation of
+rotational light curves, planetary transits, secondary eclipse light curves and
+planet-planet occultations in both emitted and reflected light. Recent
+extensions to \textsf{starry}, not mentioned in Section~\ref{sec:occultations},
+extended the spherical harmonic formalism to the problem of Doppler imaging
+\citep{2021arXiv211006271L} and add support for computing occultation light
+curves of oblate bodies \citep{2022ApJ...925..185D}. In
+Chapters~\ref{ch:mapping_io} and \ref{ch:mapping_exoplanets} we make extensive
+use of \textsf{starry} to explore solutions to the \emph{inverse problem} --
+how can we obtain an estimate of the map coefficients $\mathbf{y}$ which best
+explain the observed light curve? \textsf{starry} abstracts the complexities of
+computing the total flux and allows us to treat this problem as a linear
+problem of the form
+\begin{equation}
+    f = \mathbf{X}\mathbf{y}
+\end{equation}
+where  $\mathbf{X}$ is computed by \textsf{starry} depending on the geometry of an
+occultation or transit event. The inverse problem is highly degenerate
+and making progress requires  imposing some prior structure on the solution
+$\mathbf{y}$.
+
+In Chapter~\ref{ch:mapping_io} we use \textsf{starry} to model occultation
+light curves of a Solar System object -- Jupiter's moon Io, as it is occulted
+by Jupiter. Thanks to the comparatively close distance to Io relative to
+objects outside of the Solar System, these light curves are very high quality
+we are able to fit very high order maps $l=20$ and test our models in a high
+signal-to-noise regime. We also discuss how possible approaches to modeling
+time-dependent maps in which case the spherical harmonic coefficients are
+time-dependent: $\mathbf{y}=\mathbf{y}(t)$. In
+Chapter~\ref{ch:mapping_exoplanets} we tackle a very similar problem but in a
+very different regime of exoplanet eclipse mapping where the signal-to-noise is
+orders of magnitude worse than in the case of Io. In both cases we mostly focus
+on thermal light curves rather than light curves in reflected light.
+
 \section{Bayesian statistics}
 \label{sec:bayes}
+Having covered the basic physics behind gravitational lensing and occultation mapping I
+now turn to the subject of statistical inference in general and more focus more
+specifically on Bayesian statistics in particular because it provides a straightforward
+and elegant theoretical framework for solving inverse problems of the kind we mentioned
+in Sections~\ref{sec:microlensing}  and \ref{sec:occultations}.
+
 \subsection{Probability theory}
 \subsection{The meaning of probability}
 \subsection{Probability as frequency of events in repeated trials}
@@ -1600,9 +1969,10 @@ for completeness.
 
 \section{Inference}
 \label{sec:inference}
+\subsection{The curse of dimensionality}
 % check that paper on physics and ML by that MIT guy, there's a good stuff there. 
 % check also Ian Murray's lecture notes  on MLPR
-\subsection{The curse of dimensionality}
+
 \subsection{There's no free lunch}
 % exploration vs. explotation 
 \subsection{Optimization vs. sampling}
