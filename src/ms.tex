@@ -42,7 +42,7 @@
 
 % Custom command
 \newcommand{\ud}{\,\mathrm{d}}
-\renewcommand{\vec}[1]{\bm{#1}}
+\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
 
 \hypersetup{
     colorlinks=true,
@@ -802,38 +802,38 @@ To be able to evaluate Equation~\ref{eq:magnification_point_lens} in practice
 we have to parametrize the position of the source on the sky $u$ as a function
 of time. To derive an expression for $u(t)$ we assume the the motion of the
 observer, lens and the source is rectilinear (acceleration can be neglected).
-We take $\boldsymbol{\theta}_S$ to be the angular position of the source star
-on the plane of the sky and $\boldsymbol{\mu}_L$ to be its proper motion
-vector. Likewise for the lens. We thus have
+We take $\vec{x}_S$ to be the angular position of the source star on the plane
+of the sky and $\boldsymbol{\mu}_L$ to be its proper motion vector. Likewise
+for the lens. We thus have
 \begin{align}
-    \boldsymbol{\theta}_S(t) & =\boldsymbol{\theta}_{S, 0}+
+    \vec{x}_S(t) & =\vec{x}_{S, 0}+
     \left(t-t_{0}\right) \boldsymbol{\mu}_S
-    \label{eq:source_position}                              \\
-    \boldsymbol{\theta}_L(t) & =\boldsymbol{\theta}_{L, 0}
+    \label{eq:source_position}      \\
+    \vec{x}_L(t) & =\vec{x}_{L, 0}
     +\left(t-t_{0}\right) \boldsymbol{\mu}_L\quad,
     \label{eq:lens_position}
 \end{align}
 where $t_0$ is some reference time.
 The relative position vector of the lens with respect to the source is then
 \begin{equation}
-    \boldsymbol{u}(t) \equiv \frac{\boldsymbol{\theta}_L(t)
-        -\boldsymbol{\theta}_S(t)}{\theta_E}=
-    \frac{\boldsymbol{\theta}_{LS, 0}}{\theta_E}
+    \boldsymbol{u}(t) \equiv \frac{\vec{x}_L(t)
+        -\vec{x}_S(t)}{\theta_E}=
+    \frac{\vec{x}_{LS, 0}}{\theta_E}
     +\frac{t-t_{0}}{\theta_E} \boldsymbol{\mu}_{LS}
     \label{eq:relative_trajectory_no_parallax}
 \end{equation}
 where
-$\boldsymbol{\theta}_{L S, 0}\equiv\boldsymbol{\theta}_{L,0}-\boldsymbol{\theta}_{S, 0}$
+$\vec{x}_{L S, 0}\equiv\vec{x}_{L,0}-\vec{x}_{S, 0}$
 is the relative position at $t_0$ and
 $\boldsymbol{\mu}_{LS}\equiv \boldsymbol{\mu}_{L}- \boldsymbol{\mu}_{S}$ is the
 relative proper motion.
-Since $\boldsymbol{\mu}_{LS}$ and $\boldsymbol{\theta}_{L S, 0}$ are
+Since $\boldsymbol{\mu}_{LS}$ and $\vec{x}_{L S, 0}$ are
 perpendicular to each other, it follows that the magnitude of the relative
 separation is
 \begin{equation}
     u(t)=\sqrt{u_0^2+ \left(\frac{t-t_0}{t_E}\right)^2}
 \end{equation}
-where we have defined $u_0\equiv |\boldsymbol{\theta}_{L S, 0}|/\theta_E$
+where we have defined $u_0\equiv |\vec{x}_{L S, 0}|/\theta_E$
 and $t_E\equiv \theta_E/|\boldsymbol{\mu}_{LS}|$.
 The magnification is then a function of three parameters $(t_0, u_0, t_E)$
 and the resulting curve as a function of time is often called the Paczy\'nski curve
@@ -1019,9 +1019,9 @@ the projected separation at any time $t$.
 The angular positions of the source and the lens
 (Equations~\ref{eq:source_position} and \ref{eq:lens_position}) then become
 \begin{align}
-    \boldsymbol{\theta}_S(t) & = \boldsymbol{\theta}_{S,0}+(t-t_0)\boldsymbol{\mu}_S
-    +\pi_S\,\boldsymbol{\zeta}(t)                                                    \\
-    \boldsymbol{\theta}_L(t) & = \boldsymbol{\theta}_{L,0}+(t-t_0)\boldsymbol{\mu}_L
+    \vec{x}_S(t) & = \vec{x}_{S,0}+(t-t_0)\boldsymbol{\mu}_S
+    +\pi_S\,\boldsymbol{\zeta}(t)                            \\
+    \vec{x}_L(t) & = \vec{x}_{L,0}+(t-t_0)\boldsymbol{\mu}_L
     +\pi_L\,\boldsymbol{\zeta}(t)
 \end{align}
 where  $\pi_S\equiv 1\,\mathrm{au}/D_S$ is the source parallax, and $\pi_L$ is the
@@ -1224,17 +1224,18 @@ Microlensing with more than one lens is considerably more complex than the case
 of a single lens. Consider a system with $N$ point mass lenses with a total
 mass $M=\sum_{i=1}^Nm_i$. As before, we have the angular source position in the
 source plane, given by the the dimensionless vector
-$\mathbf{y}=\bm\beta/(D_\textrm{S}\theta_E)$ and the position of the images in
-the lens plane, given by given by
-$\mathbf{x}=\bm\theta/(D_\textrm{L}\theta_E)$, where $\theta_E$ now refers to
-the angular Einstein radius corresponding to the total mass $M$. The lens
-equation then contains a sum over the deflection angles $\bm\alpha_i$
-corresponding to each point mass $m_i$\footnote{This is because we are working
-    within the linearized GR framework so the deflection angles are additive.}:
+$\mathbf{y}=\boldsymbol\beta/(D_\textrm{S}\theta_E)$ and the position of the
+images in the lens plane, given by given by
+$\mathbf{x}=\boldsymbol\theta/(D_\textrm{L}\theta_E)$, where $\theta_E$ now
+refers to the angular Einstein radius corresponding to the total mass $M$. The
+lens equation then contains a sum over the deflection angles
+$\boldsymbol\alpha_i$ corresponding to each point mass $m_i$\footnote{This is
+    because we are working within the linearized GR framework so the deflection
+    angles are additive.}:
 \begin{equation}
-    \mathbf{y}=\mathbf{x}-\sum_{i=1}^N\bm\alpha_i(\mathbf{x},\mathbf{x}_i)
+    \mathbf{y}=\mathbf{x}-\sum_{i=1}^N\boldsymbol\alpha_i(\mathbf{x},\mathbf{x}_i)
 \end{equation}
-where $\bm\alpha_i$ is the deflection angle due to the $i$th lens.
+where $\boldsymbol\alpha_i$ is the deflection angle due to the $i$th lens.
 Using Equation~\ref{eq:lens_equation_dimensionless}, we obtain
 \begin{equation}
     \mathbf{y}=\mathbf{x}-\sum_{i=1}^N\epsilon_i\frac{\mathbf{x}-\mathbf{x}_i}
@@ -1585,7 +1586,7 @@ occultation light curves of spherical bodies for the case of emitted light
 (starlight scattered from the surface or atmosphere of the body). The following is
 mostly a short summary of the papers introducing the \textsf{starry} framework
 \citep{2019AJ....157...64L,2021arXiv210306275L}.
-\subsection{The Starry framework}
+\subsection{The starry algorithm}
 \begin{figure}[t]
     \begin{centering}
         \includegraphics[width=\linewidth]{figures/spherical_harmonics.pdf}
@@ -1948,69 +1949,487 @@ very different regime of exoplanet eclipse mapping where the signal-to-noise is
 orders of magnitude worse than in the case of Io. In both cases we mostly focus
 on thermal light curves rather than light curves in reflected light.
 
-\section{Bayesian statistics}
-\label{sec:bayes}
+\section{Statistical inference -- theory}
+\label{sec:inference_theory}
 Having covered the basic physics behind gravitational lensing and occultation mapping I
-now turn to the subject of statistical inference in general and more focus more
-specifically on Bayesian statistics in particular because it provides a straightforward
-and elegant theoretical framework for solving inverse problems of the kind we mentioned
-in Sections~\ref{sec:microlensing}  and \ref{sec:occultations}.
+now turn to the subject of statistical inference in general and more specifically --
+Bayesian statistical inference. Bayesian (as opposed to frequentist)
+provides a straightforward and elegant theoretical framework for solving inverse
+problems of the kind we mentioned
+in Sections~\ref{sec:microlensing}  and \ref{sec:occultations}. These are problems
+where we have little data per object of interest, the data is very noisy,
+the physical models are relatively well understood but their parameters don't map
+to observables in a straightforward way and there are multiple competing, sometimes
+physically  quite different, models which provide a good explanation for the data.
+Having said that, I am not particularly dogmatic about the use of Bayesian methods
+and I will occasionally steer away from the classical approach and point out where
+a less Bayesian approach is often superior in practice.  What is most important is the
+use of \emph{probabilities} for encoding uncertainty about the physical world.
+
+I start by reviewing basic probability theory and briefly mention the
+frequentist interpretation. I then introduce two key concepts, the likelihood
+function -- a recipe for generating plausible datasets given model parameters,
+and priors -- what we know about the model parameters prior to gathering any
+data. Next, I briefly summarize fundamental concepts such as the curse of
+dimensionality and the no-free-lunch-theorem. Finally I end the section by
+comparing machine learning to statistical inference within the physical
+sciences.
 
 \subsection{Probability theory}
-\subsection{The meaning of probability}
-\subsection{Probability as frequency of events in repeated trials}
-\subsection{Probability as degrees of belief}
-\subsection{The likelihood function}
-% mention the likelihood principle
-\subsection{Priors}
-\subsection{On machine learning and the difference between explanation and prediction}
-% mention that even if we have a model focused on inference, it might be best if we judge 
-% its quality through its predictive performance
+There are two different interpretations of probability. In the
+\emph{frequentist} interpretation probabilities are \emph{frequencies of
+    events} which are repeated in a large number of trials (think of a repeated
+coin tosses). An alternative to the frequentist interpretation is the
+\emph{Bayesian} interpretation in which probabilities represent \emph{degrees
+    of belief} about the subject of interest. In both cases probabilities are
+necessarily positive numbers between zero and one. The major advantage of the
+Bayesian interpretation is that it allows one to reason about the probability
+of one-off events such as ``person X wins the election'' or ``this microlensing
+event is a binary lens event''. The differences between the two interpretations
+are not just philosophical because which interpretation one subscribes to can
+determine how one approaches a particular statistical inference problem and
+which sets of tools one uses. Both approaches are commonly used within the
+physical sciences depending on the field and the problem at hand. For instance,
+in case of particle physics frequentist methods are much more common because
+particle physics experiments often involve billions of repeated experiments in
+particle accelerators. One the other hand, Bayesian methods are more popular in
+astronomy because we cannot do true repeated experiments with astrophysical
+objects.
 
-\section{Inference}
-\label{sec:inference}
-\subsection{The curse of dimensionality}
-% check that paper on physics and ML by that MIT guy, there's a good stuff there. 
-% check also Ian Murray's lecture notes  on MLPR
+The mathematical rules for manipulating probabilities are quite
+straightforward. In probability theory we use \emph{random variables} which can
+be either discrete or continuous and their possible values are described with
+probability distributions over all possible values the variable is allowed to
+take. For discrete random variables we can talk of probabilities that a given
+variable assumes a particular value, say $5$, but with continuous random
+variables we can only talk of probabilities that a given variable is in a
+particular range of values, say $[0,1]$. Now let's consider a continuous
+\emph{random variable} $x$ with an associated probability density function
+(pdf) $p(x)$\footnote{The notation $p(x)$ we use is somewhat overloaded. In
+    statistics, the proper notation for a probability density function is
+    $p_{X}(x)$ where $X$ is a random variable and $x$ is a particular realization
+    of that random variable.} Since $x$ has to take on \emph{some values} within
+its domain we have the requirement that
+\begin{equation}
+    \int p(x)\,\ud x=1
+    \label{eq:normalization_condition}
+\end{equation}
+where the integral is taken over the entire domain of $x$.
+In order for Equation~\ref{eq:normalization_condition} to hold,
+$p(x)$ has to have units of $x^{-1}$ so that
+the integral is a dimensionless number.
 
-\subsection{There's no free lunch}
-% exploration vs. explotation 
-\subsection{Optimization vs. sampling}
+In general, we are usually dealing with several parameters at once in which
+case we are interested in \emph{joint} probability distributions over all the
+parameters. Consider random variables $x_1$ and $x_2$ with a joint probability
+density function $p(x_1,x_2)$ which when integrated over a particular interval
+gives the probability that both $x_1$ and $x_2$ are contained within that
+interval. These joint probabilities can be decomposed into \emph{conditional
+    probabilities} using the so called product rule:
+\begin{align}
+    p(x_1,x_2) & =p(x_1)\,p(x_2\lvert x_1) \\
+    p(x_1,x_2) & =p(x_1\lvert x_2)\,p(x_2)
+    \label{eq:product_rule}
+\end{align}
+where $p(x_2\lvert x_1)$ is a pdf for $x_2$ \emph{conditional on
+    $x_1$ assuming a certain value.} $p(x_2\lvert x_1)$ is every bit as
+valid pdf as $p(x_2)$, it has the same units and it has to integrate to 1.
+Combining \ref{eq:product_rule} results in the famous \emph{Bayes's theorem}:
+\begin{equation}
+    p(x_1\lvert x_2)= \frac{p(x_2\lvert x_1)\,p(x_1)}{p(x_2)}
+    \label{eq:bayes_theorem}
+\end{equation}
+Bayes's theorem is simply a rule for converting one kind of a conditional probability
+into another.
+Given a pdf $p(x_1,x_2)$, we can \emph{integrate out} or
+\emph{marginalize} parameters that we are not interested in to obtain a distribution over
+parameters of interest\footnote{
+    It is very common in astronomy to have a model
+    which consists of a set of parameters $\boldsymbol x_1$ of physical signal of interest and another set
+    of ``nuisance parameters'' $\boldsymbol x_2$ which often describe the noise properties. In those cases
+    we need to marginalize over parameters $\boldsymbol x_2$ to obtain a distribution over $x_1$.}:
+\begin{equation}
+    p(x_1)=\int p(x_1,x_2)\textrm{d}x_2=\int p(x_1\lvert
+    x_2)\,p(x_2)\textrm{d}x_2
+\end{equation}
+where we applied Bayes's theorem in the second inequality.
+In cases where the parameter space is high dimensional these integrals might be
+impossible to calculate analytically but they can (sometimes) be estimated using sampling
+algorithms as we shall se in subsequent sections.
+In some cases, we may be able to factor out $p(x_1,x_2)$ as
+If $x_1$ and $x_2$ are \emph{statistically independent} we can factor out $p(x_1,x_2)$ as
+\begin{equation}
+    p(x_1,x_2)=p(x_1)\,p(x_2)\,.
+\end{equation}
+Independence is a very common assumption in statistical modelling. For instance, when modeling light curves
+of microlensing events or planetary transits we often assume that flux $f_i$ measured at time $t_i$ is independent
+of flux $f_j$ measured at time $t_j$  for all measurement times $t_i,t_j$ so that
+\begin{equation}
+    p(\{f\}_{i=1}^N)=\prod_{i=1}^Np(f_i)
+    \label{eq:likelihood_indep}
+\end{equation}
+If the pdf-s $p(f_i)$ also happen to be equal, we say that the data is independent and
+identically distributed (``iid''). If the data is independent but not identically distributed
+we say that the uncertainties are \emph{heteroscedastic}.
+The iid assumption is not that common in astronomy because we tend to have some idea of per-data-point
+uncertainties.
+
+\subsubsection{Expectation values and the mode}
+The \emph{mean} or the \emph{expected value} of a distribution $p(\vec{x})$,
+usually denoted by $\mu$, is a measure of the ``center'' of a distribution and
+it is defined as
+\begin{equation}
+    \mathbb{E}[x] \equiv\int x \,p(x) \ud x
+\end{equation}
+Similarly, the \emph{variance} is a measure of the ``spread'' of a distribution:
+\begin{align}
+    \mathbb{V}[x] & \equiv\mathbb{E}\left[(x-\mu)^{2}\right]=\int(x-\mu)^{2} p(x) d x                                           \\
+                  & =\int x^{2} p(x) \ud x+\mu^{2} \int p(x) \ud x-2 \mu \int x p(x) \ud x=\mathbb{E}\left[x^{2}\right]-\mu^{2}
+\end{align}
+The variance is usually denoted by $\sigma^2$ and the square root of $\sigma^2$ is the
+\emph{standard deviation}.
+For a \emph{multivariate} random variable with $D$ dimensions then the variance generalizes to
+a symmetric, positive semi definite matrix called the \emph{covariance matrix}:
+\begin{align}
+    \operatorname{Cov}[\vec{x}] & \equiv\mathbb{E}\left[(\vec{x}-\mathbb{E}[\vec{x}])(\vec{x}-\mathbb{E}[\vec{x}])^{\top}\right] \equiv \boldsymbol{\Sigma}                                                                                                                                                                                \\
+                                & =\left(\begin{array}{cccc}
+                                             \mathbb{V}\left[x_{1}\right]                & \operatorname{Cov}\left[x_{1}, x_{2}\right] & \cdots & \operatorname{Cov}\left[x_{1}, x_{D}\right] \\
+                                             \operatorname{Cov}\left[x_{2}, x_{1}\right] & \mathbb{V}\left[x_{2}\right]                & \cdots & \operatorname{Cov}\left[x_{2}, x_{D}\right] \\
+                                             \vdots                                      & \vdots                                      & \ddots & \vdots                                      \\
+                                             \operatorname{Cov}\left[x_{D}, x_{1}\right] & \operatorname{Cov}\left[x_{D}, x_{2}\right] & \cdots & \mathbb{V}\left[x_{D}\right]
+                                         \end{array}\right)
+\end{align}
+
+In the general case, we can compute expectation values of an arbitrary function
+$g(\vec{x})$ under the probability distribution $p(\vec{x})$:
+\begin{equation}
+    \mathbb{E}\left[g(\vec{x})\right]=\int g(\vec{x})\,p(\vec{x})\ud x
+    \ud\theta
+\end{equation}
+Some examples of $g$ include higher moments of the distribution, the median and
+quantile estimates. The \emph{mode} of $p(\vec{x})$
+\begin{equation}
+    \vec{x}^{*}=\underset{\vec{x}}{\operatorname{argmax}}\,p(\vec{x})
+\end{equation}
+on the other hand is not an expectation value. It is the global maximum of the
+function $p(\vec{x})$.
+Estimating the mode involves computing the \emph{derivatives} of the density
+$p(\vec{x})$, whereas expectation values require computing
+\emph{integrals} over the space $\vec{x}$. Computing either
+the mode or expectation values
+for nontrivial densities $p(\vec{x})$ is a very hard and often impossible problem
+(more on this in Section~\ref{sec:inference_practice}).
+
+\subsubsection{Central Limit Theorem}
+Consider $N$ \emph{independent and identically distributed} random variables
+with pdf's $p_n(x)$ which are not necessarily Gaussian. Let $S_N$ be the sum
+the random variables. The \emph{Central Limit Theorem} (CLT) says that as $N$
+increases, the distributions of this sum approaches the Gaussian distribution
+\begin{equation}
+    p\left(S_{N}=u\right)=\frac{1}{\sqrt{2 \pi N \sigma^{2}}} \exp \left(-\frac{(u-N \mu)^{2}}{2 N \sigma^{2}}\right)
+\end{equation}
+and the distribution of the quantity
+\begin{equation}
+    Z_{N} \equiv \frac{S_{N}-N \mu}{\sigma \sqrt{N}}=\frac{\bar{x}-\mu}{\sigma / \sqrt{N}}
+\end{equation}
+where $\bar{x}$ is the \emph{sample mean} $\frac{1}{N}\sum_{i=1}^Nx_i=S_N/N$
+converges to the Gaussian distribution with zero mean and unit variance.
+Because lots of random variables representing real world processes can be seen as sums
+of i.i.d. independent random variables the Gaussian distribution is all over the place
+in statistics. One should keep in mind that the assumptions underlying the CLT are
+not always satisfied and also the convergence towards a Gaussian is
+more rapid in the bulk of the distribution around the mean than in the tails of the
+distribution.
+
+\subsubsection{Change of variables}
+Given a univariate random variable $x$ the effect of some deterministic
+transformation $y(x)$ is to stretch and shift the distribution $p(x)$. For an
+infinitesimal interval the \emph{probability mass} is the same in both
+variables so $p(x) \ud x=p(y) \ud y$ which yields the \emph{change of variables
+    formula}
+\begin{equation}
+    p_{y}(y)=p_{x}(x)\left|\frac{\ud x}{\ud y}\right|
+\end{equation}
+In the multivariate case, if $\vec{f}$ is an invertible function mapping $\mathbb{R}^n$
+to $\mathbb{R}^n$ with inverse $\vec{g}$, the pdf of $\vec{y}=\vec{f}(\vec{x})$ is
+\citep{murphy_book_2022}
+\begin{equation}
+    p_{y}(\vec{y})=p_{x}(\vec{g}(\vec{y}))\left|\operatorname{det}\mathbf{J}_{g}(\vec{y})\right|
+\end{equation}
+where $\vec{J}_{g}=\frac{\ud \vec{g}(\vec{y})}{\ud \vec{y}^{\top}}$ is the Jacobian of $\vec{g}$
+and $\operatorname{det}|\mathbf{J}(\vec{y})|$ is the determinant of the Jacobian.
+
+\subsubsection{Kullback Leibler divergence}
+A common way of measuring ``similarity'' between two distributions $p(x)$ and
+$q(x)$ is using the \emph{Kullback-Leibler divergence} (KL divergence for
+short):
+\begin{equation}
+    D_{\mathrm{KL}}(p \| q)=\int_{-\infty}^{\infty} p(x) \ln \left(\frac{p(x)}{q(x)}\right) \ud x
+    \label{eq:kl_divergence}
+\end{equation}
+where $D_{\mathrm{KL}}(p \| q)$ should be read as ``the KL divergence from p to q''.
+This is not a measure of ``distance'' between the two distributions because
+it is not a symmetric quantity. The KL divergence is best understood as a quantity which
+quantifies \emph{how surprised one would be if one expected to encounter distribution $p(x)$
+    but instead saw distribution
+    $q(x)$}\footnote{\url{https://wiki.santafe.edu/images/a/a8/IT-for-Intelligent-People-DeDeo.pdf}}.
+This quantity is important in the context of variational inference which is covered in
+Section~\ref{sec:inference_practice}.
+
+\subsection{Bayes' theorem in practice}
+\label{ssec:likelihood_function}
+Consider a general inference problem where we collect some data $\mathcal{D}$ and we are interested
+in the joint probability distribution for parameters $\boldsymbol\theta$ of particular model.
+We can then rewrite Bayes' theorem as
+\begin{equation}
+    p(\vec{\theta} | \mathcal{D})=\frac{p(\vec{\theta}) p(\mathcal{D} | \vec{\theta})}{p(\mathcal{D})}=\frac{p(\vec{\theta}) p(\mathcal{D} | \vec{\theta})}{\int p\left(\vec{\theta}^{\prime}\right) p\left(\mathcal{D} |\vec{\theta}^{\prime}\right) d \vec{\theta}^{\prime}}
+    \label{eq:bayes_theorem2}
+\end{equation}
+In Equation~\ref{eq:bayes_theorem2} the term $p(\mathcal{D}|\vec{\theta})$  is a probability
+distribution over the data $\mathcal{D}$ given the parameters of the model $\vec{\theta}$.
+When this term is seen as a function of the parameters given a fixed dataset, it is
+called the \emph{likelihood function }  or the \emph{likelihood} for short. $p(\boldsymbol\theta)$
+is to so called \emph{prior} distribution over $\vec{\theta}$ and it represents our beliefs
+about $\vec{\theta}$ prior to having observed the data $\mathcal{D}$. When the prior distribution is
+multiplied by the likelihood we obtain, up to a normalizing constant $p(\mathcal{D})$, the posterior
+distribution over $\vec{\theta}$ given the data $\mathcal{D}$.
+The best way to think about Equation~\ref{eq:bayes_theorem2} is seeing at as a rule
+for updating beliefs. Our prior beliefs about the parameters of the model
+$p(\mathrm{parameters})$ should be updated to posterior beliefs $
+    p(\mathrm{parameters} | \mathrm{data})$ by making use of the likelihood
+$p(\mathrm{data} | \mathrm{parameters})$. If the data is useful, the likelihood is generally
+much narrower than the prior pdf and the choice of priors does not significantly
+influence the final results.
+
+\subsubsection{The likelihood}
+Let's cover each of these three terms in more detail, starting with the most
+important one -- the likelihood. The likelihood can be seen as a \emph{recipe
+    for generating plausible datasets $\mathcal{D}$} (a \emph{generative model})
+given a specific realization of the parameters $\vec{\theta}$. For the kinds of
+models we work with in astronomy, the likelihood consists of two parts. The
+first part is (usually deterministic) function which describes the physical
+system of interest. This is for instance the predicted flux for a binary
+microlensing event with a particular trajectory. The second part is the
+\emph{noise model} which describes the statistical properties of the noise
+inherent in any physical measurement. We often assume that the noise is
+independent and Gaussian. It is very common to use the likelihood as is and
+optimize it with respect to the model parameters $\vec{\theta}$ in a procedure
+called \emph{maximum likelihood estimation} (MLE) to find a single point in the
+parameter space $\vec{\theta}^\star$ which maximizes the likelihood (more on
+this in Section~\ref{ssec:mle_estimation}).
+
+We can also marginalize the likelihood over a subset of parameters. Say that we
+have a likelihood function $p(\vec{\theta} ,\vec{\alpha}|\mathcal{D})$ where
+$\vec{\alpha}$ is a set of \emph{nuisance parameters} which we are not
+particularly interested in. To marginalize over these nuisance parameters we
+need to introduce a prior\footnote{Not introducing a prior leads to a
+    dimensionally incorrect result.} $p(\vec{\theta}|\vec{\theta})$ which may
+potentially also depend on the $\vec{\theta}$ and the marginalized likelihood
+is then
+\begin{equation}
+    p(\mathcal{D} | \vec{\theta})=\int p(\mathcal{D} | \vec{\theta}, \vec{\alpha})\,p(\vec{\alpha} |\vec{\theta}) \ud \vec{\alpha}\quad .
+\end{equation}
+The problem structure where where $\vec{\alpha}$ is some set of parameters
+we don't particularly care about such and $\vec{\theta}$ are the physical
+parameters of interest is very common in astronomy. For instance, in single lens gravitational microlensing estimating
+the distribution $p(t_E)$ over the parameter of interest $t_E$ requires marginalizing over
+parameters such as $F_S, F_B, t_0$ and $u_0$.
+
+Not all statistical models can be written in terms of the likelihood function.
+Most machine learning models for example do not have a simple probabilistic
+interpretation\footnote{Indeed, finding probabilistic interpretations of
+    complex machine learning models such as deep neural networks is an active
+    research area.}. If we can write down the likelihood function for a certain
+problem, we say that we have a \emph{generative model for the data} because the
+likelihood can be used to generate mock data sets.
+
+\subsubsection{Priors}
+The second term of interest is the prior $p(\vec{\theta})$. In principle, the
+prior pdf-s should capture all of the prior information we might have about the
+model parameters prior to gathering new data; in practice, we don't want to
+bias our results so we often try to use ``weakly informative'' priors -- priors
+that are informative enough that they exclude unreasonable parameter values but
+aren't so narrow that they rule out sensible values which may be favored by the
+likelihood. For example, we might have prior information such as ``the mass of
+the planet should be positive'' in which case a suitable weakly informative
+prior on the mass parameter should first of all exclude negative values but
+also potentially exclude values which are nonsensically large for the problem
+at hand. There are also the so called ``non-informative prior'' such as
+Jeffrey's prior and maximum entropy priors. Although these priors can be of use
+in some cases, in general \textbf{there no such thing as a truly non
+    informative prior}. Although a prior for a particular parameter $\theta$ might
+be uninformative in one set of coordinates, it is often informative for a
+certain transformation of the parameter $g(\theta)$. For example, a uniform
+prior in $\theta$ is not uniform in $\ln\theta$. Having said that, it is often
+worth the effort to construct priors which respect certain symmetries of the
+problem the we know to be true.
+
+Priors should not be seen in isolation, rather, they should be seen in the
+context of the likelihood \citep{arXiv:1708.07487}. To see that this is the
+case consider drawing samples from the prior $\vec{\theta}\sim
+    p(\vec{\theta})$, plugging those values into the likelihood distribution
+$p(\mathcal{D}|\vec{\theta})$ and then generating mock datasets, a process
+called \emph{prior predictive checking}. This process makes it easy to spot
+priors which in combination with the likelihood yield predictions of what the
+data should like like which do not match our expectations. An excellent highly
+in depth study on choosing priors is available
+\href{https://betanalpha.github.io/assets/case_studies/prior_modeling.html}{here}.
+
+Depending on how informative the data is we differentiate between two different
+regimes. We say that the inference process is \emph{data driven} if the data
+constrains the model parameters so well that the choice of the priors is
+effectively irrelevant. The other regime is said to be \emph{prior driven},
+when the data is so weakly informative that the shape of the posterior pdf-s is
+similar to the prior pdf. In general, in any statistical analysis involving
+priors, one should check the sensitivity of the scientific conclusion to
+assumptions of different priors. No statistical inference procedure is free of
+assumptions but the use of priors and likelihoods makes those assumptions more
+explicit.
+
+Priors are sometimes the goal of the inference. For example, if the prior on
+the prior pdf $p(\vec{\theta})$ itself depends on some other set of parameters
+$\vec{\beta}$, then we can marginalize out all of the $\vec{\theta}$ parameters
+and we are left with a likelihood for the parameters $\vec{\beta}$ of the
+prior.
+\begin{equation}
+    p(\mathcal{D}\lvert\vec{\beta})=\int p(\mathcal{D}\lvert\vec{\theta})\,p(\vec{\theta}\lvert
+    \vec{\beta})\ud \vec{\theta}
+\end{equation}
+This can then be used, using Bayes's theorem, to calculate the posterior
+over the prior parameters $\bm\beta$.
+\begin{equation}
+    p(\bm\beta\lvert\mathcal{D})\propto p(\mathcal{D}\lvert\vec{\beta})
+    \,p(\bm\beta)
+\end{equation}
+The parameters $\bm\beta$ characterizing the prior are usually called
+\emph{hyperparameters} or \emph{population level parameters}. Similarly, the priors
+for those parameters are called \emph{hyperpriors}.
+The whole process is called \emph{hierarchical Bayesian inference}
+(in astronomy literature),  or \emph{multilevel modelling, hierarchical modelling,
+    nested modelling, mixed models or random effects models}
+(in statistics and adjacent fields).
+Hierarchical modelling is an very useful method for estimating
+population-wide properties given data about individual objects. For example,
+in microlensing observations of exoplanets the individual parameters could be the
+masses of individual planets while the hyperparameters would describe the
+population the shape of the planetary mass function. We shall return to this topic
+in Chapter~\ref{ch:microlensing}.
+
+\subsubsection{The evidence}
+The final component of Equation~\ref{eq:bayes_theorem2} is the normalization
+constant $ p(\mathcal{D})$ in the denominator:
+\begin{equation}
+    \mathcal{Z}\equiv p(\mathcal{D})=\int p(\mathcal D\lvert\boldsymbol\theta)\,p(\boldsymbol\theta)\textrm{d}\boldsymbol\theta
+    \label{eq:evidence}
+\end{equation}
+is often called the \emph{fully marginalized likelihood} because
+it is a likelihood marginalized over all of the parameters of the model.
+Sometimes
+it is also called the \emph{Bayesian evidence}.
+$\mathcal{Z}$ is general extremely difficult to calculate because it is an
+integral over a potentially very high dimensional parameter space $\vec{\theta}$.
+Fortunately, in most cases, we can obtain the posterior distribution without having
+to calculate $\mathcal{Z}$.
+
+%% mention the likelihood principle
+\section{Statistical inference}
+\label{sec:inference_practice}
+In the previous section I briefly summarized some key aspects of probability theory
+and Bayesian statistics but I haven't discussed how to apply these ideas in practice. That
+is the subject of statistical inference. I start by introducing some very fundamental
+concepts such as the \emph{curse of dimensionality} and the \emph{no free lunch theorems}.
+I then cover linear models which are the foundation of all statistics and also relevant
+for the occultation mapping work since the problem is linear.
+Next, I discuss various computational inference methods such
+as optimization methods, Markov chain Monte Carlo and Variational Inference.
+Finally, I discuss model comparison and evaluation.
+
+\subsection{The curse of dimensionality and the no-free-lunch theorem}
+The \emph{curse of dimensionality} refers to a phenomenon where the
+\emph{volume} of \emph{possible} explanations for the data grows exponentially
+with increasing dimension of the problem. Consider the following
+example\footnote{ Taken from the excellent paper by \citet{arXiv:2104.00008}.
+}. There are images consisting of $n$ pixels where each of the pixels is either
+a black (0) or white (1). The number of possible images is $2^n$ which grows
+exponentially. If each image out of the $2^n$ possible images is described by
+one of two labels $A$, or $B$ then the total number of possible ways of
+labeling the set of images is $2^{2^n}$ which is a stupidly large number. If
+$n=9$, the number of ways to classify the set of all 9-bit black and white
+images is greater than the number of atoms in the observable universe. If the
+labels don't correlate with the properties of the images then one strategy for
+solving this problem would be the lookup table approach -- memorize each image
+with its label. The famous \emph{no-free-lunch} (NFLT) theorem proved by the
+mathematician David Wolpert \citep{wolpert1996} demonstrates that it is
+impossible to construct an algorithm which does better than the lookup table
+approach.
+
+Of course the assumption that the labels aren't correlated to features in the
+images is silly for any meaningful problem. For instance, all images of cats
+have certain things in common as do images of galaxies. The no-free-lunch
+theorem doesn't say that it is impossible to construct an algorithm to classify
+images of cats, it only says that there is no best algorithm \emph{if we
+    average over all possible inputs to the problem}. To construct an algorithm
+which works in practice we need to impose structure on the problem, what
+machine learning researchers call \emph{inductive bias}. A set of assumptions
+which work in one domain may not work well in another domain and no single
+model will work well in all domains.
+
+\subsection{Maximum likelihood estimation}
+One of the most popular inference methods is called \emph{maximum likelihood
+    estimation} (MLE). Maximum likelihood estimation answers the question:
+\textbf{what choice of parameters $\vec{x}$ makes my data most likely} as
+opposed to the question \textbf{what are the most likely values of the
+    parameters $\vec{x}$ having observed the data $\mathcal{D}$}\footnote{The
+    distinction between the two questions is subtle, but important. The parameters
+    which maximize the likelihood might be very different from those which are most
+    ``sensible'' and which best describe the data.} which necessitates the
+multiplication of the likelihood with a prior. Since we don't incorporate the
+prior, it is not a Bayesian method. The output of MLE is a \emph{point
+    estimate} of the parameters $\hat{\vec{\theta}}$. In a Bayesian viewpoint, the
+MLE is equivalent to MAP estimation under a uniform prior $p(\vec{\theta})$.
+
+\subsubsection{MLE for a Gaussian linear model}
+\subsection{The Laplace approximation}
+\subsection{Gaussian linear models}
+
+%\subsection{Machine learning and the difference between inference and prediction}
+%% mention that even if we have a model focused on inference, it might be best if we judge 
+%% its quality through its predictive performance
+%
 \subsection{Sampling and optimization methods}
-\subsubsection{Maximum likelihood}
-\subsubsection{The Laplace approximation}
-\subsubsection{Variational inference}
-\subsubsection{Importance sampling}
-\subsubsection{Rejection sampling}
-\subsubsection{Markov Chain Monte Carlo}
-\subsubsection{Hamiltonian Monte Carlo}
-\subsubsection{Other notable methods}
-
-\section{Model validation and comparison}
-\label{sec:model_comparison}
-
+%\subsubsection{The Laplace approximation}
+%\subsubsection{Variational inference}
+%\subsubsection{Importance sampling}
+%\subsubsection{Rejection sampling}
+%\subsubsection{Markov Chain Monte Carlo}
+%\subsubsection{Hamiltonian Monte Carlo}
+%\subsubsection{Other notable methods}
+%
+%\subsection{Model validation and comparison}
+%\label{ssec:model_comparisonGaussian linear }
+%
 ``Furthermore, in the future, a blind search for planetary signals will not
 turn up all potential competing models unless those models
 are specifically considered.''\citep{2017AJ....153..129J}.
 \citet{2021AJ....162...59R}
 \citet{2020AJ....160...17H}
 
-\subsection{Cross validation}
-% discuss vanilla k-fold CV, stress out just how important and central CV is to science
-\subsubsection{Pareto smoothed importance sampling LOO}
-\subsection{Model comparison}
-% don't do it!
-
-\section{Putting it all together -- \emph{probabilistic programming}}
-\label{sec:programming}
-\subsection{The success of machine learning}
-% that quote from Yann LeCun on differentiable code 
-\subsection{Automatic differentiation}
-\subsubsection{Forward mode autodiff}
-\subsubsection{Reverse mode autodiff or backpropagation}
-\subsubsection{Jacobian vector products}
-\subsection{JAX}
-\subsection{Numpyro}
+%\subsubsection{Cross validation}
+%% discuss vanilla k-fold CV, stress out just how important and central CV is to science
+%\subsubsubsection{Pareto smoothed importance sampling LOO}
+%\subsubsection{Model comparison}
+%% don't do it!
+%
+%\section{Putting it all together -- \emph{probabilistic programming}}
+%\label{sec:programming}
+%\subsection{The success of machine learning}
+%% that quote from Yann LeCun on differentiable code 
+%\subsection{Automatic differentiation}
+%\subsubsection{Forward mode autodiff}
+%\subsubsection{Reverse mode autodiff or backpropagation}
+%\subsubsection{Jacobian vector products}
+%\subsection{JAX}
+%\subsection{Numpyro}
 
 % CHAPTER 3: Modeling microlensing events 
 \chapter{Modeling microlensing events}
@@ -2129,4 +2548,4 @@ obtain its coefficients with \textsf{SymPy} as before and their values are avail
 
 \bibliography{bib.bib}
 
-\end{document}
+\end{document}ii
