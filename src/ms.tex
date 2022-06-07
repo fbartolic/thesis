@@ -27,7 +27,7 @@
 \DeclareMathOperator*{\argmax}{arg\,max}
 \usepackage{siunitx} % for proper units 
 \usepackage{esint} % various fancy integral symbols
-\usepackage[bbgreekl]{mathbbol}
+%\usepackage[bbgreekl]{mathbbol}
 
 % Other packages
 \usepackage{url}
@@ -2043,11 +2043,7 @@ Bayes's theorem is simply a rule for converting one kind of a conditional probab
 into another.
 Given a pdf $p(x_1,x_2)$, we can \emph{integrate out} or
 \emph{marginalize} parameters that we are not interested in to obtain a distribution over
-parameters of interest\footnote{
-    It is very common in astronomy to have a model
-    which consists of a set of parameters $\boldsymbol x_1$ of physical signal of interest and another set
-    of ``nuisance parameters'' $\boldsymbol x_2$ which often describe the noise properties. In those cases
-    we need to marginalize over parameters $\boldsymbol x_2$ to obtain a distribution over $x_1$.}:
+parameters of interest:
 \begin{equation}
     p(x_1)=\int p(x_1,x_2)\textrm{d}x_2=\int p(x_1\lvert
     x_2)\,p(x_2)\textrm{d}x_2
@@ -2387,10 +2383,171 @@ multiplication of the likelihood with a prior. Since we don't incorporate the
 prior, it is not a Bayesian method. The output of MLE is a \emph{point
     estimate} of the parameters $\hat{\vec{\theta}}$. In a Bayesian viewpoint, the
 MLE is equivalent to MAP estimation under a uniform prior $p(\vec{\theta})$.
+The MLE estimate is obtained by maximizing the logarithm\footnote{Because
+    probabilities in most region of the parameter space are very small numbers we
+    always use the log transform when optimizing likelihoods or posteriors.} of the
+likelihood $p(\mathcal{D}\lvert\vec{\theta})$ (or equivalently, minimizing the
+negative log likelihood) with respect to the parameters $\vec{\theta}$:
+\begin{equation}
+    \hat{\boldsymbol{\theta}}_{\mathrm{mle}}=\underset{\boldsymbol{\theta}}{\operatorname{argmax}}
+    \ln p\left(\mathcal{D}\lvert \boldsymbol{\theta}\right)
+\end{equation}
 
-\subsubsection{MLE for a Gaussian linear model}
+\subsubsection{MLE for a multivariate Gaussian}
+The log-likelihood of multivariate Gaussian distribution without the
+unnecessary constants is
+\begin{equation}
+    L L(\boldsymbol{\mu}, \boldsymbol{\Sigma})=\log p(\mathcal{D} \lvert \boldsymbol{\mu}, \boldsymbol{\Sigma})=\frac{N}{2} \log |\vec{\Sigma}^{-1}|-\frac{1}{2} \sum_{n=1}^{N}\left(\boldsymbol{y}_{n}-\boldsymbol{\mu}\right)^{\top} \vec{\Sigma}^{-1}\left(\boldsymbol{y}_{n}-\boldsymbol{\mu}\right)
+\end{equation}
+where $\vec{y}_n$ are the data points and $\vec{\Sigma}^{-1}$ is
+the inverse covariance matrix, also knowns as the \emph{precision matrix}.
+The MLE for the mean parameter $\hat{\vec{\mu}}$
+is given by the sample mean (empirical mean) of the data \citep{murphy_book_2022}:
+\begin{equation}
+    \hat{\boldsymbol{\mu}}=\frac{1}{N} \sum_{n=1}^{N} \boldsymbol{y}_{n}=\overline{\boldsymbol{y}}\quad .
+\end{equation}
+Similarly, the MLE of the the covariance matrix $\hat{\vec{\Sigma}}$ is equal to
+the empirical covariance matrix
+\begin{equation}
+    \hat{\boldsymbol{\Sigma}}=\frac{1}{N} \sum_{n=1}^{N}\left(\boldsymbol{y}_{n}-\overline{\boldsymbol{y}}\right)\left(\boldsymbol{y}_{n}-\overline{\boldsymbol{y}}\right)^{\top}
+\end{equation}
+Thus, whenever we compute an empirical mean and the covariance for a given datasets we
+are implicitly assuming that the data is normally distributed and obtaining an MLE
+estimate of that distribution.
 
-\subsection{Gaussian linear models}
+\subsection{Least squares linear regression}
+In this section we cover the classical non Bayesian formulation of linear
+regression, also known as \emph{least squares regression} and in the next
+section we generalize to the Bayesian case. In a (multiple) linear regression
+model we have (noisy) measurements $\vec{y}\in \mathbb{R}^n$ (\emph{dependent
+    variable}), an $n\times p$ matrix $\vec{M}\in \mathbb{R}^{n\times p}$ of inputs
+(\emph{independent variables}, \emph{covariates}, or \emph{features}) and a
+vector of \emph{regression coefficients} or \emph{weights} $\vec{\theta}\in
+    \mathbb{R}^p$. This is a very general model because the matrix $\vec{M}$ can
+consist of basis functions such as polynomials, spherical harmonics, Fourier
+modes, wavelets etc. so although the model is linear in the parameters
+(regression coefficients), it is not generally linear in the raw input data. If
+we assume that the observations $\vec{y}$ have Gaussian noise we can write down
+the likelihood of this model as
+\begin{equation}
+    p(\vec{y}\lvert \vec{\theta})=\mathcal{N}(\vec{y}\lvert\vec{M}\vec{\theta}, \vec{C})
+\end{equation}
+where $\vec{C}$ is the data covariance matrix and $\mathcal{N}$ is shorthand notation for
+the multivariate normal distribution. In astronomical application it is usually
+assumed to be diagonal and we might have some idea for the scale of the variance
+of the diagonal elements (the ``errorbars'').
+The negative log likelihood (NLL) is then equal (ignoring constants)  to
+\begin{equation}
+    \operatorname{NLL}(\vec{\theta})=\frac{1}{2}(\vec{M} \vec{\theta}-\vec{y})^{\top}\vec{C}^{-1}(\vec{M} \vec{\theta}-\vec{y})
+\end{equation}
+which is just the well known least squares objective or (half the) $\chi^2$ as it is known
+in astronomy.
+
+\subsubsection{Underdetermined case ($p < n$)}
+For now, let's assume that the inverse data covariance matrix $\vec{C}^{-1}$ is
+a diagonal matrix with the the same variance $\sigma^2$ for every data point.
+In that case the MLE solution for the weights $\vec{\theta}$ is the solution to
+the following (convex) optimization problem:
+\begin{equation}
+    \hat{\vec{\theta}}=
+    \underset{\boldsymbol{\theta}}{\operatorname{argmin}}\|\vec{y}-\vec{M} \vec{\theta}\|_{2}^{2}
+    \label{eq:ols_objective}
+\end{equation}
+There is a closed form solution for Equation~\ref{eq:ols_objective} as long as the number
+of parameters and features $p$ is less than the number of data points $n$ and the solution
+is \citep{arXiv:2101.07256}
+\begin{equation}
+    \hat{\vec{\theta}}=(\vec{M}^{\top} \vec{M})^{-1} \vec{M}^{\top} \vec{y}
+    \label{eq:ols_solution}
+\end{equation}
+under the assumption that $\vec{M}\vec{M}^\top$ is invertible which is usually the case.
+Equation~\ref{eq:ols_solution} is called the \emph{ordinary least squares} (OLS) solution.
+For a nontrivial data covariance matrix $\vec{C}$ Equation~\ref{eq:ols_solution} generalizes
+to
+\begin{equation}
+    \hat{\vec{\theta}}=(\vec{M}^{\top}\vec{C}^{-1}\vec{M})^{-1} \vec{M}^{\top}\vec{C}^{-1} \vec{y}
+    \label{eq:wls_solution}
+\end{equation}
+which is the solution to the \emph{weighted least squares} (WLS) problem.
+It is common to modify the least squares objective functions with the addition of a
+\emph{regularization} term to prevent overfitting. For instance, we can modify the OLS
+objective (Equation~\ref{eq:ols_objective}) by adding an \emph{L2 regularization} term:
+\begin{equation}
+    \hat{\vec{\theta}}=
+    \underset{\boldsymbol{\theta}}{\operatorname{argmin}}\|\vec{y}-\vec{M} \vec{\theta}\|_{2}^{2} + \lambda \|\vec{\theta}\|_2^2
+    \label{eq:ols_objective_l2}
+\end{equation}
+where $\lambda >0$ is a regularization parameter
+which penalizes large magnitudes of the coefficients $\vec{\theta}$. This is also a convex
+optimization problem and the solution is
+\begin{equation}
+    \hat{\vec{\theta}}=(\vec{M}^{\top} \vec{M} + \lambda\vec{I})^{-1} \vec{M}^{\top} \vec{y}
+    \label{eq:ols_solution_l2}
+\end{equation}
+where $\vec{I}$ is the identity matrix. Regularized OLS regression with this particular
+regularization term is also known as \emph{ridge regression} in the statistics
+literature\footnote{One of the many things that make statistics confusing is that very
+    similar methods often have special names which obscures the big picture. The vast majority
+    of statistical methods can be seen as a linear model with the data represented in a particular
+    basis, and with a particular choice of the likelihood (noise model), priors (regularization)
+    and  a method for obtaining the solution (usually a convex optimization problem).}
+L2 regularization (as well as most other forms of regularization terms) can be seen
+as a particular choice of priors for the regression coefficients in the Bayesian paradigm.
+The above also naturally generalizes to the case of weighted least squares.
+
+\subsubsection{Overdetermined case ($p > n$)}
+Contrary to popular belief within the astronomy community it is possible and
+often desirable to have a model with more parameters than data points (see
+Chapter~\ref{ch:mapping_io} for a real world example). In the overparametrized
+case of linear regression $(p > n)$ there are multiple choices for
+$\vec{\theta}$ which perfectly fit the data. The solution in that case is
+defined to be a minimum-norm parameter vector $\vec{\theta}$ that interpolates
+the data ($\vec{y}=\vec{M} \vec{\theta}$), out of possibly many degenerate
+solutions. The OLS objective in Equation~\ref{eq:ols_objective} can be modified
+such that it is valid for both the $p<n$ and the $p>n$ case by making use of a
+limit in which an L2 regularization term tends to zero
+\citep{arXiv:2101.07256}:
+\begin{equation}
+    \hat{\vec{\theta}}=\lim _{\lambda \rightarrow 0^{+}}\left[
+    \underset{\boldsymbol{\theta}}{\operatorname{argmin}}\|\vec{y}-\vec{M} \vec{\theta}\|_{2}^{2} + \lambda \|\vec{\theta}\|_2^2\right]\quad .
+\end{equation}
+In this case the OLS solution becomes
+\begin{equation}
+    \hat{\vec{\theta}}=\vec{M}^{\top} (\vec{M} \vec{M}^{\top})^{-1} \vec{y}
+    \label{eq:ols_solution_overdet}
+\end{equation}
+Equations~\ref{eq:ols_solution} and \ref{eq:ols_solution_overdet} can be unified into a
+single equation by making use of the \emph{Moore-Penrose pseudoinverse} $\vec{M}^\dagger$.
+The pseudoinverse is defined by taking the singular-value decomposition (SVD)
+of $\vec{M}$:
+\begin{equation}
+    \vec{M}^\dagger\equiv\vec{U} \vec{S}^\dagger \vec{V}^\dagger
+\end{equation}
+Then $\vec{M}^\dagger\equiv  \vec{V}^{\top} \vec{S}^{\dagger} \vec{U}^{\top}$.
+
+\subsection{Bayesian linear regression}
+In the Bayesian paradigm we can write down the posterior over the regression
+weights $\vec{\theta}$ assuming a Gaussian likelihood and a Gaussian prior over
+the weights. The posterior is then proportional to
+\begin{align}
+    p(\vec{\theta}|\vec{y}) & \propto p(\vec{y}\lvert \vec{\theta})\,p(\vec{\theta})                                                          \\
+                            & =\mathcal{N}(\vec{y}\lvert\vec{M}\vec{\theta},\vec{C})\,\mathcal{N}(\vec{\theta}\lvert \vec{\mu},\vec{\Lambda})
+    \label{eq:bayes_lin_regression}
+\end{align}
+where $\vec{C}$ is the data covariance matrix as before, $\vec{\mu}$ is the mean
+of the Gaussian prior on coefficients and $\vec{\Lambda}$ is the the prior covariance matrix.
+The product of two multivariate Gaussian distributions is also a multivariate Gaussian distribution
+and the solution to Equation~\ref{eq:bayes_lin_regression} is \citep{arXiv:2005.14199}
+\begin{equation}
+    \mathcal{N}(\vec{y} \lvert\vec{M} \vec{\theta}, \vec{C}) \,\mathcal{N}(\vec{\theta} \lvert\vec{\mu}, \vec{\Lambda})=\mathcal{N}(\vec{\theta} \lvert\vec{a}, \vec{A}) \,\mathcal{N}(\vec{y} \lvert\vec{b}, \vec{B})
+\end{equation}
+where
+\begin{align}
+     & \vec{A}^{-1}   =\vec{\Lambda}^{-1}+\vec{M}^{\top} \vec{C}^{-1} \vec{M}                                                         \\
+     & \vec{a}         =\vec{A} \left(\boldsymbol{\Lambda}^{-1} \boldsymbol{\mu}+\vec{M}^{\top} \mathbf{C}^{-1} \boldsymbol{y}\right) \\
+     & \mathbf{B}      =\mathbf{C}+\vec{M} \boldsymbol{\Lambda} \vec{M}^{\top}                                                        \\
+     & \boldsymbol{b}  =\vec{M} \boldsymbol{\mu}
+\end{align}
 
 %\subsection{Machine learning and the difference between inference and prediction}
 %% mention that even if we have a model focused on inference, it might be best if we judge 
