@@ -1,5 +1,5 @@
 % Define document class
-\documentclass[12pt]{report}
+\documentclass[12pt,dvipsnames]{report}
 \usepackage{aas_macros}
 
 % Citations
@@ -17,7 +17,7 @@
 \usepackage{titling}
 
 % Figures & tables 
-\usepackage{graphicx,xcolor}
+\usepackage{graphicx}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{booktabs} % much better looking tables
@@ -29,6 +29,10 @@
 \usepackage{esint} % various fancy integral symbols
 %\usepackage[bbgreekl]{mathbbol}
 
+% Algorithms 
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
 % Other packages
 \usepackage{url}
 \usepackage{epstopdf}
@@ -37,17 +41,20 @@
 %\usepackage{import}
 % of references  
 
+% Links 
+\hypersetup{
+    hidelinks,
+    colorlinks=true,
+    allcolors=NavyBlue,
+}
+
 % Settings
 \hfuzz=6pt % tolerance on hbox overflows
 
 % Custom command
 \newcommand{\ud}{\,\mathrm{d}}
 \renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
-
-\hypersetup{
-    colorlinks=true,
-    allcolors=cyan,
-}
+\newcommand{\hquad}{~~}
 
 % Begin!
 \begin{document}
@@ -405,7 +412,7 @@ following:
     \item I propose an approach to statistical inference on a population of microlensing
           events which different from existing methods and has some advantages.
     \item I briefly discuss the issue of correlated noise in microlensing light curves
-          and propose ways to account for it using Gaussian Processes.
+          and propose ways to account for it using Gaussian processes.
 \end{itemize}
 
 \section{Occultation and phase curve mapping}
@@ -866,8 +873,8 @@ the flux of other nearby stars in the dense stellar field and potentially also
 with light from the lens and possible companions to the lens. The observed flux
 is thus given by
 \begin{equation}
-    F(t)=F_S(t)+F_B(t)
-    \label{eq:flux_observed}
+    F(t)=F_S\,A(t)+F_B
+    \label{eq:flux_observed_micro}
 \end{equation}
 where $F_s$ is the flux of the source star and $F_B$ is the contamination flux also
 called the \emph{blending flux}. To quantify the strength of the blending e can
@@ -883,7 +890,7 @@ and it is often preferable to use a slightly different parametrization proposed 
 \emph{baseline flux} $F_\mathrm{base}$ and the difference between
 the baseline flux and the flux at peak magnification $\Delta F\equiv F_S[A(u_0)-1]$
 as the new parameters.
-Equation~\ref{eq:flux_observed} then takes the form
+Equation~\ref{eq:flux_observed_micro} then takes the form
 \begin{equation}
     f=\Delta F\frac{A(t) - 1}{A(t_0)-1}+F_\mathrm{base}
     \label{eq:flux_dominik}
@@ -1632,7 +1639,7 @@ they become polynomials in these variables (see Appendix A in \citet{2019AJ....1
 We can expand the specific intensity distribution $I(x,y)$ in a spherical harmonic basis
 as
 \begin{equation}
-    I(x, y)=\tilde{\mathbf{y}}^{\top}(x, y) \mathbf{y}
+    I(x, y)=\tilde{\mathbf{y}}^{\intercal}(x, y) \mathbf{y}
     \label{eq:sh_expansion}
 \end{equation}
 where $\tilde{\mathbf{y}}$ is the basis vector of spherical harmonics  arranged in
@@ -1643,7 +1650,7 @@ increasing order:
                                 \end{array}\right. \\
      & \left.\begin{array}{lllll}
                  Y_{2,-1} & Y_{2,0} & Y_{2,1} & Y_{2,2} & \cdots
-             \end{array}\right)^{\top} \quad,
+             \end{array}\right)^{\intercal} \quad,
 \end{align}
 and $\mathbf{y}$ is a vector of scalar \emph{spherical harmonic coefficients}.
 $\mathbf{y}$ is a central quantity which defines the \emph{map} (the specific
@@ -1653,25 +1660,25 @@ intensity at every point) of the body.
 \begin{equation}
     \tilde{\boldsymbol{p}}=\left(\begin{array}{llllllllll}
         1 & x & z & y & x^{2} & x z & x y & y z & y^{2} & \cdots
-    \end{array}\right)^{\top}
+    \end{array}\right)^{\intercal}
 \end{equation}
 such that
 \begin{align}
-    I(x, y) & =\tilde{\mathbf{p}}^{\top}(x, y) \mathbf{p}                    \\
-            & =\tilde{\mathbf{p}}^{\top}(x, y) \mathbf{A}_1 \mathbf{y}\quad,
+    I(x, y) & =\tilde{\mathbf{p}}^{\intercal}(x, y) \mathbf{p}                    \\
+            & =\tilde{\mathbf{p}}^{\intercal}(x, y) \mathbf{A}_1 \mathbf{y}\quad,
     \label{eq:intensity_poly_basis}
 \end{align}
 and also in the Green's basis
 \begin{equation}
     \tilde{\boldsymbol{g}}=\left(\begin{array}{llllllllll}
         1 & 2 x & z & y & 3 x^{2} & -3 x z & 2 x y & 3 y z & y^{2} & \cdots
-    \end{array}\right)^{\top}
+    \end{array}\right)^{\intercal}
 \end{equation}
 such that
 \begin{align}
-    I(x, y) & =\tilde{\mathbf{g}}^{\top}(x, y) \mathbf{g}              \\
-            & =\tilde{\mathbf{g}}^{\top}(x, y) \mathbf{A}_2 \mathbf{p} \\
-            & =\tilde{\mathbf{g}}^{\top}(x, y) \mathbf{A} \mathbf{y}
+    I(x, y) & =\tilde{\mathbf{g}}^{\intercal}(x, y) \mathbf{g}              \\
+            & =\tilde{\mathbf{g}}^{\intercal}(x, y) \mathbf{A}_2 \mathbf{p} \\
+            & =\tilde{\mathbf{g}}^{\intercal}(x, y) \mathbf{A} \mathbf{y}
 \end{align}
 where $\mathbf{A}_1$ is the change-of-basis matrix from $\mathbf{y}$ to $\mathbf{p}$,
 $\mathbf{A}_2$ is the change-of-basis matrix from $\mathbf{p}$ to $\mathbf{g}$, and
@@ -1685,14 +1692,14 @@ and rotational phase $\Theta$. The rotated map is then $\mathbf{R}(\mathrm{I},
     \Lambda, \Theta) \mathbf{y}$ and Equation~\ref{eq:intensity_poly_basis} can be
 rewritten more generally as
 \begin{equation}
-    I(x, y)=\tilde{\mathbf{p}}^{\top}(x, y) \mathbf{A}_1 \mathbf{R}\mathbf{y}
+    I(x, y)=\tilde{\mathbf{p}}^{\intercal}(x, y) \mathbf{A}_1 \mathbf{R}\mathbf{y}
 \end{equation}
 The total flux measured by an observer is is given by an integral of the specific
 intensity over a region S of the projected disc of the body:
 \begin{align}
-    F & =\oiint I(x, y) \ud S                                                            \\
-      & =\oiint \tilde{\mathbf{p}}^{\top}(x, y) \mathbf{A}_{1} \mathbf{R} \mathbf{y} d S \\
-      & =\mathbf{r}^{\top} \mathbf{A}_{1} \mathbf{R} \mathbf{y}
+    F & =\oiint I(x, y) \ud S                                                                 \\
+      & =\oiint \tilde{\mathbf{p}}^{\intercal}(x, y) \mathbf{A}_{1} \mathbf{R} \mathbf{y} d S \\
+      & =\mathbf{r}^{\intercal} \mathbf{A}_{1} \mathbf{R} \mathbf{y}
 \end{align}
 where $\mathbf{r}$ is a column vector whose $n$-th element is \citep{2019AJ....157...64L}
 \begin{equation}
@@ -1712,12 +1719,12 @@ is partially occulted by an occultor of radius $r$, centered at $(x_o, y_o)$
 and the exposed portion of the disc is a function of $(r, x_o, y_o)$. The
 general expression for the flux is
 \begin{align}
-    F & =\oiint I(x, y) \mathrm{d} S                         \\
-      & =\mathbf{s}^\top  \mathbf{A} \mathbf{R} \mathbf{y} .
+    F & =\oiint I(x, y) \mathrm{d} S                              \\
+      & =\mathbf{s}^\intercal  \mathbf{A} \mathbf{R} \mathbf{y} .
 \end{align}
 where the vector
 \begin{equation}
-    \mathbf{s}^\top \equiv \oiint \tilde{\mathbf{g}}^{\top}(x, y) \mathrm{d} S
+    \mathbf{s}^\intercal \equiv \oiint \tilde{\mathbf{g}}^{\intercal}(x, y) \mathrm{d} S
 \end{equation}
 is defined to be the solution to the integral.
 \citet{2019AJ....157...64L} solves this integral in two steps.  First, we rotate
@@ -1728,7 +1735,7 @@ the limits of integration.
 The second step is to use Green's theorem to express the surface integral of
 $\tilde{\mathbf{g}}_n$ as a line integral of a vector function $\mathbf{G}_n$
 along the boundary of the visible portion of the occulted disc.
-The $n$-th element of the solution vector $\mathbf{s}^\top$ is
+The $n$-th element of the solution vector $\mathbf{s}^\intercal$ is
 \begin{equation}
     s_{n}=\oiint \tilde{g}_{n}(x, y) \mathrm{d} S=\oint \mathbf{G}_{n}(x, y) \cdot \ud \mathbf{r}
 \end{equation}
@@ -1813,7 +1820,7 @@ fraction of power incident on a body at a given wavelength that is scattered
 into space in all directions) distribution is expanded in a basis of spherical
 harmonics. Thus, analogous to Equation~\ref{eq:sh_expansion} we have
 \begin{equation}
-    A(x, y)=\tilde{\mathbf{y}}^{\top}(x, y) \mathbf{y}
+    A(x, y)=\tilde{\mathbf{y}}^{\intercal}(x, y) \mathbf{y}
 \end{equation}
 where $A$ is the albedo. We work under the assumption of isotropic (Lambertian)
 scattering of light at every point on the body which means that the illumination
@@ -1875,7 +1882,7 @@ integral of $A\,\mathcal{I}$ over the units disc is equal to the flux measured b
 observer as a fraction of the flux of the illumination source.
 To compute the total flux, we need to weigh each of the terms in the Green's basis
 and integrate them over the visible portion of the body's disc to obtain
-the reflected light solution vector $\mathbb{s}^\top$.
+the reflected light solution vector $\mathbb{s}^\intercal$.
 Evaluating these integrals is unfortunately intractable because of the piecewise
 function in Equation~\ref{eq:illumination}. It is more tractable to weight the basis
 terms by the function $I$ and modify the limits of integration such that the nightside
@@ -1883,7 +1890,7 @@ of the body is excluded. \citet{2021arXiv210306275L} shows that $I$ can be expre
 in the form of a linear operator $\mathbf{I}$ to weight a map vector  in the polynomial
 basis $\tilde{\mathbf{p}}$ by the illumination profile. The total flux is then
 \begin{equation}
-    f=\mathbb{s}^\top\left(b, \theta^{\prime}, b_{\mathrm{o}}, r_{\mathrm{o}}\right) \mathbf{A}_{\mathbf{2}} \mathbf{I}\left(b, \theta^{\prime}, r_{\mathrm{s}}\right) \mathbf{A}_{\mathbf{1}} \mathbf{R}^{\prime}\left(x_{\mathrm{o}}, y_{\mathrm{o}}\right) \mathbf{R}(\mathrm{I}, \Lambda, \Theta) \mathbf{y}
+    f=\mathbb{s}^\intercal\left(b, \theta^{\prime}, b_{\mathrm{o}}, r_{\mathrm{o}}\right) \mathbf{A}_{\mathbf{2}} \mathbf{I}\left(b, \theta^{\prime}, r_{\mathrm{s}}\right) \mathbf{A}_{\mathbf{1}} \mathbf{R}^{\prime}\left(x_{\mathrm{o}}, y_{\mathrm{o}}\right) \mathbf{R}(\mathrm{I}, \Lambda, \Theta) \mathbf{y}
 \end{equation}
 where
 \begin{equation}
@@ -1893,7 +1900,7 @@ where
 is the angle of the terminator in frame $\mathcal{F}^\prime$.
 In case the illuminated body is not occulted we have
 \begin{equation}
-    f_{0}=\mathbb{r}^{\top}(b) \mathbf{I}\left(b, \theta^{\prime \prime}, r_{\mathrm{s}}\right) \mathbf{A}_{\mathbf{1}} \mathbf{R}^{\prime \prime}\left(x_{\mathrm{s}}, y_{\mathrm{s}}\right) \mathbf{R}(\mathrm{I}, \Lambda, \Theta) \mathbf{y}
+    f_{0}=\mathbb{r}^{\intercal}(b) \mathbf{I}\left(b, \theta^{\prime \prime}, r_{\mathrm{s}}\right) \mathbf{A}_{\mathbf{1}} \mathbf{R}^{\prime \prime}\left(x_{\mathrm{s}}, y_{\mathrm{s}}\right) \mathbf{R}(\mathrm{I}, \Lambda, \Theta) \mathbf{y}
     \label{eq:starry_ref_phase}
 \end{equation}
 where $\theta^{\prime\prime}=0$ is the angle of the terminator in frame
@@ -1901,7 +1908,7 @@ $\mathcal{F}^{\prime\prime}$ by construction. $\mathbf{R}^{\prime\prime}$ rotate
 body through an angle $\arctan 2\left(x_{\mathrm{s}}, y_{\mathrm{s}}\right)$ so the
 semi-major axis of the terminator is aligned with the $x^{\prime \prime}$ axis.
 The solutions to integrals
-$\mathbb{r}^{\top}(b)$ and $\mathbb{s}^{\top}\left(b, \theta^{\prime}, b_{\mathrm{o}}, r_{\mathrm{o}}\right)$
+$\mathbb{r}^{\intercal}(b)$ and $\mathbb{s}^{\intercal}\left(b, \theta^{\prime}, b_{\mathrm{o}}, r_{\mathrm{o}}\right)$
 are anything but trivial, they are derived in the appendices of
 \citet{2021arXiv210306275L}. The key point is that the model is once again linear and
 the matrices in Equations~\ref{eq:starry_ref} and \ref{eq:starry_ref_phase} need to be
@@ -1930,6 +1937,7 @@ computing the total flux and allows us to treat this problem as a linear
 problem of the form
 \begin{equation}
     f = \mathbf{X}\mathbf{y}
+    \label{eq:starry_linear_model}
 \end{equation}
 where  $\mathbf{X}$ is computed by \textsf{starry} depending on the geometry of an
 occultation or transit event. The inverse problem is highly degenerate
@@ -1949,8 +1957,8 @@ very different regime of exoplanet eclipse mapping where the signal-to-noise is
 orders of magnitude worse than in the case of Io. In both cases we mostly focus
 on thermal light curves rather than light curves in reflected light.
 
-\section{Statistical inference -- theory}
-\label{sec:inference_theory}
+\section{Statistical inference -- introduction}
+\label{sec:inference_intro}
 Having covered the basic physics behind gravitational lensing and occultation mapping I
 now turn to the subject of statistical inference in general and more specifically --
 Bayesian statistical inference. Bayesian (as opposed to frequentist)
@@ -2047,6 +2055,7 @@ parameters of interest:
 \begin{equation}
     p(x_1)=\int p(x_1,x_2)\textrm{d}x_2=\int p(x_1\lvert
     x_2)\,p(x_2)\textrm{d}x_2
+    \label{eq:marginalization}
 \end{equation}
 where we applied Bayes's theorem in the second inequality.
 In cases where the parameter space is high dimensional these integrals might be
@@ -2087,7 +2096,7 @@ The variance is usually denoted by $\sigma^2$ and the square root of $\sigma^2$ 
 For a \emph{multivariate} random variable with $D$ dimensions then the variance generalizes to
 a symmetric, positive semi definite matrix called the \emph{covariance matrix}:
 \begin{align}
-    \operatorname{Cov}[\vec{x}] & \equiv\mathbb{E}\left[(\vec{x}-\mathbb{E}[\vec{x}])(\vec{x}-\mathbb{E}[\vec{x}])^{\top}\right] \equiv \boldsymbol{\Sigma}                                                                                                                                                                                \\
+    \operatorname{Cov}[\vec{x}] & \equiv\mathbb{E}\left[(\vec{x}-\mathbb{E}[\vec{x}])(\vec{x}-\mathbb{E}[\vec{x}])^{\intercal}\right] \equiv \boldsymbol{\Sigma}                                                                                                                                                                           \\
                                 & =\left(\begin{array}{cccc}
                                              \mathbb{V}\left[x_{1}\right]                & \operatorname{Cov}\left[x_{1}, x_{2}\right] & \cdots & \operatorname{Cov}\left[x_{1}, x_{D}\right] \\
                                              \operatorname{Cov}\left[x_{2}, x_{1}\right] & \mathbb{V}\left[x_{2}\right]                & \cdots & \operatorname{Cov}\left[x_{2}, x_{D}\right] \\
@@ -2152,7 +2161,7 @@ to $\mathbb{R}^n$ with inverse $\vec{g}$, the pdf of $\vec{y}=\vec{f}(\vec{x})$ 
 \begin{equation}
     p_{y}(\vec{y})=p_{x}(\vec{g}(\vec{y}))\left|\operatorname{det}\mathbf{J}_{g}(\vec{y})\right|
 \end{equation}
-where $\vec{J}_{g}=\frac{\ud \vec{g}(\vec{y})}{\ud \vec{y}^{\top}}$ is the Jacobian of $\vec{g}$
+where $\vec{J}_{g}=\frac{\ud \vec{g}(\vec{y})}{\ud \vec{y}^{\intercal}}$ is the Jacobian of $\vec{g}$
 and $\operatorname{det}|\mathbf{J}(\vec{y})|$ is the determinant of the Jacobian.
 
 \subsubsection{Kullback Leibler divergence}
@@ -2318,7 +2327,7 @@ constant $ p(\mathcal{D})$ in the denominator:
     \mathcal{Z}\equiv p(\mathcal{D})=\int p(\mathcal D\lvert\boldsymbol\theta)\,p(\boldsymbol\theta)\textrm{d}\boldsymbol\theta
     \label{eq:evidence}
 \end{equation}
-is often called the \emph{fully marginalized likelihood} because
+is often called the \textsl{fully marginalized likelihood} because
 it is a likelihood marginalized over all of the parameters of the model.
 Sometimes
 it is also called the \emph{Bayesian evidence}.
@@ -2328,47 +2337,6 @@ Fortunately, in most cases, we can obtain the posterior distribution without hav
 to calculate $\mathcal{Z}$.
 
 %% mention the likelihood principle
-\section{Statistical inference}
-\label{sec:inference_practice}
-In the previous section I briefly summarized some key aspects of probability theory
-and Bayesian statistics but I haven't discussed how to apply these ideas in practice. That
-is the subject of statistical inference. I start by introducing some very fundamental
-concepts such as the \emph{curse of dimensionality} and the \emph{no free lunch theorems}.
-I then cover linear models which are the foundation of all statistics and also relevant
-for the occultation mapping work since the problem is linear.
-Next, I discuss various computational inference methods such
-as optimization methods, Markov chain Monte Carlo and Variational Inference.
-Finally, I discuss model comparison and evaluation.
-
-\subsection{The curse of dimensionality and the no-free-lunch theorem}
-The \emph{curse of dimensionality} refers to a phenomenon where the
-\emph{volume} of \emph{possible} explanations for the data grows exponentially
-with increasing dimension of the problem. Consider the following
-example\footnote{ Taken from the excellent paper by \citet{arXiv:2104.00008}.
-}. There are images consisting of $n$ pixels where each of the pixels is either
-a black (0) or white (1). The number of possible images is $2^n$ which grows
-exponentially. If each image out of the $2^n$ possible images is described by
-one of two labels $A$, or $B$ then the total number of possible ways of
-labeling the set of images is $2^{2^n}$ which is a stupidly large number. If
-$n=9$, the number of ways to classify the set of all 9-bit black and white
-images is greater than the number of atoms in the observable universe. If the
-labels don't correlate with the properties of the images then one strategy for
-solving this problem would be the lookup table approach -- memorize each image
-with its label. The famous \emph{no-free-lunch theorem} (NFLT) proved by the
-mathematician David Wolpert \citep{wolpert1996} demonstrates that it is
-impossible to construct an algorithm which does better than the lookup table
-approach.
-
-Of course the assumption that the labels aren't correlated to features in the
-images is silly for any meaningful problem. For instance, all images of cats
-have certain things in common as do images of galaxies. The no-free-lunch
-theorem doesn't say that it is impossible to construct an algorithm to classify
-images of cats, it only says that there is no best algorithm \emph{if we
-    average over all possible inputs to the problem}. To construct an algorithm
-which works in practice we need to impose structure on the problem, what
-machine learning researchers call \emph{inductive bias}. A set of assumptions
-which work in one domain may not work well in another domain and no single
-model will work well in all domains.
 
 \subsection{Maximum likelihood estimation}
 One of the most popular inference methods is called \emph{maximum likelihood
@@ -2397,7 +2365,7 @@ negative log likelihood) with respect to the parameters $\vec{\theta}$:
 The log-likelihood of multivariate Gaussian distribution without the
 unnecessary constants is
 \begin{equation}
-    L L(\boldsymbol{\mu}, \boldsymbol{\Sigma})=\log p(\mathcal{D} \lvert \boldsymbol{\mu}, \boldsymbol{\Sigma})=\frac{N}{2} \log |\vec{\Sigma}^{-1}|-\frac{1}{2} \sum_{n=1}^{N}\left(\boldsymbol{y}_{n}-\boldsymbol{\mu}\right)^{\top} \vec{\Sigma}^{-1}\left(\boldsymbol{y}_{n}-\boldsymbol{\mu}\right)
+    L L(\boldsymbol{\mu}, \boldsymbol{\Sigma})=\ln p(\mathcal{D} \lvert \boldsymbol{\mu}, \boldsymbol{\Sigma})=\frac{N}{2} \ln |\vec{\Sigma}^{-1}|-\frac{1}{2} \sum_{n=1}^{N}\left(\boldsymbol{y}_{n}-\boldsymbol{\mu}\right)^{\intercal} \vec{\Sigma}^{-1}\left(\boldsymbol{y}_{n}-\boldsymbol{\mu}\right)
 \end{equation}
 where $\vec{y}_n$ are the data points and $\vec{\Sigma}^{-1}$ is
 the inverse covariance matrix, also knowns as the \emph{precision matrix}.
@@ -2409,28 +2377,29 @@ is given by the sample mean (empirical mean) of the data \citep{murphy_book_2022
 Similarly, the MLE of the the covariance matrix $\hat{\vec{\Sigma}}$ is equal to
 the empirical covariance matrix
 \begin{equation}
-    \hat{\boldsymbol{\Sigma}}=\frac{1}{N} \sum_{n=1}^{N}\left(\boldsymbol{y}_{n}-\overline{\boldsymbol{y}}\right)\left(\boldsymbol{y}_{n}-\overline{\boldsymbol{y}}\right)^{\top}
+    \hat{\boldsymbol{\Sigma}}=\frac{1}{N} \sum_{n=1}^{N}\left(\boldsymbol{y}_{n}-\overline{\boldsymbol{y}}\right)\left(\boldsymbol{y}_{n}-\overline{\boldsymbol{y}}\right)^{\intercal}
 \end{equation}
 Thus, whenever we compute an empirical mean and the covariance for a given datasets we
 are implicitly assuming that the data is normally distributed and obtaining an MLE
 estimate of that distribution.
 
 \subsection{Least squares linear regression}
+\label{ssec:least_squares}
 In this section we cover the classical non Bayesian formulation of linear
 regression, also known as \emph{least squares regression} and in the next
 section we generalize to the Bayesian case. In a (multiple) linear regression
 model we have (noisy) measurements $\vec{y}\in \mathbb{R}^n$ (\emph{dependent
     variable}), an $n\times p$ matrix $\vec{M}\in \mathbb{R}^{n\times p}$ of inputs
-(\emph{independent variables}, \emph{covariates}, or \emph{features}) and a
-vector of \emph{regression coefficients} or \emph{weights} $\vec{\theta}\in
-    \mathbb{R}^p$. This is a very general model because the matrix $\vec{M}$ can
-consist of basis functions such as polynomials, spherical harmonics, Fourier
-modes, wavelets etc. so although the model is linear in the parameters
-(regression coefficients), it is not generally linear in the raw input data. If
-we assume that the observations $\vec{y}$ have Gaussian noise we can write down
-the likelihood of this model as
+(\emph{design matrix} consisting of \emph{independent variables},
+\emph{covariates}, or \emph{features}) and a vector of \emph{regression
+    coefficients} or \emph{weights} $\vec{w}\in \mathbb{R}^p$. This is a very
+general model because the matrix $\vec{M}$ can consist of basis functions such
+as polynomials, spherical harmonics, Fourier modes, wavelets etc. so although
+the model is linear in the parameters (regression coefficients), it is not
+generally linear in the raw input data. If we assume that the observations
+$\vec{y}$ have Gaussian noise we can write down the likelihood of this model as
 \begin{equation}
-    p(\vec{y}\lvert \vec{\theta})=\mathcal{N}(\vec{y}\lvert\vec{M}\vec{\theta}, \vec{C})
+    p(\vec{y}\lvert \vec{w})=\mathcal{N}(\vec{y}\lvert\vec{M}\vec{w}, \vec{C})
 \end{equation}
 where $\vec{C}$ is the data covariance matrix and $\mathcal{N}$ is shorthand notation for
 the multivariate normal distribution. In astronomical application it is usually
@@ -2438,7 +2407,7 @@ assumed to be diagonal and we might have some idea for the scale of the variance
 of the diagonal elements (the ``errorbars'').
 The negative log likelihood (NLL) is then equal (ignoring constants)  to
 \begin{equation}
-    \operatorname{NLL}(\vec{\theta})=\frac{1}{2}(\vec{M} \vec{\theta}-\vec{y})^{\top}\vec{C}^{-1}(\vec{M} \vec{\theta}-\vec{y})
+    \operatorname{NLL}(\vec{w})=\frac{1}{2}(\vec{M} \vec{w}-\vec{y})^{\intercal}\vec{C}^{-1}(\vec{M} \vec{w}-\vec{y})
 \end{equation}
 which is just the well known least squares objective or (half the) $\chi^2$ as it is known
 in astronomy.
@@ -2446,26 +2415,26 @@ in astronomy.
 \subsubsection{Underdetermined case ($p < n$)}
 For now, let's assume that the inverse data covariance matrix $\vec{C}^{-1}$ is
 a diagonal matrix with the the same variance $\sigma^2$ for every data point.
-In that case the MLE solution for the weights $\vec{\theta}$ is the solution to
-the following (convex) optimization problem:
+In that case the MLE solution for the weights $\vec{w}$ is the solution to the
+following (convex) optimization problem:
 \begin{equation}
-    \hat{\vec{\theta}}=
-    \underset{\boldsymbol{\theta}}{\operatorname{argmin}}\|\vec{y}-\vec{M} \vec{\theta}\|_{2}^{2}
+    \hat{\vec{w}}=
+    \underset{\boldsymbol{w}}{\operatorname{argmin}}\left|\vec{y}-\vec{M} \vec{w}\right|^{2}
     \label{eq:ols_objective}
 \end{equation}
 There is a closed form solution for Equation~\ref{eq:ols_objective} as long as the number
 of parameters and features $p$ is less than the number of data points $n$ and the solution
 is \citep{arXiv:2101.07256}
 \begin{equation}
-    \hat{\vec{\theta}}=(\vec{M}^{\top} \vec{M})^{-1} \vec{M}^{\top} \vec{y}
+    \hat{\vec{w}}=(\vec{M}^{\intercal} \vec{M})^{-1} \vec{M}^{\intercal} \vec{y}
     \label{eq:ols_solution}
 \end{equation}
-under the assumption that $\vec{M}\vec{M}^\top$ is invertible which is usually the case.
+under the assumption that $\vec{M}\vec{M}^\intercal$ is invertible which is usually the case.
 Equation~\ref{eq:ols_solution} is called the \emph{ordinary least squares} (OLS) solution.
 For a nontrivial data covariance matrix $\vec{C}$ Equation~\ref{eq:ols_solution} generalizes
 to
 \begin{equation}
-    \hat{\vec{\theta}}=(\vec{M}^{\top}\vec{C}^{-1}\vec{M})^{-1} \vec{M}^{\top}\vec{C}^{-1} \vec{y}
+    \hat{\vec{w}}=(\vec{M}^{\intercal}\vec{C}^{-1}\vec{M})^{-1} \vec{M}^{\intercal}\vec{C}^{-1} \vec{y}
     \label{eq:wls_solution}
 \end{equation}
 which is the solution to the \emph{weighted least squares} (WLS) problem.
@@ -2473,21 +2442,21 @@ It is common to modify the least squares objective functions with the addition o
 \emph{regularization} term to prevent overfitting. For instance, we can modify the OLS
 objective (Equation~\ref{eq:ols_objective}) by adding an \emph{L2 regularization} term:
 \begin{equation}
-    \hat{\vec{\theta}}=
-    \underset{\boldsymbol{\theta}}{\operatorname{argmin}}\|\vec{y}-\vec{M} \vec{\theta}\|_{2}^{2} + \lambda \|\vec{\theta}\|_2^2
+    \hat{\vec{w}}=
+    \underset{\boldsymbol{w}}{\operatorname{argmin}}\left|\vec{y}-\vec{M} \vec{w}\right|^{2} + \lambda \left|\vec{w}\right|^2
     \label{eq:ols_objective_l2}
 \end{equation}
 where $\lambda >0$ is a regularization parameter
-which penalizes large magnitudes of the coefficients $\vec{\theta}$. This is also a convex
+which penalizes large magnitudes of the coefficients $\vec{w}$. This is also a convex
 optimization problem and the solution is
 \begin{equation}
-    \hat{\vec{\theta}}=(\vec{M}^{\top} \vec{M} + \lambda\vec{I})^{-1} \vec{M}^{\top} \vec{y}
+    \hat{\vec{w}}=(\vec{M}^{\intercal} \vec{M} + \lambda\vec{I})^{-1} \vec{M}^{\intercal} \vec{y}
     \label{eq:ols_solution_l2}
 \end{equation}
 where $\vec{I}$ is the identity matrix. Regularized OLS regression with this particular
 regularization term is also known as \emph{ridge regression} in the statistics
 literature\footnote{One of the many things that make statistics confusing is that very
-    similar methods often have special names which obscures the big picture. The vast majority
+    similar methods often have special names wich obscures the big picture. The vast majority
     of statistical methods can be seen as a linear model with the data represented in a particular
     basis, and with a particular choice of the likelihood (noise model), priors (regularization)
     and  a method for obtaining the solution (usually a convex optimization problem).}
@@ -2499,21 +2468,20 @@ The above also naturally generalizes to the case of weighted least squares.
 Contrary to popular belief within the astronomy community it is possible and
 often desirable to have a model with more parameters than data points (see
 Chapter~\ref{ch:mapping_io} for a real world example). In the overparametrized
-case of linear regression $(p > n)$ there are multiple choices for
-$\vec{\theta}$ which perfectly fit the data. The solution in that case is
-defined to be a minimum-norm parameter vector $\vec{\theta}$ that interpolates
-the data ($\vec{y}=\vec{M} \vec{\theta}$), out of possibly many degenerate
-solutions. The OLS objective in Equation~\ref{eq:ols_objective} can be modified
-such that it is valid for both the $p<n$ and the $p>n$ case by making use of a
-limit in which an L2 regularization term tends to zero
-\citep{arXiv:2101.07256}:
+case of linear regression $(p > n)$ there are multiple choices for $\vec{w}$
+which perfectly fit the data. The solution in that case is defined to be a
+minimum-norm parameter vector $\vec{w}$ that interpolates the data
+($\vec{y}=\vec{M} \vec{w}$), out of possibly many degenerate solutions. The OLS
+objective in Equation~\ref{eq:ols_objective} can be modified such that it is
+valid for both the $p<n$ and the $p>n$ case by making use of a limit in which
+an L2 regularization term tends to zero \citep{arXiv:2101.07256}:
 \begin{equation}
-    \hat{\vec{\theta}}=\lim _{\lambda \rightarrow 0^{+}}\left[
-    \underset{\boldsymbol{\theta}}{\operatorname{argmin}}\|\vec{y}-\vec{M} \vec{\theta}\|_{2}^{2} + \lambda \|\vec{\theta}\|_2^2\right]\quad .
+    \hat{\vec{w}}=\lim _{\lambda \rightarrow 0^{+}}\left[
+    \underset{\boldsymbol{w}}{\operatorname{argmin}}\left|\vec{y}-\vec{M} \vec{w}\right|^{2} + \lambda \left|\vec{w}\right|^2\right]\quad .
 \end{equation}
 In this case the OLS solution becomes
 \begin{equation}
-    \hat{\vec{\theta}}=\vec{M}^{\top} (\vec{M} \vec{M}^{\top})^{-1} \vec{y}
+    \hat{\vec{w}}=\vec{M}^{\intercal} (\vec{M} \vec{M}^{\intercal})^{-1} \vec{y}
     \label{eq:ols_solution_overdet}
 \end{equation}
 Equations~\ref{eq:ols_solution} and \ref{eq:ols_solution_overdet} can be unified into a
@@ -2521,62 +2489,1600 @@ single equation by making use of the \emph{Moore-Penrose pseudoinverse} $\vec{M}
 The pseudoinverse is defined by taking the singular-value decomposition (SVD)
 of $\vec{M}$:
 \begin{equation}
-    \vec{M}^\dagger\equiv\vec{U} \vec{S}^\dagger \vec{V}^\dagger
+    \vec{M}\equiv\vec{U} \vec{S} \vec{V}
 \end{equation}
-Then $\vec{M}^\dagger\equiv  \vec{V}^{\top} \vec{S}^{\dagger} \vec{U}^{\top}$.
+Then $\vec{M}^\dagger =  \vec{V}^{\intercal} \vec{S}^{\dagger} \vec{U}^{\intercal}$.
 
 \subsection{Bayesian linear regression}
 In the Bayesian paradigm we can write down the posterior over the regression
-weights $\vec{\theta}$ assuming a Gaussian likelihood and a Gaussian prior over
-the weights. The posterior is then proportional to
+weights $\vec{w}$ assuming a Gaussian likelihood and a Gaussian prior over the
+weights. The posterior is then
 \begin{align}
-    p(\vec{\theta}|\vec{y}) & \propto p(\vec{y}\lvert \vec{\theta})\,p(\vec{\theta})                                                          \\
-                            & =\mathcal{N}(\vec{y}\lvert\vec{M}\vec{\theta},\vec{C})\,\mathcal{N}(\vec{\theta}\lvert \vec{\mu},\vec{\Lambda})
+    p(\vec{w}|\vec{y}) & = \frac{p(\vec{y}\lvert \vec{w})\,p(\vec{w})}{\int p(\vec{y}\lvert \vec{w})p(\vec{w}) \ud\vec{w}}                                                                                                                                                 \\
+                       & = \frac{    \mathcal{N}(\vec{y} \lvert\vec{M} \vec{w}, \vec{C}) \,\mathcal{N}(\vec{w} \lvert\vec{\mu}, \vec{\Lambda})}{\int \mathcal{N}(\vec{y} \lvert\vec{M} \vec{w}, \vec{C}) \,\mathcal{N}(\vec{w} \lvert\vec{\mu}, \vec{\Lambda}) \ud\vec{w}}
     \label{eq:bayes_lin_regression}
 \end{align}
 where $\vec{C}$ is the data covariance matrix as before, $\vec{\mu}$ is the mean
 of the Gaussian prior on coefficients and $\vec{\Lambda}$ is the the prior covariance matrix.
-The product of two multivariate Gaussian distributions is also a multivariate Gaussian distribution
-and the solution to Equation~\ref{eq:bayes_lin_regression} is \citep{arXiv:2005.14199}
+Using the fact that the product of two multivariate Gaussian distributions is also a
+multivariate Gaussian distribution, one can show that
+the solution to Equation~\ref{eq:bayes_lin_regression} is
+\citep[see for example][]{arXiv:2005.14199}
 \begin{equation}
-    \mathcal{N}(\vec{y} \lvert\vec{M} \vec{\theta}, \vec{C}) \,\mathcal{N}(\vec{\theta} \lvert\vec{\mu}, \vec{\Lambda})=\mathcal{N}(\vec{\theta} \lvert\vec{a}, \vec{A}) \,\mathcal{N}(\vec{y} \lvert\vec{b}, \vec{B})
+    p(\vec{w}|\vec{y}) =\mathcal{N}(\vec{w} \lvert\vec{a}, \vec{A})
+    \label{eq:linear_regression_posterior}
 \end{equation}
 where
 \begin{align}
-     & \vec{A}^{-1}   =\vec{\Lambda}^{-1}+\vec{M}^{\top} \vec{C}^{-1} \vec{M}                                                         \\
-     & \vec{a}         =\vec{A} \left(\boldsymbol{\Lambda}^{-1} \boldsymbol{\mu}+\vec{M}^{\top} \mathbf{C}^{-1} \boldsymbol{y}\right) \\
-     & \mathbf{B}      =\mathbf{C}+\vec{M} \boldsymbol{\Lambda} \vec{M}^{\top}                                                        \\
-     & \boldsymbol{b}  =\vec{M} \boldsymbol{\mu}
+     & \vec{A}^{-1}   =\vec{\Lambda}^{-1}+\vec{M}^{\intercal} \vec{C}^{-1} \vec{M}                                                     \\
+     & \vec{a}     =\vec{A} \left(\boldsymbol{\Lambda}^{-1} \boldsymbol{\mu}+\vec{M}^{\intercal} \mathbf{C}^{-1} \boldsymbol{y}\right) \\
+\end{align}
+Since all \textsf{starry} models for occultation light curves are linear
+(Equation~\ref{eq:starry_linear_model}) we can use Equation~\ref{eq:linear_regression_posterior}
+to directly obtain the posterior over the map coefficients $\mathbf{y}$ but the cost
+of doing so is imposing a Gaussian prior on the map coefficients.
+
+\subsection{Marginalizing a likelihood over linear parameters}
+A model structure which is quite common in astronomy and physics is a model
+which depends on some linear, and some nonlinear parameters. This is the
+structure of the equation for the observed flux in microlensing
+(Equations~\ref{eq:flux_observed_micro} or \ref{eq:flux_dominik}) where the
+flux parameters are linear and the magnification parameters are nonlinear. The
+likelihoods for such models can be written as
+\begin{equation}
+    p(\vec{y}\lvert \vec{w}, \vec{\theta})
+\end{equation}
+where $\vec{w}$ are the linear parameters and $\vec{\theta}$ are the nonlinear parameters.
+In some circumstances, it is possible to analytically marginalize over the linear
+parameters $\vec{w}$. Doing so is often advantageous because it reduces the size of the
+parameter space  and the computational cost of doing inference.
+The marginalized likelihood is given by (Equation~\ref{eq:marginalization})
+\begin{equation}
+    p(\vec{y}\lvert \vec{\theta})=\int p(\vec{y}\lvert \vec{w}, \vec{\theta})p(\vec{w}\lvert \vec{\theta}) \ud\vec{w}
+\end{equation}
+Marginalization requires the introduction of a prior  $p(\vec{w}\lvert \vec{\theta})$
+which can potentially also depend on the nonlinear parameters $\vec{\theta}$.
+The alternative to doing this integral is re-factorizing the expression in the integrand
+using Bayes' theorem:
+\begin{equation}
+    p(\vec{y}\lvert \vec{w}, \vec{\theta})p(\vec{w}\lvert \vec{\theta})  = p(\vec{w}\lvert \vec{y},\vec{\theta})\,p(\vec{y}\lvert \vec{\theta})
+\end{equation}
+which yields the marginalized likelihood without us having to do the integral:
+\begin{equation}
+    p(\vec{y}\lvert \vec{\theta}) = \frac{    p(\vec{y}\lvert \vec{w}, \vec{\theta})p(\vec{w}\lvert \vec{\theta})}{p(\vec{w}\lvert \vec{y},\vec{\theta})}
+    \label{eq:likelihood_factorization}
+\end{equation}
+If both the prior and the likelihood are multivariate Gaussians with the following form:
+\begin{align}
+    p(\vec{y}\lvert \vec{w}, \vec{\theta}) & = \mathcal{N}(\vec{y}\lvert \vec{M}\vec{w},\vec{C})  \\
+    p(\vec{w}\lvert \vec{\theta})          & = \mathcal{N}(\vec{w}\lvert \vec{\mu},\vec{\Lambda})
+\end{align}
+then Equation~\ref{eq:likelihood_factorization} becomes
+\citep[for the proof see][]{arXiv:2005.14199}
+\begin{equation}
+    \mathcal{N}(\vec{y} \lvert \vec{M} \vec{w}, \vec{C})\, \mathcal{N}(\vec{w} \lvert\vec{\mu}, \vec{\Lambda})=\mathcal{N}(\vec{w} \lvert\vec{a}, \vec{A})\, \mathcal{N}(\vec{y} \lvert\vec{b}, \vec{B})
+\end{equation}
+where
+\begin{align}
+     & \vec{A}^{-1}   =\vec{\Lambda}^{-1}+\vec{M}^{\intercal} \vec{C}^{-1} \vec{M}                                                     \\
+     & \vec{a}     =\vec{A} \left(\boldsymbol{\Lambda}^{-1} \boldsymbol{\mu}+\vec{M}^{\intercal} \mathbf{C}^{-1} \boldsymbol{y}\right) \\
+     & \mathbf{B}=\mathbf{C}+\vec{M} \vec{\Lambda} \vec{M}^{\intercal}                                                                 \\
+     & \vec{b}=\vec{M} \vec{\mu}
+\end{align}
+Thus the marginalized likelihood is
+\begin{equation}
+    p(\vec{y}\lvert \vec{\theta}) = \mathcal{N}(\vec{y} \lvert \vec{b}, \vec{B})
+    \label{eq:likelihood_lin_params_marginalized}
+\end{equation}
+
+\subsubsection{Application to microlensing}
+Let's apply this trick to the microlensing models
+(Equation~\ref{eq:flux_dominik}). In the general case, the dataset consists of
+$J$ flux vectors $\vec{f}_j$, each of lengths $N_j$ where $j$ indexes different
+spectral bands, often from different observatories as well.
+Equation~\ref{eq:flux_dominik} can then be written in vector form as
+\begin{equation}
+    \vec{f}_j=\vec{M}_j\vec{w}_j
+    \label{eq:microlensing_flux_general}
+\end{equation}
+where the matrix $\vec{M}$ is defined as
+\begin{equation}
+    \vec{M}_j\equiv \begin{pmatrix}
+        \tilde{A}(t_1;\vec{\theta})     & 1      \\
+        \tilde{A}(t_2;\vec{\theta})     & 1      \\
+        \vdots                          & \vdots \\
+        \tilde{A}(t_{N_j};\vec{\theta}) & 1
+    \end{pmatrix}
+\end{equation}
+and $t=t_1,\ldots, t_{N_j}$ are the times of observations in band $j$,
+$\tilde{A}(t_i) \equiv (A(t_i)-1) /(A\left(t_{0}\right)-1)$, $\vec{\theta}$ are the
+nonlinear parameters, and the weights vector $\vec{w}_j$ is defined as
+\begin{equation}
+    \vec{w}_j\equiv    \left( \Delta F_j\; F_{\mathrm{base},j}\right)^\intercal
+\end{equation}
+Equation~\ref{eq:microlensing_flux_general} is general enough to encompass
+either single or multiple lens microlensing models. Assuming independence of
+noise properties between observations in different spectral bands\footnote{This
+    is certainly true if we have observations from different telescopes. It is not
+    strictly true if the observations are from the same telescope in different
+    spectral bands but it is often a good enough assumption.} the likelihood for
+the complete dataset
+$\mathcal{D}=\left\{f_{j}\right\}_{j=1}^{J}$ factorizes as
+\begin{equation}
+    p(\mathcal{D}\lvert \vec{w}, \vec{\theta})=\prod_{j=1}^J p(\vec{f}_j\lvert \vec{w}_j, \vec{\theta})
+\end{equation}
+Using Equation~\ref{eq:likelihood_lin_params_marginalized} we can then write down the
+negative log-likelihood (ignoring constants) for the $j$-th band as
+\begin{align}
+    \operatorname{NLL}(\vec{\theta}) & =\frac{1}{2}\left( \vec{f}_j-\vec{M}_j\vec{\mu}\right)^\intercal\left(\vec{C}_j + \vec{M}_j\vec{\Lambda}\vec{M}_j^\intercal\right)^{-1}
+    \left( \vec{f}_j-\vec{M}_j\vec{\mu}\right)                                                                                                                                 \\
+                                     & + \frac{1}{2}\ln\left| \vec{C}_j + \vec{M}_j\vec{\Lambda}\vec{M}_j^\intercal\right|
+    \label{eq:ll_marginalized_microlensing}
+\end{align}
+where we have assumed a common mean $\vec{\mu}$ and covariance $\vec{\Lambda}$ for the
+prior for the linear flux parameters.
+To avoid computing an inverse and a determinant of $J$ matrices with shape $N_j\times N_j$,
+we can simplify the terms in Equation~\ref{eq:ll_marginalized_microlensing} using the
+matrix inversion lemma \citep[see for example Appendix A3 in][]{rasmussen2006}
+\begin{align}
+     & \left(\mathbf{C}_j+\vec{M}_j \boldsymbol{\Lambda} \vec{M}_j^{\intercal}\right)^{-1}=\mathbf{C}_j^{-1}-\mathbf{C}_j^{-1} \vec{M}_j\left(\boldsymbol{\Lambda}^{-1}+\vec{M}_j^{\intercal} \mathbf{C}^{-1} \vec{M_j}\right)^{-1} \vec{M}_j^{\intercal} \mathbf{C}_j^{-1} \\
+     & \ln\left|\mathbf{C}_j+\vec{M}_j \vec{\Lambda} \vec{M}_j^{\intercal}\right|=\ln|\mathbf{C}_j| +\ln|\vec{\Lambda}| + \ln\left|\boldsymbol{\Lambda}^{-1}+\vec{M}_j^{\intercal} \mathbf{C}_j^{-1} \vec{M}_j\right|
+\end{align}
+In most cases we can assume that $\vec{\mu}=\vec{0}$, $\vec{\Lambda}$ is diagonal, and
+in absence of correlated noise all matrices $\vec{C}_j$ are also diagonal so the expression
+in Equation~\ref{eq:ll_marginalized_microlensing} isn't usually expensive to compute.
+
+Although Equation~\ref{eq:ll_marginalized_microlensing} is the formally correct
+way to marginalize the linear parameters of a general microlensing model, it is
+not used in the microlensing literature. What most people do instead is using
+MLE to maximize the joint likelihood $p(\vec{f}\lvert\vec{w},\vec{\theta})$
+with respect to the linear parameters by solving a least squares problem at
+every MCMC step in the nonlinear parameters (we'll cover MCMC in the next
+section). This procedure is approximately equivalent to using the marginalized
+likelihood from Equation~\ref{eq:ll_marginalized_microlensing} with two
+important caveats. The first it that one shouldn't optimize for the maximum
+likelihood flux parameters conditional on nonlinear parameters, but rather the
+MAP values of those parameters under Gaussian priors (although, the difference
+between the MLE and MAP estimates is negligible under broad priors). The second
+caveat is that the optimization can be cast as a linear least squares problem
+under the assumption that the covariance matrix $\vec{C}$ for the data is
+diagonal. This is a fairly restrictive assumptions because it implies that
+there is no correlated noise in the light curve which isn't true for most real
+world microlensing datasets.
+
+Although we have marginalized the likelihood over the linear parameters which
+substantially reduces the complexity of the inference problem we can still
+compute the posterior distribution for those parameters \emph{conditional on
+    the value of the nonlinear parameters}:
+\begin{equation}
+    p(\vec{w}\lvert \vec{y}, \vec{\theta})=\mathcal{N}(\vec{w}\lvert \vec{y}, \vec{\theta})
+\end{equation}
+which we can use to obtain the full posterior over the linear parameters if we happen
+to have samples from the posterior over the nonlinear parameters $p(\vec{\theta}|\vec{y})$
+(obtained using MCMC for example).
+
+\subsection{Gaussian processes}
+% https://peterroelants.github.io/posts/gaussian-process-tutorial/
+\begin{figure}[t]
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/gp_samples.pdf}
+        \caption{A few samples from a Gaussian process prior with a squared exponential
+            kernel function for two different values of the length scale parameter $l$.}
+        \label{fig:gp_samples}
+    \end{centering}
+\end{figure}
+A final topic that we need to cover in this section is that of \textsl{Gaussian
+    Processes}. In Section~\ref{ssec:least_squares} we have discussed linear
+regression with $p$ components (basis functions) and we have mentioned that one
+fit many more components than there are data points and that these models can
+be quite useful. A Gaussian process (GP) is what happens when let the number of
+components $p$ go to infinity\footnote{See \citet{arXiv:2101.07256} for a
+    demonstration of this point.} which is why they belong to a class of methods
+called \textsl{nonparametric regression} methods, although a better name would
+perhaps be infinite-parameter regression methods. This is not the only
+formulation of GPs. GPs can also be seen as \emph{prior distributions over the
+    space of functions} such that each sample from that GP prior is a function.
+More formally, \emph{a Gaussian process is a collection of random variables,
+    any finite number of which have a joint multivariate Gaussian
+    distribution} \citep{rasmussen2006}.
+
+GPs are completely specified by a \textsl{mean function} $\mu (x)$ and a
+positive-definite \textsl{covariance function} $k(x,x^\prime)$ which are
+functions of the input locations $x\in \mathbb{R}^D$ (for example, a time
+coordinate):
+\begin{align}
+    \mu (x)        & =\mathbb{E}[f(x)]                                                    \\
+    k(x, x^\prime) & =\mathbb{E}\left[(f(x) -\mu (x))(f(x^\prime) -\mu (x^\prime))\right]
+\end{align}
+where $x$ and $x^\prime$ are any two different points in the input space.
+We write
+\begin{equation}
+    f(x) \sim \mathcal{G} \mathcal{P}\left(\mu(x), k\left(x, x^{\prime}\right)\right)
+\end{equation}
+Usually the mean function $\mu(x)$  is taken to be zero for simplicity and all the
+magic happens in the covariance function $k(x,x^\prime)$ which describes
+\emph{how  any two points in the input space related to each other}.
+
+One very popular choice for the kernel function is the \textsl{squared
+    exponential} kernel:
+\begin{equation}
+    k(x, x^\prime) = \exp\left(-\frac{1}{2}\frac{\left|x-x^\prime\right|^2}{l^2}\right)\hquad .
+    \label{eq:sqexp}
+\end{equation}
+The above choice of a covariance function implies that the covariance of the outputs
+$f(x)$ evaluated at any two points  will decay exponentially with the square of
+the distance between the two points.
+In other words, function values evaluated at points close to each tend to go hand in hand
+while function values evaluated at points far away from each other are practically
+independent.
+The parameters $l$ sets the length scale which determines how quickly the covariance decays
+to zero with increasing distance between the two points.
+Figure~\ref{fig:gp_samples} shows samples from a GP prior with the squared exponential
+kernel function in the one-dimensional case for two choices of the length sale parameter
+$l$. One special property of this kernel is that it is \textsl{stationary}, meaning
+that the mean and the variance of the samples from the GP prior don't depend on the
+absolute value of the input coordinate $x$, they are the same everywhere because
+the covariance only depends on the difference between any two points $x$ and
+$x^\prime$\footnote{Stationarity is also a general property of time series.
+    A stationary  time series is one whose properties (mean, variance) do not depend
+    on the time at which the series is observed. A GP with a stationary kernel is a very flexible
+    model for stationary time series.}. Not all kernels are stationary. An example of
+a non-stationary kernel would be a kernel similar to the squared exponential but with
+a variance growing linearly with time.
+Kernels can be combined in any number of ways through for example addition and
+multiplication and the result is also a valid kernel.
+\href{https://www.cs.toronto.edu/~duvenaud/cookbook/}{This} pages provides a
+nice visualization of different kernels and their combinations.
+
+The key property of a GP is that for any finite subset
+$\vec{X}=\left\{\mathbf{x}_{1} \ldots \mathbf{x}_{n}\right\}$ of the domain of
+$x$ (that is, any marginal distribution of $x$) is a multivariate Gaussian:
+\begin{equation}
+    f(\vec{x})\sim \mathcal{N}\,(\vec{\mu}(\vec{X}), \vec K(\vec{X}, \vec{X}))
+\end{equation}
+where $\vec K$ is a covariance matrix of shape $n\times n$ which is constructed by
+evaluating  a kernel such as the one defined in Equation~\ref{eq:sqexp} elementwise.
+This is precisely how we plotted
+the functions in Figure~\ref{fig:gp_samples}, we simply chose a dense number of linearly
+spaced grid points, computed the covariance matrix $K$ and then sampled the multivariate
+Gaussian distribution.
+\subsubsection{Predictions from posterior distribution}
+\begin{figure}[t]
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/gp_samples_conditioned.pdf}
+        \caption{Samples from a Gaussian process with squared exponential kernel $l=1$
+            conditioned on observations simulated from a simple sinusoid.
+            The left panel shows the case when we assume that
+            the observations are noiseless in which case the GP perfectly interpolates the data.
+            The right panel shows the case when we assume that the observations are generated
+            from the GP with the addition of some white Gaussian noise with variance $0.1^2$.}
+        \label{fig:gp_samples_conditioned}
+    \end{centering}
+\end{figure}
+We can go a step beyond drawing samples from the GP prior and condition the GP
+on a set of observations in order fit the GP to data. Let $\vec{f}(\vec{X})$ be
+the vector of observed data points evaluated at $\vec{X}$ with length $n_1$. If
+we are interested in predicting the function values $\vec{f}^*(\vec{X}^*)$ at a
+new vector of data points $\vec{X}^*$ with length $n_2$ (so we could, for
+example, make a plot), then we need to compute the posterior distribution
+$p(\vec{f}^*\lvert \vec{f}, \vec{X},\vec{X}^*)$. In order to compute the
+conditional distribution, we start with the join distribution over $\vec{f}$
+and $\vec{f}^*$. Since $\vec{f}$ and $\vec{f}^*$ both come from the same
+multivariate Gaussian distribution, the joint distribution $p(\vec{f},
+    \vec{f}^*)$ is also a multivariate Gaussian:
+\begin{equation}
+    \begin{pmatrix}
+        \vec{f} \\
+        \vec{f}^*
+    \end{pmatrix} \sim \mathcal{N}\left[\begin{pmatrix}
+            \vec{\mu} \\
+            \vec{\mu}^*
+        \end{pmatrix},\begin{pmatrix}
+            \vec K(\vec{X},\vec{X})    & \vec K(\vec{X},\vec{X}^*)   \\
+            \vec K(\vec{X}^*, \vec{X}) & \vec K(\vec{X}^*,\vec{X}^*)
+        \end{pmatrix}\right]
+\end{equation}
+From this joint distribution, we can obtain the conditional  distribution
+\citep[see appendix A2 in ][]{rasmussen2006} which is also a multivariate Gaussian\footnote{
+    This is one of many special properties of Gaussians.
+}:
+\begin{align}
+    p(\mathbf{f}^{*} \lvert \vec X^{*}, \vec X, \mathbf{f} )\sim \mathcal{N}( & \vec K\left(\vec X^*, \vec X\right) \vec K(\vec X, \vec X)^{-1} \mathbf{f}                                                          \\
+                                                                              & \vec K\left(\vec X^*, \vec X^*\right)  -\vec K\left(\vec X^*, \vec X \right) \vec K(\vec X, \vec X)^{-1} \vec K (\vec X, \vec X^*))
+    \label{eq:gp_posterior}
 \end{align}
 
-%\subsection{Machine learning and the difference between inference and prediction}
+Samples from this posterior GP distribution given by
+Equation~\ref{eq:gp_posterior} with a squared exponential kernel conditioned on
+a set of simulated observations $\vec{f}$ generated from a simple sinusoid are
+shown in the left panel of Figure~\ref{fig:gp_samples_conditioned}. Each draw
+from the distribution perfectly interpolates all the data points. The variance
+is naturally larger where the data is sparse and the variance of the
+predictions grows rapidly in the extrapolative regime outside of the range of
+the data. The squared exponential kernel is not a great choice here because the
+covariance rapidly decays to zero with the distance from the first and last
+data point so the predictions will look flat futher away from the range of the
+data. A much better choice would be a kernel with a periodic covariance
+structure which would not have this problem.
+
+The predictions shown in the left panel assume that the observations are
+noisless which is why each sample perfectly interpolates the data. It is more
+common to assume that there is an additional white Gaussian noise component in
+the observed data. In that case we add a diagonal matrix (because white noise
+is independent Gaussian noise) to the covariance matrix
+$\vec{K}(\vec{X},\vec{X})$ and we have
+\begin{equation}
+    \vec{K}(\vec{X},\vec{X}) + \sigma^2\vec{I}
+\end{equation}
+where $\vec{I}$ is the identity matrix. Predictions from a GP with this additional
+noise are shown in the right panel of Figure~\ref{fig:gp_samples_conditioned}.
+
+\subsubsection{Fitting for the parameters of a GP kernel}
+We shown how to sample a GP prior and how to compute predictions from a GP
+conditioned on a set of observations but we haven't discssed the parameters
+which define the kernel function, such as the length scale $l$ in the squared
+exponential kernel. These parameters are often called the
+\textsl{hyperparameters} of the kernel. Given a set of observations $\vec{f}$
+evaluated at $\vec{X}$ with length $n$, the likelihood of a GP model for the
+kernel hyperparameters $\vec{\theta}$ is
+\begin{equation}
+    p(\vec{f}\lvert \vec{\theta})\sim\,
+    \mathcal{N}(\vec{f}\lvert \vec{\mu}(\vec{\theta}),
+    \vec{K}(\vec X, \vec X; \vec\theta))
+    \label{eq:gp_marginal_likelihood}
+\end{equation}
+where $\vec{\theta}$ is a set of parameters which define the kernel function. We
+can treat these kernel parameters as we would any other parameters, for example we
+can optimize the likelihood in Equation~\ref{eq:gp_marginal_likelihood} and find the
+MLE parameters $\hat{\vec{\theta}}_\mathrm{MLE}$. The likelihood is not linear in these
+hyperaparamters and the the optimization problem is generally not convex.
+
+The major challenge with GPs and the reason they still aren't as popular as for
+instance linear regression is that sampling the GP prior or computing the
+marginal likelihood (Equation~\ref{gp:marginal_likelihood}) requires an
+inversion of a dense $n\times n$ covariance matrix, an operation which scales
+as $\mathcal{O}(n^3)$. This operation becomes prohibitively expensive for
+datasets with a few thousand data points. Thankfully, there has been a lot of
+work on faster algorithms for inverting GP covariance matrices. Most of these
+algorithms rely on the assumption of some special structure for the covariance
+matrix which can be exploited to speed up the linear algebra operations. The
+most notable example is the \textsf{celerite} algorithm
+\citep{2017AJ....154..220F} which enables the use of 1D GPs with linear
+$\mathcal{O}(n)$ scaling as long as we restrict ourselved to kernels which are
+sums of complex exponential functions. These kernels are sufficiently flexible
+for modeling physical time-series and the sums of complex exponentials also
+have a physical interpretation as mixtures of stochastically drive, dampled
+simple harmonic oscillators. Thanks to \textsf{celerite} it is possible to fit
+GPs to astronomical light curves with thousands of datapoints.
+
+\subsubsection{Use of GPs in astronomy}
+The use of Gaussian process models within astronomy has skyrocketed in recent
+years. GPs within astronomy are by far most commonly used to model correlated
+noise in astronomical light curves. Practically, this is a small step from just
+assuming independent Gaussian noise. All we have to do is to replace a
+likelihood with a diagonal covariance matrix whose entries are given by the
+variance estimates for individual data points (``errorbars'') with a dense
+covariance matrix whose generated using some kernel function (while still
+including the independent noise term). The mean of the multivariate Gaussian
+likelihood is usually an astrophysical model such as a transit, a microlensing
+flux prediction or a secondary eclipse prediction. In some cases, the mean is
+set to zero and the hyperparameters of the kernel have physical meaning. For
+instance, GPs have been used to model stellar rotation periods using a
+quasi-periodic kernel specified with multiple parameters which describe the
+stochastic variability of the star \citep{2018MNRAS.474.2094A}.
+\citet{2021AJ....162..124L} went a step beyond, starting with properties of
+distributions of stellar spots expressed in the \textsf{starry} formalism they
+derived a closed-form expression for a GP which describes a light curve of a
+rotating, evolving stellar surface conditioned on a distribution of stellar
+spot sizes, contrasts and latitudes.
+
+The advantage of GP models relative to alternatives such as linear regression
+with a fixed number of basis functions is that they are far more flexible and
+allow us to make less rigid assumptions about the phenomenon of interest. This
+section was just a brief summary of their key properties and there is much more
+to GPs that we haven't discussed (for example, fitting GPs to multi-dimensional
+data). In Chapter~\ref{ch:mapping_exoplanets} we will show two very different
+use cases of GPs in the context of occultation mapping.
+
+\section{Statistical inference - computation}
+\label{sec:inference_practice}
+In the previous section I briefly summarized some key aspects of probability theory
+and Bayesian statistics, I discussed maximum likelihood estimation and
+linear models and GPs for which inference can be done analytically.
+In most most cases, models of real world interest are not so well behaved and maximum
+likelihood estimation or obtaining samples from the posterior
+distribution becomes very challenging because of complex likelihood and posterior
+landscapes. In those cases computation needs goes hand-in-hand with model building and it
+is very important to understand how the strucuture of the model and the data maps to the
+structure of the likelihood.
+I start by introducing some very fundamental
+concepts such as the \emph{curse of dimensionality} and the \emph{no free lunch theorems}.
+Next, I discuss various computational inference methods such
+as optimization methods, Markov chain Monte Carlo and Variational Inference.
+Finally, I discuss model comparison through Bayes factors and cross validation.
+
+\subsection{The curse of dimensionality and the no-free-lunch theorem}
+The \emph{curse of dimensionality} refers to a phenomenon where the
+\emph{volume} of \emph{possible} explanations for the data grows exponentially
+with increasing dimension of the problem. Consider the following
+example\footnote{ Taken from the excellent paper by \citet{arXiv:2104.00008}.
+}. There are images consisting of $n$ pixels where each of the pixels is either
+a black (0) or white (1). The number of possible images is $2^n$ which grows
+exponentially. If each image out of the $2^n$ possible images is described by
+one of two labels $A$, or $B$ then the total number of possible ways of
+labeling the set of images is $2^{2^n}$ which is a stupidly large number. If
+$n=9$, the number of ways to classify the set of all 9-bit black and white
+images is greater than the number of atoms in the observable universe. If the
+labels don't correlate with the properties of the images then one strategy for
+solving this problem would be the lookup table approach -- memorize each image
+with its label. The famous \emph{no-free-lunch theorem} (NFL) proved by the
+mathematician David Wolpert \citep{wolpert1996} demonstrates that it is
+impossible to construct an algorithm which does better than the lookup table
+approach.
+
+Of course the assumption that the labels aren't correlated to features in the
+images is silly for any meaningful problem. For instance, all images of cats
+have certain things in common as do images of galaxies. The no-free-lunch
+theorem doesn't say that it is impossible to construct an algorithm to classify
+images of cats, it only says that there is no best algorithm \emph{if we
+    average over all possible inputs to the problem}. To construct an algorithm
+which works in practice we need to impose structure on the problem, what
+machine learning researchers call \emph{inductive bias}. A set of assumptions
+which work in one domain may not work well in another domain and no single
+model will work well in all domains.
+
+\subsection{Sampling vs. optimization}
+%When fitting a model to a scientific dataset we are usually interested in
+%finding some ``best'' estimate of the parameters of that model\footnote{This is
+%    opposed to machine learning where in the vast majority of cases the goal is
+%    \emph{prediction} and the parameters of the model (for instance, weights of a
+%    neural network) are not of interest.}. In science, simply having an estimate of
+%the parameters is not sufficient, we also require estimates of the
+%\emph{uncertainty} associated with those values. In the Bayesian formalism this 
+%means estimating the posterior distribution $p(\vec \theta \lvert \mathcal{D})$.
+
+Broadly speaking, in statistical inference we can differentiate between two
+classes of methods for fitting models to data. Optimization methods cast the
+problem of estimating the likelihood or the posterior as an (generally
+non-convex) optimization problem. The goal in optimization problems is to find
+a single point which minimizes or maximizes some scalar function called a
+\textsl{cost function} or an \textsl{objective function}. The space of possible
+cost functions is infinite but in probabilitic inference these will be (usually
+unnormalized) probability distributions such as likelihood and posteriors. An
+example would be MLE and MAP estimation, the Laplace approximation and
+variational inference.
+
+Sampling methods are a fundamentally different class of algorithms whose
+purpose is accurately computing multidimensional integrals such as with the
+goal of numerically computing \emph{integrals} such as expectation values over
+the distribution $p(\vec{\theta})$:
+\begin{equation}
+    \mu\equiv \mathbb{E}_{p(\vec \theta)}[g(\vec \theta)]=\int g(\vec \theta) p(\vec \theta) \ud \vec \theta\hquad ,
+    \label{eq:general_expectation}
+\end{equation}
+where $g(\vec \theta)$ is some arbitrary function such as the mean.
+These integrals are intractable when the dimension of $\vec{\theta}$ is greater than
+a few because  the volume of the parameter space grows exponentially and finding
+the the regions in parameter space where the integral is nonzero becomes ever harder.
+We can get around this problem by generating samples from the probability distribution
+$\vec{\theta}^{(s)}\sim p(\vec{\theta})$ and computing the integral using
+\textsl{Monte Carlo Integration} in regions where there is non-negligible probability:
+\begin{equation}
+    \hat{\mu}_\mathrm{MC}=\mathbb{E}_{p(\vec \theta)}[g(\vec \theta)] \approx \frac{1}{S} \sum_{i=1}^{S} g\left(\vec \theta^{(s)}\right)\hquad .
+    \label{eq:monte_carlo_estimator}
+\end{equation}
+where $\hat{\mu}_\mathrm{MC}$ is the simple Monte Carlo estimator of the expectation
+$\mu$.
+It can be shown that if the expectation $\mu$ exists, the estimator
+$\hat{\mu}_\mathrm{MC}$ is consistent (it asymptotically converges toward $\mu$ with
+increasing $S$) and unbiased (the mean of the sampling distribution of the estimator
+is equal to $\mu$). If the expectation of $g^2$ is also finite the central limit
+theorem holds and the error of the simple  Monte Carlo estimator decreases as
+$\sqrt{S}$. This error is independent of the dimension!
+The major challenge is how to generate those samples from $p(\vec{\theta})$. This
+is usually accomplished
+sampling numbers from probability distributions that are easy to sample from
+(most commonly multivariate normal distributions) and then reweighting those
+samples at each iteration of the algorithm so that they match the target
+distribution. Examples of sampling methods include Markov chain Monte Carlo
+(MCMC), importance sampling and rejection sampling.
+
+%The difference between optimization and sampling algorithms can often be fuzzy
+%because sampling problems can sometimes be cast as optimization problems. In
+%both cases the NFL theorem holds, meaning that no sampling or optimization
+%method works best across all problems. The fundamental problem in both cases as
+%that we can only evaluate the target density some finite number of times and
+%the challenge is to find high probability regions in a multi-dimensional
+%parameter space. Even in moderately high-dimensional spaces (on the order of 10
+%dimensions) this is an extremely challening problem which is why methods which
+%work well in low dimensions often fail spectacularly in high dimensions. Both
+%classes of methods often use information about the gradient of target
+%distribution to aid the exploration of the parameter space. In fact, optimizing
+%or sampling high dimensional distributions is often impossible without access
+%to (exacy) gradients of the target density.
+%
+\begin{figure}[t]
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/typical_sets.pdf}
+        \caption{Histograms showing the distance from the MAP point for a set of 
+        samples from $D$-dimensional multivariate normal distribution with 
+        zero mean and unit variance. With increasing number of dimensions the 
+        probability mass concentrates in a thin shell centered at the MAP point 
+        called the typical set. For $D=50$ the posterior samples are coming from 
+        a region more than 5 sigma away from the MAP point.}     
+               \label{fig:typical_sets}
+    \end{centering}
+\end{figure}
+Contrary to what we might intuitively think, in all but the lowest dimensional models
+samples from the posterior distribution are not located anywhere 
+near a point estimate such as the MAP point in the parameter space, despite the fact 
+that this is where the posterior density is highest.
+This happens because expectation values  depend not only on the density of the pdf 
+$p(\vec\theta)$ but also on the volume term 
+$\ud \vec\theta$ and the value of the integral is non-negligible only when both are 
+jointly maximized. In high dimensions the volume grows exponentially and most 
+of the volume ends up being concentrated far away from the mode so that 
+the product of the density and the  volume, the \textsl{posterior mass}, ends up 
+being concentrated in a thin shell around the mode called the \textsl{typical set} 
+\citep[for a good overview of this issue see][]{arXiv:1701.02434}.
+This point is illustrated in Figure~\ref{fig:typical_sets} using samples from 
+a $D$-dimensional multivariate normal distribution with zero mean and unit 
+variance. 
+The reason this happens is that  although the most likely points are located 
+in the neighbourhood of the mode, 
+there are many more points further away in the typical set and those are the 
+ones that contribute to the integral involved in the calculation of expectation 
+values.
+For a toy example shown in Figure~\ref{fig:typical_sets} the fact this does not 
+matter much because the posterior has spherical symmetry but  for non Gaussian
+posteriors we can get very different results  when computing the mean (via 
+sampling) and the MAP point (via optimization).
+
+
+\subsection{Optimization methods}
+In this section we provide a brief overview of two most relevant methods for
+estimating the posterior distribution $p(\vec{\theta}\lvert \mathcal{D})$ using
+optimization algorithms.
+
+\subsubsection{The Laplace approximation}
+One of the simplest way of approximating a posterior distribution is the
+\textsl{Laplace approximation}. We start with the general posterior density of
+the form
+\begin{equation}
+    p(\vec{\theta}\lvert\mathcal{D})=\frac{1}{\mathcal{Z}}e^{-\mathcal{E}(\vec{\theta})}
+\end{equation}
+where $\mathcal{E}(\vec{\theta}) \equiv \ln\,p(\vec{\theta}, \mathcal{D})$
+is called an \textsl{energy function} and $\mathcal{Z}$ is the fully marginalized
+likelihood. Following \citet{murphy_book_2022}, we Taylor expand $\mathcal{E}(\vec{\theta})$ around the mode
+$\hat{\vec{\theta}}$ as follows
+\begin{equation}
+    \mathcal{E}(\vec{\theta}) =\ln\,p(\vec{\theta}, \mathcal{D})\approx \mathcal{E}(\hat{\vec{\theta}})+(\vec{\theta}-\hat{\vec{\theta}})^{\intercal} \vec{g}+\frac{1}{2}(\vec{\theta}-\hat{\vec{\theta}})^{\intercal} \mathbf{H}(\vec{\theta}-\hat{\vec{\theta}})
+\end{equation}
+where $\vec{g}$ is the gradient at the mode (the Jacobian matrix), and $\vec{H}$
+is the \textsl{Hessian} evaluated at the mode. The gradient term by definition
+vanishes at the mode $\hat{\vec{\theta}}$ so we are left with
+\begin{equation}
+    \hat{p}(\vec{\theta}, \mathcal{D})=e^{-\mathcal{E}(\hat{\vec{\theta}})} \exp \left[-\frac{1}{2}(\boldsymbol{\theta}-\hat{\vec{\theta}})^{\intercal} \mathbf{H}(\vec{\theta}-\hat{\vec{\theta}})\right]
+\end{equation}
+from which it follows that
+\begin{equation}
+    \hat{p}(\vec{\theta} \lvert\mathcal{D})=\frac{1}{\mathcal{Z}}\, \hat{p}(\vec{\theta}, \mathcal{D})=\mathcal{N}\left(\vec{\theta} \lvert\hat{\vec{\theta}}, \mathbf{H}^{-1}\right)\hquad .
+\end{equation}
+Thus, we obtain the well known result that a Taylor expansion of an arbitrary
+distribution  $p(\vec{\theta} \lvert\mathcal{D})$ around the mode $\hat{\vec{\theta}}$
+truncated at the first non-vanishing term is simply a multivariate normal distribution
+centered at the mode whose covariance matrix is given by the inverse Hessian (which specifies
+the \emph{curvature} of the distribution) evaluated at the mode.
+
+Laplace approximation works very well with posteriors which are well described
+by a multivariate normal distribution. It is straightforward to compute because
+we can use an optimizer to find the MAP point and then estimate the Hessian
+numerically using finite difference approximation for the gradient or use
+automatic differentiation to obtain the exact Hessian (we'll cover automatic
+differentiation in the next section).
+
+\subsubsection{Variational inference}
+Another method which uses optimization to obtain an approximation to the true
+posterior is \emph{Variational inference} (VI). The advantage of VI over the
+Laplace approximation is that we can fit any distribution we like to the
+posterior. The key idea is to model an intractable density $p(\vec{\theta}
+    \lvert\mathcal{D})$ with some off-the-shelf distribution $q(\vec{\theta})$ such
+that \emph{we minimize a measure of discrepancy between the two distributions}.
+We optimize for the parameters of the distribution $q(\vec{\theta})$
+$\vec{\psi}$ which are called the \textsl{variational parameters}. The most
+common discrepancy measure is the KL divergence
+(Equation~\ref{eq:kl_divergence})from $q$ to $p$. Thus, the optimization
+problem is to find the parameters $\vec{\psi}^*$ which minimize the KL
+divergence:
+\begin{equation}
+    \boldsymbol{\psi}^{*}=\underset{\boldsymbol{\psi}}{\operatorname{argmin}}\,D_{\mathbb{K} \mathbb{L}}(q(\boldsymbol{\theta} \lvert\boldsymbol{\psi})\, \|\, p(\boldsymbol{\theta} \lvert\mathcal{D}))
+    \label{eq:variational_inference}
+\end{equation}
+Making use of Equation~\ref{eq:kl_divergence}, we can expand the above equation as \citep{murphy_book_2022}
+\begin{align}
+    \vec{\psi}^* & =\underset{\vec{\psi}}{\operatorname{argmin}}\, \mathbb{E}_{q(\boldsymbol{\theta} \lvert\boldsymbol{\psi})}\left[\ln q(\boldsymbol{\theta} \lvert\boldsymbol{\psi})-\ln \left(\frac{p(\mathcal{D} \lvert\boldsymbol{\theta}) p(\boldsymbol{\theta})}{p(\mathcal{D})}\right)\right]                           \\
+                 & =\underset{\vec{\psi}}{\operatorname{argmin}} \,\underbrace{\mathbb{E}_{q(\boldsymbol{\theta} \lvert\boldsymbol{\psi})}[-\ln p(\mathcal{D} \lvert\boldsymbol{\theta})-\ln p(\boldsymbol{\theta})+\ln q(\boldsymbol{\theta} \lvert\boldsymbol{\psi})]}_{-\mathrm{ELBO}(\boldsymbol{\psi})}+\ln p(\mathcal{D})
+\end{align}
+Since the evidence $\ln\,p(\mathcal{D})$ is not a function of the variational parameters
+$\vec{\psi}$, the problem of solving Equation~\ref{eq:variational_inference} reduces
+to maximizing the term
+\begin{equation}
+    \mathrm{ELBO}(\boldsymbol{\psi}) \equiv \mathbb{E}_{q(\boldsymbol{\theta} \lvert\boldsymbol{\psi})}[\ln p(\mathcal{D} \lvert\boldsymbol{\theta})+\ln p(\boldsymbol{\theta})-\ln q(\boldsymbol{\theta} \lvert\boldsymbol{\psi})]
+\end{equation}
+which is called the \textsl{evidence lower bound} (ELBO) because
+$D_{\mathbb{K} \mathbb{L}}(q \| p) \geq 0$ implies that
+$\mathrm{ELBO}(\boldsymbol{\psi}) \leq \ln p(\mathcal{D})$.
+The most common choice for the distribution $q$ is, unsurprisingly, a multivariate
+Gaussian. VI with a multivariate Gaussian differs from  the Laplace aproximation
+because  in VI we are optimizing for both the mean and the covariance matrix rather
+than equating the covariance matrix to the inverse Hessian at the MAP point.
+VI is most commonly used with very large datasets and high dimensional parameter
+spaces because it is computationally cheaper than MCMC (although VI and MCMC are not
+doing the same thing). It has seen little use within astronomy.
+
+\subsection{Sampling methods}
+\label{ssec:sampling_methods}
+\subsubsection{Rejection sampling}
+Rejection sampling is one of the simplest algorithms for generating samples
+from a probability distribution. Consider a normalized pdf
+\begin{equation}
+    p(\vec{\theta})=\frac{\tilde{p}(\vec{\theta})}{\mathcal{Z}}
+\end{equation}
+where $\tilde{\vec{\theta}}$ is the unnormalized pdf and $\mathcal{Z}$ is normalization
+constant which isn't necessarily known.
+If a proposal distribution $q(\vec{\theta})$ (which we know how to sample from)
+satisfies the inequality
+\begin{equation}
+    Cq(\vec{\theta})\geq \tilde{p}(\vec{\theta})
+    \label{eq:rejection_sampling_constraint}
+\end{equation}
+for some constant $C$, the function $Cq(\vec{\theta})$ provides an upper envelope for
+$\tilde{p}$. We can use the proposal distribution to generate samples from the target
+distribution using the following algorithm:
+\begin{itemize}
+    \item Sample $\vec{\theta}_0\sim q(\vec{\theta})$ from the proposal distribution.
+    \item Sample $u_0\sim \mathrm{Unif}(0, Cq(\vec{\theta}_0))$ which corresponds to
+          uniformly drawing a height under the envelope.
+    \item If $u_0>\tilde{p}(\vec{\theta}_0)$ reject the sample, otherwise accept
+\end{itemize}
+See \citet{murphy_book_2023} for the proof that this procedure works.
+If $\tilde{p}$ is a normalized target distribution the acceptence probability at
+each iteration is  $1/C$ (TODO: show this) so  $C$ should be as small as possible
+while satisfying the constraint in Equation~\ref{eq:rejection_sampling_constraint}.
+In practice, if the distribution $p(\vec{\theta})$ represents a posterior distribution
+$p(\vec{\theta}\lvert \mathcal{D})$ rejection sampling can be accomplished by using
+the prior as the proposal distribution, sampling a very large number of parameter
+vectors from the prior, computing the value of the likeliood
+$p(\mathcal{D} \lvert\vec{\theta})$ for each and then setting $C$ to be equal to the
+maximum value of the likelihood across all samples.
+
+The major drawback of rejection sampling is that it scales badly with
+increasing dimensionality of the target distribution. For instance, if
+$p(\vec{\theta})=\mathcal{N}(\vec{0}, \sigma_p^2\vec{I})$ and
+$q(\vec{\theta})=\mathcal{N}(\vec{0}, \sigma_q^2\vec{I})$ we need to have
+$\sigma_q^2\sigma_p^2>\sigma_p^2$ to satisfy the bound. In $D$ dimensions the
+optimal value of $C$ is $C=(\sigma_q/\sigma_p)^D$ and since the acceptance
+probability is $1/C$ this decreases exponentially fast with dimension $D$. If
+the the proposal distribution $q(\vec{\theta})$ approaches $0$ in the tails at
+a faster rate than $p(\vec{\theta})$ as $\vec{\theta}\rightarrow \infty$ than
+their ratio $p(\vec{\theta})/q(\vec{\theta})$ approaches $\infty$ and the
+constraint in Equation~\ref{eq:rejection_sampling_constraint} will not
+satisfied. Thus, we must ensure that the target distribution does not have
+heavier tails than the proposal distribution.
+
+Even though it is the simplest sampling algorithm, rejection sampling can be
+very useful for problems with small numbers of parameters and small data sets
+because it can deal with very pathological distributions (for example highly
+multi-modal distributions). The most notable application of rejection sampling
+in astronomy is the \textsf{The Joker} sampler \citep{2017ApJ...837...20P} for
+sampling posterior pdfs for with very sparse binary-star and exoplanet radial
+velocity measurements. \citet{2020ApJ...895....2P} apply this sampler to obtain
+posterior pdfs in Keplerian parameters for $232 495$ sources from the APOGEE
+catalog. Becuase these measurements are very sparse (a few data points per
+star), the posterior pdf over the period prameter is highly multi-modal. The
+brute-force approach of rejection sampling works very well and produces
+independent samples from the distribution. For any individual object this pdf
+doesn't tell us much, however, when the analysis is repeated for thousands of
+objects in the framework of \textsl{hierarchical Bayesian inference} it is
+nevertheless possible to obtain very tight constrain on the population-level
+parameters. This is because even a highly multi-modal posterior pdf represents
+a major contraction of the prior parameter space and thus excludes certain
+parameter values.
+
+The radial veclocity model in \citet{2017ApJ...837...20P} interesting because
+structurally it very closely models the single lens microlensing model with
+parallax effects. Both models have few parameters 7 default parameters, two of
+which are linear and in both cases the posterior can be multi-modal (see
+Chapter~\ref{ch:microlensing} for more on this point). In
+\citet{2017ApJ...837...20P} they use the marginalized likelihood over the
+linear parameters and perform rejection sampling with the dimensionally reduced
+model. However, this requires an extremely large number of prior samples, on
+the order of hundreds of millions! Evaluating the likelihood this many times is
+much more computationally expensive in the microlensing case primarily because
+microlensing light curves have a lot more data points than stellar RV
+measurements. Neverthless, as I will show in Chapter~\ref{ch:microlensing}
+rejection sampling is intractable with the parallax microlensing model but it
+is tractable with the classic Paczynski model with 3 nonlinear parameters
+$(t_0, t_E, u_0)$.
+
+\subsubsection{Importance sampling}
+\textsl{Importance sampling} is not a an algorithm for generating samples from
+$p(\vec{\theta})$ but rather a method for estimating expectations
+$\mathbb{E}_p[g(\vec{\theta})]$ given an existing set of samples from
+some other distribution $q(\vec{\theta})$. We start by rewriting the integral 
+in Equation~\ref{eq:general_expectation} as 
+\begin{equation}
+    \mu = \mathbb{E}_{p}[g(\vec \theta)]=\int g(\vec \theta)\,\frac{p(\vec \theta)}{q(\vec \theta)}\,q(\vec \theta) \ud \vec \theta\hquad ,
+\end{equation}
+where we have introduced some other distribution $q(\vec \theta)$.
+The imporance sampling estimator of $\mu$ is then defined as
+\begin{align}
+    \hat{\mu}_{\mathrm{IS}}&=\frac{1}{S} \sum_{s=1}^{S} \frac{p\left(\boldsymbol{\theta}^{(s)}\right)}{q\left(\boldsymbol{\theta}^{(s)}\right)} g\left(\boldsymbol{\theta}^{(s)}\right)\\
+    &=\frac{1}{S} \sum_{s=1}^{S} w^{(s)} g\left(\boldsymbol{\theta}^{(s)}\right)
+\end{align}
+where  $\boldsymbol{\theta}^{(s)} \sim q(\boldsymbol{\theta})$ are samples from the 
+proposal distribution $q$ and $w^{(s)}$ are the \textsl{importance weights}. 
+$w^{(s)}$  are the ratios between the target distribution $p(\vec \theta)$ and 
+the proposal distribution $q(\vec \theta)$ evaluated at each $\vec{\theta}^{(s)}$.
+As in the case of rejection sampling, the requirement for the proposal distribution $q$
+is that it has support (is nonzero) wherever $p(\boldsymbol{\theta}) g(\boldsymbol{\theta})$
+is nonzero.
+Similarly to $\hat{\mu}_{\mathrm{MC}}$,  $\hat{\mu}_{\mathrm{IS}}$ is also a 
+consistent and  unbiased estimator of $\mu$ but its variance is heavily dependent on 
+how well the proposal distribution $q$ matches $p$. 
+If we do not know the normalization constants of $p$ and $q$ we can instead use the 
+self-normalized importance sampling (SNIS)  estimator 
+\begin{equation}
+    \hat{\mu}_{\mathrm{SNIS}}=\frac{\sum_{s=1}^{S} w^{(s)} h\left(\boldsymbol{\theta}^{(s)}\right)}{\sum_{s=1}^{S} w^{(s)}}
+\label{eq:importance_sampling_estimator}
+\end{equation}
+which is also consistent but it has a small bias of order $\mathcal{O}(1/S)$.
+There are also adaptive versions of importance sampling  which all rely on iteratively 
+adapting the poposal distribution $q$ based on the importance weights at each iteration. 
+
+When the proposal distribution $q$ is a poor approximation of $p$ the distribution of 
+importance weights can have a heavy right tail which results in a large and 
+large and possibly infinite variance of $\hat{\mu}_{\mathrm{IS}}$.
+This is especially true in high dimensions when the importance weights $w^{(s)}$ can 
+vary by several orders of magnitude and the estimator in 
+Equation~\ref{eq:importance_sampling_estimator} becomes dominated by a few draws from 
+proposal distribution. One solution to this  problem is to fit a generalized 
+Pareto distribution\footnote{Pareto distributions are commonly used in \textsl{Extreme 
+Value Analysis} (EVA). EVA is a branch of statistics dealing with heavy and fat-tailed 
+distributions, a regime where many classical methods built around Gaussian assumptions 
+fall apart.} 
+to the distribution of importance weights and then use that distribution to produce 
+a uniformly spaced set of importance weights. This procedure is called 
+\textsl{Pareto Smoothed Importance Sampling} (PSIS) \citep{arXiv:1507.02646}.
+PSIS forms the basis of a very popular \textsf{R} package \textsf{loo} for 
+high-dimensional leave-one-out cross validation \citep{arXiv:1507.04544}.
+The PSIS algorithm also reports the estimate of the smoothness parameter in the
+generalized Pareto distribution (\textsl{Pareto $\hat{k}$}). $\hat{k}$ acts as a 
+diagnostic  because the PSIS estimate is likely to be unstable  if $\hat{k}$ is 
+too large \citep{arXiv:1507.02646}.
+
+What if we are not just interested in computing expectations but also want to obtain 
+posterior samples from $p(\vec{\theta})$ in order to, say, plot a historgram? We can 
+use \textsl{importance resampling} which works by resampling the original samples 
+$\vec{\theta}^{(1)} \dots \vec{\theta}^{(S)}$
+with replacament with probabilities proportional to  the importance weights.
+Practically, this meanse drawing a set of indices $i_1, \dots, i_S$ from a 
+multinomial distribution  where the event probabilities are the normalized importance 
+weights $\tilde{w}_{i}=w_{i} / \sum_{j} w_{j}$:
+\begin{equation}
+i_{1}, \ldots, i_{S} \sim \operatorname{Multinomial}\left(1, \tilde{w}_{1}, \ldots, \tilde{w}_{S}\right)\hquad .
+\end{equation}
+Samples with larger weights will appear more often than those with smaller weights. 
+We can use Pareto smoothing when computing the weights. 
+
+In the context of astronomy, one  interesting (and relevant for the work presented 
+in thesis) application of importance sampling is for simplifying Bayesian hierarchical 
+inference. \citet{2010ApJ...725.2166H} showed that given posterior samples for a 
+collection of objects (obtained using MCMC for example) which were obtained with some 
+set of vague priors on the parameters of interest, we can re-weight those samples using 
+importance resampling under a different hierarchical prior which depends on some 
+population level parameters and in the process obtain a posterior over the population 
+level parameters. \citet{2010ApJ...725.2166H} applied this method to infer parameters 
+describing the eccentricity  distribution for a catalog of $N$ exoplanets given 
+posterior samples for the eccentricity for each individual planet. I will describe 
+this method in more detail in Chapter~\ref{ch:microlensing} and show how it can be
+applied to model the distribution of the $t_E$ parameter for a catalog of microlensing 
+events.
+
+\subsubsection{Rosenbluth-Metropolis-Hastings algorithm}
+The most popular class of algorithms used for generating samples 
+from a general pdf are 
+\textsl{Markov Chain Monte Carlo} algorithms or MCMC for short. The simplest 
+MCMC algorithm and the very first one that was developed is the
+\textsl{Rosenbluth-Metropolis-Hasting algorithm} (RMH) (also known as the 
+\textsl{Metropolis algorithm}). The RMH algorithm is one of 
+the most famous algorithms developed in the 20th century. The original algorithm was 
+published in \citet{1953JChPh..21.1087M} and it was extended by 
+\citet{1970Bimka..57...97H}. The original version is extremely simple. 
+Given a most recent sample $\vec\theta^{(s)}$, to generate the next sample
+\begin{itemize}
+    \item Draw a sample $\vec{\theta}^\prime$ from a proposal distribution $q(\bm\theta^\prime\lvert\vec\theta^{(s)})$ 
+    \item Draw a uniform random number $r\sim\mathcal{U}(0,1)$
+    \item If $\frac{p(\bm\theta^\prime)}{p(\vec\theta^{(k)})}$ then $\bm\theta^{(k+1)}\leftarrow \bm\theta^\prime$, else $\bm\theta^{(k+1)}\leftarrow\bm\theta^{(k)}$
+\end{itemize}
+The main characteristic of this algorithm is that it defines a biased random walk
+through the parameter space (usually moving in only one parameter at the time) 
+in such that the amount of time spent at a particular location $\vec\theta$ is 
+proportional to the target density $p(\vec\theta)$.
+These samples can then be used to approximate some expectation value of interest 
+by means of Equation~\ref{eq:monte_carlo_estimator}. The samples are always correlated 
+to en extent so estimates of the expectations don't converge as quickly with increasing 
+number of samples as they would if the samples were independent.
+
+The reason this algorithm works is because it defines a process called a 
+\textsl{Markov Chain} in which the probability of moving from a current state to a
+a successive state in the chain depends only on the current state and not any
+past states.
+Markov chains have stationary probability distributions over states and the stationary
+distribution for the Markov chain defined by the RMH algorithm turns out to be
+the target distribution $p(\bm\theta)$.
+For this to happen, the proposal distribution $q$ must satisfied a property
+called \textsl{detailed balance} which is defined as
+\begin{equation}
+    q(\bm\theta^\prime\lvert\bm\theta)=q(\bm\theta\lvert\bm\theta^\prime)\hquad .
+\end{equation}
+That is, the proposal has to be reversible so that the probability of going in either 
+direction is the same. 
+
+The proposal distribution $q$ is one of the main tunable parameters
+of the RMH algoritm.
+The simplest choice for $q$ is a multivariate Gaussian distribution
+ $q(\bm\theta^\prime\lvert\bm\theta)\sim\mathcal{N}(\bm\theta,\vec \Sigma)$.
+ The covariance matrix $\vec \Sigma$ sets a characteristic 
+\textsl{step size} in the parameter space. If the step size is
+too large most proposals will get rejected and the chain might miss regions with high
+probability mass.
+If on the other hand the step size is too small, most steps are likely to be accepted
+but we might not explore the parameter space fully.
+RMH (and MCMC samplers in general) don't converge to the stationary distribution  
+of the target distribution immediately, instead there is always an initial exploration 
+phase before the chain reaches the relevant parts of the parameter space 
+(typical set).  The time it 
+takes to reach stationarity is called the \textsl{mixing time} of the sampler 
+or the \textsl{burn-in} period.
+
+All MCMC algorithms have the same goal, namely, generating samples from a
+target pdf such that the least number of samples $S$ are needed to accurately
+approximate the integral in Equation~\ref{eq:general_expectation}. Metrics
+used to judge the quality of different samplers include 
+\begin{itemize}
+    \item Efficiency -- what is the acceptance rate of the proposals?
+    \item Coverage -- is the target distribution explored completely?
+    \item Correlation -- how correlated are individual samples with past samples?
+    \item High dimensions -- can the sampler handle high dimensional spaces?
+    \item Derivatives -- does the sampler require gradients of the target density? 
+\end{itemize}
+In real world problems MCMC samplers require very careful tuning and initalization 
+to work well. Although RMH and other MCMC samplers should in principle converge to the posterior distribution 
+independent of the initialization point in the parameter space and the particular 
+choice of parametrization; in practice intialization, careful tuning of the proposal 
+distribution and how we parametrize the model is crucial for the performance 
+of the sampler. It is not an usual that a minor reparametrization of a given model leads 
+to an increase in sampling efficiency of several orders of magnitude\footnote{For this
+reason it is often much better to invest time into making a given model more friendly 
+to MCMC than to improve the evaluation time of the model by a factor of a few.}.
+
+
+\subsubsection{Hamiltonian Monte Carlo}
+Hamiltonian Monte Carlo (HMC) \citep{1987PhLB..195..216D,arXiv:1206.1901} is a 
+variant of  Markov Chain Monte Carlo which uses the gradient of the target 
+density to substantially  improve the sampling efficiency compared to 
+gradient-free samplers such as the RMH sampler, especially in high dimensions.
+The gradient information is especially useful for high-dimensional densities 
+because it enables the sampler to better 
+explore the typical set of parameter space by making proposals along the 
+the thin shell comprising the typical set\footnote{In high dimensions and 
+petrurbation away from the thin shell of the typical sets is likely to be 
+outside the tpical set which is why samplers which are not aware of the 
+geometry of the target density such as RMH work very poorly in high dimension.}.
+
+HMC works by transforming the sampling problem to a classical mechanics 
+problem expressed using the theory of Hamiltonian mechanics. 
+We start by transforming the parameter space $\boldsymbol{\theta}$ into phase space by 
+introducing a set of momentum parameters $\vec{p}$ (thus doubling the number of 
+parameters) and define a \textsl{Hamiltonian} of the system to be the negative logarithm 
+of the  joint density over $p(\vec{\theta}, \vec{p})$:
+\begin{equation}
+    \mathcal{H}(\boldsymbol{\theta},\mathbf p)\equiv -\ln p(\boldsymbol{\theta},\mathbf p)=-\ln p(\boldsymbol{\theta})-\ln p(\mathbf p\lvert\boldsymbol{\theta})\hquad .
+\end{equation}
+We can rewrite this Hamiltonian as
+\begin{equation}
+    \mathcal{H}(\boldsymbol{\theta},\mathbf p)= \mathcal{U}(\boldsymbol{\theta})  + 
+    \mathcal{K}(\boldsymbol{\theta},\mathbf p)
+\end{equation}
+where $\mathcal{U}(\boldsymbol{\theta})=-\ln p(\vec \theta)$ is a potential energy term,
+ $\mathcal{K}(\boldsymbol{\theta},\vec p)$ is a kinetic energy term and 
+ $p(\vec\theta)$ is the target  density.
+By mapping a posterior density to a physical system, we can use the machinery of 
+classical mechanics by first sampling the momenta conditional on the parameters 
+$\mathbf{p}\sim p(\mathbf{p}\lvert\boldsymbol{\theta})$
+ and then solving Hamilton's equations
+\begin{align}
+  \dot{\theta}_i&=\frac{\partial\mathcal{H}}{\partial p_i}=\frac{\partial\mathcal{K}}{\partial p_i}\\
+  \dot{p}_i&=-\frac{\partial\mathcal{H}}{\partial q_i}=-\frac{\partial\mathcal{U}}{\partial q_i} - 
+  \frac{\partial\mathcal{K}}{\partial q_i}
+\end{align}
+\textsl{Symplectic integrators} (integrators which respect Liouville's theorem of 
+classical mechanics) are used to integrate Hamilton's equation because of their 
+high accuracy. The most common choice for an integrator is the symplectic 
+(and reversible) \textsl{Leapfrog integrator}, which is defined by 
+\begin{align}
+\vec{p}_{t+1 / 2} &=\vec{p}_{t}-\frac{\eta}{2} \frac{\partial \mathcal{U}\left(\boldsymbol{\theta}_{t}\right)}{\partial \boldsymbol{\theta}} \\
+\boldsymbol{\theta}_{t+1} &=\boldsymbol{\theta}_{t}+\eta \frac{\partial \mathcal{K}\left(\boldsymbol{p}_{t+1 / 2}\right)}{\partial \boldsymbol{p}} \\
+\vec{p}_{t+1} &=\boldsymbol{p}_{t+1 / 2}-\frac{\eta}{2} \frac{\partial \mathcal{U}\left(\boldsymbol{\theta}_{t+1}\right)}{\partial \boldsymbol{\theta}}
+\end{align}
+where $\eta$ is the \textsl{step size}. The Leapfrog integrator works by performing a
+half-update of the momentum, followed by a full update of position and another half-update 
+of momentum.
+Because no integrator t preserve energy perfectly an RMH acceptence criterion of the form 
+$\alpha=\mathrm{min}\{1,\exp (\mathcal{H}(\boldsymbol{\theta}, \mathbf p) -\mathcal{H}(\boldsymbol{\theta}^\prime, \vec p^\prime))\}$ 
+is needed at the end of the inegration step in order to restore the detailed balance 
+property of Markov chains.
+For the pseudocode of a complete algorithm using the Leapfrog integrator see 
+for example \citet{murphy_book_2023}.
+
+
+The most challenging part of implementing HMC is tuning the various hyperaparamters of 
+the algorithm, namely, the number of leapfrog integration steps $L$, the step size
+$\eta$ and the kinetic energy term $\mathcal{K}$.
+The most common choice for the kinetic energy term is the Euclidian-Gaussian kinetic 
+energy distribution where  the conditional momentum distribution is simply a 
+multivariate normal distribution independent of the position:
+\begin{equation}
+\mathcal{K}(\vec\theta, \vec p) = \mathcal{N}(\mathbf p ; 0, \mathbf M)
+\end{equation}
+where the covariance matrix $\mathbf M$ is usually called the \textsl{mass matrix}.
+The choice of the mass matrix $\mathbf{M}$ is important for efficient sampling because 
+every transformation of the parameter space induces an inverse transformation on 
+momentum space \citep{arXiv:1701.02434}. Consider for example a a cigar shaped target 
+density.
+We can either transform the posterior such that it looks more Gaussian and make it
+ easier to sample from, or equivalently we can choose the momentum distribution such 
+ that the momenta are aligned with the shape of the cigar by having higher velocity 
+ proposals along the longer axis.
+The optimal choice for $\mathbf{M}$ is to choose the matrix to be as close as 
+possible to the covariance matrix of the parameter space.
+The mass matrix is usually estimated empirically from the covariance matrix of the 
+parameters during a burn-in phase of the sampling. 
+
+As for the leapfrog parameters, we want to choose the number of leapfrog steps $L$ to be 
+large enough so that the algorithm explores large swathes of the parameter space.
+The most popular variant of HMC, the No U-Turn Sampler (NUTS) algorithm 
+\citep{arXiv:1111.4246} adaptively chooses $L$ such that Leapfrog integration is 
+automatically halted when the trajectory starts going back to its starting point (the
+the momentum vector points in the direction of the starting point).
+This trick ensures that parameter space updates are as large as possible and it 
+reduces autocorrelation between successive samples.
+In addition to automatically selecting $L$, \citet{arXiv:1111.4246} also propose a 
+scheme for adapting the step size $\eta$ on the fly. Adding the automatic adaptation
+of the mass matrix by running short chains during the burn-in period means that 
+NUTS removes any need to tuning. The lack of complicated tuning parameters and 
+the fact that NUTS works very well across a large set of problems are one of the 
+reasons why NUTS (and its derivations) is the work-horse algorithm 
+in many popular statistical modeling packages such as \textsf{Stan}
+\footnote{\url{https://mc-stan.org/}} \citep{2017JSS....76....1C}, 
+\textsf{PyMC}\footnote{\url{https://www.pymc.io/welcome.html}}, \textsf{numpyro}
+\footnote{\url{https://num.pyro.ai/}} and \textsf{TensorFlow Probability}
+\footnote{\url{https://www.tensorflow.org/probability}}. 
+
+How well MCMC works depends almost entirely on the geometry of the target density
+(which is parametrization dependent). If the target density is non-Gaussian 
+HMC requires lots of leapfrog integration steps per iteration. It is entirely 
+possible to have a 3 dimensional density with poor geometry (for example 
+a multi-modal density with well seperated modes) for which HMC will 
+fail but if the geometry of the distribution is well behaved HMC can scale to 
+even millions of parameters.
+
+
+One other notable variant of Hamiltonian Monte Carlo which works better for 
+densities with highly complex geometries is 
+Riemannian Manifold Hamiltonian Monte Carlo (RMHMC) \citep{girolami2011}.
+RMHMC uses a position dependent kinetic energy term $\mathcal{K}$ and second order 
+gradient information (quantifying the curvature of the target density) to improve 
+sampling efficiency with highly correlated densities by adapting to the local geometry 
+of the target density at every point. RMHMC is very rarely used and there are no 
+good open-source implementations of the algorithm. The reason for this is that 
+it is  difficult to construct numerically stable integrators for RMHMC
+\footnote{\href{https://discourse.mc-stan.org/t/riemann-manifold-hmc-in-stan/19466/5}{This}
+discussion on the \textsf{Stan} forums is particularly illuminating}.
+Instead of using RMHMC, we can find better parametrizations for the target density
+and use NUTS to sample it which can end up being equivalent to RMHMC 
+\citep{arXiv:1910.09407}.
+
+For an excellent visualization of different MCMC samplers see 
+\href{http://chi-feng.github.io/mcmc-demo/app.html}{here}.
+
+
+\subsubsection{Diagnosing MCMC chains}
+How can we tell that our MCMC chains have converged to target density?
+Unfortunately there is no point at which we can say that the chain definitively
+converged to the target density and that we are sampling from the typical set of 
+the posterior density faithfully. At best, we can
+tell when the chain has not converged. The prime diagnostic for the convergence
+of MCMC chains is the \textsl{integrated autocorrelation time}.
+Given $S$ independent samples, the variance $\sigma^2$ for a Monte Carlo 
+estimate of an expectation value $g(\vec\theta)$  is 
+\begin{equation}
+    \sigma^2= \frac{1}{S} \mathbb{V}_{p}\left[g(\vec\theta)\right]
+    \label{eq:mcmc_error_indep}
+\end{equation}
+and the standard deviation of this estimator will decrease
+$\sim 1/\sqrt{S}$ with the number of samples.
+However, samples from $p(\vec\theta)$ produced by MCMC are not truly independent.
+The way we measure this correlation is by computing the integrated autocorrelation
+time $\tau_f$. If the samples are correlated, the the variance in 
+Equation~\ref{eq:mcmc_error_indep} becomes
+\begin{equation}
+    \sigma^2= \frac{\tau_f}{S} \mathbb{V}_{p}\left[g(\vec\theta)\right]
+    \label{eq:mcmc_error}
+\end{equation}
+where $\tau_f$ is the average number of steps needed before the chain ``forgets''
+its initial position. It is defined as
+\begin{equation}
+    \tau_f = \sum_{\tau=-\infty}^\infty\rho_f(\tau)
+\end{equation}
+where $\rho_f(\tau)$ is the normalized \textsl{autocorrelation function} (ACF) of 
+the stochastic process which  generated the chain for
+$f$ \footnote{See this blog post by Daniel Foreman-Mackey for more details on 
+autocorrelation functions: \url{https://dfm.io/posts/autocorr/}.}.
+Estimating integrated autocorrelation times is difficult and in general
+requires long chains because the estimate of $\tau_f$ is slow to converge.
+
+Using an estimate of integrated autocorrelation time  we can compute the 
+\textsl{Effective Sample Size} (ESS) for a given chain \citep{sokal1997}
+\begin{equation}
+\mathrm{ESS}\equiv\frac{S}{\tau_f}
+\end{equation}
+The integrated autocorrelation time (and hence also the ESS) depends on the function 
+$g(\vec\theta)$ and will be different depending which expectation value we 
+are interested in.
+For example if we are interested in calculating the mean and require a certain
+fractional precision we need to know the integrated autocorrelation time to estimate 
+how many effective samples are necessary to achieve this precision.
+\citet{arXiv:1903.08008} suggest computing ESS for both the bulk of the distribution 
+(captured by the median) and \textsl{tail-ESS} which they define to be the minimum 
+of the ESS for the 5\% and 95\% quantiles of the distribution. Tail-ESS will generally 
+be smaller  than the ESS for the median because MCMC converges at a slower rate 
+in the tail of the distribution.
+
+Since MCMC samples are correlated, some users discard all except every $n-th$ sample in a process called
+\textsl{thinning} the chains. Except for reasons of storage in memory, this
+procedure should be discouraged because discarding information never helps with
+better estimates and the Monte Carlo error in Equation~\ref{eq:mcmc_error} 
+already incorporates the fact that the samples are correlated.
+
+Another popular statistic for the diagnostic of MCMC chains is the
+\textsl{Gelman-Rubin} $\hat R$ statistic \citep{1992StaSc...7..457G} which uses 
+information pooled from multiple chains to judge convergence. It is 
+defined as
+\begin{equation}
+    \hat R= \frac{\hat V}{W}
+\end{equation}
+where $W$ is the sample variance within a single chain, and $\hat V$ is the
+variance estimate pooled across several independent chains.
+The $\hat R$ statistic converges to 1 when each of the chains accurately 
+sample the target density. A value greater than 1 indicates that one or more 
+chains have not yet converged.
+
+Finally, the most sophisticated diagnostic for the convergence of MCMC chains
+attempts to detect the the breakdown of the geometric ergodicity property of
+MCMC. Geometric ergodicity is a necessary condition for MCMC estimators to
+follow the central limit theorem ensures that the estimator in 
+Equation~\ref{eq:monte_carlo_estimator} is consistent and unbiased.
+HMC algorithms enable the detection of so called
+\textsl{divergences} 
+\footnote{\url{http://mc-stan.org/users/documentation/case-studies/divergences_and_bias.html}.}.
+ in the parameter space -- points in the parameter space 
+where the target density has very large gradient indicating 
+a suspected  breakdown of geometric ergodicity.
+The presence of a large number of divergences in a model can lead to 
+biased estimators. 
+Modern statistical modeling packages include functions for computing ESS 
+estimators,  $\hat R$ and divergences. Without the use of these diagnostic 
+tools we cannot be sure that the MCMC chains have converged and that our results 
+are correct.
+
+
+
+\subsubsection{Failure modes for samplers}
+MCMC methods work really well for distributions with relatively well-behaved 
+geometries but tend to fail with more complex distributions, particularlly 
+multi-modal distributions with well seperated modes. 
+ \citet{arXiv:2101.09675} lists 
+key properties of densities for which MCMC methods tend to fail:
+\begin{itemize}
+    \item \textbf{Highly non-Gaussian distributions}: For example banana shaped
+    distributions, distributions with heavy tails.
+    \item \textbf{Multimodal distributions}: If there are multiple well 
+    separated  modes in the target densities, even if each mode is individually 
+    well described by a Gaussian MCMC methods will tend to get stuck in one of
+    the modes and fail to jump between modes.
+    \item \textbf{High dimensionality}: High dimensional problems can break pretty 
+    much every algorithm, they are however less of a problem for HMC like algorithms.
+    \item \textbf{Highly informative distributions}: If the data is particularly 
+    informative the posterior occupies an extremely small portion of the total 
+    prior volume and it may be challenging to discover those regions. Even HMC 
+    can fail here if the posterior mass is concentrated  in a very narrow 
+    ``canyon'' if the momentum of the proposals is too large.
+    \item \textbf{Phase transitions}: These are abrupt changes in the structure 
+    of the likelihood as we move up constant likelihod contours.
+\end{itemize}
+The first and second failure modes are particularly important for this thesis 
+because likelihoods for microlensing models are highly non-Gaussian and 
+multimodal. In the next section we cover a class of algorithms which (on paper!)
+addresses almost all of these challenges.
+
+\subsubsection{Nested Sampling}
+\textsl{Nested sampling} \citep{2004AIPC..735..395S}  is fundamentally different 
+from MCMC algorithms  because it was designed for the purpose  of estimating the
+Bayesian evidence  $\mathcal{Z}$ (Equation~\ref{eq:evidence}) instead of drawing samples 
+from  a target distribution.
+Since $\mathcal{Z}$ is just a normalization constant, it is usually ignored 
+in traditional MCMC algorithms such as RMH which don't require the target 
+density to be properly normalized.
+However, $\mathcal{Z}$  becomes important in the context of model comparison 
+using \textsl{Bayes factors} (see Section~\ref{ssec:model_comparison}) which
+are proportional to the ratios of the evidences of two models. 
+
+In addition to estimating $\mathcal{Z}$ Nested Sampling produces samples 
+from posterior $p(\vec\theta\lvert \mathcal{D})$ as a sort of byproduct. 
+The major advantage of NS over MCMC methods is that acts as a sort of 
+global search algorithm working from the outside-in which improves its 
+performance on highly multi-modal distributions\footnote{
+    The extent to which this claim is true will be investigated in 
+    Chapter~\ref{ch:microlensing}.
+}. Nested Sampling has been extensively used in cosmology in particular, mostly 
+thanks to the popularity of the \textsf{MultiNest} package \citep{arXiv:0809.3437}. 
+\citet{arXiv:2205.15570} is great introductory review to these methods while 
+\citet{arXiv:2101.09675} goes into a lot more depth.
+
+We start by rewriting the evience $\mathcal{Z}$ from Equation~\ref{eq:evidence}
+as 
+\begin{equation}
+\mathcal{Z}=\int \mathcal{L}(\vec\theta) \pi(\vec \theta)\ud\vec\theta
+\label{eq:evidence2}
+\end{equation}
+where  $\mathcal{L}\equiv p(\mathcal{D}\lvert\vec \theta)$ is the likelihood 
+and $\pi(\vec \theta)$ is the prior. The key idea behind NS is that it is possible 
+to replacec the high-dimensional integral in Equation~\ref{eq:evidence2} with 
+a one-dimensional integral over the entire prior volume: 
+\begin{equation}
+    \mathcal{Z}=\int_{0}^{1} \mathcal{L}(X) \ud X
+    \label{eq:nested_sampling}
+\end{equation}
+where $\ud X$ is the volume element of points in the parameters space which 
+share the same likelihood $\mathcal{L}(X)$ weighted by the prior $\pi(\vec\theta)$:
+\begin{equation}
+X\left(\mathcal{L}^{\star}\right)=\int_{\mathcal{L}>\mathcal{L}^{\star}} \pi(\vec\theta) \ud \vec\theta\hquad .
+\end{equation}
+$\mathcal{L}=\mathcal{L}^\star$ defines a contour of constant likelihood and 
+$X(\mathcal{L}^\star)$ is the prior volume enclosed by that contour.
+\emph{Nested sampling thus replaces the original problem of sampling from the posterior 
+to  sampling from prior with a likelihood constraint}.
+For a derivation of Equation~\ref{eq:nested_sampling} see \citet{arXiv:2205.15570}.
+
+The standard version of the NS algorithm works by drawing $K$ \textsl{live points} 
+(points in the parameter space) from the prior at each iteration $i$, removing 
+the point with the lowest likelihood value $\mathcal{L}_i$ and replacing it 
+with a new live point sampled from the prior and subject to the 
+constraint $\mathcal{L}_{i+1}>\mathcal{L}_i$ (see \citet{arXiv:2205.15570} 
+for details). This process continuously shrinks the volume of the prior by an 
+approximately constant factor, effectively scanning the parameter space from 
+contours with a lowest likelihood to contours with a highest likelihood.
+The algorithm terminates when some fractional error tolerance on the estimation 
+of the evidence is reached. 
+At the end of the iterative procedure we are left with 
+estimates of the volume $X(\mathcal{L}^\star)$ at each iteration and we can 
+estimate the integral in Equation~\ref{eq:nested_sampling} using the trapezoidal 
+rule:
+\begin{equation}
+\mathcal{Z}=\sum_{i=1}^{K}w_i\,\mathcal{L}_i^\star\hquad ,
+\end{equation}
+where the weights $w_i$ are 
+\begin{equation}
+w_{i}=\frac{1}{2}\left(X_{i-1}-X_{i+1}\right)\hquad .
+\end{equation}
+The posterior samples can be obtained from the from the discarded live points 
+by assigning weights $\hat{w}_i$ to each live point:
+\begin{equation}
+    \hat{w}_i\equiv \frac{\mathcal{L}_i\,w_i}{\hat{\mathcal{Z}}}
+\end{equation}
+To compute the ESS for these samples, we can use the exectation value dependent 
+estimator provided by \citet{arXiv:1809.04129}:
+\begin{equation}
+    \widehat{\mathrm{ESS}}=\frac{1}{\sum_{s=1}^S\tilde{w}_i^2}
+\end{equation}
+where
+\begin{equation}
+\tilde{w}_{i}\equiv\frac{\left|g\left(\vec{\theta}^{(s)}\right)\right| \hat w_{s}}{\sum_{i=1}^{S}\left|g\left(\vec{\theta}^{(i)}\right)\right| \hat w_{i}}
+\end{equation}
+
+
+\cite{arXiv:2101.09675} identifies three distinct phases in the behavior 
+of the NS algorithm. In the first phase the prior volume shrinks towards the 
+bulk of the posterior (the typical set) and during this phase the live points 
+vary in likelihood by many orders of magnitude. All of the probability mass is 
+associated with a single live point because the live points are all associated 
+with an equal volume. 
+The typical set is resolved in the second phase and the live points have 
+comparable wieghts.  In the final stage NS reaches the region around the MLE 
+with large values of the likelihood but very small volume.
+Unlike MCMC, NS has a well defined termination criterion and running the algorithm 
+for a longer time does not produce more posterior samples (there are other ways 
+of producing more samples after an NS run has terminated).
+NS is different compared to HMC in that HMC explores level sets of energy where 
+the Hamiltonian is constant while NS scans through a range of energy levels. 
+It's this feature that enables it to discover multiple modes in the density.
+
+
+Historically NS has been  extensively used by physicists and almost completely 
+ignored by statisticians. This has been changing in recent years and there 
+is now more work from both communities aimed at understanding and improving the 
+algorithm and better diagnosing its failure modes (see for example 
+\citet{ arXiv:1407.5459,arXiv:1804.06406,arXiv:1704.03459,arXiv:2101.09675}).
+For example, a recent paper by \citet{arXiv:1805.03924}  reframes the NS 
+algorithm as a special case of \textsl{Sequantial Monte Carlo}, a class of 
+algorithms that have been extensively studied by statisticians for decades.
+There are also lots of modern open-source implementations of NS such as 
+\textsf{dynesty} \citep{arXiv:1904.02180}, \textsf{JAXNS} \citep{arXiv:2012.15286}
+and \textsf{UltraNest} \citep{2021JOSS....6.3001B}. 
+\textsf{UltraNest} in particular is the most developed modeling framework 
+focused on correctness of posterior inferences. Ultimately, the only way 
+to check whether NS is doing what it promises to do is to apply it to a real 
+world problem. In Chapter~\ref{ch:microlensing} we do just that and compare 
+the results and performance of NS to HMC.
+
+\subsubsection{Ensemble samplers with affine invariance}
+By far the most popular sampler in physics and astronomy is an MCMC method 
+called \textsl{affine invariant ensamble sampler} (AIES)
+\citep{2010CAMCS...5...65G} which was popularized by an excellent \textsf{Python}
+implementation of the algorithm \textsf{emcee} 
+\citep{arXiv:1202.3665,arXiv:1911.07688}. The method is similar 
+to RMH  in the sense that it does not use gradient information and it requires 
+only that the evaluation of the log-probability function. The special property 
+of affine invariant MCMC is that it is invariante to 
+\textsl{affine transformations} (linear transformations such as 
+scale transformations and rotations) of the parameter space. It uses multiple 
+MCMC chains (called \textsl{walkers}) to explore the parameter space which 
+are correlated by construction. 
+
+\textsf{emcee} is so popular that the 
+original paper has been cited almost 8000 times so far.  
+The success of \textsf{emcee} has less to do with its actual suitability 
+to a wide range  of problems and more to do with the fact that it is very easy to use with the 
+kinds of models astronomers and physicists work with. \textsf{emcee}  works with
+black-box physics simulators and it is also easily parallelizable. 
+This feature also makes it easy to misuse and apply to problems for which it is 
+not suitable. For example, \citet{arXiv:1509.02230} showed that \textsf{emcee} 
+does not work well in high dimensions (greater than about 10) and it can appear 
+as if the sampler converged when in reality it has not. Nevertheless 
+\textsf{emcee} can still be very useful and fast for very low dimensional 
+problems. As with other MCMC samplers, it will fail with multi-modal 
+likelihoods.
+
+
+\subsubsection{Other methods}
+That there are many many algorithms in the  literature besides the ones I've covered here. 
+The vast majority of these  algorithms are variants of RHMC, HMC or  
+NS. Most of these algorithms don't have well tested opens-source implementations, 
+the examples presented in the papers are usually low-dimensional toy 
+problems, and the algorithms require very careful tuning to work at all. This 
+is why the development of general purpose statistical modeling 
+(probabilistic programming) packages such as \textsf{Stan} and 
+\textsf{PyMC} has been so important. They demonstrated that methods such as 
+NUTS work well for a wide variety of problems.
+
+\subsection{Model validation and comparison}
+\label{ssec:model_comparison}
+
+So far I have discussed inference of model parameters using either optimization 
+methods such as maximum likelihood or sampling methods such as MCMC and Nested 
+Sampling.
+Using these methods we can obtain some estimates of the parameters of a specific  
+model but this  does not tell us if the model is any good in the first place.
+Every time we are doing parameter inference we assume that the particular model
+is true.
+A major challenge in statistical inference is comparing different 
+models which can explain the same dataset, so called \textsl{model comparison}.
+What we mean by different models is somewhat fuzzy. We could for example have 
+a model specified by the same likelihood function and a set of continous 
+parameters and then call different realizations of those parameters different 
+models. This does not make much sense in the Bayesian context. In most cases
+when a model comparison problem can be cast as a parameter inference problem it 
+is easier to treat it as a parameter inference problem\footnote{Although, as we
+will see in Chapter~\ref{ch:microlensing} it may be advantageous  to use model 
+comparison methods when comparing different modes in a multi-modal posterior.}.
+This happens when two \emph{models are nested}, meaning they share one or 
+several parameters.
+For example, let's say we are fitting a microlensing model and trying to decide 
+whether  or not to include the finite source effect parametrized by a continuous 
+parameter $\rho_\star$.
+We could fit two separate models, a model which uses a point source 
+aproximation for the magnification and one which includes the finite source 
+effects via the $\rho_\star$ parameter and then decide which model better 
+describes the data. The alternative is to simply fit the more complex model, 
+obtain a posterior for the $\rho_\star$ parameter and check if it differs from 
+zero in a meaningful way. Although the former approach is more elegant sometimes
+it is practically intractable because we might end up having trouble sampling 
+the posterior if the additional parameter is not well constrained by the data\footnote{In those
+cases is may nake sense to put a strong prior pushing the parameter to zero which 
+helps with inference. If the parameter is well constrained by the data the 
+likelihood will push the posterior away from zero.} or if the model with the 
+extra parameter is much more computationally expensive. 
+If the models are nested but the paramer which differentiates between models is 
+discrete it is sometimes still possible to cast the comparison problem as a parameter 
+inference problem using \emph{dimension jumping} methods such as 
+\textsl{Reversible-jump MCMC} (RJ-MCMC)
+\citep[See][for an application of a method similar to RJ-MCMC to an 
+astronomy problem]{2015MNRAS.448.3206B}.
+However, these methods are computationally very difficult to implement.
+
+When the models are not nested we have no choice but to do model comparison. 
+An example would be fitting a single lens microlensing model vs. a binary lens 
+or a binary source star model. Statistics alone does not tell us what to put in the 
+abstract of a paper after we have completed the analysis for multiple competing 
+models\footnote{This is the subject of decision theory which relies on 
+specifying \textsl{utility functions} (which depend on our posterior beliefs) 
+to quantify expected loss given a certain decision}. Best we can hope for is 
+assigning probabilities to each of the models taking into account how well they 
+fit the data and how parsimonious they are. Model 
+comparison is one of the key problems with analyzing microlensing light curves 
+because there are often multiple very different models which make near-identical 
+predictions  
+\citep[see][for examples from microlensing]{ 2017AJ....153..129J,2020AJ....160...17H,2021AJ....162...59R}.
+Especially problematic is the fact that when multiple models equally well 
+describe the data, \emph{some models will be more interesting than others}.
+For example one model might be a triple lens model implying the discovery of 
+an \textsl{exomoon} in a planetary system. The other model could be a binary 
+source star model. The major issue here is that the incentives of researchers 
+are not always aligned with truth-seeking and the outcome of a model 
+comparison test can be a strong function of how much effort was invested into 
+a given model\footnote{This is one of the causes of the replication crisis in 
+many scientific disciplines.}. In the extreme case, if we only consider one interesting model then
+there is no chance we can conclude that  a more mundane model describes the 
+data equally well. This is why it is very important to have a clearly defined 
+framework for assesing different models.
+
+\subsubsection{Frequentist model comparison (hypothesis testing)}
+The question of model comparison is different depending on whether
+one uses the frequentist or Bayesian statistics. In classical frequentist
+statistics, one has to form the \textsl{null hypothesis} $\textrm H_0$ which 
+represents a baseline (null) model and an \textsl{alternative hypothesis} which is 
+the hypothesis of interest. For instance, the two hypotheses could be
+\begin{align}
+    \textrm H_0: & \; \textrm{there is no planet in the data} \notag\\
+    \textrm H_1: & \;\textrm{there is a planet in the data}\notag
+\end{align}
+We then form a \textsl{hypothesis test} under some \textsl{test statistic} 
+and based on the outcome of that hypothesis test we either reject the null 
+hypothesis or we don't, depending on an arbitrary threshold called the 
+\textsl{p-value}.
+
+The p-value is the probability of obtaining data equal to or more extreme than 
+what is observed, \emph{assuming that the null hypothesis $\textrm H_0$ is true}.
+It is the probability for obtaining the observed
+dataset in an infinite set of draws of the data, \emph{it is not a statement 
+about the probability of the hypothesis}\footnote{The definition of the p-value
+is so confusing that even some statistics textbooks get it wrong.}.
+All hypothesis testing does is answering the following question:
+assuming there's nothing interesting in the data, how likely was I to observe 
+the data I was given.
+If a certain threshold p-value is reached ($0.05$ in most scientific disciplines, 
+substantially less in physics and astronomy), the null hypothesis hypothesis 
+is rejected.
+The fact the null hypothesis is rejected cannot be interpreted as evidence in
+favour of the alternative hypothesis because such a statement would involve
+using Bayes' theorem to invert the probabilities. However, it is almost always
+(mis)interpreted in that way.
+Given a set of models $\{\mathcal{M}_1,\mathcal{M}_2,\dots,\mathcal{M}_n\}$, all
+we are formally allowed to do is to  reject some of those models based on 
+a p-value, and keep the rest.
+
+
+One might wonder if there is as an absolute way of judging the quality of a
+single isolated model. In astronomical literature, this usually falls under the term of
+a \textsl{goodness of fit} statistic. These statistics implicitly use the 
+hypothesis testing procedure described above, rejecting the null hypothesis 
+under some p-value. Popular choices are the \textsl{Chi-squared test} 
+(not to be confused with the $\chi^2$ loss function),
+\textsl{Kolmogorov-Smirnov test}, \textsl{Anderson-Darling test}, etc.
+These tests rely on strong assumptions about the data generating process 
+and they are often misused. 
+It is often preferable (if possible) to just use visual checks on the predictions 
+of the model 
+\citep[see][for a visualization guide in the Bayesian paradigm]{arXiv:1709.01449}. 
+For example plotting the predictions of the model in data space, plotting 
+the residuals, etc.  Probabilistic modeling is almost always an iterative 
+process and visualization helps us spot where the model is failing to describe 
+the data adequatelly.
+
+\subsubsection{Bayesian model comparison using Bayes factors}
+In the Bayesian paradigm, the most natural way of comparing different 
+models is by making use of  Bayes' theorem. We can assign the probability of a 
+given model $\mathcal{M}$ as 
+\begin{equation}
+    p(\mathcal{M}\lvert\mathcal D)\propto p(\mathcal{M})\,p(\mathcal D\lvert\mathcal{M})
+\end{equation}
+where $p(\mathcal{M})$ is the prior probability of the model $\mathcal{M}$ and
+$p(\mathcal D\lvert\mathcal{M})$ is the Bayesian evidence. If we are comparing two 
+models, $\mathcal{M}_o$ with a set of parameters $\vec\theta_0$ and
+and $\mathcal{M}_1$ with a set of parameters $\vec\theta_1$, we can form the ratio of 
+the their posterior probabilities given the data
+\begin{equation}
+    \frac{p(\mathcal{M}_0\lvert\mathcal D)}{p(\mathcal{M}_1\lvert\mathcal D)} =
+    \frac{\mathcal{Z}_0}{\mathcal{Z}_1} \, \frac{p(\mathcal{M}_0)}{p(\mathcal{M}_1)}\hquad .
+\end{equation}
+The ratio of the two evidences on the right hand side is called the 
+\textsl{Bayes factor}, and the ratio of prior probabilities is the 
+\textsl{prior odds}.
+Prior odds can be set to unity under the assmuption that both models are equally 
+likely a priori.
+A large Bayes factor $\textrm{B}_{01}\equiv \mathcal{Z}_0/\mathcal{Z}_1$ should 
+be interpreted as evidence in favour of model 0 versus model 1, given the 
+observed data $\mathcal D$.
+As in the case of hypothesis testing, one can then define arbitrary criteria for
+the strength of the evidence in favour of model 0 conditional on the specific value
+of the Bayes factor.
+The popular choice is using Jeffreys scale \citep{1939thpr.book.....J}.
+Unlike the p-value, Bayes factors (multiplied by prior odds)
+are actual probabilities for the models
+themselves, rather than probabilities for the data in an infinite set of trials.
+One useful aspect of Bayesian model comparison is the fact that it automatically
+implements \emph{Occam's razor}, penalizing overly complicated models if there
+is a simpler alternative \citep[see Chapter 28 of][]{2003itil.book.....M}.
+The goal when using Bayes factor is to either select a single ``best'' model
+$\mathcal{M}_i$ or, the more Bayesian option, to average over a set of 
+multiple models using their  posterior probabilities 
+$p(\mathcal{M}_i\lvert\mathcal D)$.
+
+There are two major problems with Bayes' factor. The first one is the fact that
+whereas the Bayesian evidence $\mathcal{Z}$ could often be ignored when inferring the 
+parameters of the models, it is a crucial quantity in Bayesian model comparison. 
+Computing $\mathcal{Z}$ is very computationally expensive, error prone, and it
+ requires methods such as Nested Sampling.
+The other problem with Bayes
+factors is that the estimates of $\mathcal{Z}$ are particularly sensitive to the 
+width and the shape of te prior distribution for the parameters. For example, if 
+the prior for parameter $\theta_k$
+in model $\mathcal{M}_0$ is $\theta_k\sim \mathcal{N}(0, s^2)$, where $s$ is
+very large, the evidence will scale as $\mathcal{Z}\sim 1/s$ practically
+independently of the data. This kind of dependence of the evidences on the
+parameter priors is not unexpected, it means that models which ``waste'' prior
+parameter space will be penalized, but it is often undesirable\footnote{See the 
+excellent essay on Bayes factors by \citet{navarro_2020}.}. 
+
+Thus, in order to use Bayes factors for model comparison, one has to be able to
+compute evidences, and think very carefully about the choice of priors. Despite
+these issues, Bayes factors have been used extensively in staistics and the 
+natural sciences, most notably in cosmology. For example,\citet{arXiv:1312.3529} 
+used Bayesian model comparison to estimate Bayes factors of 193 different 
+inflation models using the Cosmic Microwave Background
+data from the Planck satellite and Higgs inflation as the reference model. 
+
+\subsubsection{Cross validation}
+The more tractable and robust alternative to estimating Bayes factors is using 
+\textsl{cross validation}. The key idea behind cross validation (CV) is to judge 
+different models based on how well they predict unseen data\footnote{This is 
+principle method of model comparison in machine learning. In machine learning 
+it is customary to split the original dataset into a \textsl{training dataset} 
+and a \textsl{validation dataset}. The training dataset is used to optimize 
+the main parameters of the model and the loss function evaluated on the 
+validation dataset is used to compare different models or set the hyperparameters
+of a given model.}. 
+CV can be used to assess the predictive power of a single model (as a sort of 
+goodness of fit metric) to compare or average multiple models. 
+The idea behind CV is to split the dataset into $K$ parts or \textsl{folds}, 
+re-fit the model including $K-1$ folds, evaluate the objective function (log 
+likelihood or posterior) and then repeat the procedure for each fold. We 
+can then for example add up the $K$ values and compute an estimate 
+the predictive performance of the model. 
+If we set $K$ to be equal to the number of data points $N$, then we 
+are talking about \textsl{leave-one-out cross validation} (LOO-CV).
+
+One measure of the predictive performance of a given model $\mathcal{M}$ which has 
+good theoretical properties is ther so-called 
+\textsl{exptected log predictive density} (ELPD) 
+\citep[see for example][]{10.1214/12-SS102}. It is defined as 
+\begin{equation}
+\operatorname{ELPD}(\mathcal{M})\equiv \int \ln p\left(\tilde{\vec y}_{i} \lvert \vec y, \mathcal{M}\right)\,p_{t}\left(\tilde{\vec y}_{i}\right) \ud \tilde{\vec y}_{i}
+\end{equation}
+where 
+\begin{equation}
+p(\tilde{\vec y}_i\lvert\vec y)=\int p\left(\tilde{\vec y}_{i} \lvert \vec \theta,\mathcal{M}\right)\,p(\vec\theta \lvert \vec y) \ud \vec\theta
+\end{equation}
+is the posterior predictive distribution for a new observation $\tilde{\vec y}_i$ that 
+was generated from some unknown true distribution $p_t(\tilde{\vec y}_i)$.
+ELPD captures the expected predictive performance of the model for some future data
+$\tilde{\vec y}$.  It tells us how well the model will generalize to new data.
+
+One method for estimating ELPD is using LOO-CV. In LOO-CV we compute $N$ leave-one-out 
+posterior distributions $p(\vec\theta\lvert \vec{y}_{-i})$ where $\vec y_{-i}$ 
+denotes all of the observations except the $i$-th observation. Using these 
+posterior estimates we can estimate the ELPD as 
+ \begin{align}
+\mathrm{ELPD}_{\mathrm{LOO}} &\approx\frac{1}{N} \sum_{i=1}^{N} \ln p\left(\vec y_{i} \lvert \vec y_{-i},\mathcal{M}\right) \\
+\label{eq:elpd_loo}
+&=\frac{1}{N} \sum_{i=1}^{L} \ln\int p\left(\vec y_{i} \lvert \vec \theta, \mathcal{M}\right) p\left(\vec\theta \lvert \vec y_{-i},\mathcal{M}\right) \ud \vec\theta \\
+\end{align}
+where $p(\vec y_i\lvert \vec \theta)$ is the likelihood for the $i$-th observation 
+and $p(\vec\theta\lvert \vec y_{-i},\mathcal{M})$ is the posterior for $\vec\theta$ 
+obtained by fitting the full dataset except the held-out observation $\vec y_{-i}$.
+
+A naive implementation LOO-CV is very computationally expensive because it 
+involves re-fitting the model $N$ times. Fortunately, there are reliable methods for 
+approximating it. 
+The most popular approximation uses importance sampling such that the target 
+distribution is the LOO posterior and the proposal distribution is the full
+posterior. Given $S$ draws from the full posterior 
+$\vec\theta\sim p(\vec\theta|\vec y, \mathcal{M})$ we can estimate 
+$p(\vec y_i\lvert \vec y_{-i},\mathcal{M})$ as 
+\begin{align}
+\ln p\left(\vec y_{i} \lvert \vec y_{-i},\mathcal{M}\right)&\approx\ln\left(\frac{\frac{1}{S} \sum_{s=1}^{S} p\left(\vec y_{i} \lvert\vec \theta^{(s)},\mathcal{M}\right) w\left(\vec\theta^{(s)}\right)}{\frac{1}{S} \sum_{s=1}^{S} w\left(\vec\theta^{(s)}\right)}\right) \\
+\label{eq:prob_loocv_pointwise}
+w\left(\vec\theta_{s}\right)&=\frac{p\left(\vec\theta^{(s)} \lvert \vec y_{-i},\mathcal{M}\right)}{p\left(\vec\theta^{(s)} \lvert\vec y,\mathcal{M}\right)} \propto \frac{1}{p\left(\vec y_{i} \lvert\vec\theta^{(s)},\mathcal{M}\right)}
+\end{align}
+If particular observations are highly influential (removing one data point 
+noticeably changes the results) the target LOO posterior can differ 
+from the full posterior which is why Pareto smoothed importance sampling (PSIS) 
+(see Section~\ref{ssec:sampling_methods}) is used to improve the estimate. 
+Using Equation~\ref{eq:prob_loocv_pointwise} and Equation~\ref{eq:elpd_loo}
+we define \citep{2015arXiv150704544V} 
+\begin{equation}
+\mathrm{ELPD}_\mathrm{PSIS-LOO}\equiv\sum_{i=1}^N\ln\left(\frac{\frac{1}{S} \sum_{s=1}^{S} p\left(\vec y_{i} \lvert\vec \theta^{(s)},\mathcal{M}\right) w\left(\vec\theta^{(s)}\right)}{\frac{1}{S} \sum_{s=1}^{S} w\left(\vec\theta^{(s)}\right)}\right) \hquad .
+\label{eq:elpd_psis_loo}
+\end{equation}
+We can use the value of the Pareto $\hat k$ from PSIS to determine if the 
+PSIS-LOO ELPD estimator of $p(\vec\theta\lvert\vec y_{-i})$ for the $i$-th data 
+point potentially do a full re-fit of the model only for the most problematic 
+points. \citet{arXiv:1004.2316} showed that LOO is a consistent and unbiased estimator of 
+the ELPD.
+
+Equation~\ref{eq:elpd_psis_loo} thus enables us to estimate the expected log pointwise 
+predictive density for unseen data using only posterior samples without having 
+to re-fit the model (unless Paretko $\hat k$ is large for certain data points). 
+This equation forms the basis for the widely popular \textsf{loo} statistical package 
+\citep{loo_package}.
+$\mathrm{ELPD}_\mathrm{PSIS-LOO}$ is closely related to the WAIC information 
+criterion \citep{arXiv:1004.2316} which is an alternative approach to estimating 
+ELPD. LOO and WAIC are asymptotically equivalent but LOO is a more robust and less 
+biased estimator with finite data \citep{arXiv:1507.04544}.
+Other information criteria such as AIC, BIC and DIC are inferior to LOO and WAIC 
+estimates of ELPD because they use point estimates (maximum likelihood) to assign 
+a score to a model and they attempt to quantify model complexity in an ad-hoc 
+way (by including a term proportional to the number of parameters in the model). 
+LOO-CV is also less sensitive to the choice of priors and often more reliable 
+for model comparison than Bayes factors \citep{10.1214/17-BA1091,arXiv:2003.04026}.
+
+What if our model includes a Gaussian Process and the likelihood is not 
+factorizable? In that case we cannot use Equation~\ref{eq:elpd_psis_loo} but 
+\citet{arXiv:1810.10559} showed how to evaluate 
+$\ln p(\vec y_i\lvert\vec y_{-i},\vec\theta,\mathcal{M})$ if the likelihood is 
+multivariate normal with a dense covariance or a Student-t likelihood so it is 
+still possible to use LOO-CV cheaply. 
+If we are dealing with time-series data and we are only interested in predicting 
+the next few points conditional on the previous data points then it may not 
+much sense to use LOO-CV because we are using future data points when evaluating 
+predictions on past data points. \textsl{leave-future-out cross validation} 
+(LFO-CV) \citep{arXiv:1902.06281} is a generalization of LOO which takes into 
+account the time-ordering of the data points in a time-series. 
+
+For a more information about Cross Validation and its approximations see the excellent
+\href{https://avehtari.github.io/modelselection/CV-FAQ.html}{Cross-validation FAQ}
+by Aki Vehtari.
+In Chapter~\ref{ch:microlensing} I will demonstrate the utility of these methods by applying 
+them to very practical problems in the analysis of microlensing light curves.
+
+
+\subsection{What about machine learning?}
 %% mention that even if we have a model focused on inference, it might be best if we judge 
 %% its quality through its predictive performance
 %
-\subsection{Sampling and optimization methods}
-\subsubsection{The Laplace approximation}
-\subsubsection{Variational inference}
-\subsubsection{Importance sampling}
-\subsubsection{Rejection sampling}
-\subsubsection{Markov Chain Monte Carlo}
-\subsubsection{Hamiltonian Monte Carlo}
-%\subsubsection{Other }
-%
-%\subsection{Model validation and comparison}
-%\label{ssec:model_comparisonGaussian linear }
-%
-``Furthermore, in the future, a blind search for planetary signals will not
-turn up all potential competing models unless those models
-are specifically considered.''\citep{2017AJ....153..129J}.
-\citet{2021AJ....162...59R}
-\citet{2020AJ....160...17H}
-
-%\subsubsection{Cross validation}
-%% discuss vanilla k-fold CV, stress out just how important and central CV is to science
-%\subsubsubsection{Pareto smoothed importance sampling LOO}
-%\subsubsection{Model comparison}
-%% don't do it!
-%
+\section{Automatic differentiation}
 %\section{Putting it all together -- \emph{probabilistic programming}}
 %\label{sec:programming}
 %\subsection{The success of machine learning}
@@ -2589,6 +4095,7 @@ are specifically considered.''\citep{2017AJ....153..129J}.
 %\subsection{Numpyro}
 
 % CHAPTER 3: Modeling microlensing events 
+%% PLOT POINTWISE LOO 
 \chapter{Modeling microlensing events}
 \label{ch:microlensing}
 \section{Single lens events}
@@ -2705,4 +4212,4 @@ obtain its coefficients with \textsf{SymPy} as before and their values are avail
 
 \bibliography{bib.bib}
 
-\end{document}ii
+\end{document}
