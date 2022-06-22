@@ -4077,36 +4077,445 @@ by Aki Vehtari.
 In Chapter~\ref{ch:microlensing} I will demonstrate the utility of these methods by applying 
 them to very practical problems in the analysis of microlensing light curves.
 
-
 \subsection{What about machine learning?}
-%% mention that even if we have a model focused on inference, it might be best if we judge 
-%% its quality through its predictive performance
-%
-\section{Automatic differentiation}
-%\section{Putting it all together -- \emph{probabilistic programming}}
-%\label{sec:programming}
-%\subsection{The success of machine learning}
-%% that quote from Yann LeCun on differentiable code 
-%\subsection{Automatic differentiation}
-%\subsubsection{Forward mode autodiff}
-%\subsubsection{Reverse mode autodiff or backpropagation}
-%\subsubsection{Jacobian vector products}
-%\subsection{JAX}
-%\subsection{Numpyro}
+How is \textsl{machine learning} (ML) different from the topics we have discussed so far? 
+I would say the key difference is that ML and particularly \textsl{deep learning} (DL) 
+\emph{ML is much more focused on predicting future data} conditional on observing 
+past data  than on estimating the parameters of some model, which is the subject of 
+statistical inference. Classic example is that of neural networks which 
+today routinely consist of millions, even billions of parameters (weights) but 
+the  values of these weights are not important, only the prediction error 
+(on unseen data) is what matters. For this reason optimization methods such as 
+\textsl{stochastic gradient descent} (SGD) which are computationally much 
+cheaper to implement are dominant over sampling methods such as MCMC.
 
-% CHAPTER 3: Modeling microlensing events 
+Despite the fact that the deep learning revolution started in 2012, 
+deep learning has not had as much impact  in the physical sciences as many have 
+expected  despite the fact that  there are many papers on the topic.
+DL methods tend to be black boxes which are very efficient at 
+the task they were trained to do, but their internal structure is usually 
+illegible. This is not as much of an issue in industry applications as it is 
+in the sciences where we care deeply about the precise values of very few 
+parameters.
+Nevertheless, all of this is changing rapidly and there is  a lot of work 
+going on the boundary of physics and machine learning. One example is the field 
+of \textsl{likelihood free inference} (LFI) which aims to emulate expensive 
+physics simulators (such as massive hydrodynamics simulations) with neural 
+networks so that one can do inference with much faster emulators 
+\citep[see for example the review paper by]{2020PNAS..11730055C}. There has 
+also been a lot of work on neural networks which respect certain physical 
+symmetries (see for example Hamiltonian and Lagrangian neural 
+networks\footnote{Or \textsl{geometric deep learning} more generally.})
+and even automated discovery of succinct mathematical descriptions of 
+the dynamical behavior of a physical system through observations of its 
+behaviour \citep{arXiv:2006.11287}.
+
+However, the biggest significance of the atmospheric rise of machine learning 
+in my opinion is that the computational infrastructure developed for training 
+large neural networks can also be used for scientific computing. In particular,
+two of the key technologies responsible for the deep learning  revolution
+are \textsl{Graphical Processing Units} (GPUs) and 
+\textsl{automatic differentiation} (AD), are also very useful 
+for building scientific models. 
+
+\section{Automatic differentiation}
+\label{sec:autodiff}
+\textsl{Automatic differentiation} (AD or autodiff for short)\citep{10.1145/355586.364791} is an old idea 
+that has revolutionized the fields of machine learning, AI and optimization in the 
+recent decade. 
+The key idea behind automatic differentiation 
+is that any model implemented in computer code (such as \textsf{C++} or 
+\textsf{Python}) is fundamentally a composition 
+of simple functions such as additions, multiplications and trig functions 
+which can be easily differentiated and these gradients evaluated at each step 
+of the computation can be combined using the chain rule from calculus to 
+yield the exact (up to machine precision) derivative of the complete model.
+Specialized automatic differentiation libraries build a representation of the 
+code as graph, evaluate the derivatives at each node and propagate them through 
+the entire graph. 
+
+A variant of automatic differentiation called reverse mode automatic differentiation 
+is widely used in machine learning (where it goes under the name of 
+\emph{backpropagation}) to differentiate scalar functions with respect to 
+millions if not billions of parameters. 
+Backpropagation and autodiff in general tells us how to change the inputs of a 
+model (even if there are billions of inputs) to obtain a particular output.
+Autodiff has been used to differentiate through all sorts of things, including 
+complex simulations of physical systems such as molecular dynamics simulations,
+\citep{arXiv:1912.04232}, cosmological simulations \citep{2016MNRAS.463.2273F},
+ ODE and PDE solvers etc. It has even been applied to differentiating code at 
+ the level of a compiler using the LLVM compiler infrastructure \citep{arXiv:2010.01709}.
+ Because the wide variatey of autodiff applications
+the famous AI researcher Yann LeCun recently popularized the term 
+\textsl{differentiable programming} to refer to any computer code which is 
+automatically differentiable.
+
+The reason why I am discussing this topic in the first place is that implementing AD 
+for astrophysical models enables the use  of advanced MCMC methods such as 
+Hamiltonian Monte Carlo and much faster and more stable numerical optimization  
+(for obtaining the MLE estimate for example).
+
+\subsection{Three ways of differentiating computer programs}
+There are three ways of computing derivatives:
+\begin{itemize}
+    \item \textbf{Symbolic differentiation}: computing \emph{exact} derivatives of 
+    functions using either a pen and paper or a computer algebra system such as 
+    \textsf{Wolfram Mathematica} or \textsf{SymPy} \citep{10.7717/peerj-cs.103}.
+    \item \textbf{Numerical differentiation}: computing \emph{approximate} derivatives 
+    using \textsl{finite difference}  methods.
+    \item \textbf{Automatic differentiation}: computing \emph{exact} derivatives of entire 
+    computer programs containing things like conditionals, loops, etc.
+\end{itemize}
+Symbolic differentiation is familiar to everyone from basic calculus. Using either 
+pen and paper  or Computer Algebra Systems (CAS) we can compute exact 
+derivatives of functions. 
+If our model is expressible as a straightforward closed-form function it is 
+often not to difficult to compute the derivatives of interest and indeed this 
+is what people have been doing for decades to improve the performance of their
+models\footnote{Before the advent of easy to use open-source AD libraries 
+the contribution of many papers in applied AI would be to compute the analytic 
+derivatives for some specific model.}
+
+The challenge with symbolic differentiation is that it is not always possible 
+to easily compute the gradients, especially if the model is implemented in terms 
+of a code which contains control flow constructs such as loops and conditionals, 
+or iterative solvers. In those cases gradients of the output of the model 
+are with respect to the input are usually computed using finite-difference 
+methods. In finite-difference methods the derivative of some function $f(x)$
+is defined as 
+\begin{equation}
+    f^\prime(x)=\lim _{h \rightarrow 0} \frac{f(x+h / 2)-f(x-h / 2)}{h}
+\end{equation}
+for some small step size $h$. Numerical gradients are easy to compute even with 
+complicated models but they have two key drawbacks. First, obtaining a 
+good approximation of the derivatives requires a small step size $h$ which is 
+can lead to errors due to numerical cancellations.
+The second is that if we want to evaluate the Jacobian of a function with lots 
+of input parameters we would need to compute a finite difference gradient 
+for each partial derivative which is prohibitively expensive in high dimensions.
+
+Automatic differentiation solves these problems. If AD is properly implemented 
+evaluating the exact gradient is only a factor of a few slower than evaluating 
+the function itself, even for models with millions of parameters.
+The drawback is that it is usually
+necessary to express our model in terms of constructs which are implemented in 
+specialized AD libraries. It also requires a slightly different programming style
+than what most people are used to. Fortunately there are now lots very flexible 
+and easy to use high performance AD libraries. 
+
+\subsection{Forward and reverse-mode autodiff and the chain rule}
+What follows is mostly a summary of the chapter on autodiff 
+from \citet{murphy_book_2023}. First, we define the notation
+\begin{equation}
+\partial x_1 f\left(x_{1}, x_{2}, \ldots, x_{n}\right)
+\end{equation} 
+which denotes the partial derivative of function 
+$f\,:\,\mathbb{R}^{n} \rightarrow \mathbb{R}$ with respect to argument $x_1$ 
+evaluated at the point $(x_{1}, x_{2}, \ldots, x_{n})$.
+We define the derivative operator $\partial$ and denote the derivative of a 
+differentiable function $f\,:\,\mathbb{R}^{n} \rightarrow \mathbb{R}^m$ as 
+\begin{equation}
+    \partial f\,:\,\mathbb{R}^{n} \rightarrow \mathbb{R}^{m\times n}
+    \label{eq:general_derivative}
+\end{equation}
+The function $\partial f$ is a \textsl{linear map} which maps a point 
+$\vec x\in \mathbb{R}^n$ to the \textsl{Jacobian} of all partial derivatives 
+evaluated at $\vec x$.  $\partial f$ evaluated at point $\vec x$,
+$\partial f (\vec x)$ is the \textsl{linearization} of function $f$ at point $\vec x$.
+The Jacobian can be be represent as a matrix $\vec J$ whose 
+elements $J_{ij}$ are given by 
+\begin{equation}
+J_{i j}=\frac{\partial f_{i}}{\partial x_{j}}
+\end{equation}
+  To make this slighly less abstract, consider the case when
+$m=n=1$, the function takes a scalar and returns a scalar, then 
+Equation~\ref{eq:general_derivative} is just the familiar derivative $f'(x)$:
+\begin{equation}
+    f^\prime\,:\,\mathbb{R} \rightarrow \mathbb{R}
+\end{equation}
+If the $f$ takes a vector and returns a scalar ($m=1$) then derivative operator is 
+the \textsl{gradient} $\nabla f$:
+\begin{equation}
+    \partial f\,:\,\mathbb{R}^{n} \rightarrow \mathbb{R}^{1\times n}
+\end{equation}
+
+We now introduce two key ingredients for an automatic differentiation framework 
+which enable us to efficiently compute the Jacobian for functions of arbitrary 
+complexity.
+
+\subsubsection{Jacobian-vector products (JVPs)}
+Now consider consider a perturbation $\vec v\in\mathbb{R}^n$ to the function input 
+$\vec x$. The  mapping 
+\begin{equation}
+(\vec{x}, \vec{v}) \mapsto \partial f(\vec{x})\,\vec v
+\label{eq:jvp}
+\end{equation}
+is called the \textsl{Jacobian-vector product} (JVP). For example, if $f=\cos(x)$ 
+for a scalar $x$ and $v$ is also a scalar, the JVP would be 
+\begin{equation}
+(x, v) \mapsto \partial \cos (x) v=-v \sin (x)\hquad .
+\end{equation}
+Why is this useful? With a function $f\,:\,\mathbb{R}^n\rightarrow\mathbb{R}^m$
+and a \textsl{one-hot} vector $\vec v=(1, 0, \ldots, 0)^\intercal$ we can use  the JVP to 
+evaluate the Jacobian matrix one column at a time:
+\begin{equation}
+    \partial f(\vec x)\,\vec v = 
+    \begin{pmatrix}
+\frac{\partial f_{1}}{\partial x_{1}} & \cdots & \frac{\partial f_{1}}{\partial x_{n}} \\
+\vdots & \ddots & \vdots \\
+\frac{\partial f_{m}}{\partial x_{1}} & \cdots & \frac{\partial f_{m}}{\partial x_{n}}
+    \end{pmatrix}
+    \begin{pmatrix}
+        1\\
+        0\\
+        \vdots\\
+        0
+    \end{pmatrix}
+    = \begin{pmatrix}
+        \frac{\partial f_{1}}{\partial x_{1}}\\
+        \frac{\partial f_{2}}{\partial x_{1}}\\
+        \vdots\\
+        \frac{\partial f_{m}}{\partial x_{1}}
+    \end{pmatrix}
+\end{equation}
+Evaluating one column of the Jacobian in this way costs about the same as one function evaluation
+so this is efficient for fucntions with ``tall Jacobians'' (functions with many outputs and few
+inputs) but innefficient for functions with ``wide Jacobians''.
+
+\subsubsection{Vector-Jacobian products (VJPs)}
+Similarly, if we consider 
+a perturbation to $\vec u\in\mathbb{R}^m$ to the output of the $f$, we obtain
+the \textsl{vector-Jacobian product} (VJP):
+\begin{equation}
+(\vec{x}, \vec{u}) \mapsto \partial f(\vec{x})^{\intercal}\,\vec u
+\label{eq:vjp}
+\end{equation}
+Whereas JVPs are useful for computing the Jacobian matrix one column at a time, we can use VJPs
+to compute the Jacobian one row at a time:
+\begin{equation}
+    \vec v^\intercal\,\partial f(\vec x)= 
+    (1\,0\, \cdots \, 0)\,
+    \begin{pmatrix}
+\frac{\partial f_{1}}{\partial x_{1}} & \cdots & \frac{\partial f_{1}}{\partial x_{n}} \\
+\vdots & \ddots & \vdots \\
+\frac{\partial f_{m}}{\partial x_{1}} & \cdots & \frac{\partial f_{m}}{\partial x_{n}}
+    \end{pmatrix}
+        = \begin{pmatrix}
+        \frac{\partial f_{1}}{\partial x_{1}}\\
+        \frac{\partial f_{1}}{\partial x_{2}}\\
+        \vdots\\
+        \frac{\partial f_{1}}{\partial x_{n}}
+    \end{pmatrix}
+\end{equation}
+For a scalar function $f\,:\,\mathbb{R}^n\rightarrow\mathbb{R}$, the VJP is simply the gradient 
+$\nabla f$:
+\begin{equation}
+    \vec v^\intercal\,\partial f(\vec x)\equiv \nabla f(\vec x)=
+    \left(1\right)\,\left(  \frac{\partial f}{\partial x_{1}} \,\cdots\,\frac{\partial f}{\partial x_{n}}   \right)
+    =\begin{pmatrix}
+        \frac{\partial f}{\partial x_{1}}\\
+        \vdots\\
+        \frac{\partial f}{\partial x_{n}}
+    \end{pmatrix}
+\end{equation}
+
+\subsubsection{Chain rule}
+Let's now consider a function $f\,:\, \mathbb{R}^n\rightarrow\mathbb{R}^m$ which is a composition
+three functions $a$, $b$ and $c$:
+\begin{equation}
+f=c \circ b \circ a
+\end{equation}
+The \textsl{chain rule} from calculus says that we can differentiate $f$ if we know how to differentiate 
+each of its constituent parts:
+\begin{align}
+\partial f(\vec{x})&=\partial c(b(a(\vec{x}))) \circ \partial b(a(\vec{x})) \circ \partial a(\vec{x})\\
+&=\partial c(b(a(\vec{x})))[\partial b(a(\vec{x}))[\partial a(\vec{x})]]
+\label{eq:chain_rule}
+\end{align}
+The idea behind AD is to decompose complicated functions $f$ into constituent parts (sometimes 
+called \textsl{primitive functions}) which we know how to differentiate  and then use the chain 
+rule to obtain the derivative of $f$.
+Equation~\ref{eq:chain_rule} consists of a series of matrix multiplications. Although the order
+in which we multiply those matrices does not matter because of the associativity of matrix 
+multiplication, it matters a great deal when we are implementing AD on a computer.
+Let's say that we want to compute the JVP $\partial f(\vec{x})\,\vec v$ of this composite 
+function:
+\begin{equation}
+ \partial f(\vec{x})\,\vec v = \partial c(b(a(\vec{x})))[\partial b(a(\vec{x}))[\partial a(\vec{x})\vec v]]
+ \label{eq:jvp_chain_rule}
+\end{equation}
+Right-to-left evaluation of the expression on the right-hand side of 
+Equation~\ref{eq:jvp_chain_rule} is known  as \textsl{forward-mode automatic differentiation}.
+In forward-mode AD we evaluate \textsl{primal terms} $\vec{x}, a(\vec{x}), b(a(\vec{x}))$ 
+alongside the \textsl{tangent terms} 
+$\partial a(\vec{x}), \partial b(a(\vec{x})), \partial c(b(a(\vec{x})))$.
+
+If instead we are interested in evaluating the VJP the order of operations is reversed:
+\begin{equation}
+\partial f(\vec{x})^{\intercal}\,\vec u=\partial a(\vec{x})^{\intercal}\left[\partial b(a(\vec{x}))^\intercal\left[\partial c(b(a(\vec{x})))^{\intercal}\vec u\right]\right]
+\label{eq:vjp_chain_rule}
+\end{equation}
+To evaluate  Equation~\label{eq:vjp_chain_rule} we first have to traverse the whole chain 
+computing the primals $\vec{x}, a(\vec{x}), b(a(\vec{x}))$ as we go and then we proceed in reverse order 
+computing the tangents 
+$\partial c(b(a(\vec{x})))^{\intercal}, \partial b(a(\vec{x}))^{\intercal}, \partial a(\vec{x})^{\intercal}$.
+This process is known as \textsl{reverse-mode automatic differentiation} or 
+\textsl{backpropagation} (since we are propagating the gradients backwards from the function output).
+
+Using JVPs and VJPs is much more memory efficient than computing the Jacobian matrix directly 
+because all intermediate results computed when applying the chain rule are 1D vectors that 
+don't take up a lot of memory. The key difference between reverse mode and  forward mode is that 
+in the case of forward-mode AD we can just evaluate the JVPs as we evaluate the function itself 
+whereas in reverse-mode AD we need to store the primal terms for the entire chain before 
+backpropagating so reverse-mode AD is more memory intensive.
+Reverse-mode is usually far more popular than forward-mode in optimization and machine learning 
+because the function $f$ is some cost function with  a high-dimensional input and a scalar 
+output so we only need one VJP to obtain the entire Jacobian matrix. There is also mixed-mode 
+automatic differentiation which combines forward-mode and reverse-mode to optimize memory use.
+
+In the general case functions can be more complex than a simple chain of compositions and in AD 
+frameworks they are represented as \textsl{Directed Acyclic Graphs} (DAGs), sometimes also 
+called \textsl{computation graphs} or \textsl{circuits}. We point the reader to the Section 
+6.2 in \citep{murphy_book_2023} for details on how to generalize AD to graphs and also higher 
+order AD which is also possible using the same formalism. 
+
+\subsection{AD libraries}
+The big challenge in automatic differentiation is creating a library wich can knows how to compute 
+JVPs and VJPs for each primitive operation (for example, multiplication, division, 
+matrix multiplication, array slicing, etc.).
+Because the primitive operations need to be coded 
+manually, expressing a given computation (say an astrophysics code written in \textsf{C++}) in 
+an AD library often requires some effort and it is a bit like programming in a different 
+language. 
+Popular AD libraries are generally developed by large groups of researchers and with the backing 
+of major tech companies.
+
+There are two main kinds of AD libraries:
+\begin{itemize}
+    \item \textbf{Static graph libraries} 
+    \item \textbf{Dynamic graph libraries}
+\end{itemize}
+The static graph libraries first build the entire computation graph for a given program before 
+the graph is evaluated. Examples include \textsf{Theano}\footnote{Theano is no longer 
+maintained but it has recently been ressurected and turned into \textsf{aesara} 
+(\url{https://github.com/aesara-devs/aesara})} \citep{arXiv:1605.02688}, 
+\textsf{TensorFlow}\footnote{\url{https://www.tensorflow.org/}} \citep{arXiv:1603.04467}, 
+and the \textsf{Stan Math Library} \citep{arXiv:1509.07164}.
+Dynamic graph libraries build the graph as the program is is being executed. Examples are 
+\textsf{Tensorflow 2}, \textsf{JAX}\footnote{\url{https://jax.readthedocs.io/en/latest/}.} 
+\citep{jax2018github} and \textsf{PyTorch}\footnote{\url{https://pytorch.org/}.} \citep{pytorch}.
+These libraries have many features in addition to autodiff, most notably support for
+for GPUs. They are written in Python but the primitive operations are usually 
+expressed in a lower level language like \textsf{C++} and \textsf{CUDA C++} 
+for GPU support. 
+
+The most recent and most research oriented of these libraries is Google's \textsf{JAX} 
+library.
+\textsf{JAX} is written in \textsf{Python} and it offers nearly identical functionallity 
+to the widely popular \textsf{NumPy} \textsf{Python} library for manipulating 
+multi-dimensional arrays. \textsf{JAX}takes Python code as an input, converts it 
+to an intermediate language (IR) representation called \textsf{jaxpr} which is 
+used to perform autodiff, and finally the resulting code for evaluating functions 
+and their gradients is \textsl{Just-In-Time} (JIT) compiled to a lower level 
+assembly like language called \textsf{HLO-IR} using the 
+\textsf{XLA}\footnote{\url{https://www.tensorflow.org/xla}.} compiler in such a way 
+that the code can be executed on different hardware architecutres such  as 
+CPUs, GPUs and TPUs (Tensor Processing Units).
+In practice this means that one can write \textsf{Python} code using a \textsf{NumPy} 
+like library, easily compute gradients of the code through autodiff and get 
+the performance of a compiled language like $C++$ through on-the-fly JIT 
+compilation. \textsf{JAX} natively supports \textsf{Python} language constructs such 
+as loops, conditionals and data structures such as tuples and dictionaries.
+Almost everything you could write in \textsf{Python} is differentiable with 
+\textsf{JAX} although there is no guarantee that the gradients are meaningful 
+if the function represented by the code is not itself differentiable.
+Implementing a real-world model in an AD framework often requires making individual 
+functions ``smoother'' so they are more easily differentiable (see 
+Chapter~\ref{ch:microlensing2} for more on this point).
+
+
+Many of the statistical algorithms I have mentioned  in 
+Section~\ref{ssec:sampling_methods} are now implemented in \textsf{JAX} and 
+\textsf{JAX} has also been used within astronomy. \citet{2022ApJS..258...31K} built 
+an autodifferentiable model for exoplanet spectrum modeling, 
+the \textsf{exoplanet} code \citet{2021JOSS....6.3285F} for modeling transit light 
+curves and radial velocity time series uses \textsf{JAX} as a backend, and 
+\citet{2022arXiv220207663G} used \textsf{JAX} to build a differentiable model 
+for strong lensing  which produces samples from a Bayesian posterior by  first
+exploring the posterior using an optimizer, running variational inference to 
+obtain an estimate of the posterior covariance followed by Hamiltonian Monte Carlo
+to obtain the final samples. Importantly, \textsf{JAX} makes it relatively 
+straightforward to implement custom primitives. One of the contributions of this 
+thesis is an implementation of a custom JAX primitive for computing the roots 
+of complex polynomials (see Chapter~\ref{ch:microlensing2} for more details).
+The process of building custom primitives involves specifying the JVP rule 
+(Equation~\ref{eq:jvp}). Interestingly, to support reverse-mode AD we it is 
+not necessary to also specify the VJP rule (Equation~\ref{eq:vjp}) because 
+\textsf{JAX} is able to deduce the transpose of the JVP automatically\footnote{
+    Essentially, this is possible because the implementation of the JVP rule 
+    in \textsf{Python} consists of several \textsf{JAX} primitives such as addition
+    and multiplication and \textsf{JAX} already knows how to transpose those 
+    primitives.} (see \citet{arXiv:2105.09469} for details). 
+
+\subsection{Probability + programming + autodiff = probabilistic programming}
+The final topic in this chapter nicely ties up everything we have discussed so far.
+The term \textsl{probabilistic programming} refers to the use of software libraries 
+which  provide a high-level API for constructing statistical models (usually in 
+the Bayesian paradigm). Specifically, 
+the key components of modern probabilistic programming languages (PPLs) include a backend
+autodiff framework, methods for initializing \emph{random variables} with 
+associated pdf or pmf distribution functions and evaluation the (log) probability, 
+and finally an one or several optimizers and samplers. The idea behind these 
+frameworks is to provide an easy to use interface for constructing probabilistic 
+models and to abstract away the inference as much as possible.
+Why is this useful for scientists? Because these frameworks simplify the process  
+of building probabilistic  models and because they include well-tested and high
+performance implementations of state-of-the-art inference methods such as 
+Hamiltonian Monte Carlo. 
+
+The most popular such library is \textsf{Stan} \citep{2017JSS....76....1C}. 
+Stan is built in \textsf{C++}, it uses the \textsf{Stan Math Library} for automatic 
+differentiation, it uses a variant of the NUTS HMC sampler and also has some 
+support for Variational Inference. \textsf{Stan} is oriented primarily towards 
+applications in the social sciences and it is not as flexible and easily extensible 
+as some other PPLs. \textsf{PyMC} is another PPL which is very similar to 
+\textsf{Stan} except that it is implemented in \textsf{Python} and it uses 
+the \textsf{aesara}\footnote{\url{https://github.com/aesara-devs/aesara}.} library 
+for AD (it used to be called \textsf{PyMC3} and use \textsf{Theano} for AD) and it 
+also supports \textsf{JAX}. 
+\textsf{PyMC} is somewhat more popular in the physical sciences and easier to 
+extend  with custom functionality. The \textsf{exoplanet} code 
+\citep{2021JOSS....6.3285F} is a good example of an astrophysics code which 
+interfaces with \textsf{PyMC}.  There is also 
+\textsf{numpyro}\footnote{\url{https://num.pyro.ai/}.}
+\citep{arXiv:1912.11554} which is also built in \textsf{Python} and uses 
+\textsf{JAX} for AD and \textsf{Tensorflow Probability} \citep{arXiv:1711.10604} 
+which supports bot \textsf{TensorFlow} and \textsf{JAX} for AD. \textsf{PyMC}, \textsf{numpyro}
+and \textsf{Tensorflow Probability} all use a variant of NUTS similar to the one 
+implemented in \textsf{Stan} as the core algorithm for inference but also 
+include support for Variational Inference and additional samplers. 
+I use PPLs (mostly \textsf{numpyro}) extensively throughout the rest of this thesis.
+
+% CHAPTER 3: Modeling single lens microlensing events 
 %% PLOT POINTWISE LOO 
-\chapter{Modeling microlensing events}
+\chapter{Modeling single lens microlensing events}
 \label{ch:microlensing}
-\section{Single lens events}
-\section{Modeling single lens events}
-\section{Numerical solutions to the lens equation}
+% single lens events are important because...
+\section{A differentiable single lens extended source model}
+\section{Practical solutions for sampling multi-modal posteriors}
+\section{Hierarchical inference}
+
+% CHAPTER 4: Modeling binary and triple microlensing events
+\chapter{Modeling binary and triple lens microlensing events}
+\label{ch:microlensing2}
+\section{A differentiable complex polynomial root solver}
 \section{\textsf{caustics} -- computing the magnification of an extended limb-darkened source}
 \section{Comparison with previous work}
 \section{Modeling binary lens events}
 \section{Population-level inference using hierarchical modeling}
 
-% CHAPTER 4: Mapping the surface of Io 
+
+% CHAPTER 5: Mapping the surface of Io 
 \chapter{Mapping the surface of Io}
 \label{ch:mapping_io}
 \section{The data}
@@ -4115,14 +4524,14 @@ them to very practical problems in the analysis of microlensing light curves.
 \section{A static map model}
 \section{A dynamic map model}
 
-% CHAPTER 5: Mapping the surfaces of exoplanets
+% CHAPTER 6: Mapping the surfaces of exoplanets
 \chapter{Mapping the surfaces of exoplanets}
 \label{ch:mapping_exoplanets}
 \section{Previous work}
 \section{What can we learn using eclipse mapping?}
 \section{Time dependent maps}
 
-% CHAPTER 6: Conclusion
+% CHAPTER 7: Conclusion
 \chapter{Conclusion}
 \section{Summary of the thesis}
 \subsection{Microlensing}
