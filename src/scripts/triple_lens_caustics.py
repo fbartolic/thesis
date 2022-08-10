@@ -1,3 +1,4 @@
+import paths
 import numpy as np
 import jax.numpy as jnp
 from jax.config import config
@@ -45,5 +46,5 @@ plt.colorbar(im, label="magnification")
 ax.set_rasterization_zorder(0)
 
 # Save to disc
-fig.savefig("triple_lens_caustics.pdf", bbox_inches="tight", dpi=200)
+fig.savefig(path.figures/"triple_lens_caustics.pdf", bbox_inches="tight", dpi=200)
 

@@ -1,3 +1,4 @@
+import paths
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -51,4 +52,5 @@ ax.set_xticks([-1.0, -0.5, 0.0, 0.5, 1.0])
 ax.legend(prop={"size": 16})
 
 # Save to disk
-fig.savefig("paczynski_curve.pdf", bbox_inches="tight")
+fig.savefig(paths.figures/"paczynski_curve.pdf", bbox_inches="tight")
+

@@ -1,3 +1,4 @@
+import paths
 from functools import partial
 
 from jax.config import config
@@ -106,4 +107,4 @@ for a in ax:
     a.xaxis.set_minor_locator(AutoMinorLocator())
     a.yaxis.set_minor_locator(AutoMinorLocator())
 
-fig.savefig("single_lens_hex.pdf", bbox_inches="tight")
+fig.savefig(paths.figures/"single_lens_hex.pdf", bbox_inches="tight")

@@ -1,3 +1,4 @@
+import paths
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -28,5 +29,5 @@ for a in ax.ravel():
     a.set_xlabel("Distance from MAP")
 
 # Save as pdf
-fig.savefig("typical_sets.pdf", bbox_inches="tight")
+fig.savefig(paths.figures/"typical_sets.pdf", bbox_inches="tight")
 

@@ -1,3 +1,4 @@
+import paths
 import numpy as np
 import jax.numpy as jnp
 from jax.config import config
@@ -75,4 +76,4 @@ plt.colorbar(
 )
 
 # Save to file
-fig.savefig("planetary_caustics.pdf", bbox_inches="tight")
+fig.savefig(paths.figures/"planetary_caustics.pdf", bbox_inches="tight")

@@ -1,3 +1,4 @@
+import paths
 import numpy as np
 import jax.numpy as jnp
 from jax.config import config
@@ -101,4 +102,4 @@ for _a in ax[:, 1]:
     _a.set_yticklabels([])
 
 
-fig.savefig("binary_lens_topology.pdf", bbox_inches="tight")
+fig.savefig(paths.figures/"binary_lens_topology.pdf", bbox_inches="tight")

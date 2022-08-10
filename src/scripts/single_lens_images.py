@@ -1,3 +1,4 @@
+import paths
 import numpy as np
 import jax.numpy as jnp
 from jax import jit, vmap
@@ -73,4 +74,4 @@ for a in ax.reshape(-1):
     a.set_rasterization_zorder(0)
 
 # Save to disk
-fig.savefig("single_lens_images.pdf", bbox_inches="tight", dpi=200)
+fig.savefig(paths.figures/"single_lens_images.pdf", bbox_inches="tight", dpi=200)

@@ -1,3 +1,4 @@
+import paths
 import numpy as np
 import jax.numpy as jnp
 from jax.config import config
@@ -102,4 +103,4 @@ ax_maps[1].set_ylabel(r"$\mathrm{Im}(w)$")
 
 
 # Save to file
-fig.savefig("close_wide_degeneracy.pdf", bbox_inches="tight")
+fig.savefig(paths.figures/"close_wide_degeneracy.pdf", bbox_inches="tight")

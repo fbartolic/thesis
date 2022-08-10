@@ -1,3 +1,4 @@
+import paths
 import starry
 import matplotlib.pyplot as plt
 
@@ -59,4 +60,4 @@ for i, l in enumerate(range(ydeg + 1)):
         ax[i, j].set_rasterization_zorder(0)
 
 # Save to file
-plt.savefig("spherical_harmonics.pdf", bbox_inches="tight", dpi=200)
+plt.savefig(paths.figures/"spherical_harmonics.pdf", bbox_inches="tight", dpi=200)
