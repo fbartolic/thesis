@@ -23,7 +23,7 @@ for _u0 in u0:
 ax.set_aspect(1)
 ax.xaxis.set_minor_locator(AutoMinorLocator())
 ax.yaxis.set_minor_locator(AutoMinorLocator())
-ax.set(xlabel=r"$\delta w_{c,1}$", ylabel="$\delta w_{c, 2}$")
+ax.set(xlabel=r"$\delta z_{\mathrm{cent},1}$", ylabel="$\delta z_{\mathrm{cent}, 2}$")
 ax.legend(prop={"size": 14})
 
 
