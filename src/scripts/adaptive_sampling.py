@@ -11,7 +11,7 @@ from matplotlib import colors
 
 from caustics import images_point_source, critical_and_caustic_curves, mag_point_source
 from caustics.point_source_magnification import lens_eq_det_jac
-from caustics.extended_source_magnification import _eval_images_sequentially
+from caustics.extended_source_magnification import _images_point_source_sequential 
 
 from caustics.utils import *
 
@@ -58,10 +58,11 @@ def _images_of_source_limb(
     npts_init = int(0.5 * npts)
     theta = jnp.linspace(-np.pi, np.pi, npts_init - 1, endpoint=False)
     theta = jnp.pad(theta, (0, 1), constant_values=np.pi - 1e-8)
-    z, z_mask, z_parity = _eval_images_sequentially(
-        theta, w0, rho, nlenses, roots_compensated, roots_itmax, **params
+    z, z_mask = _images_point_source_sequential(
+        rho * jnp.exp(1j * theta) + w0, nlenses=nlenses, roots_itmax=roots_itmax, **params
     )
     det = lens_eq_det_jac(z, nlenses=nlenses, **params)
+    z_parity = jnp.sign(det)
     mag = jnp.sum((1.0 / jnp.abs(det)) * z_mask, axis=0)
 
     theta_init, z_init, z_mask_init, mag_init = theta, z, z_mask, mag
@@ -150,7 +151,7 @@ theta_init, z_init, z_mask_init, mag_init, theta_new, z_new, z_mask_new, mag_new
     e2=e2,
 )
 cc, _ = critical_and_caustic_curves(
-    nlenses=3, npts=1000, a=a, e1=e1, e2=e2, r3=r3, rho=rho
+    nlenses=3, npts=300, a=a, e1=e1, e2=e2, r3=r3, rho=rho
 )
 
 fig, ax = plt.subplot_mosaic(
@@ -243,7 +244,9 @@ ax['A'].set(xlabel=r"$\mathrm{Re}(w)$", ylabel=r"$\mathrm{Im}(w)$")
 ax['C'].set(xlabel=r"$\mathrm{Re}(z)$", ylabel=r"$\mathrm{Im}(z)$")
 
 # Critical curves
-ax['C'].scatter(cc.real, cc.imag, marker='.', color='k', s=1 ,alpha=0.6, zorder=-2)
+for z in cc:
+    ax['C'].plot(z.real, z.imag, color='k', lw=0.7, zorder=-2)
+
 
 for _a in ([ax['A'], ax['B'], ax['C'], ax_in1, ax_in2]):
     _a.set_rasterization_zorder(0)

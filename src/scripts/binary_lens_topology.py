@@ -7,7 +7,7 @@ config.update("jax_enable_x64", True)
 
 import matplotlib.pyplot as plt
 
-from caustics import critical_and_caustic_curves_binary
+from caustics import critical_and_caustic_curves
 
 s_array = jnp.array([0.6, 1 / np.sqrt(2), 1.2, 2.0, 3.2])
 
@@ -15,15 +15,13 @@ fig, ax = plt.subplots(5, 2, figsize=(10, 18), sharex=True)
 fig.subplots_adjust(hspace=0.15, wspace=0.3)
 
 for i, s_ in enumerate(s_array):
-    critical_curves, caustic_curves = critical_and_caustic_curves_binary(
-        0.5 * s_, 0.5, npts=1000
+    critical_curves, caustic_curves = critical_and_caustic_curves(
+        a=0.5 * s_, e1=0.5, npts=3000, nlenses=2
     )
-
-    ax[i, 0].scatter(
-        critical_curves.real, critical_curves.imag, s=0.8, c="k", alpha=0.8
-    )
-    ax[i, 1].scatter(caustic_curves.real, caustic_curves.imag, s=0.8, c="k", alpha=0.8)
-
+    for z in critical_curves:
+        ax[i, 0].plot(z.real, z.imag, "k-", lw=0.7, zorder=-1)
+    for z in caustic_curves:
+        ax[i, 1].plot(z.real, z.imag, "k-", lw=0.7, zorder=-1)
 
 for a in ax.ravel():
     #    a.grid(True)

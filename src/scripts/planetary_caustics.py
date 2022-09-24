@@ -9,7 +9,7 @@ config.update("jax_enable_x64", True)
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 
-from caustics import mag_point_source_binary
+from caustics import mag_point_source
 
 q = 5e-03
 e1 = q / (1 + q)
@@ -26,7 +26,7 @@ for i, s_ in enumerate(s_array):
     wgrid = xgrid + 1j * ygrid
     a = 0.5 * s_
     x_cm = (2 * e1 - 1) * a
-    mag = mag_point_source_binary(wgrid, a, e1)
+    mag = mag_point_source(wgrid, a=a, e1=e1, nlenses=2)
     im = ax[i].pcolormesh(
         xgrid,
         ygrid,

@@ -405,7 +405,7 @@ following:
     \item I have revisited the topic of degeneracies in the posterior probability
           distributions which appear in the context of microlensing and propose solutions
           to these problems.
-    \item I have extended the complex polynomial root solver from \citet{Cameron2021}
+    \item I have extended the complex polynomial root solver from \citet{cameron2021}
           such that it can be executed on GPU architectures and that it supports
           automatic differentiation. This enables the evaluation of ~1M lens equation
           solutions for point source binary and triple lenses in seconds using a CPU and
@@ -925,22 +925,23 @@ curve \citep{2009MNRAS.393..816D}.
 
 In addition to the photometric microlensing effect, there is the astrometric
 effect -- the relative shift in the \emph{position} of the source star as the
-star is being magnified. In case of a point source and a single lens we can
+star is being magnified. For a point source and a single lens we can
 obtain the centroid of the two images by weighing their positions
 (Equation~\ref{eq:images_location}) with their magnifications
 (Equation~\ref{eq:magnification_per_image}):
 \begin{equation}
-    \vec w_c=\frac{A_+\vec w_+ + A_-\vec w_-}{A_+ + A_-}
+    \vec z_\mathrm{cent}=\frac{A_+\vec z_+ + A_-\vec z_-}{A_+ + A_-}
+    \label{eq:centroid_single_lens}
 \end{equation}
-where $\vec w_c$ is the position of the centroid. It follows that the magnitude of the
+where $\vec z_\mathrm{cent}$ is the position of the centroid. It follows that the magnitude of the
 shift is
 \begin{equation}
-    w_c=\frac{1}{2}\left(\frac{u(u^2 + 4)}{u^2+2}+u\right)
+    z_\mathrm{cent}=\frac{1}{2}\left(\frac{u(u^2 + 4)}{u^2+2}+u\right)
 \end{equation}
-and the magnitude $\delta w_c$ of the shift
-$\delta \vec w_c\equiv\vec w_c - \vec u$ relative to the source star is
+and the magnitude $\delta z_\mathrm{cent}$ of the shift
+$\delta \vec z_\mathrm{cent}\equiv\vec z_\mathrm{cent} - \vec u$ relative to the source star is
 \begin{equation}
-    \delta w_c = \frac{u}{u^2 + 2}
+    \delta z_\mathrm{cent} = \frac{u}{u^2 + 2}
 \end{equation}
 The centroidal shift is plotted in Figure~\ref{fig:single_lens_astrometric_shift} for
 different values of the impact parameter $u_0$. The trajectories trace out ellipses
@@ -948,9 +949,10 @@ different values of the impact parameter $u_0$. The trajectories trace out ellip
 Whereas the photometric effect is
 strongest for
 $u\ll 1$  the astrometric shift peaks at $u=\sqrt{2}$ with
-$\delta w_{c,\max}\approx 0.354$ in units of the angular Einstein radius.
+$\delta z_{\mathrm{cent},\max}\approx 0.354$ in units of the angular Einstein radius.
 Importantly, the astrometric shift falls of as $1/u$ for $u\gg \sqrt{2}$  which is
 much slower than $A\propto 1/u^4$ for the photometric effect.
+
 
 \subsection{Magnification of an extended source}
 \begin{figure}[t]
@@ -1057,10 +1059,11 @@ providing a relationship between the mass and the distance to the lens
 In this section I will describe the annual parallax effect. We start by
 modifying Equations~\ref{eq:source_position} and \ref{eq:lens_position} to
 include the projected motion of the Sun relative to the Earth on the plane of
-the sky. We project $\mathbf s$ -- the position vector of the Sun relative to
+the sky. We project $\mathbf s(t)$ -- the position vector of the Sun relative to
 Earth, onto a plane perpendicular to the line of sight towards the source star
 (plane of the sky) which is defined by the unit vector $\boldsymbol{\hat n}$
-normal to the plane. The unit vector $\boldsymbol{\hat n}$ depends on the sky
+normal to the plane. This geocentric coordinate system is defined at some reference time
+$t_0^\prime$.  The unit vector $\boldsymbol{\hat n}$ depends on the sky
 coordinates of the source star $(\alpha,\delta)$ (right ascension and
 declination). We choose to work in geocentric equatorial coordinates defined by
 the spherical unit vectors $\hat{\mathbf e}_n$, pointing North, and
@@ -1072,25 +1075,27 @@ right-handed. The unit vectors are defined by
 \end{align}
 The two components of $\mathbf s$ projected onto the plane of the sky are then
 \begin{align}
-    \zeta_e(t;\alpha,\delta)\equiv \mathbf s\cdot \hat{\mathbf e}_e \\
+    \zeta_e(t;\alpha,\delta)\equiv \mathbf s\cdot \hat{\mathbf e}_e 
+    \label{eq:zeta_e_t}\\
     \zeta_n(t;\alpha,\delta)\equiv \mathbf s\cdot \hat{\mathbf e}_n
+    \label{eq:zeta_n_t}
 \end{align}
-In practice, we can retrieve $\mathbf{s}$ using NASA's JPL Horizons system and compute
-the projected separation at any time $t$.
+In practice, we can retrieve $\mathbf{s}(t)$ using NASA's JPL Horizons system and compute
+the projected separation at any time $t$. 
 The angular positions of the source and the lens
 (Equations~\ref{eq:source_position} and \ref{eq:lens_position}) then become
 \begin{align}
-    \vec{w}_S(t) & = \vec{w}_{S,0}+(t-t_0)\boldsymbol{\mu}_S
+    \vec{w}_S(t) & = \vec{w}_{S,0}+(t-t_0^\prime)\boldsymbol{\mu}_S
     +\pi_S\,\boldsymbol{\zeta}(t)                            \\
-    \vec{w}_L(t) & = \vec{w}_{L,0}+(t-t_0)\boldsymbol{\mu}_L
+    \vec{w}_L(t) & = \vec{w}_{L,0}+(t-t_0^\prime)\boldsymbol{\mu}_L
     +\pi_L\,\boldsymbol{\zeta}(t)
 \end{align}
 where  $\pi_S\equiv 1\,\mathrm{au}/D_S$ is the source parallax, and $\pi_L$ is the
 lens parallax.
 The relative separation is then
 \begin{equation}
-    \boldsymbol{u}(t)= \frac{\boldsymbol\theta_{LS, 0}}{\theta_E}
-    +\frac{t-t_0}{\theta_E}\boldsymbol{\mu}_{LS}+\pi_{E}\,\boldsymbol{\zeta}(t)
+    \boldsymbol{u}(t)= \frac{\vec{w}_{LS, 0}}{\theta_E}
+    +\frac{t-t_0^\prime}{\theta_E}\boldsymbol{\mu}_{LS}+\pi_{E}\,\boldsymbol{\zeta}(t)
     \label{eq:relative_separation_parallax}
 \end{equation}
 where
@@ -1100,38 +1105,31 @@ where
 \end{equation}
 
 Since annual parallax is a higher order effect affecting the apparent
-trajectory of the source on the sky, it makes sense to decompose the trajectory
-as a sum of rectilinear motion plus a deviation due to parallax. Following
-\citet{2004ApJ...606..319G} we define the position offset of the Sun on the
-plane of the sky relative to its position at a particular time $t_0'$ as
-
+trajectory of the source on the sky that is often not very well constrained by the data, 
+it makes sense to decompose the trajectory as a sum of rectilinear motion plus a deviation 
+due to parallax
+\citep{2002ApJ...572..521A,2004ApJ...606..319G}. In other words, we can write 
+\citep{2002ApJ...572..521A}
+\begin{align}
+    \vec{u}(t_0^\prime)&\equiv \vec{u}_0=\vec{w}_{LS}/\theta_E+\pi_E\vec{\zeta}(t_0^\prime)\\
+    \dot{\vec u}(t_0^\prime)&\equiv \dot{\vec u}_0=\vec{\mu}_{LS}+\pi_E\dot{\vec{\zeta}}(t_0^\prime)
+\end{align}
+Combining the above definitions with Equation~\ref{eq:relative_separation_parallax}, we obtain
+\begin{equation}
+    \boldsymbol{u}(t)=\mathbf{u}(t_0^\prime) + (t-t_0')\,\dot{\vec{u}}(t_0^\prime) +
+    \pi_E\,\delta\vec\zeta(t)
+\end{equation}
+where 
 \begin{equation}
     \delta\boldsymbol \zeta (t)=\boldsymbol \zeta (t)-\boldsymbol \zeta (t_0')-(t-t_0')
     \boldsymbol{\dot \zeta} (t_0')
-\end{equation}
-By construction, we have $\delta\boldsymbol \zeta (t_0')=0$ and
-$\delta\dot{\boldsymbol \zeta} (t_0')=0$.
-Equation~\ref{eq:relative_separation_parallax} then takes the form
-\begin{equation}
-    \boldsymbol{u}(t)=\mathbf{u}_0 + (t-t_0')\,\dot{\mathbf{u}}_0 +
-    \pi_E\,\delta\boldsymbol \zeta(t)
     \label{eq:relative_separation_parallax_decomposed}
 \end{equation}
-where
-\begin{align}
-    \mathbf{u}_0       & \equiv \mathbf{u}(t_0) =\frac{\boldsymbol\theta_{LS, 0}}{\theta_E}
-    + \frac{(t_0'-t_0)}{\theta_E}\boldsymbol\mu_{LS}+
-    \pi_E\,\boldsymbol \zeta(t_0)                                                           \\
-    \dot{\mathbf{u}}_0 & \equiv\dot{\mathbf{u}}(t_0)=
-    \frac{\boldsymbol\mu_{LS}}{\theta_E}  + \pi_E\,\dot{\boldsymbol \zeta}
-    (t_0')
-\end{align}
-In what follows, we set the reference time to $t_0'\equiv t_0$ in order to ensure that
-the vectors $\mathbf{u}_0$ and $\dot{\mathbf{u}}_0$ are perpendicular to each other,
-which is the case at $t=t_0$ because at $t_0$ the trajectory has a local extremum
-\footnote{In CITE, $t_0'$ is fixed to a particular value. It is not clear
-    to me how this ensures that the two vectors are perpendicular to each other
-    (TODO: show that this is true).}
+is the position offset of the Sun on the plane of the sky relative to its position 
+at the reference time $t_0^\prime$. By construction, we have 
+$\delta\boldsymbol \zeta (t_0')=0$ and $\delta\dot{\boldsymbol \zeta} (t_0')=0$.
+At the reference time $t_0^\prime$, the vectors $\vec{u}(t_0^\prime)$ and 
+$\dot{\vec u}(t_0^\prime)$ are perpendicular to each other.
 
 \subsubsection{$\mathbf{u}(t)$ in the $(\mathbf{\hat e}_\bot,
         \mathbf{\hat e}_\parallel)$ coordinate system}%
@@ -1150,14 +1148,16 @@ which is the case at $t=t_0$ because at $t_0$ the trajectory has a local extremu
 To evaluate Equation~\ref{eq:relative_separation_parallax_decomposed}, we need
 to choose a suitable basis. A natural coordinate system for describing the
 trajectory of the source relative to the lens is one defined by unit vectors
-$(\mathbf{\hat e}_\bot,\mathbf{\hat e}_\parallel)$ where $\mathbf{\hat e}_\parallel$ is parallel to the trajectory $\mathbf{u}(t)$ at time $t_0$
-(Figure~\ref{fig:parallax2}). We define the unit vectors as
+$(\mathbf{\hat e}_\bot,\mathbf{\hat e}_\parallel)$ where $\mathbf{\hat e}_\parallel$ 
+is parallel to the trajectory $\mathbf{u}(t)$ at time $t_0^\prime$
+(Figure~\ref{fig:parallax2}). 
+We define the unit vectors as
 \begin{equation}
     \mathbf{\hat e}_\bot\equiv \frac{\mathbf{u}_0}{|\mathbf{u}_0|}\quad,
     \mathbf{\hat e}_\parallel\equiv \frac{\mathbf{\hat n}\times\mathbf{u}_0}{|\mathbf{u}_0|}\quad
 \end{equation}
-and the coordinate system $(\mathbf{\hat e}_\bot,\mathbf{\hat e}_\parallel)$ is related to ecliptic coordinates via a simple rotation through an
-angle $\psi$
+The coordinate system $(\mathbf{\hat e}_\bot,\mathbf{\hat e}_\parallel)$ is related to 
+ecliptic coordinates by a simple rotation through an angle $\psi$
 \begin{equation}
     \begin{pmatrix}
         \mathbf{\hat e}_\bot \\
@@ -1174,13 +1174,13 @@ angle $\psi$
     \end{pmatrix}
     \label{eq:ecliptic_to_parallel}
 \end{equation}
-By construction, at time $t_0$ we have
+By construction, at time $t_0^\prime$ we have
 $\mathbf{u}_0\,\bot\,\dot{\mathbf{u}}_0$ and the two components of
 $\mathbf{u}(t)$ are then
 \begin{align}
     u_\bot(t)      & \equiv \mathbf{u}(t)\cdot \mathbf{\hat e}_\bot= u_0 +
     \pi_E\,\delta\boldsymbol \zeta(t)\cdot\mathbf{\hat e}_\bot                                                                                                                                       \\
-    u_\parallel(t) & \equiv \mathbf{u}(t)\cdot \mathbf{\hat e}_\parallel= (t-t_0)\,\dot{\mathbf{u}}_0\cdot\mathbf{\hat e}_\parallel+ \pi_E\,\delta\boldsymbol \zeta(t)\cdot\mathbf{\hat e}_\parallel
+    u_\parallel(t) & \equiv \mathbf{u}(t)\cdot \mathbf{\hat e}_\parallel= (t-t_0^\prime)\,\dot{\mathbf{u}}_0\cdot\mathbf{\hat e}_\parallel+ \pi_E\,\delta\boldsymbol \zeta(t)\cdot\mathbf{\hat e}_\parallel
 \end{align}
 using the definitions of the unit vectors and
 $\delta\boldsymbol \zeta(t)=
@@ -1188,12 +1188,12 @@ $\delta\boldsymbol \zeta(t)=
 \begin{align}
     u_\bot(t)      & = u_0 + \pi_E\,\cos\psi\,\delta \zeta_e(t) - \pi_E\,\sin\psi\,\delta \zeta_n(t)
     \label{eq:u_t_parallel1}                                                                         \\
-    u_\parallel(t) & =(t-t_0)/t_E' + \pi_E\,\sin\psi\,\delta \zeta_e(t) +
+    u_\parallel(t) & =(t-t_0^\prime)/t_E^\prime + \pi_E\,\sin\psi\,\delta \zeta_e(t) +
     \pi_E\,\cos\psi\,\delta \zeta_n(t) \label{eq:u_t_parallel2}
 \end{align}
-where $t_E' =|\dot{\mathbf{u}}_0|=|\boldsymbol\mu_{LS}/\theta_E  + \pi_E\,\dot{\boldsymbol \zeta}(t_0')|$.
+where $t_E^\prime =|\dot{\mathbf{u}}_0|=|\boldsymbol\mu_{LS}/\theta_E  + \pi_E\,\dot{\boldsymbol \zeta}(t_0^\prime)|$.
 The model parameters which determine the magnification $A(t)$ are then
-$\left(u_0,t_0,t'_E,\pi_E,\psi\right)$. Notice that $u_0$ in this case can also be negative.
+$\left(u_0,t_0^\prime,t'_E,\pi_E,\psi\right)$. Notice that $u_0$ in this case can also be negative.
 
 An alternative parametrization which is more commonly used is obtained by
 defining components of a "microlensing parallax vector" as
@@ -1204,10 +1204,10 @@ defining components of a "microlensing parallax vector" as
 in which case we have
 \begin{align}
     u_\bot(t)      & = u_0 + \pi_{E,N}\,\delta \zeta_e(t) - \pi_{E,E}\,\delta \zeta_n(t) \\
-    u_\parallel(t) & =(t-t_0)/t_E' + \pi_{E,E}\,\delta\zeta_e(t) +
+    u_\parallel(t) & =(t-t_0^\prime)/t_E^\prime + \pi_{E,E}\,\delta\zeta_e(t) +
     \pi_{E,N}\,\delta\zeta_n(t)
 \end{align}
-and the model parameters are $\left(u_0,t_0,t_E',\pi_{E,E},\pi_{E,N}\right)$.
+and the model parameters are $\left(u_0,t_0^\prime,t_E^\prime,\pi_{E,E},\pi_{E,N}\right)$.
 
 For reference, we can also write down the components of $\mathbf{u}(t)$ in
 equatorial coordinates by inverting the rotation matrix in
@@ -1215,49 +1215,51 @@ Equation~\ref{eq:ecliptic_to_parallel} and applying it to
 Equations~\ref{eq:u_t_parallel1} and \ref{eq:u_t_parallel2}, the two components
 are then
 \begin{align}
-    u_e & =u_0\cos\psi + (t-t_0)/t_E'\sin\psi + \pi_E\,\delta\zeta_e(t)  \\
-    u_n & =-u_0\sin\psi + (t-t_0)/t_E'\cos\psi + \pi_E\,\delta\zeta_n(t)
+    u_e & =u_0\cos\psi + (t-t_0^\prime)/t_E^\prime\sin\psi + \pi_E\,\delta\zeta_e(t)  
+    \label{eq:u_t_east}\\
+    u_n & =-u_0\sin\psi + (t-t_0^\prime)/t_E^\prime\cos\psi + \pi_E\,\delta\zeta_n(t)
+    \label{eq:u_t_north}
 \end{align}
 
 \subsubsection{$\mathbf{u}(t)$ in the $(\mathbf{\hat e}_\parallel, \mathbf{\hat e}_\bot)$ coordinates using acceleration parameters} There
 exist another parametrization of the trajectory in which we fit for the local
-acceleration of the lens at $t_0$ instead of $\pi_E$ and the angle $\psi$. We
-define the position, velocity and acceleration such that at $t=t_0$ we have
+acceleration of the lens at $t_0^\prime$ instead of $\pi_E$ and the angle $\psi$. We
+define the position, velocity and acceleration such that at $t=t_0^\prime$ we have
 \begin{align}
-    \mathbf{u}(t_0)       & \equiv \widetilde{u}_0 \,\hat{\mathbf e}_\bot
+    \mathbf{u}(t_0^\prime)       & \equiv \widetilde{u}_0 \,\hat{\mathbf e}_\bot
     \label{eq:u_primed_def}                                               \\
-    \dot{\mathbf{u}}(t_0) & \equiv \frac{1}{\widetilde{t_E'}}\,
-    \hat{\mathbf e}_\parallel \label{eq:u_dot_primed_def}                 \\ \ddot{\mathbf{u}}(t_0) & \equiv
+    \dot{\mathbf{u}}(t_0^\prime) & \equiv \frac{1}{\widetilde{t_E^\prime}}\,
+    \hat{\mathbf e}_\parallel \label{eq:u_dot_primed_def}                 \\ \ddot{\mathbf{u}}(t_0^\prime) & \equiv
        a_\bot\,\hat{\mathbf e}_\bot + a_\parallel\,\hat{\mathbf e}_\parallel \label{eq:u_ddot_primed_def}
 \end{align}
 where $a_\parallel$ and $a_\bot$ are the two components of the instantaneous acceleration of
-the lens at $t_0$. From Equations~\ref{eq:u_t_parallel1} and
+the lens at $t_0^\prime$. From Equations~\ref{eq:u_t_parallel1} and
 \ref{eq:u_t_parallel2} it follows that
 \begin{align}
-    \mathbf{u}(t_0)       & = u_0\,\hat{\mathbf e}_\bot                    \\
-    \dot{\mathbf{u}}(t_0) & =\frac{1}{t_E'}\,\hat{\mathbf e}_\parallel     \\ \ddot{\mathbf{u}}(t_0) &
-       =\left[\pi_E\cos\psi\,\delta\ddot{\zeta}_e(t_0)
-    -\pi_E\sin\psi\,\delta\ddot{\zeta}_n(t_0)\right]\,\hat{\mathbf e}_\bot \\  &
-       +\left[\pi_E\sin\psi\,\delta\ddot{\zeta}_e(t_0)
-           +\pi_E\cos\psi\,\delta\ddot{\zeta}_n(t_0)\right]\,\hat{\mathbf e}_\parallel
+    \mathbf{u}(t_0^\prime)       & = u_0\,\hat{\mathbf e}_\bot                    \\
+    \dot{\mathbf{u}}(t_0^\prime) & =\frac{1}{t_E^\prime}\,\hat{\mathbf e}_\parallel     \\ \ddot{\mathbf{u}}(t_0^\prime) &
+       =\left[\pi_E\cos\psi\,\delta\ddot{\zeta}_e(t_0^\prime)
+    -\pi_E\sin\psi\,\delta\ddot{\zeta}_n(t_0^\prime)\right]\,\hat{\mathbf e}_\bot \\  &
+       +\left[\pi_E\sin\psi\,\delta\ddot{\zeta}_e(t_0^\prime)
+           +\pi_E\cos\psi\,\delta\ddot{\zeta}_n(t_0^\prime)\right]\,\hat{\mathbf e}_\parallel
 \end{align}
 By equating the components of the position, velocity and acceleration vectors, we obtain the expressions for the old parameters in terms of the new parameters as
 \begin{equation}
-    \widetilde{u}_0=u_0,\quad \widetilde{t_E'}=t_E'\,\quad
-    \pi_E=\sqrt{\frac{a_\parallel^2 + a_\bot^2}{1} \left[\delta\ddot{\boldsymbol{\zeta}}_e(t_0)\right]^2 +
-        \left[\delta\ddot{\boldsymbol{\zeta}}_n(t_0)\right]^2}
+    \widetilde{u}_0=u_0,\quad \widetilde{t_E'}=t_E^\prime\,\quad
+    \pi_E=\sqrt{\frac{a_\parallel^2 + a_\bot^2}{1} \left[\delta\ddot{\boldsymbol{\zeta}}_e(t_0^\prime)\right]^2 +
+        \left[\delta\ddot{\boldsymbol{\zeta}}_n(t_0^\prime)\right]^2}
 \end{equation}
 Similarly, we have
 \begin{align}
-    \pi_{E,N}=\pi_E\cos\psi & = \frac{a_\parallel\,\delta\ddot{\zeta}_n(t_0) + a_\bot\,\delta\ddot{\zeta}_e(t_0)
-    }{[\delta\ddot{\zeta}_e(t_0)]^2 + [\delta\ddot{\zeta}_n(t_0)]^2}                                              \\
-    \pi_{E,E}=\pi_E\sin\psi & = \frac{ a_\parallel\,\delta\ddot{\zeta}_e(t_0) - a_\bot\,\delta\ddot{\zeta}_n(t_0)
-    }{[\delta\ddot{\zeta}_e(t_0)]^2 + [\delta\ddot{\zeta}_n(t_0)]^2}
+    \pi_{E,N}=\pi_E\cos\psi & = \frac{a_\parallel\,\delta\ddot{\zeta}_n(t_0^\prime) + a_\bot\,\delta\ddot{\zeta}_e(t_0^\prime)
+    }{[\delta\ddot{\zeta}_e(t_0^\prime)]^2 + [\delta\ddot{\zeta}_n(t_0^\prime)]^2}                                              \\
+    \pi_{E,E}=\pi_E\sin\psi & = \frac{ a_\parallel\,\delta\ddot{\zeta}_e(t_0^\prime) - a_\bot\,\delta\ddot{\zeta}_n(t_0^\prime)
+    }{[\delta\ddot{\zeta}_e(t_0^\prime)]^2 + [\delta\ddot{\zeta}_n(t_0^\prime)]^2}
 \end{align}
 To obtain the trajectory in terms of these new parameters, we plug in the above expressions
 into Equations~\ref{eq:u_t_parallel1} and \ref{eq:u_t_parallel2}.
-The new parameter set is then $\left(u_0,t_0,t_E',a_\parallel,a_\bot\right)$. This parametrization makes it obvious that the parallax
-effect depends on the apparent local acceleration of the lens at time $t_0$.
+The new parameter set is then $\left(u_0,t_0^\prime,t_E^\prime,a_\parallel,a_\bot\right)$. This parametrization makes it obvious that the parallax
+effect depends on the apparent local acceleration of the source at time $t_0^\prime$.
 
 \subsection{Measuring the lens mass}
 Notice that only quantity of physical interest in single lens microlensing --
@@ -1447,7 +1449,7 @@ planet rather than the star. Notice that the magnification in the vicinity of
 these planetary caustics is significantly smaller than the magnification around
 the central caustic. Because of this it is easier to search for binary events
 with trajectory passing close to the central caustic rather than the planetary
-caustics. As the separation $s$ approaches $s_c$, the critical value between
+caustics. As the separation $s$ approaches $s_c$ -- the critical value between
 the close and wide topologies, the two planetary caustics merge with the
 central caustic into a single caustic, often called the \emph{resonant
     caustic}, with a much larger cross section than either the central or the
@@ -2466,7 +2468,7 @@ the model is linear in the parameters (regression coefficients), it is not
 generally linear in the raw input data. If we assume that the observations
 $\vec{y}$ have Gaussian noise we can write down the likelihood of this model as
 \begin{equation}
-    p(\vec{y}\lvert \vec{w})=\mathcal{N}(\vec{y}\lvert\vec{M}\vec{w}, \vec{C})
+    p(\vec{y}\lvert \vec \beta)=\mathcal{N}(\vec{y}\lvert\vec{M}\vec \beta, \vec{C})
 \end{equation}
 where $\vec{C}$ is the data covariance matrix and $\mathcal{N}$ is shorthand notation for
 the multivariate normal distribution. In astronomical application it is usually
@@ -2474,7 +2476,7 @@ assumed to be diagonal and we might have some idea for the scale of the variance
 of the diagonal elements (the ``errorbars'').
 The negative log likelihood (NLL) is then equal (ignoring constants)  to
 \begin{equation}
-    \operatorname{NLL}(\vec{w})=\frac{1}{2}(\vec{M} \vec{w}-\vec{y})^{\intercal}\vec{C}^{-1}(\vec{M} \vec{w}-\vec{y})
+    \operatorname{NLL}(\vec \beta)=\frac{1}{2}(\vec{M} \vec\beta -\vec{y})^{\intercal}\vec{C}^{-1}(\vec{M} \vec\beta-\vec{y})
 \end{equation}
 which is just the well known least squares objective or (half the) $\chi^2$ as it is known
 in astronomy.
@@ -2485,15 +2487,15 @@ a diagonal matrix with the the same variance $\sigma^2$ for every data point.
 In that case the MLE solution for the weights $\vec{w}$ is the solution to the
 following (convex) optimization problem:
 \begin{equation}
-    \hat{\vec{w}}=
-    \underset{\boldsymbol{w}}{\operatorname{argmin}}\left|\vec{y}-\vec{M} \vec{w}\right|^{2}
+    \hat{\vec\beta}=
+    \underset{\vec \beta}{\operatorname{argmin}}\left|\vec{y}-\vec{M} \vec\beta\right|^{2}
     \label{eq:ols_objective}
 \end{equation}
 There is a closed form solution for Equation~\ref{eq:ols_objective} as long as the number
 of parameters and features $p$ is less than the number of data points $n$ and the solution
 is \citep{arXiv:2101.07256}
 \begin{equation}
-    \hat{\vec{w}}=(\vec{M}^{\intercal} \vec{M})^{-1} \vec{M}^{\intercal} \vec{y}
+    \hat{\vec\beta}=(\vec{M}^{\intercal} \vec{M})^{-1} \vec{M}^{\intercal} \vec{y}
     \label{eq:ols_solution}
 \end{equation}
 under the assumption that $\vec{M}\vec{M}^\intercal$ is invertible which is usually the case.
@@ -2501,7 +2503,7 @@ Equation~\ref{eq:ols_solution} is called the \emph{ordinary least squares} (OLS)
 For a nontrivial data covariance matrix $\vec{C}$ Equation~\ref{eq:ols_solution} generalizes
 to
 \begin{equation}
-    \hat{\vec{w}}=(\vec{M}^{\intercal}\vec{C}^{-1}\vec{M})^{-1} \vec{M}^{\intercal}\vec{C}^{-1} \vec{y}
+    \hat{\vec\beta}=(\vec{M}^{\intercal}\vec{C}^{-1}\vec{M})^{-1} \vec{M}^{\intercal}\vec{C}^{-1} \vec{y}
     \label{eq:wls_solution}
 \end{equation}
 which is the solution to the \emph{weighted least squares} (WLS) problem.
@@ -2509,15 +2511,15 @@ It is common to modify the least squares objective functions with the addition o
 \emph{regularization} term to prevent overfitting. For instance, we can modify the OLS
 objective (Equation~\ref{eq:ols_objective}) by adding an \emph{L2 regularization} term:
 \begin{equation}
-    \hat{\vec{w}}=
-    \underset{\boldsymbol{w}}{\operatorname{argmin}}\left|\vec{y}-\vec{M} \vec{w}\right|^{2} + \lambda \left|\vec{w}\right|^2
+    \hat{\vec\beta}=
+    \underset{\vec \beta}{\operatorname{argmin}}\left|\vec{y}-\vec{M} \vec\beta\right|^{2} + \lambda \left|\vec\beta\right|^2
     \label{eq:ols_objective_l2}
 \end{equation}
 where $\lambda >0$ is a regularization parameter
-which penalizes large magnitudes of the coefficients $\vec{w}$. This is also a convex
+which penalizes large magnitudes of the coefficients $\vec\beta$. This is also a convex
 optimization problem and the solution is
 \begin{equation}
-    \hat{\vec{w}}=(\vec{M}^{\intercal} \vec{M} + \lambda\vec{I})^{-1} \vec{M}^{\intercal} \vec{y}
+    \hat{\vec\beta}=(\vec{M}^{\intercal} \vec{M} + \lambda\vec{I})^{-1} \vec{M}^{\intercal} \vec{y}
     \label{eq:ols_solution_l2}
 \end{equation}
 where $\vec{I}$ is the identity matrix. Regularized OLS regression with this particular
@@ -2535,20 +2537,20 @@ The above also naturally generalizes to the case of weighted least squares.
 Contrary to popular belief within the astronomy community it is possible and
 often desirable to have a model with more parameters than data points (see
 Chapter~\ref{ch:mapping_io} for a real world example). In the overparametrized
-case of linear regression $(p > n)$ there are multiple choices for $\vec{w}$
+case of linear regression $(p > n)$ there are multiple choices for $\vec\beta$
 which perfectly fit the data. The solution in that case is defined to be a
-minimum-norm parameter vector $\vec{w}$ that interpolates the data
-($\vec{y}=\vec{M} \vec{w}$), out of possibly many degenerate solutions. The OLS
+minimum-norm parameter vector $\vec\beta$ that interpolates the data
+($\vec{y}=\vec{M} \vec\beta$), out of possibly many degenerate solutions. The OLS
 objective in Equation~\ref{eq:ols_objective} can be modified such that it is
 valid for both the $p<n$ and the $p>n$ case by making use of a limit in which
 an L2 regularization term tends to zero \citep{arXiv:2101.07256}:
 \begin{equation}
-    \hat{\vec{w}}=\lim _{\lambda \rightarrow 0^{+}}\left[
-    \underset{\boldsymbol{w}}{\operatorname{argmin}}\left|\vec{y}-\vec{M} \vec{w}\right|^{2} + \lambda \left|\vec{w}\right|^2\right]\quad .
+    \hat{\vec\beta}=\lim _{\lambda \rightarrow 0^{+}}\left[
+    \underset{\vec\beta}{\operatorname{argmin}}\left|\vec{y}-\vec{M} \vec\beta\right|^{2} + \lambda \left|\vec\beta\right|^2\right]\quad .
 \end{equation}
 In this case the OLS solution becomes
 \begin{equation}
-    \hat{\vec{w}}=\vec{M}^{\intercal} (\vec{M} \vec{M}^{\intercal})^{-1} \vec{y}
+    \hat{\vec\beta}=\vec{M}^{\intercal} (\vec{M} \vec{M}^{\intercal})^{-1} \vec{y}
     \label{eq:ols_solution_overdet}
 \end{equation}
 Equations~\ref{eq:ols_solution} and \ref{eq:ols_solution_overdet} can be unified into a
@@ -2562,11 +2564,11 @@ Then $\vec{M}^\dagger =  \vec{V}^{\intercal} \vec{S}^{\dagger} \vec{U}^{\interca
 
 \subsection{Bayesian linear regression}
 In the Bayesian paradigm we can write down the posterior over the regression
-weights $\vec{w}$ assuming a Gaussian likelihood and a Gaussian prior over the
+weights $\vec\beta$ assuming a Gaussian likelihood and a Gaussian prior over the
 weights. The posterior is then
 \begin{align}
-    p(\vec{w}|\vec{y}) & = \frac{p(\vec{y}\lvert \vec{w})\,p(\vec{w})}{\int p(\vec{y}\lvert \vec{w})p(\vec{w}) \ud\vec{w}}                                                                                                                                                 \\
-                       & = \frac{    \mathcal{N}(\vec{y} \lvert\vec{M} \vec{w}, \vec{C}) \,\mathcal{N}(\vec{w} \lvert\vec{\mu}, \vec{\Lambda})}{\int \mathcal{N}(\vec{y} \lvert\vec{M} \vec{w}, \vec{C}) \,\mathcal{N}(\vec{w} \lvert\vec{\mu}, \vec{\Lambda}) \ud\vec{w}}
+    p(\vec\beta|\vec{y}) & = \frac{p(\vec{y}\lvert \vec\beta)\,p(\vec\beta)}{\int p(\vec{y}\lvert \vec\beta)p(\vec\beta) \ud\vec\beta}                                                                                                                                                 \\
+                       & = \frac{    \mathcal{N}(\vec{y} \lvert\vec{M} \vec\beta, \vec{C}) \,\mathcal{N}(\vec\beta \lvert\vec{\mu}, \vec{\Lambda})}{\int \mathcal{N}(\vec{y} \lvert\vec{M} \vec\beta, \vec{C}) \,\mathcal{N}(\vec\beta \lvert\vec{\mu}, \vec{\Lambda}) \ud\vec\beta}
     \label{eq:bayes_lin_regression}
 \end{align}
 where $\vec{C}$ is the data covariance matrix as before, $\vec{\mu}$ is the mean
@@ -2576,7 +2578,7 @@ multivariate Gaussian distribution, one can show that
 the solution to Equation~\ref{eq:bayes_lin_regression} is
 \citep[see for example][]{arXiv:2005.14199}
 \begin{equation}
-    p(\vec{w}|\vec{y}) =\mathcal{N}(\vec{w} \lvert\vec{a}, \vec{A})
+    p(\vec\beta|\vec{y}) =\mathcal{N}(\vec\beta \lvert\vec{a}, \vec{A})
     \label{eq:linear_regression_posterior}
 \end{equation}
 where
@@ -2590,6 +2592,7 @@ to directly obtain the posterior over the map coefficients $\mathbf{y}$ but the 
 of doing so is imposing a Gaussian prior on the map coefficients.
 
 \subsection{Marginalizing a likelihood over linear parameters}
+\label{ssec:marginalize_linear}
 A model structure which is quite common in astronomy and physics is a model
 which depends on some linear, and some nonlinear parameters. This is the
 structure of the equation for the observed flux in microlensing
@@ -2597,37 +2600,37 @@ structure of the equation for the observed flux in microlensing
 flux parameters are linear and the magnification parameters are nonlinear. The
 likelihoods for such models can be written as
 \begin{equation}
-    p(\vec{y}\lvert \vec{w}, \vec{\theta})
+    p(\vec{y}\lvert \vec\beta, \vec{\theta})
 \end{equation}
-where $\vec{w}$ are the linear parameters and $\vec{\theta}$ are the nonlinear parameters.
+where $\vec\beta$ are the linear parameters and $\vec{\theta}$ are the nonlinear parameters.
 In some circumstances, it is possible to analytically marginalize over the linear
-parameters $\vec{w}$. Doing so is often advantageous because it reduces the size of the
+parameters $\vec\beta$. Doing so is often advantageous because it reduces the size of the
 parameter space  and the computational cost of doing inference.
 The marginalized likelihood is given by (Equation~\ref{eq:marginalization})
 \begin{equation}
-    p(\vec{y}\lvert \vec{\theta})=\int p(\vec{y}\lvert \vec{w}, \vec{\theta})p(\vec{w}\lvert \vec{\theta}) \ud\vec{w}
+    p(\vec{y}\lvert \vec{\theta})=\int p(\vec{y}\lvert \vec\beta, \vec{\theta})p(\vec\beta\lvert \vec{\theta}) \ud\vec\beta
 \end{equation}
-Marginalization requires the introduction of a prior  $p(\vec{w}\lvert \vec{\theta})$
+Marginalization requires the introduction of a prior  $p(\vec\beta\lvert \vec{\theta})$
 which can potentially also depend on the nonlinear parameters $\vec{\theta}$.
 The alternative to doing this integral is re-factorizing the expression in the integrand
 using Bayes' theorem:
 \begin{equation}
-    p(\vec{y}\lvert \vec{w}, \vec{\theta})p(\vec{w}\lvert \vec{\theta})  = p(\vec{w}\lvert \vec{y},\vec{\theta})\,p(\vec{y}\lvert \vec{\theta})
+    p(\vec{y}\lvert \vec\beta, \vec{\theta})p(\vec\beta\lvert \vec{\theta})  = p(\vec\beta\lvert \vec{y},\vec{\theta})\,p(\vec{y}\lvert \vec{\theta})
 \end{equation}
 which yields the marginalized likelihood without us having to do the integral:
 \begin{equation}
-    p(\vec{y}\lvert \vec{\theta}) = \frac{    p(\vec{y}\lvert \vec{w}, \vec{\theta})p(\vec{w}\lvert \vec{\theta})}{p(\vec{w}\lvert \vec{y},\vec{\theta})}
+    p(\vec{y}\lvert \vec{\theta}) = \frac{    p(\vec{y}\lvert \vec\beta, \vec{\theta})p(\vec\beta\lvert \vec{\theta})}{p(\vec\beta\lvert \vec{y},\vec{\theta})}
     \label{eq:likelihood_factorization}
 \end{equation}
 If both the prior and the likelihood are multivariate Gaussians with the following form:
 \begin{align}
-    p(\vec{y}\lvert \vec{w}, \vec{\theta}) & = \mathcal{N}(\vec{y}\lvert \vec{M}\vec{w},\vec{C})  \\
-    p(\vec{w}\lvert \vec{\theta})          & = \mathcal{N}(\vec{w}\lvert \vec{\mu},\vec{\Lambda})
+    p(\vec{y}\lvert \vec\beta, \vec{\theta}) & = \mathcal{N}(\vec{y}\lvert \vec{M}\vec\beta,\vec{C})  \\
+    p(\vec\beta\lvert \vec{\theta})          & = \mathcal{N}(\vec\beta\lvert \vec{\mu},\vec{\Lambda})
 \end{align}
 then Equation~\ref{eq:likelihood_factorization} becomes
 \citep[for the proof see][]{arXiv:2005.14199}
 \begin{equation}
-    \mathcal{N}(\vec{y} \lvert \vec{M} \vec{w}, \vec{C})\, \mathcal{N}(\vec{w} \lvert\vec{\mu}, \vec{\Lambda})=\mathcal{N}(\vec{w} \lvert\vec{a}, \vec{A})\, \mathcal{N}(\vec{y} \lvert\vec{b}, \vec{B})
+    \mathcal{N}(\vec{y} \lvert \vec{M} \vec\beta, \vec{C})\, \mathcal{N}(\vec\beta \lvert\vec{\mu}, \vec{\Lambda})=\mathcal{N}(\vec\beta \lvert\vec{a}, \vec{A})\, \mathcal{N}(\vec{y} \lvert\vec{b}, \vec{B})
 \end{equation}
 where
 \begin{align}
@@ -2649,7 +2652,7 @@ $J$ flux vectors $\vec{f}_j$, each of lengths $N_j$ where $j$ indexes different
 spectral bands, often from different observatories as well.
 Equation~\ref{eq:flux_dominik} can then be written in vector form as
 \begin{equation}
-    \vec{f}_j=\vec{M}_j\vec{w}_j
+    \vec{f}_j=\vec{M}_j\vec\beta_j
     \label{eq:microlensing_flux_general}
 \end{equation}
 where the matrix $\vec{M}$ is defined as
@@ -2663,9 +2666,9 @@ where the matrix $\vec{M}$ is defined as
 \end{equation}
 and $t=t_1,\ldots, t_{N_j}$ are the times of observations in band $j$,
 $\tilde{A}(t_i) \equiv (A(t_i)-1) /(A\left(t_{0}\right)-1)$, $\vec{\theta}$ are the
-nonlinear parameters, and the weights vector $\vec{w}_j$ is defined as
+nonlinear parameters, and the weights vector $\vec\beta_j$ is defined as
 \begin{equation}
-    \vec{w}_j\equiv    \left( \Delta F_j\; F_{\mathrm{base},j}\right)^\intercal
+    \vec\beta_j\equiv    \left( \Delta F_j\; F_{\mathrm{base},j}\right)^\intercal
 \end{equation}
 Equation~\ref{eq:microlensing_flux_general} is general enough to encompass
 either single or multiple lens microlensing models. Assuming independence of
@@ -2676,7 +2679,7 @@ noise properties between observations in different spectral bands\footnote{This
 the complete dataset
 $\mathcal{D}=\left\{f_{j}\right\}_{j=1}^{J}$ factorizes as
 \begin{equation}
-    p(\mathcal{D}\lvert \vec{w}, \vec{\theta})=\prod_{j=1}^J p(\vec{f}_j\lvert \vec{w}_j, \vec{\theta})
+    p(\mathcal{D}\lvert \vec\beta, \vec{\theta})=\prod_{j=1}^J p(\vec{f}_j\lvert \vec\beta_j, \vec{\theta})
 \end{equation}
 Using Equation~\ref{eq:likelihood_lin_params_marginalized} we can then write down the
 negative log-likelihood (ignoring constants) for the $j$-th band as
@@ -2702,7 +2705,7 @@ in Equation~\ref{eq:ll_marginalized_microlensing} isn't usually expensive to com
 Although Equation~\ref{eq:ll_marginalized_microlensing} is the formally correct
 way to marginalize the linear parameters of a general microlensing model, it is
 not used in the microlensing literature. What most people do instead is using
-MLE to maximize the joint likelihood $p(\vec{f}\lvert\vec{w},\vec{\theta})$
+MLE to maximize the joint likelihood $p(\vec{f}\lvert\vec\beta,\vec{\theta})$
 with respect to the linear parameters by solving a least squares problem at
 every MCMC step in the nonlinear parameters (we'll cover MCMC in the next
 section). This procedure is approximately equivalent to using the marginalized
@@ -2722,7 +2725,7 @@ substantially reduces the complexity of the inference problem we can still
 compute the posterior distribution for those parameters \emph{conditional on
     the value of the nonlinear parameters}:
 \begin{equation}
-    p(\vec{w}\lvert \vec{y}, \vec{\theta})=\mathcal{N}(\vec{w}\lvert \vec{y}, \vec{\theta})
+    p(\vec\beta\lvert \vec{y}, \vec{\theta})=\mathcal{N}(\vec\beta\lvert \vec{y}, \vec{\theta})
 \end{equation}
 which we can use to obtain the full posterior over the linear parameters if we happen
 to have samples from the posterior over the nonlinear parameters $p(\vec{\theta}|\vec{y})$
@@ -3001,6 +3004,7 @@ which work in one domain may not work well in another domain and no single
 model will work well in all domains.
 
 \subsection{Sampling vs. optimization}
+\label{ssec:sampling_vs_optimization}
 %When fitting a model to a scientific dataset we are usually interested in
 %finding some ``best'' estimate of the parameters of that model\footnote{This is
 %    opposed to machine learning where in the vast majority of cases the goal is
@@ -3336,7 +3340,7 @@ posterior samples from $p(\vec{\theta})$ in order to, say, plot a historgram? We
 use \textsl{importance resampling} which works by resampling the original samples 
 $\vec{\theta}^{(1)} \dots \vec{\theta}^{(S)}$
 with replacament with probabilities proportional to  the importance weights.
-Practically, this meanse drawing a set of indices $i_1, \dots, i_S$ from a 
+Practically, this means drawing a set of indices $i_1, \dots, i_S$ from a 
 multinomial distribution  where the event probabilities are the normalized importance 
 weights $\tilde{w}_{i}=w_{i} / \sum_{j} w_{j}$:
 \begin{equation}
@@ -4054,98 +4058,105 @@ the predictive performance of the model.
 If we set $K$ to be equal to the number of data points $N$, then we 
 are talking about \textsl{leave-one-out cross validation} (LOO-CV).
 
-One measure of the predictive performance of a given model $\mathcal{M}$ which has 
-good theoretical properties is ther so-called 
-\textsl{exptected log predictive density} (ELPD) 
-\citep[see for example][]{10.1214/12-SS102}. It is defined as 
-\begin{equation}
-\operatorname{ELPD}(\mathcal{M})\equiv \int \ln p\left(\tilde{\vec y}_{i} \lvert \vec y, \mathcal{M}\right)\,p_{t}\left(\tilde{\vec y}_{i}\right) \ud \tilde{\vec y}_{i}
-\end{equation}
-where 
-\begin{equation}
-p(\tilde{\vec y}_i\lvert\vec y)=\int p\left(\tilde{\vec y}_{i} \lvert \vec \theta,\mathcal{M}\right)\,p(\vec\theta \lvert \vec y) \ud \vec\theta
-\end{equation}
-is the posterior predictive distribution for a new observation $\tilde{\vec y}_i$ that 
-was generated from some unknown true distribution $p_t(\tilde{\vec y}_i)$.
-ELPD captures the expected predictive performance of the model for some future data
-$\tilde{\vec y}$.  It tells us how well the model will generalize to new data.
-
-One method for estimating ELPD is using LOO-CV. In LOO-CV we compute $N$ leave-one-out 
-posterior distributions $p(\vec\theta\lvert \vec{y}_{-i})$ where $\vec y_{-i}$ 
-denotes all of the observations except the $i$-th observation. Using these 
-posterior estimates we can estimate the ELPD as 
- \begin{align}
-\mathrm{ELPD}_{\mathrm{LOO}} &\approx\frac{1}{N} \sum_{i=1}^{N} \ln p\left(\vec y_{i} \lvert \vec y_{-i},\mathcal{M}\right) \\
-\label{eq:elpd_loo}
-&=\frac{1}{N} \sum_{i=1}^{L} \ln\int p\left(\vec y_{i} \lvert \vec \theta, \mathcal{M}\right) p\left(\vec\theta \lvert \vec y_{-i},\mathcal{M}\right) \ud \vec\theta \\
-\end{align}
-where $p(\vec y_i\lvert \vec \theta)$ is the likelihood for the $i$-th observation 
-and $p(\vec\theta\lvert \vec y_{-i},\mathcal{M})$ is the posterior for $\vec\theta$ 
-obtained by fitting the full dataset except the held-out observation $\vec y_{-i}$.
-
-A naive implementation LOO-CV is very computationally expensive because it 
-involves re-fitting the model $N$ times. Fortunately, there are reliable methods for 
-approximating it. 
-The most popular approximation uses importance sampling such that the target 
-distribution is the LOO posterior and the proposal distribution is the full
-posterior. Given $S$ draws from the full posterior 
-$\vec\theta\sim p(\vec\theta|\vec y, \mathcal{M})$ we can estimate 
-$p(\vec y_i\lvert \vec y_{-i},\mathcal{M})$ as 
-\begin{align}
-\ln p\left(\vec y_{i} \lvert \vec y_{-i},\mathcal{M}\right)&\approx\ln\left(\frac{\frac{1}{S} \sum_{s=1}^{S} p\left(\vec y_{i} \lvert\vec \theta^{(s)},\mathcal{M}\right) w\left(\vec\theta^{(s)}\right)}{\frac{1}{S} \sum_{s=1}^{S} w\left(\vec\theta^{(s)}\right)}\right) \\
-\label{eq:prob_loocv_pointwise}
-w\left(\vec\theta_{s}\right)&=\frac{p\left(\vec\theta^{(s)} \lvert \vec y_{-i},\mathcal{M}\right)}{p\left(\vec\theta^{(s)} \lvert\vec y,\mathcal{M}\right)} \propto \frac{1}{p\left(\vec y_{i} \lvert\vec\theta^{(s)},\mathcal{M}\right)}
-\end{align}
-If particular observations are highly influential (removing one data point 
-noticeably changes the results) the target LOO posterior can differ 
-from the full posterior which is why Pareto smoothed importance sampling (PSIS) 
-(see Section~\ref{ssec:sampling_methods}) is used to improve the estimate. 
-Using Equation~\ref{eq:prob_loocv_pointwise} and Equation~\ref{eq:elpd_loo}
-we define \citep{2015arXiv150704544V} 
-\begin{equation}
-\mathrm{ELPD}_\mathrm{PSIS-LOO}\equiv\sum_{i=1}^N\ln\left(\frac{\frac{1}{S} \sum_{s=1}^{S} p\left(\vec y_{i} \lvert\vec \theta^{(s)},\mathcal{M}\right) w\left(\vec\theta^{(s)}\right)}{\frac{1}{S} \sum_{s=1}^{S} w\left(\vec\theta^{(s)}\right)}\right) \hquad .
-\label{eq:elpd_psis_loo}
-\end{equation}
-We can use the value of the Pareto $\hat k$ from PSIS to determine if the 
-PSIS-LOO ELPD estimator of $p(\vec\theta\lvert\vec y_{-i})$ for the $i$-th data 
-point potentially do a full re-fit of the model only for the most problematic 
-points. \citet{arXiv:1004.2316} showed that LOO is a consistent and unbiased estimator of 
-the ELPD.
-
-Equation~\ref{eq:elpd_psis_loo} thus enables us to estimate the expected log pointwise 
-predictive density for unseen data using only posterior samples without having 
-to re-fit the model (unless Paretko $\hat k$ is large for certain data points). 
-This equation forms the basis for the widely popular \ssf{loo} statistical package 
-\citep{loo_package}.
-$\mathrm{ELPD}_\mathrm{PSIS-LOO}$ is closely related to the WAIC information 
-criterion \citep{arXiv:1004.2316} which is an alternative approach to estimating 
-ELPD. LOO and WAIC are asymptotically equivalent but LOO is a more robust and less 
-biased estimator with finite data \citep{arXiv:1507.04544}.
-Other information criteria such as AIC, BIC and DIC are inferior to LOO and WAIC 
-estimates of ELPD because they use point estimates (maximum likelihood) to assign 
-a score to a model and they attempt to quantify model complexity in an ad-hoc 
-way (by including a term proportional to the number of parameters in the model). 
-LOO-CV is also less sensitive to the choice of priors and often more reliable 
-for model comparison than Bayes factors \citep{10.1214/17-BA1091,arXiv:2003.04026}.
-
-What if our model includes a Gaussian Process and the likelihood is not 
-factorizable? In that case we cannot use Equation~\ref{eq:elpd_psis_loo} but 
-\citet{arXiv:1810.10559} showed how to evaluate 
-$\ln p(\vec y_i\lvert\vec y_{-i},\vec\theta,\mathcal{M})$ if the likelihood is 
-multivariate normal with a dense covariance or a Student-t likelihood so it is 
-still possible to use LOO-CV cheaply. 
-If we are dealing with time-series data and we are only interested in predicting 
-the next few points conditional on the previous data points then it may not 
-much sense to use LOO-CV because we are using future data points when evaluating 
-predictions on past data points. \textsl{leave-future-out cross validation} 
-(LFO-CV) \citep{arXiv:1902.06281} is a generalization of LOO which takes into 
-account the time-ordering of the data points in a time-series. 
-
 For a more information about Cross Validation and its approximations see the excellent
 \href{https://avehtari.github.io/modelselection/CV-FAQ.html}{Cross-validation FAQ}
 by Aki Vehtari.
-In Chapter~\ref{ch:microlensing_modeling} I will demonstrate the utility of these methods by applying 
-them to very practical problems in the analysis of microlensing light curves.
+In Chapter~\ref{ch:microlensing_modeling} I describe CV in a lot more detail and apply
+LOO-CV in the context of modeling microlensing light curves.
+
+
+%One measure of the predictive performance of a given model $\mathcal{M}$ which has 
+%good theoretical properties is ther so-called 
+%\textsl{exptected log predictive density} (ELPD) 
+%\citep[see for example][]{10.1214/12-SS102}. It is defined as 
+%\begin{equation}
+%\operatorname{ELPD}(\mathcal{M})\equiv \int \ln p\left(\tilde{\vec y}_{i} \lvert \vec y, \mathcal{M}\right)\,p_{t}\left(\tilde{\vec y}_{i}\right) \ud \tilde{\vec y}_{i}
+%\label{eq:elpd}
+%\end{equation}
+%where 
+%\begin{equation}
+%p(\tilde{\vec y}_i\lvert\vec y)=\int p\left(\tilde{\vec y}_{i} \lvert \vec \theta,\mathcal{M}\right)\,p(\vec\theta \lvert \vec y) \ud \vec\theta
+%\end{equation}
+%is the posterior predictive distribution for a new observation $\tilde{\vec y}_i$ that 
+%was generated from some unknown true distribution $p_t(\tilde{\vec y}_i)$.
+%ELPD captures the expected predictive performance of the model for some future data
+%$\tilde{\vec y}$.  It tells us how well the model will generalize to new data.
+%
+%One method for estimating ELPD is using LOO-CV. In LOO-CV we compute $N$ leave-one-out 
+%posterior distributions $p(\vec\theta\lvert \vec{y}_{-i})$ where $\vec y_{-i}$ 
+%denotes all of the observations except the $i$-th observation. Using these 
+%posterior estimates we can estimate the ELPD as 
+% \begin{align}
+%\mathrm{ELPD}_{\mathrm{LOO}} &\approx \sum_{i=1}^{N} \ln p\left(\vec y_{i} \lvert \vec y_{-i},\mathcal{M}\right) \\
+%\label{eq:elpd_loo}
+%&=\sum_{i=1}^{L} \ln\int p\left(\vec y_{i} \lvert \vec \theta, \mathcal{M}\right) p\left(\vec\theta \lvert \vec y_{-i},\mathcal{M}\right) \ud \vec\theta \\
+%\end{align}
+%where $p(\vec y_i\lvert \vec \theta)$ is the likelihood for the $i$-th observation 
+%and $p(\vec\theta\lvert \vec y_{-i},\mathcal{M})$ is the posterior for $\vec\theta$ 
+%obtained by fitting the full dataset except the held-out observation $\vec y_{-i}$.
+%
+%A naive implementation LOO-CV is very computationally expensive because it 
+%involves re-fitting the model $N$ times. Fortunately, there are reliable methods for 
+%approximating it. 
+%The most popular approximation uses importance sampling such that the target 
+%distribution is the LOO posterior and the proposal distribution is the full
+%posterior. Given $S$ draws from the full posterior 
+%$\vec\theta\sim p(\vec\theta|\vec y, \mathcal{M})$ we can estimate 
+%$p(\vec y_i\lvert \vec y_{-i},\mathcal{M})$ as 
+%\begin{align}
+%\ln p\left(\vec y_{i} \lvert \vec y_{-i},\mathcal{M}\right)&\approx\ln\left(\frac{\frac{1}{S} \sum_{s=1}^{S} p\left(\vec y_{i} \lvert\vec \theta^{(s)},\mathcal{M}\right) w\left(\vec\theta^{(s)}\right)}{\frac{1}{S} \sum_{s=1}^{S} w\left(\vec\theta^{(s)}\right)}\right) 
+%\label{eq:prob_loocv_pointwise}\\
+%w\left(\vec\theta_{s}\right)&=\frac{p\left(\vec\theta^{(s)} \lvert \vec y_{-i},\mathcal{M}\right)}{p\left(\vec\theta^{(s)} \lvert\vec y,\mathcal{M}\right)} \propto \frac{1}{p\left(\vec y_{i} \lvert\vec\theta^{(s)},\mathcal{M}\right)}
+%\label{eq:loocv_weights}
+%\end{align}
+%If particular observations are highly influential (removing one data point 
+%noticeably changes the results) the target LOO posterior can differ 
+%from the full posterior which is why Pareto smoothed importance sampling (PSIS) 
+%\citep{vehtari2017} is used to smooth-out the long tail of the weights 
+%$w(\vec\theta_s)$.
+%Making use of Equation~\ref{eq:prob_loocv_pointwise} and Equation~\ref{eq:elpd_loo},
+%we define \citep{vehtari2017} 
+%\begin{equation}
+%\mathrm{ELPD}_\mathrm{PSIS-LOO}\equiv
+%\sum_{i=1}^N
+%\ln p\left(\vec y_{i} \lvert \vec y_{-i},\mathcal{M}\right)\hquad .
+%\label{eq:elpd_psis_loo}
+%\end{equation}
+%We can use the value of the Pareto $\hat k$ from PSIS to determine if the 
+%PSIS-LOO ELPD estimator of $p(\vec\theta\lvert\vec y_{-i})$ for the $i$-th data 
+%point potentially do a full re-fit of the model only for the most problematic 
+%points. \citet{arXiv:1004.2316} showed that LOO is a consistent and unbiased estimator of 
+%the ELPD.
+%
+%Equation~\ref{eq:elpd_psis_loo} thus enables us to estimate the expected log pointwise 
+%predictive density for unseen data using only posterior samples without having 
+%to re-fit the model (unless Paretko $\hat k$ is large for certain data points). 
+%This equation forms the basis for the widely popular \ssf{loo} statistical package 
+%\citep{loo_package}.
+%$\mathrm{ELPD}_\mathrm{PSIS-LOO}$ is closely related to the WAIC information 
+%criterion \citep{arXiv:1004.2316} which is an alternative approach to estimating 
+%ELPD. LOO and WAIC are asymptotically equivalent but LOO is a more robust and less 
+%biased estimator with finite data \citep{arXiv:1507.04544}.
+%Other information criteria such as AIC, BIC and DIC are inferior to LOO and WAIC 
+%estimates of ELPD because they use point estimates (maximum likelihood) to assign 
+%a score to a model and they attempt to quantify model complexity in an ad-hoc 
+%way (by including a term proportional to the number of parameters in the model). 
+%LOO-CV is also less sensitive to the choice of priors and often more reliable 
+%for model comparison than Bayes factors \citep{10.1214/17-BA1091,arXiv:2003.04026}.
+%
+%What if our model includes a Gaussian Process and the likelihood is not 
+%factorizable? In that case we cannot use Equation~\ref{eq:elpd_psis_loo} but 
+%\citet{arXiv:1810.10559} showed how to evaluate 
+%$\ln p(\vec y_i\lvert\vec y_{-i},\vec\theta,\mathcal{M})$ if the likelihood is 
+%multivariate normal with a dense covariance or a Student-t likelihood so it is 
+%still possible to use LOO-CV cheaply. 
+%If we are dealing with time-series data and we are only interested in predicting 
+%the next few points conditional on the previous data points then it may not 
+%much sense to use LOO-CV because we are using future data points when evaluating 
+%predictions on past data points. \textsl{leave-future-out cross validation} 
+%(LFO-CV) \citep{arXiv:1902.06281} is a generalization of LOO which takes into 
+%account the time-ordering of the data points in a time-series. 
+
 
 \subsection{What about machine learning?}
 How is \textsl{machine learning} (ML) different from the topics we have discussed so far? 
@@ -5137,8 +5148,8 @@ highly inaccurate. For this reason all microlensing software packages instead
 compute two-dimensional integrals in the image plane $z$. The total magnification, 
 expressed as an integral over the extended images in the image plane is given by
 \begin{equation}
-    A_\mathrm{tot}(|w_0(z)|,\rho_\star)\equiv \frac{\oiint I(w(z) - w_0(z))\ud S^\prime}{
-        \oiint I(w(z) - w_0(z))\ud S}\hquad,
+    A_\mathrm{tot}(|w_0(z)|,\rho_\star)\equiv \frac{\oiint I_s(w(z) - w_0(z))\ud S^\prime}{
+        \oiint I_s(w(z) - w_0(z))\ud S}\hquad,
     \label{eq:mag_integration_image_plane}
 \end{equation}
 where $w(z)$ is the lens equation (Equation~\ref{eq:lens_equation_complex}).
@@ -5295,8 +5306,13 @@ as an additional parameter $N_\mathrm{iter}$ which is described below and is fix
 default. The output is a two-dimensional array with shape $(K, N_\mathrm{limb})$ containing the 
 images where $K$ is the number of images ($K=5$ for binary lensing and $K=10$ for triple lensing), 
 a binary mask indicating which of the images satisfy the lens equation and an integer array 
-indicating the parity of each image. The algorithm consists of the following steps:
-
+indicating the parity of each image. The threshold value used to differentiate between 
+real and false images is set to $10^{-6}$. \citet{2021MNRAS.503.6143K} used a value of 
+$10^{-5}$ but I found that this value in rare cases leads to false positives\footnote{False 
+positives are worse than false negatives because we can end up with contour segments (see
+Section~\ref{ssec:constructing_contours}) which are crooked at their endpoints because 
+the point source images are misclassified as real.}. 
+The sampling algorithm consists of the following steps:
 
 \subsubsection{Adaptive sampling algorithm}
 \begin{enumerate}
@@ -5304,9 +5320,8 @@ indicating the parity of each image. The algorithm consists of the following ste
     denotes the ceiling function) points at locations 
     $w^{(n)}=w_0 + \rho_\star e^{i\phi_n}$ on the limb of the source disc  in 
     the interval $[-\pi,\pi)$. Evaluate $K$ point source images, the parity and a binary
-    mask indicating which images satisfy the lens equation\footnote{I use a threshold of 
-    $10^{-5}$ to differentiate between real and false images, as suggested by 
-    \citet{2021MNRAS.503.6143K}.}. The images are evaluated sequentially such that at iteration
+    mask indicating which images satisfy the lens equation. 
+    The images are evaluated sequentially such that at iteration
     $n$ we use the images obtained in iteration $n-1$ to initialize the root solver.
     The result of this procedure is an array with shape 
      $(K, \lceil\frac{1}{2}N_\mathrm{limb}\rceil)$. This initialization strategy also 
@@ -5470,27 +5485,46 @@ For a binary lens a brute-force search would require trying out $5!=120$ possibl
 at each index $n$ but this brute-force approach would fail for triple lensing because 
 $10!$ is a very large number. It turns out that this matching problem is is a well-known problem 
 in combinatorial optimization, called the \ssf{linear sum assignment problem}. There are better
-algorithms for solving it than brute-force search, most notably, using the 
+algorithms for solving it than brute-force search, most notably, the 
 \ssf{Hungarian algorithm}. However, implementing and executing this algorithm is complicated, 
-computationally expensive, and as it turneed out, it is unnecessary. Instead I simply iterate 
-over each image in the $n$-th column in order, and then match that image with the closest image in 
-the $n-1$-th column. 
-The resulting permutation of the $n$-th column will in general not be equivalent to the solution 
+computationally expensive. It is also unnecessary because there is no guarantee that 
+the solution which optimizes the sum of pairwise distanes is necessarily correct in the sense 
+that we would provably avoid connections between two segments belonging to different contours.
+Instead I simply iterate over each image in the $n$-th column in order, and then match that 
+image with the closest image in  the $n-1$-th column.  The resulting permutation of the 
+$n$-th column will in general not be equivalent to the solution 
 of the linear sum assignment problem but it is good enough for what follows.
 The same approach seems to be used by \citet{2021MNRAS.503.6143K}.
 
 \subsection{Constructing the images contours}
+\label{ssec:constructing_contours}
 Having obtained a $(K, N_\mathrm{limb})$ array containing points, the next step, following 
-\citet{2021MNRAS.503.6143K} is to iterate over each row and split it into some number (different 
-for each row) of disjoint \emph{segments} such that \emph{each segments consists of only real images 
-with the same parity}. This is accomplished by iterating over the angular index $n$ and keeping
-track where the binary mask indicating whether a given image is real or false changes value.
-The total number of segments will in general be greater than $K$. I also discard any segments 
-consisting  of fewer than 3 images.
-Since these segments have variable length \citet{2021MNRAS.503.6143K} store them in a 
+\citet{2021MNRAS.503.6143K} is to iterate over each row and split it into some number 
+(which is different for each row) of disjoint \emph{segments} such that the each segment has 
+the following properties:
+\begin{enumerate}
+    \item Each segment consists of only contiguous real images with the same parity. 
+    \item There are no discontinuities in the distance between consecutive points in the 
+    segment above a distance threshold of $0.1$.
+\end{enumerate}
+The first condition means that if the a given row of the image array consists
+of multiple ``bundles'' of contiguous real images with false images in between each bundle, 
+then each bundle is stored as a separate segment. The second condition is necessary because
+in rare cases the matching between consecutive columns of images described in the previous 
+section fails such that there is a discontinous jump from one contour to another at some 
+index $n$ without any false images in between. Requiring that all consecutive point 
+source images within a segment are relatively close to each other gets rid of this problem.
+The splitting of sequences of images into segments is achieved by iterating over the angular 
+index $n$ and keeping track where a binary mask a indicating changes in image type 
+(real vs. false), parity, and distance between consecutive points. Each row is then split
+into multiple segments at the recorded points. I discard any segments  consisting  of 
+fewer than 3 images.
+
+The total number of segments will in general be greater than $K$. Since these segments have 
+variable length \citet{2021MNRAS.503.6143K} store them in a 
 \ssf{linked list} data structure. Because \ssf{XLA} imposes a strict requirement that all 
-arrays have to have statically determined shape at compile time we cannot use lists so I use 
-fixed size arrays padded with zeros to store the segments instead. 
+arrays have a statically determined shape at compile time, we cannot use lists. Instead, 
+I use fixed size arrays padded with zeros to store the segments. 
 
 \begin{figure}[t]
     \begin{centering}
@@ -5595,14 +5629,15 @@ In this case we have to be careful to avoid making a wrong connection so make su
 segments are pointing towards each other and that the distance between the connection points 
 is less than some large value $\text{MAX\_DIST}$ which we set $0.05$. 
 We then merge the first two segments and repeat the process for a fixed number of iterations 
-$\text{MAX\_NR\_OF\_SEGMENTS}$ which is set to 10, a number chosen to be large enough that 
-by the last iteration all segments comprising the same contour are merged together. 
+$\text{MAX\_NR\_OF\_SEGMENTS}$ which is set to 3 times the number of images, a number 
+chosen to be large enough that by the last iteration all segments comprising the same contour 
+are merged together. 
 We then repeat the process by sorting the segments by length again, selecting the shortest 
 segment and iterating for another $\text{MAX\_NR\_OF\_SEGMENTS}$ iterations. This ensures that
 if there are multiple contours comprised of open segments, all segments will be merged. 
-I found that there are never more than two contours comprised of open segments so I set 
-the value of $\text{MAX\_NR\_OF\_CONTOURS}$ to 2. These two loops are fixed size because of 
-\ssf{XLA} constraints on dynamic arrays. However, we at each iteration we check if there are 
+I set the value of $\text{MAX\_NR\_OF\_CONTOURS}$ to 3.
+These two loops are fixed size because of  \ssf{XLA} constraints on dynamic arrays. However, 
+we at each iteration we check if there are 
 any more segments left to avoid unnecessary computation. The whole procedure is not very 
 computationally expensive because we are mostly just rearanging and copying arrays containing
 the point source images.
@@ -5617,6 +5652,7 @@ positions of the source star for triple and binary lenses.
 \section{Integration}
 \label{sec:integration}
 \subsection{Uniform brightness source}
+\label{ssec:mag_uniform}
 In the past two sections I have described the algorithms for computing the contours of extended
 images which I have implemented in the \ssf{caustics} code. The remaining task is to numerically 
 solve the contour integral in Green's theorem (Equation~\ref{eq:green_theorem}). I will start by 
@@ -5639,6 +5675,7 @@ we obtain
     A_\mathrm{tot}\left(w_0, \rho_{\star}\right)\approx  \frac{1}{ \pi \rho_{\star}^{2}}
     \frac{1}{2}\sum_{i=1}^{n}\left[\frac{1}{2}\left(z_1^{(i)}+z_1^{(i+1)}\right)\Delta z_2^{(i)}
     -\frac{1}{2}\left(z_2^{(i)}+z_2^{(i+1)}\right)\Delta z_1^{(i)}\right]
+\label{eq:mag_trapezoidal}
 \end{equation}
 where $\Delta z_1^{(i)}= z_1^{(i+1)}-z_1^{(i)}$ and $\Delta z_2^{(i)}= z_2^{(i+1)}-z_2^{(i)}$.
 
@@ -5661,42 +5698,44 @@ does work betteer, but, as mentioned previously, it does not easily generalize t
 limb-darkening case and I found that the additional complexity involved in the implementation 
 is not warranted, at least in the context of the \ssf{caustics} code.
 
-\subsection{Magnification of a limb-darkened source}
-\label{sec:mag_limbdark}
-The limb-darkening case is more complicated. The brightness profile of the source star is given
-by 
+\subsection{Limb-darkened source}
+\label{ssec:mag_limbdark}
+The limb-darkening case is more complicated. The brightness profile of the source star with
+linear limb-darkening is given by 
 \begin{equation}
-    I_s(r)=
+    I_s(r(z))=
     \begin{cases}\frac{3}{3-u_1}\left[1 - u_1\left(1 - \sqrt{1-r^2}\right)\right] &\text{if} \quad r\leq\rho_\star\\
         0 &\text{otherwise}\\
     \end{cases}
     \label{eq:limbdark_profile}
 \end{equation}
-where $r\equiv |w-w_0|$ is the distance from the source center and $\frac{3}{3-u_1}$ is a 
-normalization factor. The linear limb darkening 
-is a real number defined on the interal $[0,1]$ where $u_1=0$ reduces to the uniform case.
-Following Equation~\ref{eq:green_theorem}, we are interested in finding  functions $P$ and $Q$
-which satisfy the condition
+where $r\equiv |w(z)-w_0|$ is the distance from the source center and $\frac{3}{3-u_1}$ is a 
+normalization factor. The linear limb darkening coefficient $u_1$
+is a real number defined on the interal $[0,1]$. Setting $u_1=0$ reduces 
+Equation~\ref{eq:limbdark_profile} to the uniform brightness case.
+Following Equation~\ref{eq:green_theorem}, we are interested in finding 
+functions $P$ and $Q$ which satisfy the condition
 \begin{equation}
 \left(\frac{\partial Q}{\partial z_{1}} - 
 \frac{\partial P}{\partial z_{2}} \right) = I_s(z_1,z_2)
 \end{equation}
-Two functions which satisfy this condition are given by \citep{1998A&A...333L..79D}:
+Functions which satisfy this condition are given by \citep{1998A&A...333L..79D}:
 \begin{align}
 P\left(z_1, z_2\right)&=-\frac{1}{2} \int_{z_2^{(0)}}^{z_2} I_s\left(z_1, z_2^{\prime}\right) \ud z_2^{\prime}\\
 Q\left(z_1, z_2\right)&=\frac{1}{2} \int_{z_1^{(0)}}^{z_1} I_s\left(z_1^{\prime}, z_2\right) \ud z_1^{\prime}\hquad .
 \label{eq:p_and_q_functions_ld}
 \end{align}
 where the lower integration bound $z^{(0)}=(z_1^{(0)},z_2^{(0)})$ is some freely chosen point
-in the image plane. The total magnification is thus given by
+in the image plane. The total magnification is therefore 
 \begin{equation}
     A_\mathrm{tot}\left(w_0, \rho_{\star}\right)=\frac{1}{\pi \rho_{\star}^{2}}
     \sum_{k=1}^Kp_k\int_{C_k} \left[P(z_1^\prime, z_2)\ud z_1^\prime + Q(z_1, z_2^\prime)\ud z_2^\prime\right]
+    \hquad .
     \label{eq:mag_green_theorem_ld_expanded}
 \end{equation}
 Evaluating the magnification of a limb-darkened source is much 
 more computationally demanding than the uniform brightness case  because functions $P$ and
-$Q$ are themselves (1D) integrals which need to be computed numerically at the location of 
+$Q$ are themselves (1D) integrals which need to be estimated numerically at the location of 
 each contour point.
 
 \begin{figure}[t]
@@ -5709,19 +5748,20 @@ each contour point.
         contour. The grey cross is the geometric centre of the contour. And the the two grey 
         dashed lines indicate the integration domains for integrals $P$ and $Q$ for a particular
         contour point. The integrands are plotted in the two panels on the right.}
-        \label{fig:p_and_q_integrals}
+    \label{fig:p_and_q_integrals}
         \script{p_and_q_integrals.py}
     \end{centering}
 \end{figure}
 
-
-The integrand function defined in Equation~\ref{eq:limbdark_profile} and 
-its first derivative with respect $r$ is discontinous at the source boundary in the image plane
- which makes it difficult to integrate.
-\citet{1998A&A...333L..79D,2007MNRAS.377.1679D} get around this problem using analytic continuation to improve
-the numerical stability of the integrand. They redefine Equation~\ref{eq:limbdark_profile} as 
+The surface brightness function $I_s(z_1,z_2)$ as defined in Equation~\ref{eq:limbdark_profile}
+is problematic because the function and its first derivative with respect $r$ are
+discontinous at the location source boundary in the image plane. This makes it difficult 
+function to integrate numerically.
+\citet{1998A&A...333L..79D,2007MNRAS.377.1679D} get around this problem by using analytic 
+continuation to improve the numerical stability of the integrand. They redefine 
+$I_s(r(z))$ as
 \begin{equation}
-    I_s(r)=C(u_1)\,\left[1-u_1\left(2-B(r)\right)\right]
+    I_s(r(z))=C(u_1)\,\left[1-u_1\left(2-B(r)\right)\right]\hquad,
 \end{equation}
 where $C(u_1)\equiv\frac{3}{3-u}$  and
 \begin{equation}
@@ -5734,32 +5774,42 @@ B(r)=
     \hquad .
     \label{eq:limbdark_profile_cont}
 \end{equation}
-Equation~\ref{eq:limbdark_profile_cont} is identical to Equation~\ref{eq:limbdark_profile} 
-except when $r>1$. 
-Figure~\ref{fig:p_and_q_integrals} shows an extended image for a single lens with 
-$\rho_\star=0.05$ located at $w_0=1.5$ with a linear limb darkening coefficient of $u_1=0$ 
-(left panel), and the two integrand functions $P$ and $Q$ for a particular contour point 
-(two panels on the right). 
-Equation~\ref{eq:fig_p_and_q_integrals} (two panels on the right) as 1D slices through the 
-image plane (left panel). Contour points are shown in blue with the marker size encoding 
-the direction of the contour. The grey dashed lines indicate the integration domain for the 
-two integrals. The grey cross is the location of the point $z^{(0)}$ (the lower integration
-bound) which was chosen to be the geometric centroid of all contour points. 
+This definition is identical to the one in Equation~\ref{eq:limbdark_profile} 
+except for $r>1$. 
 
-In order to evaluate Equation~\ref{eq:p_and_q_functions_ld} we have to numerically compute the 
-the 1D integrals at every contour point. For these integrals we are free to choose the locations
-at which we evaluate the integrands. Although the integrals are smooth, the fact that 
-lower integration point $z^{(0)}$ is often far away from contour points means that the integrand
+The (revised) surface brightness function and the integrands of the $P$ and $Q$ integrals
+for a single lens image are shown in Figure~\ref{fig:p_and_q_integrals}. The extended image
+of a single lens with $\rho_\star=0.05$ located at $w_0=1.5$ with a 
+linear limb darkening coefficient $u_1=0.5$  is shown in the panel on the left.
+The two integrand functions evaluated at a particular a particular contour point  are shown
+in the two panels on the right. Contour points are shown in blue such that the marker size 
+encodes the direction of the contour. The grey dashed lines indicate the integration domain for the 
+two integrals. The grey cross is the location of the point $z^{(0)}$ (the lower integration
+bound) which was chosen to be the geometric centroid of all contour points belonging the 
+displayed contour. 
+
+In order to evaluate Equation~\ref{eq:p_and_q_functions_ld} we have to numerically integrate
+the 1D functions shown in Figure~\ref{fig:p_and_q_integrals} for very contour point within
+a given contour.
+For these integrals we are free to choose the locations at which we evaluate the integrands. 
+Although the integrands are smooth, the fact that the  lower integration point $z^{(0)}$ is 
+often far away from contour points means that the integrand
 functions are nearly constant at most locations and they vary appreaciably only in a small
 interval near the limb. This problem is much worse for smaller source sizes because the 
 image shown in Figure~\ref{fig:p_and_q_integrals} becomes extremely thin for small values 
-of $\rho_\star$. The consequence of this fact is that a quadrature rule with fixed spacing 
-between the evaluation points is going to be highly inaccurate when $\rho_\star$ is small.
-Although an adaptive integration algorithm (such as Adaptive Simpson's method) is more suitable
-for these kinds of problems, I found that a scheme using a fixed number of points can work 
-well as long as we split the integration domain into two parts. 
-For the $P$ integral, the new domain is a union between the intervals $[z_2^{0}, z_{2,\mathrm{split}}]$
-and $[z_{2,\mathrm{split}}, z_2]$ where $z_{2, \mathrm{split}}$ is defined as 
+of $\rho_\star$. As a consequence, quadrature rules which use a uniform grid are going to 
+lead to highly inaccurate results when $\rho_\star$ is small.
+
+In these cases adaptive integration algorithms such as the Adaptive Simpson's method 
+are a better choice. However, I found that a scheme using \ssf{Gaussian Quadrature} with a 
+fixed number of points works really well as long as we split the integration domain for each 
+integral into two parts. 
+The advantage of using a fixed number of points is that such an approach is easier to implement 
+in \ssf{JAX} and also more computationally efficient\footnote{I have implemented an
+adaptive Simpson integrator in \ssf{JAX} and found it too be very slow.}. 
+Let's take the $P$ integral as an example. We redefine the integration domain 
+as a union between the intervals $[z_2^{0}, z_{2,\mathrm{split}}]$
+and $[z_{2,\mathrm{split}}, z_2]$ where $z_{2, \mathrm{split}}$ is given by
 \begin{equation}
         z_{2,\mathrm{split}}=
     \begin{cases}
@@ -5767,11 +5817,15 @@ and $[z_{2,\mathrm{split}}, z_2]$ where $z_{2, \mathrm{split}}$ is defined as
        z_2 + 2\rho_\star & \text{if}\quad z_2 < z_2^{(0)} \quad\text{and}\quad |z_2 - z_2^{(0)}|>2\rho_\star\\
        \frac{1}{2}(z_2^{(0)} + z_2) &\text{otherwise}\\
     \end{cases}
+    \hquad .
     \label{eq:z_split}
 \end{equation}
 The second interval always encompasses the region close to the contour and its length 
-is proportional to the source radius $\rho_\star$. The situation for the $Q$ integral is 
-completely analogous. 
+is proportional to the source radius $\rho_\star$.  The definition of $z_{1,\mathrm{split}}$
+for the $Q$ integral is analogous to that of $z_{2, \mathrm{limb}}$.
+It is possible that could achieve a similar effect by modifying the function evaluation 
+points and the weights used in Gaussian quadrature rule but I could not get this to work 
+robustly.
 
 \begin{figure}[t]
     \begin{centering}
@@ -5789,60 +5843,1082 @@ completely analogous.
     \end{centering}
 \end{figure}
 
-To compare different approaches to estimating these integrals I first compute the contour points 
-for a single lens located at $w_0=0.5$ and then compute the $P$ integral for every point 
-using an adaptive integrator from the \ssf{QUADPACK} library, available in the SciPy library as 
-the function \ssf{scipy.integrate.quad} to a relative precision of $10^{-12}$. I then estimate 
-the integrals using three different methods with a fixed number of 100 points: composite 
+In Figure~\ref{fig:quadrature_comparison} I show the effect of using this procedure on the 
+accuracy of the estimated integrals given a fixed number of points. I also compare the (non 
+adaptive) Simpson's method to Gaussian quadrature.
+To generate the plot I first compute the contour points 
+for a single lens located at $w_0=0.5$ and I then compute the $P$ integral for every point 
+using an adaptive integrator from the \ssf{QUADPACK} library (available in the SciPy library as 
+the function \ssf{scipy.integrate.quad}) to a relative precision of $10^{-12}$. I then compute
+the same integrals using three different methods with a fixed number of 100 points: composite 
 Simpson's rule, Gaussian Quadrature and Gaussian Quadrature evaluated at the two sub-intervals
 defined by Equation~\ref{eq:z_split} such that each sub-interval is allocated half of the 100 
-points. The results for three different values of $\rho_\star$ (averaged over the two images) 
-are shown in Figure~\ref{fig:quadrature_comparison}. Gauss-Legendre is generally an order of 
-magnitude more accurate the composite Simpson's method and spliting the intergration intervals
-into two unequal parts improves the error for small sources by multiple orders of magnitude.
-%\citet{1998A&A...333L..79D,2007MNRAS.377.1679D} 
+points. Gauss-Legendre is generally an order of  magnitude more accurate the composite Simpson's 
+method and spliting the intergration intervals into two unequal parts improves the error 
+for small  sources by multiple orders of magnitude.
+The result for the $Q$ integral are qualitatively the same. 
+
+The drawback of this approach is that we do not obtain an error estimate for the integrals. 
+This is not really a significant issue because the number of points $N_\mathrm{ld}$ is a 
+simple parameter which is proportional to the true error. We set this parameter to $100$ by 
+default because that value is sufficient to keep the final error for the magnification 
+below $10^{-3}$ in the vast majority of cases. 
+One could also use an adaptive integrator such the adaptive Simpson's method or 
+the adaptive \ssf{Gauss-Kronrod} method\footnote{Adaptive Gauss-Kronrod quadrature is one of 
+the algorithms used in the \ssf{Fortran} \ssf{QUADPACK} library.}. I have 
+implemented a naive version of the adaptive 
+Simpson's method in \ssf{JAX} and found that it is much slower than the approach described
+in the previous paragraphs which uses fixed size arrays and no loops. It remains to be seen
+if a higher quality implementation of the adaptive Simpson's method or the 
+adaptive Gauss-Kronrod method (such as the one implemented in the \ssf{Boost} \ssf{C++} 
+library\footnote{\url{https://www.boost.org/doc/libs/master/libs/math/doc/html/math_toolkit/gauss_kronrod.html}.})
+is worthwhile to use.
+
+Having described how to compute $P$ and $Q$ functions for every contour point, we can now
+apply the trapezoidal rule to the contour integral defined in 
+Equation~\ref{eq:mag_green_theorem_ld_expanded}. The result is given by
+\begin{equation}
+    A_\mathrm{tot}\left(w_0, \rho_{\star},u_1\right)\approx  \frac{1}{ \pi \rho_{\star}^{2}}
+    \sum_{i=1}^{n}\left[\frac{1}{2}\left(P(z_1^{(i)}, z_2^{(i)})+P(z_1^{(i)}, z_2^{(i+1)})\right)\Delta z_2^{(i)}
+    +\frac{1}{2}\left(Q(z_1^{(i)}, z_2^{(i)})+Q(z_1^{(i+1)}, z_2^{(i)})\right)\Delta z_1^{(i)}\right]
+    \hquad .
+    \label{eq:mag_trapezoidal_ld}
+\end{equation}
+Although we have only covered the linear limb-darkening case in this section and only 
+linear limb-darkening is currently implemented in \ssf{caustics}, the approach we have 
+described above easily generalizes to an arbitrary source brightness distribution. This is 
+in contrast to the methods used in \citet{2010MNRAS.408.2188B} and \citet{2021MNRAS.503.6143K}
+which can only work for azimuthally symmetric source brightness profiles.
+The only thing that requires some modification is the analytic extension defined in 
+Equation~\ref{eq:limbdark_profile_cont}.  \citet{2007MNRAS.377.1679D} showed how to adapt 
+this equation for an arbitrary azimuthally symmetric source brightness profile but 
+relaxing this assumption should be straightforward.
+Extending \ssf{caustics} to work with arbitrary source brightness distributions will enable
+the use of spherical harmonics to model arbitrary two-dimensional surface features such 
+stellar spots.
+
+\section{Extended source magnification tests}
+Using Equations~\ref{eq:mag_trapezoidal} and~\ref{eq:mag_trapezoidal_ld} we can compute the 
+magnification of an extended or limb-darkened source star respectively, at any point in the 
+source plane. In this section I compare \ssf{caustics} to other codes in terms of accuracy
+and performance. First, I test the accuracy and validity of \ssf{caustics} by comparing it 
+to \ssf{VBBinaryLensing}, the most widely used microlensing code. To test the extended 
+source magnification calculation for a binary lens,  I initialize a system with parameters 
+$a=0.45$ and $\epsilon_1=0.8$ and solve for 1000 points on the caustics (see 
+Appendix~\ref{app:complex_poly_crit}). I then shift these points in a random direction by 
+adding complex number whose radius is uniformly distributed in the interval $[0, 2\rho_\star]$ 
+and phase is uniformly distributed in the interval $[0, 2\pi]$. This ensures that at all 
+locations the source limb is either crossing one or multiple caustics or it is extemely 
+close to the caustic. 
+The test points are generated for four different values of $\rho_\star$ spanning several 
+orders of magnitude. I set the number of points on the source limb  $N_\mathrm{limb}$ to 
+$400$ and compute the magnification for a uniform brightness source at each point. The 
+relative precision parameter in \ssf{VBBinaryLensing} is set to a value of $10^{-5}$. 
+
+\begin{figure}[t]
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/mag_uniform_accuracy.pdf}
+        \caption{Relative error in the magnification between \ssf{caustics} and 
+        \ssf{VBBinaryLensing} (ground truth) for a uniform brightness source for a binary 
+        lens system with $a=0.45$ and $\epsilon_1=0.8$. The magnification is evaluated at 
+        1000 points randomly drawn such that they are at most $2\rho_\star$ away from the
+        caustic. The number of lens equation evaluations is fixed to $N_\mathrm{limb}=400$.}
+            \label{fig:mag_uniform_accuracy}
+        \script{mag_uniform_accuracy.py}
+    \end{centering}
+\end{figure}
+
+As shown in Figure~\ref{fig:mag_uniform_accuracy}, the relative error for this  particular 
+choice of $N_\mathrm{limb}$ is well bellow $10^{-3}$ at all points and below $10^{-4}$ 
+for a wide range of source radii. The accuracy does deteriorate somewhat for very small 
+source radii suggesting that a slightly larger value of $N_\mathrm{limb}$ may be required 
+to decrease the relative error to $10^{-4}$.  To test the limb darkening calculations 
+I repeat the same test for a limb-darkened source star with the linear limb-darkening 
+coefficient $u_1=0.7$ and $N_\mathrm{ld}=100$. I reduce the number of test points to 100 points and omit the panel
+with $\rho_\star=10^{-4}$ because computing the magnification of a limb-darkened source 
+is much more expensive and the results are similar to the uniform brigthness case because 
+if the $P$ and $Q$ functions are computed correctly the error is still most dependent on 
+the distribution of points along the contours as in the uniform case.
+The results are shown in Figure~\ref{fig:mag_limbdark_accuracy}. The error is slightly 
+or a given value of $\rho_\star$ than in the uniform brightness case. Increasing 
+$\mathrm{N}_\mathrm{ld}$ would solve this problem.
+Tests similar to the ones I have just described are executed automatically for the 
+\ssf{caustics} \ssf{GitHub} repository every time there is a change to the code.
+
+\begin{figure}[t]
+    \begin{centering}
+        \includegraphics[width=0.95\linewidth]{figures/mag_limbdark_accuracy.pdf}
+        \caption{Same as Figure~\ref{fig:mag_uniform_accuracy} except the error is computed 
+        for a limb-darkened source with a linear limb-darkening coefficient $u_1=0.7$. The 
+        number of points used to evaluate the $P$ and $Q$ functions is fixed to 
+        $N_\mathrm{ld}=100$, and $N_\mathrm{limb}=400$ as before.}
+            \label{fig:mag_limbdark_accuracy}
+        \script{mag_limbdark_accuracy.py}
+    \end{centering}
+\end{figure}
+
+\begin{figure}[t]
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/performance_comparison.pdf}
+        \caption{Performance comparison between \ssf{caustics} and other microlensing codes.
+        The performance is defined to be the total elapsed wall time when computing the 
+        magnification of a uniform brightness (left panel) and limb-darkened (right panel) 
+        source star at 12 different test points close to caustics, divided by the number of points.
+        The magnification is evaluated for a binary lens system with $a=0.45$ and 
+        $\epsilon_1=0.8$ for different values of $\rho_\star$.
+        }
+            \label{fig:performance_comparison}
+        \script{performance_comparison.py}
+    \end{centering}
+\end{figure}
+
+
+The next crucial test is to compare the performance of \ssf{caustics} to alternatives.
+Performance is absolutely critical because the magnification will need to be evaluated hundreds 
+of thousands of times within an optimization or MCMC algorithm. I start by drawing a dozen 
+points near caustics for a binary lens system with $a=0.45$ and $\epsilon_1=0.8$,
+as described in the previous paragraphs. I then compute the magnification for 
+a uniform brightness source and a limb-darkened source with $u_1=0.7$ at each point using 
+\ssf{caustics}, \ssf{Adaptive Contouring} \citep{2007MNRAS.377.1679D} and 
+\ssf{VBBinaryLensing}. To ensure a fair comparison I tune the parameters of each code 
+such that they all obtain roughly the same average accuracy accross the dozen test points. For  
+\ssf{caustics}, I set $N_\mathrm{limb}=300$ and $N_\mathrm{ld}=100$, for \ssf{VBBinaryLensing}
+I set the relative precision to $10^{-4}$  XXXXX.
+I compute the magnification with each code in a \ssf{Python} loop over all points and average 
+the execution time over two trials. 
+
+This experiment is quite crude and the exact timings should be taken with a grain of salt 
+but the results shown in Figure~\ref{fig:performance_comparison} are nevertheless 
+illuminating. First of all, the computation time in both \ssf{VBBinaryLensing} and 
+\ssf{Adaptive Contouring} increases  as the source radius $\rho_\star$ decreases while 
+it is independent of the $\rho_\star$ for \ssf{caustics}. This is expected because the 
+contours become more elongated with for small $\rho_\star$ and more contour points are 
+required to obtain a certain precision. \ssf{caustics} allocates a fixed number of points
+independent of the source radius. This is of course a major 
+drawback because it means \ssf{caustics} uses far too many points $\rho_\star$ is large and 
+we have to set $N_\mathrm{limb}$ and $N_\mathrm{ld}$ to a value large enough to make sure 
+the error is small enough for all values of $\rho_\star$ we expect to see when fitting 
+a particular event.
+
+The second notable feature of the results shown in Figure~\ref{fig:performance_comparison}
+is that for uniform brigthness sources, \ssf{VBBinaryLensing} has the best performance, 
+it is, averaged across $\rho_\star$ about $\sim 5$ times faster than \ssf{caustics} and 
+more than an order of magnitude faster than \ssf{Adaptive Contouring}. This is expected
+because as mentioned previously, \ssf{VBBinaryLensing} is perfectly optimized for 
+computing the area of the images with as few lens equation inversions as possible. 
+The situation for a limb-darkened source is quite different. After obtaining the 
+image contours, \ssf{caustics} and \ssf{Adaptive Contouring} both use the same approach 
+to computing the magnification of a limb-darkened source while \ssf{VBBinaryLensing} repeats
+the uniform brightness calculation at different annuli and reweights it in proportion to 
+the radial source brightness profile. Averaged over $\rho_\star$, \ssf{caustics} and 
+\ssf{VBBinaryLensing} have about the same computational cost but \ssf{caustics} is an order 
+of magnitude faster for very small source sizes. \ssf{Adaptive Contouring} is more than an 
+order of magnitude slower than both. Overall, computing the magnification of a limb-darkened 
+source star is slightly less than an order of magnitude more expensive relative to 
+a uniform-brigthness source for \ssf{caustics} and almost two orders of magnitude more 
+expensive for \ssf{VBBinaryLensing}. 
+The fact that \ssf{caustics} and \ssf{Adaptive Contouring} have roughly the same performance 
+difference for both uniform-brightness and limb-darkened sources suggests the difference 
+in performance is likely due to the less efficient contour construction algorithm  in 
+\ssf{Adaptive Contouring}.
+
+What about triple lensing? Neither \ssf{VBBinaryLensing} nor \ssf{Adaptive Contouring} 
+support triple lensing. The \ssf{TripleLens} code \citep{2021MNRAS.503.6143K} which 
+\ssf{caustics} was partly based on does support triple 
+lensing, but as mentioned previously in this section, the code does not really work
+near \ssf{caustic} crossings, even for binary lens events. 
+This makes it difficult to test the magnification computation for triple lenses. The 
+optimal solution to this problem would be to write an inverse ray shooting code and use that
+as a benchmark but because of time constraints I haven't managed to do that. 
+However, since the exact same algorithms and functions are 
+used to compute the magnification for binary and triple lens systems in \ssf{caustics} 
+and all these functions are extensively tested, there is no reason to assume the that 
+\ssf{caustics} does not work equally well with triple lenses. 
+Regarding performance, evaluating the extended source magnification for a triple lens system 
+is only about 2-3X slower than for a binary lens system. For reference, 
+\ssf{TripleLens} is 2-3 orders of magnitude slower.
+
+To summarize, in this section I have shown that \ssf{caustics} works as intended by comparing 
+it to two other codes at the most problematic locations in the source plane where the source 
+limb is either intersecting or is very close to binary lens caustics. I leave extensive 
+testing of the triple lens magnification for future work but since the same functions are used 
+to compute the magnification of binary and triple lenses there is no reason to assume that 
+the results for triple lenses are any different. Regarding performance, \ssf{caustics} is 
+roughly 3-10X slower than \ssf{VBBinaryLensing} for uniform sources and on par with
+\ssf{VBBinaryLensing} for limb-darkened source except for the smallest source radii 
+($\rho_\star\sim 10^{-3}$) when \ssf{caustics} is substantially faster than 
+\ssf{VBBinaryLensing}. 
+
+\section{Computing light curves}
+Although the computation of the extended source magnification at a single point is relatively
+fast (on the order of a few miliseconds on the 2021 Macbook Pro), microlensing light curves 
+consist of thousands of data points meaning that a complete evaluation of the likelihood 
+function would take on the order of seconds. This is prohibitively expensive. Fortunately, 
+the vast majority of these points correspond to locations in the source plane that are 
+sufficiently far from the caustics that one can approximate the extended source magnification 
+using either the point source magnification or the multipole series expansion of the 
+full magnification. Version 2.0 
+of \ssf{VBBinaryLensing} \citep{2018MNRAS.479.5157B} switches between the full computation 
+and the point source approximation to solve this problem.
+
+Multipole expansion up to hexadecapole order \citep{2008ApJ...681.1593G,2017MNRAS.468.3993C}
+is highly up to a few source radii away from the caustics. \citep{2017MNRAS.468.3993C} showed
+that one can evaluate the hexadecapole approximation for the magnification of a limb-darkened 
+extended source using only a single inversion of the lens equation at the center of the 
+source. The computational cost of this approximation is only a factor of a few larger than 
+the point source approximation and it is orders of magnitude cheaper than the full contour
+integration.
+The challenge is to cheaply (in terms of computational cost) determine whether the approximate 
+solution is sufficient at any given point in the source plane while making use of only 
+local information.To solve this problem, \citep{2018MNRAS.479.5157B} implements a series of  
+series of tests to determine when a point source approximation\footnote{It is not clear to me why 
+they use the point source approximation rather than the only slightly more expensive 
+hexadecapole approximation.} is sufficient:
+\begin{itemize}
+    \item \textbf{Quadrupole test} -- detects deviations from point source mangification using 
+    the quadrupole term in the multipole expansion of the magnification.
+    \item \textbf{Cusp test} -- detets proximity to cusps.
+    \item \textbf{False images test} -- detects when the source is very close the a fold by computing the 
+    Taylor expansion of the lens mapping Jacobian and evaluating it for the false images.
+    \item \textbf{Planetary test} -- detects situations when the source is larger than 
+    planetary caustics and the lens mapping Jacobian is insensitive to its presence.
+\end{itemize}
+In \ssf{caustics} all of the tests instead of the last one, with slight modifications. 
+I do not implement the cusp detection test because I find that it is unnecessary when using 
+the hexadecapole approximation. What follows is the description of all tests implemented in 
+\ssf{caustics}.
+
+\subsubsection{Multipole and cusp test}
+Following \citet{2017MNRAS.468.3993C}, the magnification of an extended limb-darkened source 
+can be expanded in a power series for $\rho_\star\ll 1$ as follows:
+\begin{equation}
+    A_\mathrm{tot}(w_0,\rho_\star,u_1)=\sum_{k}|\mu_k(w_0,\rho_\star,u_1)|
+\end{equation}
+where 
+\begin{equation}
+\mu_k(w,\rho_\star,u_1)=\mu_{0,k}(w,u_1) + \mu_{\mathrm{quad},k}(w,u_1)\rho_\star^2 + 
+    \mu_{\mathrm{hex},k}(w,u_1)\rho_\star^4+\mathcal{O}(\rho_\star^6)
+\end{equation}
+The index $k$ indicates the $k$-th point source image and sum is over all real images.
+$\mu_0$ is the point source magnification, $\mu_\mathrm{quad}$ is the quadrupole term 
+and $\mu_\mathrm{hex}$ is the hexadecapole term. 
+
+In order to detect deviations from the point source magnification, 
+\citet{2018MNRAS.479.5157B} requires that the magnitude of the quadrupole term multiplied 
+by some constant is less than a specified absolute error threshold. I modify this condition
+somewhat by also including the hexadecapole term. The condition is  
+\begin{equation}
+    \sum_k\left(|\mu_{\mathrm{quad},k}| + |\mu_{\mathrm{hex},k}| \right)<c_m
+    \label{eq:condition_multipole}
+\end{equation}
+where $c_m$ is some tunable constant and the sum is over the real images.
+
+As pointed out by \citet{2017MNRAS.468.3993C}, the quadrupole (and also the hexadecapole) 
+term sometimes vanishes in the vicinity of the cusps and the condition from  
+Equation~\ref{eq:condition_multipole} fails to trigger the full calculation where it is 
+necessary. To fix this problem \citet{2017MNRAS.468.3993C} propose adding a term which
+detects proximity to a cusp with the following form
+\begin{equation}
+\mu_\mathrm{cusp}=\frac{6\,\mathrm{Im}\left[3 (f^{\prime }(\bar{z}))^3 (f^{\prime \prime }(z))^2\right]}{(J(z))^5} \rho_\star^{2}
+\end{equation}
+This term is large when the tangential vector to the caustic vanishes.
+I then modify the condition in Equation~\ref{eq:condition_multipole} to 
+\begin{equation}
+    \sum_k\left(\gamma|\mu_{\mathrm{cusp},k}| + |\mu_{\mathrm{quad},k}| + |\mu_{\mathrm{hex},k}| \right)<c_m
+    \label{eq:condition_multipole_and_cusp}
+\end{equation}
+where $\gamma$ is a positive tunable constant.
+
+\subsubsection{False images test}
+The condition in Equation~\ref{eq:condition_multipole_and_cusp}
+fails when a particular point is close to a caustic fold. 
+The reason for this is that the point source magnification of the real images corresponding 
+to the center of the source disc is completely insensitive to a fold approach until the 
+moment the limb of the source limb touches the fold. Although the real images
+are insensitive to the fold approach, the false image move closer together as the source 
+approaches the fold, they then merge together and finally reappear as real images on the 
+other side of the fold. At the point of the caustic crossing the Jacobian determinant of 
+the lens mapping evaluated at the false images vanishes.
+Therefore, we can make use of the false images to detect a proximity to a fold caustic. 
+\citet{2018MNRAS.479.5157B} implement a test for this by evaluating the change in the 
+Jacobian determinant $J\equiv|\vec J|$ of the lens mapping for the false images as
+we move from the center of the source disc $w_0$ to the limb. 
+
+Following \citet{2018MNRAS.479.5157B}, the value of $J$ at the source limb can be 
+expressed as 
+\begin{equation}
+    J(z_\mathrm{limb})=J(z_0)+\Delta J(z_0,\rho_\star)
+\end{equation}
+where $z_0$ is any of the false images and $\Delta J$ is the change in the Jacobian 
+determinant.
+To test that we are far enough from a fold it is sufficient to test that $J(z)$ never 
+vanishes on any of the points on the source limb which requires that 
+\citep{2018MNRAS.479.5157B}
+\begin{equation}
+    J(z_0)>|\underset{\phi}{\mathrm{max}\;}\Delta J(\rho_\star)|
+\end{equation}
+where $\phi$ is the angle along the limb of the source.
+Expanded, the condition becomes
+\begin{equation}
+\frac{1}{2}\left| J\left(z_0\right) \frac{\tilde{J}^{2}}{\tilde{J} 
+f^{\prime \prime}\left(\bar{z}_0\right) f^{\prime}\left(z_0\right)-\bar{\tilde{J}} 
+f^{\prime \prime}\left(z_0\right) f^{\prime}\left(\bar{z}_0\right) f^{\prime}
+(\tilde{z})}\right|>c_f \rho_\star
+\end{equation}
+where $f(z)$ is a term in the lens equation defined such that $w=z + f(\bar{z})$, the prime
+ denotes the  derivatives with respect to $z$, $\tilde{z}\equiv \bar{w}-f(z_0)$, 
+$\bar{\tilde{z}}\equiv w - f(\bar{z}_0)$, $\tilde{J}\equiv 1 - f^\prime(z_0)f^\prime(\tilde{z})$,
+and $c_f$ is a positive tunable constant.
+
+\subsubsection{Planetary test}
+Finally, if the source is large enough and the binary lens mass ratio small enough, we 
+could have a situation where the limb of the source touches the planetary caustic while 
+the center of the source is so far that the gradient of the Jacobian determinant is not 
+sensitive to the planet. \citep{2018MNRAS.479.5157B} tests for this situation by checking 
+the distance from $w_0$ to the center of the planetary caustic is greater than $\rho_\star$. 
+The condition is
+\begin{equation}
+\left|w-w_{p c}\right|^{2}>c_p\left(\rho_\star^{2}+\Delta_{p c}^{2}\right)\hquad ,
+\end{equation}
+where $w_{pc}=-1/(2a)-a(2\epsilon_1 - 1)$ is the position of the binary lens planetary 
+caustic and $\Delta_{pc}\equiv 3\frac{\sqrt{q}}{2a}$. This test is only needed for small 
+mass ratios when $q<0.01$. 
+
+\begin{figure}[t]
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/extended_source_test.pdf}
+        \caption{}
+            \label{fig:extended_source_test}
+        \script{extended_source_test.py}
+    \end{centering}
+\end{figure}
+
+I then choose the values of the free parameters $(c_m, \gamma, c_f, c_p)$ such that the 
+full contour integration is triggered only when the relative error is greater than a threshold 
+value which I set to $10^{-4}$. This is a sort of optimization problem where the goal is 
+minimize the number of false negatives while also keeping the number of false positive results 
+relatively low. I find that the setting 
+\begin{equation}
+    c_m=10^{-2},\quad \gamma=0.02, c_f=4, \quad c_p=2.
+\end{equation}
+work well. Figure~\ref{fig:extended_source_test} shows the application of the tests for a binary 
+system with $a=0.8$, $\epsilon_1=0.95$ and $\rho_\star=5\times 10^{-3}$. The caustic 
+curves are shown as black lines, the red region indicates where the (relative) error of 
+the hexadecapole approximation relative to a complete contour integration is greater than 
+$10^{-4}$ and the grey regions is where the tests indicate that the full integration is 
+necessary. Unfortunately the tests are far from perfect and there are large areas of the 
+source plane where the tests give a false positive result. 
+Another issue is that the false image test and the planetary caustic test don't work 
+for triple lenses. 
+
+\section{Automatic differentiation}
+\begin{figure}[t]
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/lightcurve_gradients.pdf}
+        \caption{}
+            \label{fig:lightcurve_gradients}
+        \script{lightcurve_gradients.py}
+    \end{centering}
+\end{figure}
+
+\section{Astrometric microlensing}
+It is straightforward to also compute the astrometric shift given the contours of the images.
+Following  \citet{1998A&A...333L..79D}, the shift in the center-of-light relative to the 
+centroid of the unlensed source, denoted by the complex variable $z_\mathrm{cent}$, is given by 
+\begin{equation}
+    z_\mathrm{cent} = \frac{\oiint_{{S}^\prime}z\,I_s(z_1^\prime,z_2^\prime)\ud z_1^\prime\ud z_2^\prime}{
+    \oiint_{{S}^\prime}I_s(z_1^\prime,z_2^\prime)\ud z_1^\prime\ud z_2^\prime}{
+    }
+    \label{eq:centroid_shift}
+\end{equation}
+The above equation is analogous to the equation for the astrometric shift for a single lens 
+illuminated by a point source which which we defined in 
+Equation~\ref{eq:centroid_single_lens}.
+The integral in the denominator is the one we have covered in the previous sections in this chapter 
+and the one in the numerator is very similar except it requires a slight modification for the 
+functions $P(z_1,z_2)$ and $Q(z_1,z_2)$. 
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{l l l l} 
+ \toprule
+\shortstack[l]{Integrand\\$f(z_1, z_2)$} & Description & $P(z_1,z_2)$ & $Q(z_1,z_2)$\\
+ \midrule
+$1$ & Area of images& -$\frac{1}{2}z_2$ &  $\frac{1}{2}z_1$ \\[0.5cm]
+$I_s(z_1, z_2)$ &\shortstack[l]{Brightness distribution\\integrated over image area}& -$\frac{1}{2} \int_{z_2^{(0)}}^{z_2} I_s\left(z_1, z_2^{\prime}\right) \ud z_2^{\prime}$ & $\frac{1}{2} \int_{z_1^{(0)}}^{z_1} I_s\left(z_1^{\prime}, z_2\right) \ud z_1^{\prime}$\\[0.5cm]
+$z_1$ & \shortstack[l]{$x$-component of centroid shift\\(uniform brightness)}& -$\frac{1}{2}z_1z_2$ & $\frac{1}{4}z_1^2$\\[0.5cm]
+$z_2$ & \shortstack[l]{$y$-component of centroid shift\\(uniform brightness)}&  -$\frac{1}{4}z_1^2$ & $\frac{1}{2}z_1z_2$\\[0.5cm]
+$z_1\,I_s(z_1, z_2)$ & \shortstack[l]{$x$-component of centroid shift\\(arbitrary brightness distribution)}& -$\frac{1}{2} z_1\int_{z_2^{(0)}}^{z_2} I_s\left(z_1, z_2^{\prime}\right) \ud z_2^{\prime}$ & $\frac{1}{2} \int_{z_1^{(0)}}^{z_1} z_1^\prime\,I_s\left(z_1^{\prime}, z_2\right) \ud z_1^{\prime}$\\[0.5cm]
+$z_2\,I_s(z_1, z_2)$ & \shortstack[l]{$y$-component of centroid shift\\(arbitrary surface brightness)}& -$\frac{1}{2} \int_{z_2^{(0)}}^{z_2} z_2^\prime\,I_s\left(z_1, z_2^{\prime}\right) \ud z_2^{\prime}$ & $\frac{1}{2} z_2\int_{z_1^{(0)}}^{z_1} \,I_s\left(z_1^{\prime}, z_2\right) \ud z_1^{\prime}$\\[0.5cm]
+\bottomrule
+\end{tabular}
+\caption{Table showing the different integrand functions $f(z_1, z_2)$ 
+for a surface integral over the images $\oiint_{{S}^\prime}f(z_1,z_2)\ud z_1\ud z_2$.
+These functions satisfy the constraint 
+$f(z_1, z_2) = \partial Q/\partial z_1 - \partial P/\partial z_2$ so that 
+we can use Green's theorem (Equation~\ref{eq:green_theorem}) to transform the two-dimensional
+surface integral into a one-dimensional line integral. The functions in the first two rows 
+from the top are used to compute the photometric microlensing effect and the rest 
+are used to compute the astrometric microlensing effect.}
+\label{tab:p_and_q_functions}
+\end{table}
+
+Table~\ref{tab:p_and_q_functions} shows the different choices of integrand functions 
+$f(z_1,z_2)$ for a surface integral  $\oiint_{{S}^\prime}f(z_1,z_2)\ud z_1\ud z_2$ which 
+are used in the computation of the photometric and astrometric microlensing effects and 
+the corresponding functions $P(z_1,z_2)$ and $Q(z_1,z_2)$ which satisfy the constraint
+$f(z_1, z_2) = \partial Q/\partial z_1 - \partial P/\partial z_2$.
+The first two rows of the table show the integrands for the uniform brightness 
+and limb-darkened photometric microlensing effect which was covered in the previous section.
+The following rows show the funtions for the real and imaginary components of the integrand 
+in the numerator of Equation~\ref{eq:centroid_shift} for the uniform brightness and 
+limb-darkened brightness  distributions.
+We see that for the photometric microlensing effect we have to numerically estimate three 
+surface integrals in total (the one in the denominator of Equation~\ref{eq:centroid_shift} 
+and the two components of the integral in the numerator) compared to one for the photometric 
+effect. 
 
 
 
 
-%%
-%%\section{Computing lightcurves}
-%%\begin{figure}[t]
-%%    \begin{centering}
-%%        \includegraphics[width=0.6\linewidth]{figures/single_lens_hex.pdf}
-%%        \caption{}
-%%        \label{fig:single_lens_hex}
-%%        \script{single_lens_hex.py}
-%%    \end{centering}
-%%\end{figure}
-%
-%\section{Automatic differentiation}
-%
 % CHAPTER 4: Modeling binary and triple microlensing events
 \chapter{Modeling microlensing events}
 \label{ch:microlensing_modeling}
+This chapter tackles some fundamental questions concerning the modeling of single 
+and binary lens microlensing events. The chapter is split into two parts. In the first
+part I discuss the modeling of single lens microlensing events, a problem with relatively 
+smooth and well-behaved parameter space.  I choose a single light curve of an event 
+which exhibits a parallax signal and I use it to demonstrate an extremely fast and 
+practical solution to one of the most common problems in microlensing modeling: fitting a model with 
+a multi-modal posterior or likelihood distribution. In the second part of the chapter 
+I show how things change when we introduce more lenses. The problem becomes non-smooth
+and substantially more challening.
+
 %% PLOT POINTWISE LOO 
 
 \section{Single lens events}
-%Although the majority of effort dedicated to modeling microlensing events in recent 
-%years has been dedicated to binary and triple lens events, single lens events 
-%exhibit many of the same problems (such as degeneracies) as binary and triple 
-%lens events and they share common parameters. It is thus instructive to understand
-%the challenges in modeling single lens events before tackling events with more 
-%lenses. Single lens events are also interesting scientifically because we can use 
-%them to constrain the occurance rates of free-floating planets (CITE) and study 
-%isolated Black Hole populations. They're also about an order of magnitude more 
-%common than binary and triple lens events.
-%
-%
-%Models with multiple lenses share all of the parameters with the single lens model,
-%to make progress with these often pathological models, we need to understand the simpler model first.
-%The single lens model is also not useless by itself since one of the most well known results from microlensing 
-%in the past decade, the reported discovery of a large population of a large population 
-%of unbound free floating planets in the Milky Way by \cite{sumi_unbound_2011} (and 
-%the subsequent correction by \cite{mroz_no_2017}) relies entirely on inferences 
-%drawn using a single lens model in a regime particularly  sensitive to modeling 
-%assumptions.
+\subsection{Introduction}
+Although the majority of effort dedicated to modeling microlensing events in recent 
+years has been dedicated to binary and triple lens events, single lens events (which are
+an order of magnitude more common than multiple lens events) exhibit many of the same 
+pathologies as binary and triple lens events, in addition to  
+sharing common parameters. Single lens events are also very important scientifically 
+on their own for two main reasons. First, constraining tail properties of the $t_E$ 
+distribution enables us to make predictions about the number of free floating exoplanets
+in the Galaxy \citep{sumi_unbound_2011,mroz_no_2017}. By measuring the microlensing 
+parallax $\pi_E$ in addition to $t_E$ we can also place constrains on the mass of the 
+lens \citep{2016MNRAS.458.3012W}. This is especially important for finding intermediate 
+mass black holes which are predicted to stand out in the joint $(\pi_E, t_E)$ 
+distribution. Predictions by \citet{2020ApJ...889...31L} using a microlensing population 
+synthesis model indicate that if a given event has $t_E\gtrsim 120$ days and 
+$\pi_E\lesssim 0.08$ it is highly likely to be a black hole.
+
+Both of these applications are highly sensitive to modeling assumptions. The event 
+timescale $t_E$ is often very poorly constrained \citep{2009MNRAS.393..816D} for 
+blended events and for events with correlated noise \citep{golovich2022}. 
+In addition to those problems, events with annual parallax 
+deviations also suffer from multi-modal posterior posterior distributions, a 
+reflection of the degeneracies inherent in the problem \citep{2004ApJ...606..319G}.
+Multi-modal posteriors are also a big problem for multiple lens events, although, 
+as we shall see, they are easier to study in the context of single lenses. 
+
+The reason why muti-modal posterior distributions (or likelihoods) are problematic is 
+that every single MCMC method which uses \emph{local information} 
+about the distribution (e.g., its scalar value and gradient) will inevitably get 
+stuck in one of the modes if the modes are separated by regions of low probability. 
+Seen through the lens of Hamiltonian Monte Carlo, a posterior distribution 
+$p(\vec\theta)$ with two seperated modes has a potential energy barrier between the 
+two modes (because  $U(\vec\theta)\propto -\ln p(\vec\theta)$) which decreaseses
+the transition probability between the modes.
+
+A similar problem occurs if we are optimizing the likelihood or the posterior 
+distribution for the MLE or the MAP point and we get trapped in local minima (maxima).
+The difference is that the two classes of algorithms are not exploring the same thing. 
+The ``modes'' in the context of MCMC refer to isolated regions of high probability mass
+(typical sets) while the the ``modes'' in the context of optimiztion refer to 
+minima (maxima) of the posterior density 
+(see Section~\ref{ssec:sampling_vs_optimization}). In high dimensions (higher than 
+a few) the 
+typical sets is concentrated into a thin shell and instead of thinking of two isolated
+islands in the parameter space, it is better to think of isolated soap bubbles.
+
+
+In what follows, I investigate this problem for a specific single lens event with a 
+parallax signal and test multiple methods for dealing with it. 
+
+
+%Single lens events are also about an order of magnitude more common than multiple lens 
+%events and there exists a wealth of data from past surveys containing thousands of 
+%single lens light curve that has not been fully utilized 
+%\citep[see][for instance]{arXiv:2009.07927}.
+
+\subsection{Data}
+The single lens microlensing event I have chosen to model is OGLE-2005-BLG-086
+with coordinates $(\alpha, \delta)=(18^h 4^m 45.7^s, -26^\circ 59^\prime 15.5^\prime)$.
+which was previously published in \citet{2015ApJS..216...12W}. 
+The light curve is shown in Figure~\ref{fig:ogle_lightcurve}. 
+The information about the photometry pipeline for light curve extraction from raw 
+is in  \citet{2008AcA....58...69U}.
+This is a fairly typical long-timescale event which exhibits subtle 
+deviations in the wings of the light curve due to the annual parallax effect.
+The event was modeled by \citet{2015ApJS..216...12W} and fit with a single lens model 
+without parallax, the inferred parameters are shown in Table~\ref{tab:lukasz_parameters}.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{l c c c c} 
+ \toprule
+Parameter & $t_0$ & $t_E$ & $u_0$ & $F_s$ \\
+&HJD - 2450000 (days) & (days) & & \\
+ \midrule
+Value & $3628.293103_{-0.132710}^{+0.135788}$  & $102.084389_{-1.402358}^{+1.425696}$ & $0.374351_{-0.007950}^{+0.008415}$ & $0.775243_{-0.021796}^{+0.023732}$ \\
+\bottomrule
+\end{tabular}
+\caption{Inferred parameters of a single lens model without 
+parallax fitted to the OGLE-2005-BLG-086 light curve, from \citet{2015ApJS..216...12W}.
+The uncertainties correspond to 15 and 85\% confidence intervals.} 
+\label{tab:lukasz_parameters}
+\end{table}
+
+\begin{figure}[!t]
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/single_lens_lightcurve.pdf}
+        \caption{}
+            \label{fig:ogle_lightcurve}
+        \script{single_lens_fit_plots.py}
+    \end{centering}
+\end{figure}
+
+\subsection{Model}
+Since we are dealing with a single lens event without noticable finite-source effects
+the model is computationally cheap and it can be easily implemented in \ssf{JAX}. The 
+point source magnification is simply given by 
+\begin{equation}
+    A(t) = \frac{u(t)^2 + 2}{u(t)  \sqrt{u(t)^2 + 4}}
+\end{equation}
+where $u(t)\equiv |\vec u(t)|$ is the apparent trajectory of the source start on the plane 
+of the sky whose two components are given by 
+Equations~\ref{eq:u_t_east},\ref{eq:u_t_north} which I repeat here for clarity: 
+\begin{align}
+    u_e & =u_0\cos\psi + (t-t_0^\prime)/t_E^\prime\sin\psi + \pi_E\,\delta\zeta_e(t)  \\
+    u_n & =-u_0\sin\psi + (t-t_0^\prime)/t_E^\prime\cos\psi + \pi_E\,\delta\zeta_n(t)
+\end{align}
+Instead of using the $(\pi_E, \psi)$ parametrization I use the two microlensing 
+parallax components $\pi_{E,N}\equiv\pi_E\cos\psi$ and 
+$\pi_{E,E}\equiv\pi_E\sin\psi$ because the angle $\psi$ has a discontinuity at $\pi$ 
+which is problematic for fitting. The five free parameters which determine the 
+magnification are then $(t_0^\prime, t_E^\prime, u_0, \pi_{E,E}, \pi_{E,N})$.
+
+To evaluate the magnification at an arbitrary point in the parameter space we have 
+to be able to evaluate the two components of the projected position vector of the 
+Solar System Barycentre (SSB)
+on the plane of the sky, $\delta\zeta_e(t)$ and $\delta\zeta_n(t)$ at arbitrary
+time $t$. There are two ways to do this. The first is to parametrize Earth's orbit 
+as a Keplerian orbit and compute the projected position of the Sun in a geocentric 
+frame analytically. The second is to use the \ssf{JPL Horizons} ephemeris which 
+relies on highly accurate N-body simulations of the Solar System and tracks the 
+positions and velocities of Solar System bodies with high precision.
+
+I chose the second option because although the anlaytic approximation of the orbit 
+is sufficient in the majority of cases, obtaining the high accuracy ephemris from 
+\ssf{JPL Horizons} is very straightforward. I use the function 
+\ssf{get\_body\_barycentric\_posvel} from the \ssf{Astropy} package to obtain the 
+position and velocity vector of the SSB with respect to Earth on a grid with a time resultion of 
+1 day starting at the time of the first observation and ending at the time of the
+last observation in the light curve. I then project the vectors onto the plane of 
+the sky (which is defined by the coordinates $(\alpha, \delta)$ of the source star) 
+using Equations~\ref{eq:zeta_e_t},\ref{eq:zeta_n_t} to obtain the two components 
+of the projected position $(\zeta_e(t), \zeta_n(t))$  and velocity 
+$(\dot\zeta_e(t), \dot\zeta_n(t))$ of the SSB on the plane of the sky. All of this 
+is precomputed before fitting. The computation of the position offset of SSB on the 
+plane of the sky relative to to its position at time $t_0^\prime$ 
+(Equation~\ref{eq:relative_separation_parallax_decomposed}) depends on the parameter
+$t_0^\prime$ and is computed on the fly during the fitting process by linerly
+interpolating the values of $\zeta_e(t)$ and $\zeta_n(t)$ and their derivatives. 
+Only the last operation is implemented in \ssf{JAX} and it is differentiable because
+\ssf{JAX} has an interpolation function (\ssf{jax.numpy.interp}).
+The above procedure is implemented in \ssf{caustics} in a class 
+\ssf{AnnualParallaxTrajectory}.
+
+Next, we have to choose the parametrization for the linear flux parameters. 
+I use the parameters $F_S$ (the source star flux) and 
+$F_\mathrm{base}\equiv F_S + F_B$\footnote{The parametrization proposed by 
+\citet{2009MNRAS.393..816D} which replaces the source star flux $F_S$ with 
+$\Delta F\equiv F_S\left[A(u_0)-1\right]$ is an equally good choice but it does not
+easily generalize to binary lens events which I discuss in the following section.}
+The advantage of this parametrization over the parametrization $(F_S,F_B)$ is that 
+$F_\mathrm{base}$ (the baseline flux) is directly related to the light curve and  
+$F_S$ is a physical parameter of interest. 
+The predicted flux is then given by the matrix equation
+\begin{equation}
+    \vec f =\vec M \,\vec \beta 
+\end{equation}
+where $\vec \beta \equiv (F_S, F_\mathrm{base})^\intercal$ and 
+the design matrix $\vec M$, which depends on the nonlinear parameters
+$\vec\theta = (t_0^\prime, t_E^\prime, u_0, \pi_{E,E}, \pi_{E,N})$, is given by
+\begin{equation}
+    \vec M = \begin{pmatrix} 
+        A(t_1;\vec\theta) - 1 & 1 \\ 
+        A(t_2;\vec\theta) - 1& 1 \\ 
+        \vdots & \vdots \\ 
+        A(t_N;\vec\theta) - 1 & 1
+    \end{pmatrix}
+\end{equation}
+
+I do not fit for the linear parameters because we can analytically marginalize 
+the Gaussian likelihood over those parameters, as described in 
+Section~\ref{ssec:marginalize_linear}. In addition to reducing the dimensionality 
+of the problem, this procedure also eases sampling and optimization of the posterior
+distribution because there are strong nonlinear convariances between the source star flux 
+$F_S$ and the parameters $t_E^\prime$ and $u_0$ for blended events which leads to 
+complicated geometry of the posterior density. By marginalizing over these parameters
+we only have to worry about the covariances between the nonlinear parameters. 
+
+I assume a Gaussian likelihood with a diagonal covariance matrix comprised of the 
+variances of the flux measurements which are provided by OGLE. This noise model 
+does not have the flexibility to capture correlated noise features in the light curve 
+due to seeing variations or stellar variability which should absolutely be included 
+in a more realistic model, but for the purposes of this section it is sufficient.
+In Section~\ref{ssec:generalizing_to_non_seperable_likelihoods} I will explore how to 
+generalize the model to include more sophisticated noise models.
+Because the data covariance matrix is assumed to be diagonal we can obtain the 
+linear flux parameters $\vec \beta$ using weighted least squares\footnote{
+    The weighted least squares solution for $\vec\beta$ is obtained by 
+    solving the linear system $(\vec M^\intercal \vec C^{-1} \vec M)\hat{\vec\beta} = \vec M^\intercal \vec C^{-1} \vec f$ 
+    where $\vec C$ is the diagonal data covariance matrix.}
+    at every iteration which is faster than computing the marginalized likelihood from 
+Equation~\ref{eq:ll_marginalized_microlensing}. 
+
+Finally, we have to specify the priors for the nonlinear parameters. These are listed 
+in Table~\ref{tab:single_lens_priors}. They are all broad weakly informative priors
+with the exception of the prior for the $\ln t_0$ parameter which is a Gaussian 
+centered at a particular value $t^\prime_{0, \mathrm{estimate}}$ -- an estimate of the 
+$t_0^\prime$ parameter from the raw data. 
+$t^\prime_{0,\mathrm{estimate}}$ is obtained by passing the lightcurve through 
+a median filter and selecting the observation time of the point with the maximum flux.
+The reason I do this is because $t_0^\prime$ is usually a very well constrained 
+parameter not sensitive to the choice of the prior and placing a prior centered 
+at the time of the peak magnification eases fitting.
+
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{l c c c c c} 
+ \toprule
+Parameter & $\ln t_0^\prime$ & $\ln t_E^\prime$ & $u_0$ & $\pi_{E,N}$ &$\pi_{E,E}$\\
+ \midrule
+Prior &$\mathcal{N}(t^\prime_{0,\mathrm{estimate}}, 2.3)$ &$\mathcal{N}(2.5, 1.5)$ &$\mathcal{N}(0,1)$ & $\mathcal{N}(0,1)$ & $\mathcal{N}(0,1)$\\
+\bottomrule
+\end{tabular}
+\caption{Prior distributions for model parameters. $t^\prime_{0,\mathrm{estimate}}$ is 
+estimated  time of the peak flux in the light curve.}
+\label{tab:single_lens_priors}
+\end{table}
+
+\subsection{Multiple modes in the posterior}
+Having specified the model, we can now explore the parameter space with MCMC. To sample
+the posterior distribution I implemented the parallax model in the probabilistic 
+programming language \ssf{numpyro} \citep{arXiv:1912.11554}. \ssf{numpyro} is a 
+\ssf{Python} library built using \ssf{JAX} which comes with a robust implementation of 
+the NUTS Hamiltonian Monte Carlo sampler, various optimizers, probability distributions 
+and transforms.
+NUTS uses the gradient of the posterior distribution with with respect to the 
+model parameters to substantially improve the sampling efficiency relative to 
+gradient-free MCMC \footnote{The exact speedup
+depends on the details of the problem  -- the dimensionality and the geometry of the 
+parameter space, it is generally at least an order of magnitude and it can be much 
+larger.}.
+
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{l c c c c c} 
+ \toprule
+Name & $t_0^\prime$ & $t_E^\prime$ & $u_0$ & $\pi_{E,N}$ &$\pi_{E,E}$ \\
+&HJD - 2450000 (days) & (days) &&&\\
+ \midrule
+ Mode 1 & $3629.874_{-0.170}^{+0.171}$&$109.324_{-3.575}^{+3.831}$&$-0.416_{-0.014}^{+0.013}$&$-0.297_{-0.025}^{+0.031}$&$0.116_{-0.009}^{+0.009}$\\
+ Mode 2 & $3629.783_{-0.159}^{+0.171}$&$92.942_{-2.256}^{+2.234}$&$0.488_{-0.018}^{+0.020}$&$0.266_{-0.033}^{+0.030}$&$0.106_{-0.009}^{+0.009}$\\
+ Mode 3 & $3630.218_{-0.201}^{+0.206}$&$122.337_{-4.623}^{+4.905}$&$-0.229_{-0.013}^{+0.012}$&$0.340_{-0.015}^{+0.013}$&$0.074_{-0.005}^{+0.005}$\\
+ Mode 4 & $3630.370_{-0.222}^{+0.220}$ & $151.626_{-7.542}^{+8.345}$ & $0.178_{-0.012}^{+0.013}$ & $-0.288_{-0.009}^{+0.009}$ & $0.075_{-0.005}^{+0.005}$\\
+\bottomrule
+\end{tabular}
+\caption{
+    Inferred model parameters from single NUTS MCMC chains trapped in four separate modes in 
+    the posterior. The sampling converged in each case but the solutions are quite 
+    different from each other.
+}
+\label{tab:parameters_four_chains}
+\end{table}
+
+\begin{figure}[t]
+    \begin{centering}
+        \includegraphics[width=0.7\linewidth]{figures/single_lens_samples.pdf}
+        \caption{
+            Projection of the posterior samples onto parameters $(t_E, \pi_E)$.
+            Each color indicates samples from a single NUTS MCMC chain trapped 
+            in a different mode of the posterior distribution. Modes 1 and 2 
+            are dominant modes with comparable likelihood while modes 3 and 4
+            have lower values of the likelihood. The panels on the top and right 
+            show the histograms of the marginal distributions.
+        }
+            \label{fig:ogle_lightcurve_fit_samples}
+        \script{single_lens_fit_plots.py}
+    \end{centering}
+\end{figure}
+
+
+Intializing the sampler at an arbitrary position in the parameter space results in 
+a Markov chain which gets stuck in one of four modes in the posterior. To demonstrate 
+this I intialize four chains such that each ends up exploring a different mode.
+I run the NUTS sampler with 1000 warmup iterations (using the default \ssf{numpyro} 
+strategy for estimating the HMC mass matrix) and 2000 sampling iterations.
+To make sure that the chains have converged I checked the ESS for all parameters 
+is at least 400 and that there number of divergent transitions\footnote{Divergent 
+transitions occur when the gradients of the target distribution become very large.
+This indicates that the chains become trapped in regions of high curvature 
+in the parameter space and they may not be exploring the typical set fully 
+\citep{arXiv:1701.02434}.} during the leapfrog 
+integration for each sample is either zero or a very small fraction of the all 
+samples. The inferred parameters for each chain are shown in 
+Table~\ref{tab:parameters_four_chains}.
+
+\begin{figure}[t]
+    \begin{centering}
+        \includegraphics[width=0.5\linewidth]{figures/single_lens_trajectories.pdf}
+        \caption{Posterior source star trajectories on the plane of the sky for each
+        of the four mode. Each thin line is one possible trajectory of the source star 
+        within one of the four modes in the posterior distribution. The arrows indicate 
+        the direction of the source. Both modes 1 and 2 and modes 3 and 4 have similar 
+        absolute values of $u_0$ but with the opposite sign. }
+            \label{fig:ogle_lightcurve_fit_trajectories}
+        \script{single_lens_fit_plots.py}
+    \end{centering}
+\end{figure}
+
+Figure~\ref{fig:ogle_lightcurve_fit_samples} shows the projection of the samples 
+from each mode in the physically relevant parameters $(t_E, \pi_E)$.
+There are two dominant modes with comparable values of the likelihood (Mode 1 and 
+Mode 2) and two less dominant modes (Mode 3 and Mode 4). All four solutions are 
+quite different from each other. The physical interpretation of the different modes
+is obvious if we plot the inferred trajectories on the plane of the sky, this is 
+shown in Figure~\ref{fig:ogle_lightcurve_fit_trajectories}. Each line is a single 
+sample from the posterior distribution for each of the modes and the arrows 
+indicated the direction of the motion of the source star. We see that each mode 
+represents a different trajectory of the source on the plane of the sky. The two 
+dominant modes (blue and orange) have similar absolute values of $u_0$  
+but with opposite signs. One solution corresponds to the source star moving 
+South to North (orange) while the other corresponds to the source moves North to South (blue).
+The situation is similar for the two less dominant modes (green and red) 
+although the difference in event timescales between these two modes is greater.
+
+These degeneracies for annual parallax events have been known for some time 
+\citep{2004ApJ...606..319G} but there is still no definitive answer to the obvious 
+question: \textbf{How do compare the different modes?}. 
+With the exception of the recent work by \citet{2022MNRAS.514.4845K}, this question has
+been largely ignored in the literature. Comparing the different modes can be seen as a
+classic model comparison problem from statistics except we don't have the additional
+complication of having to compare structurally completely different models 
+(in terms of the specification of the posterior distribution). There are two potential 
+solutions to this problem. The first is to use a sampler which can sample the full 
+multi-modal posterior distribution. The second is to use the MCMC samples we have 
+obtained for each mode seperately and re-weigh them in proportion to how well 
+they fit to the data. 
+In what follows I compare both of these approaches, starting with a discussion of 
+cross validation in the context  microlensing light curves.
+
+\subsection{Cross validation}
+One of the most popular and robust methods for model comparison/selection in statistics
+is \emph{cross validation} (CV).
+\textbf{The fundamental idea behind CV is to judge the performance 
+of different models based on how well they predict unseen data}. The word ``models'' in 
+the previous sentence can refer to entirely different models -- with 
+different structure, likelihoods and numbers of parameters, or it can 
+refer to different modes in the posterior. Consider a model $\mathcal{M}$, observed
+data $\vec y$, and a posterior distribution $p(\vec \theta \vert \vec y,\mathcal{M})$.
+The posterior predictive distribution 
+\begin{equation}
+p(\tilde{\vec y}|\vec y,\mathcal{M})=\int p(\tilde{\vec y}|\vec \theta,\mathcal{M})\,p(\vec \theta|\vec y,\mathcal{M})\ud\vec \theta
+\end{equation}
+expresses our beliefs about new data $\tilde{\vec y}$ given the posterior distribution
+of the model parameters $\vec\theta$ conditional on observed data $\vec y$.
+
+This may sound a little abstract but it is actually quite simple to understand.
+If in the previous step we obtained samples from the posterior distribution 
+$p(\vec \theta \vert \vec y,\mathcal{M})$ using for example MCMC, then we can use 
+these samples to generate samples from the posterior predictive distribution by 
+simply  plugging them into the data distribution $p(\tilde{\vec y}|\vec \theta,\mathcal{M})$
+and drawing a new data vector $\tilde{\vec y}$ for each sample $\vec \theta$. 
+In our case this would mean fitting a microlensing light curve $\vec f$ and sampling
+from the Gaussian likelihood $p(\vec f|\vec \theta,\mathcal{M})$ for each posterior 
+sample. We could evaluate the new data $\tilde{\vec f}$ at the same times as the 
+observed data $\vec f$ but we could also choose to evaluate it at different times.
+Doing this sort of thing (simulating data conditional on posterior samples) is a useful
+way of checking the model fit and it goes by the name of \emph{posterior predictive
+checking} (PPC).
+
+To measure how close these predictions are to the \emph{true data generating process} 
+(which is unknown), we can construct a utility function which quantifies the 
+predictive performance of the model. One such function that has multiple desirable
+properties is the \emph{expected log predictive density} (elpd) of model $\mathcal{M}$.
+It is the expectation of the log posterior predictive density under the true data 
+generating process $p_t(\tilde{\vec y}|\vec y)$:
+\begin{align}
+    \mathrm{elpd}&\equiv\mathbb{E}_{p_t(\tilde{\vec y})}\left[ \ln p(\tilde{\vec y}|\vec y,\mathcal{M})\right]\\
+    &= \int \ln p(\tilde{\vec y}|\vec \theta,\mathcal{M})\,p_t(\vec \theta|\vec y)\ud\vec \theta
+    \label{eq:elpd}
+\end{align}
+This quantity can be approximated using \emph{leave-one-out} cross validation (LOO-CV)\footnote{
+    It can also be approximated using K-fold cross validation but LOO is easier to work with.
+}
+as \citep{vehtari2017}
+\begin{align}
+\mathrm{elpd}_\mathrm{loo}&\approx \sum_{i=1}^n \ln p(\tilde{\vec y}_i|\vec y_{-i},\mathcal{M})\\
+&=\sum_{i=1}^n\ln\left[p(\vec y_i|\vec \theta,\mathcal{M})\,p(\vec \theta | \vec y_{-i},\mathcal{M})\ud\vec\theta\right]
+\label{eq:elpd_loo}
+\end{align}
+where $\vec y_i$ is the $i$-th data point and $p(\vec \theta|\vec y_{-i})$ is the 
+posterior distribution over the model parameters conditional on all data points except 
+the $i$-th one (hence the name LOO). 
+\citet{arXiv:1004.2316} showed that Equation~\ref{eq:elpd} is a consistent and unbiased 
+estimator of the true elpd.
+
+There are two fundamental assumptions behind the approximation of the elpd using 
+Equation~\ref{eq:elpd_loo} and CV approximations of elpd in general 
+\citep[see][for a more thorough discussion]{arXiv:1810.05374}.
+The first assumption is that existing data is that existing data is a good representation
+of new data. The second assumption is that observations or groups of observations are 
+exchangeable\footnote{Parameters $\theta_1,\theta_2,\ldots,\theta_D$ are
+exchangable if their joint distribution $p(\vec \theta)$ is invariant under permutations
+of the indices $1,2,\ldots,D$.} conditional on the model parameters. Otherwise the 
+estimator in Equation~\ref{eq:elpd_loo} is not an unbiased approximation of the true 
+expecatation over unseen data. The second assumption means that we have to be careful when 
+applying CV to data correlated in space or time, although there are cross validation
+schemes designed to work in such cases (see the discussion on Gaussian Processes and 
+LOO-CV towards the end of the this section).
+
+In priciple, computing the elpd using Eq.~\ref{eq:elpd_loo} requires us to re-fit the model 
+for each data point which 
+is very computationally expensive. However, the LOO posterior $p(\vec \theta|\vec y_{-i})$
+is in practice often close to the full posterior $p(\vec \theta|\vec y,\mathcal{M})$
+and we can approximate it using importance sampling without having to re-fit the model.
+If we have samples from the full posterior $p(\vec \theta|\vec y)$, the importance 
+sampling approximation of Equation~\ref{eq:elpd_loo} is 
+\begin{equation}
+\mathrm{elpd}_\mathrm{is-loo}\approx\sum_{i=1}^n\ln\left(\frac{\frac{1}{S} \sum_{s=1}^{S} p\left( \vec y_{i} \lvert\vec \theta^{(s)},\mathcal{M}\right) w\left(\vec\theta^{(s)}\right)}{\frac{1}{S} \sum_{s=1}^{S} w\left(\vec\theta^{(s)}\right)}\right)
+\label{eq:elpd_is_loo}
+\end{equation}
+where $w \propto 1/p\left(\vec f_{i} \lvert\vec\theta^{(s)},\mathcal{M}\right)$ are the 
+importance weights.
+The problem with the above approximation is that individual data points $\vec y_i$
+can be quite influential on the posterior and the resulting distribution of importance 
+weights is dominated by a few outliers. This can lead to a large variance in the estimate 
+of elpd. \citet{2015arXiv150702646V} solves this problem by fitting a generalized
+Pareto distribution to the the distribution of weights and replacing the largest 
+weights with the predictions from the fitted distribution -- so caled 
+\emph{Pareto smoothed importance sampling} (PSIS). 
+elpd estimated using Equation~\ref{eq:elpd_is_loo} with Pareto smoothed
+importance weights is denoted as $\mathrm{elpd}_\mathrm{psis-loo}$.
+
+The Pareto distribution has 
+the form $p(r \mid u, \sigma, k)=\sigma^{-1}\left(1+k(r-u) \sigma^{-1}\right)^{-1 / k-1}$
+where $u$ is the location, $\sigma$ is the scale and $k$ is the shape parameter.
+An output of this PSIS  procedure \citep[described in][]{2015arXiv150702646V,vehtari2017} 
+is a set of new stabilized weights $w(\vec\theta^{(s)})$ and an inferred shape parameter $\hat k$ 
+(for each data point $\vec y_i$). The Pareto shape parameters $\hat k$ have very useful 
+diagnostic value. When $\hat k$ is greater than about 0.7,the importance sampling estimate of 
+the LOO posterior (or the importance sampling estimate of any other distribution) is 
+unlikely to be reliable \citep{2015arXiv150702646V}. This in turn also implies that 
+$\vec y_i$ is a highly influential observation. 
+
+We may ask weather it makes sense to apply LOO-CV to a \emph{time-series} dataset where 
+the data points have a specific ordering. Indeed, in cases where we only care about 
+predicting future data points conditional on having observed past data points, 
+LOO-CV is not a good measure of the predictive performance of the model because it 
+makes use of future data points to asses the predictive accuracy on past data points. 
+In those cases so called leave-future-out (LFO) CV \citep{arXiv:1902.06281}
+ is a data split which makes more sense.
+However, when comparing different models fitted to fully observed microlensing events, 
+this is not something we really care about. We care about the predictive performance 
+of the model between observed points  (especially in the informative 
+parts of the light curve) and this is what plain LOO-CV 
+captures\footnote{Aki Vehtari makes this point in this blog post: 
+\url{https://statmodeling.stat.columbia.edu/2018/08/03/loo-cross-validation-approaches-valid/}}.
+
+ To compute the LOO-CV score $\mathrm{elpd}_\mathrm{psis-loo}$ for each of the four modes 
+ in the posterior I use the function \ssf{arviz.loo} from the \ssf{ArviZ} library 
+ \citep{arviz_2019}, which implements 
+ the Pareto smoothing procedure described previously.  The results are shown in 
+Table~\ref{tab:loo_cv}. The table contains the mean $\chi^2$ across all samples 
+in each mode, the $\mathrm{ELPD}_\mathrm{PSIS-LOO}$ estimate, the difference 
+in $\mathrm{ELPD}_\mathrm{PSIS-LOO}$ relative to the top performing mode (zero
+for the mode with the largest $\mathrm{ELPD}_\mathrm{PSIS-LOO}$, and the 
+standard error for that difference\footnote{See \citet{vehtari2017} for how to compute
+the standard errors for the vlalue of and difference between 
+$\mathrm{ELPD}_\mathrm{PSIS-LOO}$.}. 
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{l c c c c} 
+ \toprule
+Name & $\chi^2$ & $\mathrm{elpd}_\mathrm{psis-loo}$ & $\Delta(\mathrm{elpd}_\mathrm{psis-loo})$ & $\mathrm{se}(\Delta(\mathrm{eldp}_\mathrm{psis-loo}))$ \\
+ \midrule
+ Mode 1 & 949.4& -1409.89 & 0 & 0 \\
+ Mode 2 & 951.8& -1410.81 & 0.92 & 2.03\\
+ Mode 3 & 961.0& -1415.97 &  6.07 & 4.34\\
+ Mode 4 & 969.5& -1420.54 &  10.65	& 6.236\\
+\bottomrule
+\end{tabular}
+\caption{Differences in $\chi^2$ and the LOO-CV scores between the four modes in the 
+posterior. $\Delta \mathrm{elpd}_\mathrm{psis-loo}$ is the difference in 
+$\mathrm{elpd}_\mathrm{psis-loo}$ relative to the first mode with the largest 
+$\mathrm{elpd}_\mathrm{psis-loo}$. $\mathrm{se}(\Delta \mathrm{elpd}_\mathrm{psis-loo})$
+is the standard error for the difference.}
+\label{tab:loo_cv}
+\end{table}
+
+
+The first thing to notice is that the ordering of the four modes based on the LOO-CV scores 
+(where a higher score is better) is the same as the ordering of the $\chi^2$ values. 
+This is not a given because these two quantities measure different things. 
+$\chi^2$ is simply the value of the likelihood
+which measures how well a particular mode fits the data \emph{assuming that the model is 
+correctly specified} (which is never the case in reality).
+The LOO-CV score on the other hand is a measure of the predictive performance of each 
+mode which is more robust to model misspecifications. However, 
+sin Equation~\ref{eq:elpd_is_loo} is an approximation of the true elpd and we need to 
+keep in mind the variance of the estimate. 
+\citet{arXiv:2008.10296} discusses how 
+to asses the uncertainties in the LOO-CV score. In sumary, to ensure that the standard 
+error of the LOO-CV score or the standard error for the difference in LOO-CV scores is 
+reliably estimated, the MCMC sampling has to have converged and the model shouldn't 
+be wildly misspecified. If one model is clearly superior to all the others 
+the other models can be safely discarded but if the LOO-CV scores are comparable 
+\citet{arXiv:2008.10296} suggests averaging over the models instead (a subject we 
+shall return to shortly).
+As a rule of thumb, if the difference in LOO-CV scores between two models is smaller 
+than about 5 the two models have roughly the same predictive performance.
+This is the case for the first two modes in the inferred posterior for our microlensing 
+model. The difference between the third 
+and the first mode appears to be significant but the standard error on the difference 
+is still large meaning that we probably shouldn't discard that mode.
+Mode 4 seems to be significantly worse than all the others.
+
+
+\subsubsection{PSIS-LOO as a powerful model diagnostic}
+
+\begin{figure}[t]
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/single_lens_lightcurve_fits.pdf}
+        \caption{Posterior predictions for the observed flux for modes 1 and 4 in
+        the posterior (first row).
+        modes. Each line is a single posterior sample for the predicted flux evaluated
+        on a dense grid in time. Predictions are similar within modes so the lines 
+        are all nearly on top of each other. The second rows shows the residuals with 
+        respect to the median flux prediction coloured by the pointwise LOO-CV score
+        which quantifies how likely each point is under the model.
+        The bottom row also shows the residuals except they're coloured by the inferred 
+        shape parameter $\hat k$ of the Pareto distribution fitted to importance weights 
+        when computing the LOO-CV scores. The $\hat k$ values measure how influential 
+        each point is on the posterior distribution. The points which are most 
+        influential in this case are not those which are most unlikely under the model.}
+            \label{fig:ogle_lightcurve_fits}
+        \script{single_lens_fit_plots.py}
+    \end{centering}
+\end{figure}
+
+To gain further insight into the meaning of the LOO-CV score, we can visualize the 
+pointwise LOO-CV scores $\ln p\left(f_{i} \lvert \vec f_{-i},\mathcal{M}\right)$ 
+(the term in the sum in Equation~\ref{eq:elpd_is_loo}) and the Pareto shape parameters
+$\hat k$.
+In Figure~\ref{fig:ogle_lightcurve_fits} I plot the posterior flux samples for the most 
+predictive and the least predictive modes in the posterior (modes 1 and 4 respectively,
+top row).I also plot the residuals with respect to the median of those 
+flux samples (second and third rows). In the second row I colour the residuals by the 
+pointwise LOO-CV score which tells us 
+\emph{how well the model predicts the the $i$-th point} conditional on all the other 
+points in the light curve. In the third row I colour the same residuals using the
+$\hat k$ values which tell us \emph{how influential the $i$-th point is on 
+the posterior}. It does not follow that those data points which are not well predicted 
+by the model are also the most influential on the posterior distribution over the 
+parameters. Indeed, this is exactly what we see in this case. The data points which 
+are not well predicted by the model are the three outlier points and other points 
+far away from the mean. For outlier points this is expected
+because they are obviously inconsistent with a Gaussian noise model. The other points 
+have low scores probably because the errorbars are slightly underestimated. 
+If we now focus on the Pareto shape parameters, we see that most of the points 
+which are not well predicted by the model are not particularly influential on the 
+posterior. This is good news, it means that our misspecified noise model 
+(an independent Gaussian noise model with errorbars generated by the OGLE pipeline)
+is not having a large impact on the posterior distribution over the parameters.
+The points which are influential (with $\hat k\gtrsim 0.4$) are understandably those 
+around the tails and the peak of the magnification. 
+
+\begin{figure}[t]
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/pointwise_loo.pdf}
+        \caption{The difference in pointwise LOO-CV scores relative to most predictive 
+        mode (mode 1) (bottom panel). The top panel shows the light curve for reference.}
+            \label{fig:pointwise_loo}
+        \script{single_lens_fit_plots.py}
+    \end{centering}
+\end{figure}
+
+Even with these diagnostic tools, it is hard to spot obvious differences between the 
+modes in data space. One other plot we can make is a pointwise version of the 
+difference in the LOO-CV scores with respect to the best performing model.
+Figure~\ref{fig:pointwise_loo} shows the light curve (top) and the difference in 
+pointwise LOO-CV scores relative to the score for mode 1 (bottom). Positive values 
+indicate that the particular model is more predictive for that point than mode 1. 
+We see a large scatter for modes 3 and 4 in both directions and no clear sign 
+of bias in the predictive accuracy relative to mode 1. 
+
+These examples only scratch the surface of possible applications of pointwise 
+LOO-CV scores and Pareto shape parameters.
+In addition to checking the relative predicting power of different modes within one 
+model, these tools can be applied to compare completely different models such as comparing 
+single lens microlensing to binary lens microlensig. In binary lens microlensing 
+differences between wildly different models for the observed data often rely on only a 
+few critical points near caustic crossing 
+\citep[see for example Figure 1 in ][[]{2018AJ....155..259H}. LOO-CV scores have 
+the potential to completely  revolutionize how we compare models in microlensing.
+
+\subsection{Averaging over the modes}
+
+
+\begin{figure}[t]
+    \begin{centering}
+        \includegraphics[width=0.7\linewidth]{figures/single_lens_samples_reweighted.pdf}
+        \caption{}
+            \label{fig:ogle_lightcurve_fit_samples_reweighted}
+        \script{single_lens_fit_plots.py}
+    \end{centering}
+\end{figure}
+
+\subsection{Faster inference using the Laplace approximation}
+
+\begin{figure}[t]
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/single_lens_samples_nuts_vs_laplace.pdf}
+        \caption{}
+            \label{fig:ogle_lightcurve_fit_nuts_vs_laplace}
+        \script{single_lens_laplace_comparison.py}
+    \end{centering}
+\end{figure}
+
+\begin{figure}[t]
+    \begin{centering}
+        \includegraphics[width=\linewidth]{figures/single_lens_samples_nuts_vs_laplace_ecdf.pdf}
+        \caption{}
+            \label{fig:ogle_lightcurve_fit_nuts_vs_laplace_ecdf}
+        \script{single_lens_laplace_comparison.py}
+    \end{centering}
+\end{figure}
+
+\subsection{Generalizing the method to non-seperable likelihoods}
+\label{ssec:generalizing_to_non_seperable_likelihoods}
+
+\subsection{Summary}
 
 \section{Binary and triple lens events}
 \section{Population-level inference using hierarchical modeling}

@@ -44,7 +44,7 @@ z, z_mask, z_parity = _images_of_source_limb(
 
 segments_closed, segments_open, _ = _get_segments(z, z_mask, z_parity, nlenses=3)
 cc, _ = critical_and_caustic_curves(
-    nlenses=3, npts=1000, a=a, e1=e1, e2=e2, r3=r3, rho=rho
+    nlenses=3, npts=300, a=a, e1=e1, e2=e2, r3=r3, rho=rho
 )
 contours1, contours1_p = _contours_from_closed_segments(segments_closed)
 contours2, contours2_p = _contours_from_open_segments(segments_open)
@@ -87,8 +87,9 @@ for i in range(len(segments_list)):
             f'C{i%10}',
         )
 
+for z in cc:
+    ax[0].plot(z.real, z.imag, color='k', lw=0.7) 
 
-ax[0].scatter(cc.real, cc.imag, marker='.', color='k', s=1 ,alpha=0.6, zorder=-2)
 ax[0].set_title("Contour segments")
 
 # BOTTOM PANEL 
