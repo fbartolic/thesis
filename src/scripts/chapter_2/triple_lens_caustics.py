@@ -1,5 +1,4 @@
 import paths
-import numpy as np
 import jax.numpy as jnp
 from jax.config import config
 
@@ -12,25 +11,21 @@ import matplotlib.colors as colors
 from caustics import mag_point_source
 
 # Lens postions
-a = 0.4
-r3 = 0.3 - 0.8j
-
-# Lens mass ratios
 e1 = 0.9
 e2 = 0.05
 e3 = 1.0 - e1 - e2
 
+s = 0.8
+r3 = 0.3 - 0.8j
 psi = jnp.arctan2(r3.imag, r3.real)
-s = 0.5*a
 q = e2/e1
 q3 = (1 - e1-e2)/e1
 
-
 # Define 2D grid in the source plane
-npts = 1000
+npts = 1200 
 
-x = jnp.linspace(-0.1, 1, npts)
-y = jnp.linspace(-0.45, 0.5, npts)
+x = jnp.linspace(-0.1, 1.2, npts)
+y = jnp.linspace(-1.3, -0.2, npts)
 xgrid, ygrid = jnp.meshgrid(x, y)
 wgrid = xgrid + 1j * ygrid
 
@@ -45,6 +40,8 @@ im = ax.pcolormesh(
     norm=colors.LogNorm(vmax=150),
     zorder=-1,
 )
+
+
 
 ax.set_aspect(1)
 ax.set(xlabel="$\mathrm{Re}(w)$", ylabel="$\mathrm{Im}(w)$")

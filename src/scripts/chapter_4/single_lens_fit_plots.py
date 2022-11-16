@@ -150,7 +150,7 @@ fig.savefig(paths.figures/"single_lens_lightcurve.pdf", bbox_inches="tight")
 
 
 # Load samples from disk with arviz
-samples_mcmc_az = az.from_netcdf(paths.scripts/"output/single_lens/samples_mcmc_az.nc")
+samples_mcmc_az = az.from_netcdf(paths.data/"output/single_lens/samples_mcmc_az.nc")
 samples_mcmc_az.posterior['piE'] = np.sqrt(samples_mcmc_az.posterior.piEE**2 + samples_mcmc_az.posterior.piEN**2)
 
 
@@ -364,13 +364,25 @@ samples_mcmc_reweighted_stacking = mixture_draws(samples_mcmc_az.posterior, weig
 
 params_names = ['ln_t0', 'ln_tE', 'u0', 'piEE', 'piEN']
 chains_equal_weighted = np.loadtxt(
-    paths.scripts/"output/single_lens/ultranest/chains/equal_weighted_post.txt", skiprows=1
+    paths.data/"output/single_lens/ultranest/chains/equal_weighted_post.txt", skiprows=1
 )
 nsamples = samples_mcmc_az.posterior.isel(chain=[0])['ln_tE'].shape[-1]
 idcs = np.random.randint(0, chains_equal_weighted.shape[0], nsamples)
 chains_equal_weighted = chains_equal_weighted[idcs, :]
 samples_ultranest = {k: chains_equal_weighted[:, i] for i, k in enumerate(params_names)}
 samples_ultranest['piE'] = np.sqrt(samples_ultranest['piEE']**2 + samples_ultranest['piEN']**2)
+
+# Print weights
+print("Pseudo-BMA weights:")
+print(az.compare(compare_dict_mcmc, method='pseudo-BMA')['weight'])
+print("\n")
+
+print("Pseudo-BMA+ weights:")
+print(az.compare(compare_dict_mcmc, method='BB-pseudo-BMA')['weight'])
+print("\n")
+
+print("Stacking weights:")
+print(az.compare(compare_dict_mcmc)['weight'])
 
 
 # Plot re-weighted samples
@@ -407,7 +419,7 @@ ax['D'].hist(
 # Stacking
 ax['C'].scatter(
     jnp.exp(samples_mcmc_reweighted_stacking['ln_tE']),
-    samples_mcmc_reweighted['piE'],
+    samples_mcmc_reweighted_stacking['piE'],
     color=f'C1', alpha=0.3, zorder=-1
 )
 ax['A'].hist(

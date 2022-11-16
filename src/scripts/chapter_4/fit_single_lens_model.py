@@ -1,3 +1,4 @@
+import paths
 import numpy as np
 from jax.config import config
 config.update("jax_enable_x64", True)
@@ -148,7 +149,7 @@ samples_mcmc_az_list = [
 samples_mcmc_az = az.concat(samples_mcmc_az_list, dim='chain')
 
 # Save to disk 
-az.to_netcdf(samples_mcmc_az, 'output/single_lens/samples_mcmc_az.nc')
+az.to_netcdf(samples_mcmc_az, paths.data/'output/single_lens/samples_mcmc_az.nc')
 
 # NESTED SAMPLING
 @jit
@@ -178,25 +179,24 @@ def prior_transform(u):
 
     return x
 
-#log_likelihood_fn = lambda x: numpyro.infer.log_likelihood(
-#    model,
-#    {'ln_t0': x[0], 'ln_tE': x[1], 'u0': x[2], 'piEE': x[3], 'piEN': x[4]},
-#    t=t, t0_est=t0_est, fobs=fobs,ferr=ferr, trajectory=trajectory
-#)['obs'].sum()
-#log_likelihood_fn = jit(log_likelihood_fn)
-#
-#log_likelihood_vectorized = lambda x: np.array(vmap(log_likelihood_fn)(x))
-#prior_transform_vectorized = lambda x: np.array(vmap(prior_transform)(x))
-#
-#param_names = ['ln_t0', 'ln_tE', 'u0', 'pi_EE', 'pi_EN']
-#sampler = ultranest.ReactiveNestedSampler(
-#    param_names,
-#    log_likelihood_vectorized,
-#    prior_transform_vectorized, 
-#    resume=True,
-#    vectorized=True,
-#    log_dir='output/single_lens/ultranest',
-#);
-#result = sampler.run()
-#
-#
+log_likelihood_fn = lambda x: numpyro.infer.log_likelihood(
+    model,
+    {'ln_t0': x[0], 'ln_tE': x[1], 'u0': x[2], 'piEE': x[3], 'piEN': x[4]},
+    t=t, t0_est=t0_est, fobs=fobs,ferr=ferr, trajectory=trajectory
+)['obs'].sum()
+log_likelihood_fn = jit(log_likelihood_fn)
+
+log_likelihood_vectorized = lambda x: np.array(vmap(log_likelihood_fn)(x))
+prior_transform_vectorized = lambda x: np.array(vmap(prior_transform)(x))
+
+param_names = ['ln_t0', 'ln_tE', 'u0', 'pi_EE', 'pi_EN']
+sampler = ultranest.ReactiveNestedSampler(
+    param_names,
+    log_likelihood_vectorized,
+    prior_transform_vectorized, 
+    resume=True,
+    vectorized=True,
+    log_dir=paths.data/'output/single_lens/ultranest',
+);
+result = sampler.run()
+

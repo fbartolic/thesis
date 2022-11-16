@@ -72,14 +72,15 @@ def model(t, t0_est, fobs, ferr, trajectory):
 
     numpyro.sample("obs", dist.Normal(fpred, ferr), obs=fobs)
 
-
 def initialization_model(t0_est):
-    t0 = numpyro.sample('t0', dist.Normal(t0_est, 1.))
+    t0 = numpyro.sample('t0', dist.Normal(t0_est, 10.))
     numpyro.deterministic('ln_t0', jnp.log(t0))
-    numpyro.sample('ln_tE', dist.Uniform(jnp.log(20.0), jnp.log(365.0)))
-    numpyro.sample('u0', dist.Normal(0., 0.4))
-    numpyro.sample('piEE', dist.Normal(0., 0.05))
-    numpyro.sample('piEN', dist.Normal(0., 0.05))
+    tE = numpyro.sample('tE', dist.Uniform(10., 400.))
+    numpyro.deterministic('ln_tE', jnp.log(tE))
+    numpyro.sample('u0', dist.Uniform(-1., 1.))
+    numpyro.sample('piEE', dist.Normal(0., 0.1))
+    numpyro.sample('piEN', dist.Normal(0., 0.1))
+
 
 def fit_map(key, t0_est, params_init):
     opt = optimize_numpyro_ext(model, start=params_init, num_steps=3, include_deterministics=False)
@@ -238,8 +239,8 @@ samples_init = prior_predictive(subkey, t0_est=t0_est)
 
 key, subkey = random.split(key)
 map_params_dict = fit_map_batched(subkey, samples_init)
+map_params_dict = {key: map_params_dict[key][::-1] for key in map_params_dict.keys()}
 params_names = list(map_params_dict.keys())
-
 
 # Get samples from Laplace approximation  
 samples_laplace_dict, samples_laplace_unconstrained_dict = vmap(get_laplace_posterior_samples)(map_params_dict)
@@ -255,8 +256,16 @@ log_weights_list, ll_pointwise_list =\
 compare_dict_laplace = {
     f'mode_{i+1}': compute_loo(log_weights_list[i], ll_pointwise_list[i]) for i in range(len(log_weights_list))
 }
-az.compare(compare_dict_laplace, method='BB-pseudo-BMA')
+elpd_data_list = [compute_loo(log_weights_list[i], ll_pointwise_list[i]) for i in range(len(log_weights_list))]
 
+# Sort according to loo and keep the significant modes
+loo_vals = np.array([e['loo'] for e in elpd_data_list])
+mask = np.nanmax(loo_vals) - loo_vals < 50
+idcs = np.where(mask)[0]
+samples_laplace_az = samples_laplace_az.isel(chain=idcs)
+compare_dict_laplace = {f'mode_{i+1}': elpd_data_list[j] for i, j in enumerate(idcs)}
+
+print(az.compare(compare_dict_laplace))
 
 # Load samples from disk with arviz
 samples_mcmc_az = az.from_netcdf(paths.scripts/"output/single_lens/samples_mcmc_az.nc")
@@ -332,7 +341,8 @@ for i in range(4):
     _samples = samples_mcmc_az.isel(chain=[i]).stack(sample=('chain', 'draw')).posterior
     _samples_laplace = samples_laplace_az.isel(chain=[i]).stack(sample=('chain', 'draw')).posterior
 
-    x1, y1 = ecdf(np.exp(_samples['ln_tE'][::4].values))
+    nthin = 3
+    x1, y1 = ecdf(np.exp(_samples['ln_tE'][::nthin].values))
     x2, y2 = ecdf(np.exp(_samples_laplace['ln_tE'].values[:len(x1)]))
     ax[0, i].plot(x1, y1, 'k.', alpha=0.5, label='NUTS', zorder=-1)
     ax[0, i].plot(x2, y2, 'C1.', alpha=0.5, label='Laplace', zorder=-1)

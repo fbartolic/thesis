@@ -1,6 +1,0 @@
-# Enforce a non-interactive backend
-backend: agg
-font.size : 16
-font.family : sans-serif, DejaVu Sans
-font.sans-serif : Computer Modern Sans
-mathtext.fontset: stix
