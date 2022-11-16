@@ -3,6 +3,20 @@
 
 @string{june = {June}}
 
+@article{0.1214/17-BA1091,
+ author = {Yuling Yao and Aki Vehtari and Daniel Simpson and Andrew Gelman},
+ doi = {10.1214/17-BA1091},
+ journal = {Bayesian Analysis},
+ keywords = {Bayesian model averaging, model combination, predictive distribution, proper scoring rule, stacking, Stan},
+ number = {3},
+ pages = {917 -- 1007},
+ publisher = {International Society for Bayesian Analysis},
+ title = {{Using Stacking to Average Bayesian Predictive Distributions (with Discussion)}},
+ url = {https://doi.org/10.1214/17-BA1091},
+ volume = {13},
+ year = {2018}
+}
+
 @article{10.1145/355586.364791,
  abstract = {A procedure for automatic evaluation of total/partial derivatives of arbitrary algebraic functions is presented. The technique permits computation of numerical values of derivatives without developing analytical expressions for the derivatives. The key to the method is the decomposition of the given function, by introduction of intermediate variables, into a series of elementary functional steps. A library of elementary function subroutines is provided for the automatic evaluation and differentiation of these new variables. The final step in this process produces the desired function's derivative.The main feature of this approach is its simplicity. It can be used as a quick-reaction tool where the derivation of analytical derivatives is laborious and also as a debugging tool for programs which contain derivatives.},
  address = {New York, NY, USA},
@@ -36,19 +50,17 @@
  year = {2012}
 }
 
-@article{10.1214/17-BA1091,
- adsnote = {Provided by the SAO/NASA Astrophysics Data System},
- adsurl = {https://ui.adsabs.harvard.edu/abs/2017arXiv170402030Y},
- archiveprefix = {arXiv},
- author = {{Yao}, Yuling and {Vehtari}, Aki and {Simpson}, Daniel and {Gelman}, Andrew},
- eid = {arXiv:1704.02030},
- eprint = {1704.02030},
- journal = {arXiv e-prints},
- keywords = {Statistics - Methodology, Statistics - Computation},
- month = {April},
- pages = {arXiv:1704.02030},
- primaryclass = {stat.ME},
- title = {{Using stacking to average Bayesian predictive distributions}},
+@article{10.1214/17-EJS1337SI,
+ author = {Juho Piironen and Aki Vehtari},
+ doi = {10.1214/17-EJS1337SI},
+ journal = {Electronic Journal of Statistics},
+ keywords = {Bayesian inference, horseshoe prior, shrinkage priors, Sparse estimation},
+ number = {2},
+ pages = {5018 -- 5051},
+ publisher = {Institute of Mathematical Statistics and Bernoulli Society},
+ title = {{Sparsity information and regularization in the horseshoe and other shrinkage priors}},
+ url = {https://doi.org/10.1214/17-EJS1337SI},
+ volume = {11},
  year = {2017}
 }
 
@@ -65,6 +77,51 @@
  urldate = {2022-07-14},
  volume = {51},
  year = {1988}
+}
+
+@article{10.2307/2240875,
+ abstract = {The Bayesian bootstrap is the Bayesian analogue of the bootstrap. Instead of simulating the sampling distribution of a statistic estimating a parameter, the Bayesian bootstrap simulates the posterior distribution of the parameter; operationally and inferentially the methods are quite similar. Because both methods of drawing inferences are based on somewhat peculiar model assumptions and the resulting inferences are generally sensitive to these assumptions, neither method should be applied without some consideration of the reasonableness of these model assumptions. In this sense, neither method is a true bootstrap procedure yielding inferences unaided by external assumptions.},
+ author = {Donald B. Rubin},
+ issn = {00905364},
+ journal = {The Annals of Statistics},
+ number = {1},
+ pages = {130--134},
+ publisher = {Institute of Mathematical Statistics},
+ title = {The Bayesian Bootstrap},
+ url = {http://www.jstor.org/stable/2240875},
+ urldate = {2022-09-25},
+ volume = {9},
+ year = {1981}
+}
+
+@article{10.2307/2286745,
+ abstract = {This article offers a synthesis of Bayesian and sample-reuse approaches to the problem of high structure model selection geared to prediction. Similar methods are used for low structure models. Nested and nonnested paradigms are discussed and examples given.},
+ author = {Seymour Geisser and William F. Eddy},
+ issn = {01621459},
+ journal = {Journal of the American Statistical Association},
+ number = {365},
+ pages = {153--160},
+ publisher = {[American Statistical Association, Taylor & Francis, Ltd.]},
+ title = {A Predictive Approach to Model Selection},
+ url = {http://www.jstor.org/stable/2286745},
+ urldate = {2022-09-25},
+ volume = {74},
+ year = {1979}
+}
+
+@article{10.2307/26874452,
+ abstract = {The data torrent unleashed by current and upcoming astronomical surveys demands scalable analysis methods. Many machine learning approaches scale well, but separating the instrument measurement from the physical effects of interest, dealing with variable errors, and deriving parameter uncertainties is often an afterthought. Classic forward-folding analyses with Markov chain Monte Carlo or nested sampling enable parameter estimation and model comparison, even for complex and slow-to-evaluate physical models. However, these approaches require independent runs for each data set, implying an unfeasible number of model evaluations in the Big Data regime. Here I present a new algorithm, collaborative nested sampling, for deriving parameter probability distributions for each observation. Importantly, the number of physical model evaluations scales sub-linearly with the number of data sets, and no assumptions about homogeneous errors, Gaussianity, the form of the model, or heterogeneity/completeness of the observations need to be made. Collaborative nested sampling has immediate applications in speeding up analyses of large surveys, integral-field-unit observations, and Monte Carlo simulations.},
+ author = {Johannes Buchner},
+ issn = {00046280, 15383873},
+ journal = {Publications of the Astronomical Society of the Pacific},
+ number = {1004},
+ pages = {1--8},
+ publisher = {[IOP Publishing Limited, Astronomical Society of the Pacific]},
+ title = {Collaborative Nested Sampling: Big Data versus Complex Physical Models},
+ url = {https://www.jstor.org/stable/26874452},
+ urldate = {2022-09-25},
+ volume = {131},
+ year = {2019}
 }
 
 @article{10.7717/peerj-cs.103,
@@ -214,6 +271,50 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {1972}
 }
 
+@article{1974A&A....35..115A,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/1974A&A....35..115A},
+ author = {{Arlot}, J.~E. and {Camichel}, H. and {Link}, F.},
+ journal = {\aap},
+ keywords = {Astronomical Photometry, Jupiter (Planet), Light Curve, Natural Satellites, Occultation, Eclipses, Electrophotometry, Ephemerides, Luminous Intensity, Radii, Size Determination, Lunar and Planetary Exploration},
+ month = {September},
+ number = {1},
+ pages = {115-119},
+ title = {{Mutual occultation and eclipse of Jupiter satellites J-1 and J-2 on August 30th 1973.}},
+ volume = {35},
+ year = {1974}
+}
+
+@article{1979Sci...203..892P,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/1979Sci...203..892P},
+ author = {{Peale}, S.~J. and {Cassen}, P. and {Reynolds}, R.~T.},
+ doi = {10.1126/science.203.4383.892},
+ journal = {Science},
+ keywords = {Energy Dissipation, Io, Melting, Tides, Eccentricity, Galilean Satellites, Planetary Mantles, Thermal Energy, Voyager Project, Lunar and Planetary Exploration; Jupiter, INTERIOR, ORBITS, VOYAGER 1, MANTLE, MELTING, IO, TIDES, TIDAL DISSIPATION, ENERGY, THERMAL PROPERTIES, VOLCANISM, PREDICTIONS, ECCENTRICITY, JUPITER, HEATING, SATELLITES, CORE, LIBRATIONS},
+ month = {March},
+ number = {4383},
+ pages = {892-894},
+ title = {{Melting of Io by Tidal Dissipation}},
+ volume = {203},
+ year = {1979}
+}
+
+@article{1979Sci...204..951S,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/1979Sci...204..951S},
+ author = {{Smith}, Bradford A. and {Soderblom}, Laurence A. and {Johnson}, Torrence V. and {Ingersoll}, Andrew P. and {Collins}, Stewart A. and {Shoemaker}, Eugene M. and {Hunt}, G.~E. and {Masursky}, Harold and {Carr}, Michael H. and {Davies}, Merton E. and {Cook}, Allan F., II and {Boyce}, Joseph and {Danielson}, G. Edward and {Owen}, Tobias and {Sagan}, Carl and {Beebe}, Reta F. and {Veverka}, Joseph and {Strom}, Robert G. and {McCauley}, John F. and {Morrison}, David and {Briggs}, Geoffrey A. and {Suomi}, Verner E.},
+ doi = {10.1126/science.204.4396.951},
+ journal = {Science},
+ keywords = {Amalthea, Galilean Satellites, Jupiter (Planet), Jupiter Atmosphere, Planetary Surfaces, Voyager Project, Cameras, Color, Craters, Global Atmospheric Research Program, Imaging Techniques, Planetary Rotation, Planetary Structure, Time Response, Vertical Motion, Volcanoes, Vortices, Lunar and Planetary Exploration; Jupiter, VOYAGER 1, JUPITER, OBSERVATIONS, ATMOSPHERE, SURFACE, RINGS, IO, SATELLITES, DIASTROPHISM, EUROPA, FLATTENING, VOLCANISM, GENYMEDE, CALLISTO, AMALTHEA, GREAT RED SPOT, MORPHOLOGY, CRATERS},
+ month = {June},
+ number = {4396},
+ pages = {951-957},
+ title = {{The Jupiter System Through the Eyes of Voyager 1}},
+ volume = {204},
+ year = {1979}
+}
+
 @article{1980ApJ...241..507Y,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
  adsurl = {https://ui.adsabs.harvard.edu/abs/1980ApJ...241..507Y},
@@ -226,6 +327,51 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  title = {{The double quasar Q0957+561 A, B: a gravitational lens image formed by a galaxy at z=0.39.}},
  volume = {241},
  year = {1980}
+}
+
+@article{1981GeoRL...8..313O,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/1981GeoRL...8..313O},
+ author = {{O'Reilly}, T.~C. and {Davies}, G.~F.},
+ doi = {10.1029/GL008i004p00313},
+ journal = {\grl},
+ keywords = {Advection, Heat Transfer, Io, Lithosphere, Magma, Orography, Planetary Surfaces, Silicates, Volcanoes, JUPITER, SATELLITES, IO, MAGMAS, HEAT TRANSPORT, LITHOSPHERE, THICKNESS, HEAT FLOW, CONDUCTION, TOPOGRAPHY, DATA, SULFUR, SILICATE, MODELS, VOLCANOES, OBSERVATIONS, Lunar and Planetary Exploration; Jupiter, Planetology: Interiors of planets, Planetology: Surfaces of planets, Tectonophysics: Heat flow},
+ month = {April},
+ number = {4},
+ pages = {313-316},
+ title = {{Magma transport of heat on Io: A mechanism allowing a thick lithosphere}},
+ volume = {8},
+ year = {1981}
+}
+
+@article{1981JGR....86.8721L,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/1981JGR....86.8721L},
+ author = {{Lindal}, G.~F. and {Wood}, G.~E. and {Levy}, G.~S. and {Anderson}, J.~D. and {Sweetnam}, D.~N. and {Hotz}, H.~B. and {Buckles}, B.~J. and {Holmes}, D.~P. and {Doms}, P.~E. and {Eshleman}, V.~R. and {Tyler}, G.~L. and {Croft}, T.~A.},
+ doi = {10.1029/JA086iA10p08721},
+ journal = {\jgr},
+ keywords = {Jupiter Atmosphere, Radio Astronomy, Radio Occultation, Voyager Project, Abundance, Aerosols, Ammonia, Atmospheric Composition, Atmospheric Density, Atmospheric Pressure, Atmospheric Temperature, Tropopause, JUPITER, ATMOSPHERE, ANALYSIS, RADIO OCCULTATIONS, VOYAGER 1, VOYAGER 2, OBSERVATIONS, GASES, REFRACTIVITY, DENSITY, PRESSURE, TEMPERATURES, MICROWAVES, ABSORPTION, TROPOSPHERE, STRATOSPHERE, LATITUDES, AMMONIA, TROPOPAUSE, ALTITUDE, AEROSOLS, DISTRIBUTION, DYNAMICS, COMPARISONS, EQUATORIAL REGIONS, IRIS, INFRARED INTERFEROMETRY SPECTROMETER, SHAPE, PHYSICAL PROPERTIES, DATA, Lunar and Planetary Exploration; Jupiter},
+ month = {September},
+ number = {A10},
+ pages = {8721-8727},
+ title = {{The atmosphere of Jupiter: an analysis of the Voyager radio occulation measurements}},
+ volume = {86},
+ year = {1981}
+}
+
+@article{1985Sci...230...63H,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/1985Sci...230...63H},
+ author = {{Howell}, R.~R. and {McGinn}, M.~T.},
+ doi = {10.1126/science.230.4721.63},
+ journal = {Science},
+ keywords = {Infrared Interferometers, Io, Speckle Patterns, Volcanoes, Algorithms, Image Reconstruction, Temperature Distribution, Lunar and Planetary Exploration; Satellites of Jupiter, JUPITER, SATELLITES, IO, INFRARED, WAVELENGTHS, SPECKLE METHODS, FLUX, OBSERVATIONS, ERUPTIONS, LOKI REGION, EMISSIONS, HOT SPOTS, IMAGERY, IMAGE PROCESSING, ROTATION, SURFACE, FEATURES, RADIANCE, SIZE, SOURCE, TEMPERATURE, THERMAL PROPERTIES, VOLCANISM},
+ month = {October},
+ number = {4721},
+ pages = {63-65},
+ title = {{Infrared Speckle Observations of Io: An Eruption in the Loki Region}},
+ volume = {230},
+ year = {1985}
 }
 
 @article{1986A&A...166...36K,
@@ -283,6 +429,21 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {1986}
 }
 
+@article{1986Icar...66..403S,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/1986Icar...66..403S},
+ author = {{Simonelli}, D.~P. and {Veverka}, J.},
+ doi = {10.1016/0019-1035(86)90083-7},
+ journal = {\icarus},
+ keywords = {Astronomical Photometry, Io, Limb Darkening, Voyager Project, Image Processing, Lunar and Planetary Exploration},
+ month = {June},
+ number = {3},
+ pages = {403-427},
+ title = {{Disk-resolved photometry of Io  I. Near-opposition limb darkening}},
+ volume = {66},
+ year = {1986}
+}
+
 @article{1987PhLB..195..216D,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
  adsurl = {https://ui.adsabs.harvard.edu/abs/1987PhLB..195..216D},
@@ -307,6 +468,21 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  pages = {311},
  title = {{Investigation of high amplification events in light curves of gravitationally lensed quasars.}},
  volume = {236},
+ year = {1990}
+}
+
+@article{1990Natur.348..618S,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/1990Natur.348..618S},
+ author = {{Spencer}, J.~R. and {Shure}, M.~A. and {Ressler}, M.~E. and {Goguen}, J.~D. and {Sinton}, W.~M. and {Toomey}, D.~W. and {Denault}, A. and {Westfall}, J.},
+ doi = {10.1038/348618a0},
+ journal = {\nat},
+ keywords = {Infrared Imagery, Io, Satellite Surfaces, Volcanology, Eclipses, Jupiter Atmosphere, Mapping, Voyager Project, Lunar and Planetary Exploration},
+ month = {December},
+ number = {6302},
+ pages = {618-621},
+ title = {{Discovery of hotspots on Io using disk-resolved infrared imaging}},
+ volume = {348},
  year = {1990}
 }
 
@@ -483,6 +659,36 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {1994}
 }
 
+@article{1994JGR....9917095V,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/1994JGR....9917095V},
+ author = {{Veeder}, Glenn J. and {Matson}, Dennis L. and {Johnson}, Torrence V. and {Blaney}, Diana L. and {Goguen}, Jay D.},
+ doi = {10.1029/94JE00637},
+ journal = {\jgr},
+ keywords = {Astronomical Models, Infrared Astronomy, Io, Spectral Emission, Thermal Emission, Volcanology, Flux Density, Infrared Radiometers, Light Curve, Tables (Data), Temperature Distribution, Voyager Project, Astronomy, Planetology: Solid Surface Planets: Origin and evolution, Planetology: Solid Surface Planets: Interiors, Interplanetary Physics: Instruments and techniques, Planetology: Solid Surface Planets: Rings and dust},
+ month = {August},
+ number = {E8},
+ pages = {17095-17162},
+ title = {{Io's heat flow from infrared radiometry: 1983-1993}},
+ volume = {99},
+ year = {1994}
+}
+
+@inproceedings{1994SPIE.2198..614S,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/1994SPIE.2198..614S},
+ author = {{Shure}, Mark A. and {Toomey}, Douglas W. and {Rayner}, John T. and {Onaka}, Peter M. and {Denault}, Anthony J.},
+ booktitle = {Instrumentation in Astronomy VIII},
+ doi = {10.1117/12.176769},
+ editor = {{Crawford}, David L. and {Craine}, Eric R.},
+ month = {June},
+ pages = {614-622},
+ series = {Society of Photo-Optical Instrumentation Engineers (SPIE) Conference Series},
+ title = {{NSFCAM: a new infrared array camera for the NASA Infrared Telescope Facility}},
+ volume = {2198},
+ year = {1994}
+}
+
 @article{1995A&AS..109..597D,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
  adsurl = {https://ui.adsabs.harvard.edu/abs/1995A&AS..109..597D},
@@ -493,6 +699,23 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  pages = {597-610},
  title = {{Improved routines for the inversion of the gravitational lens equation for a set of source points.}},
  volume = {109},
+ year = {1995}
+}
+
+@article{1995ApJ...443....6W,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/1995ApJ...443....6W},
+ archiveprefix = {arXiv},
+ author = {{White}, Martin and {Srednicki}, M.},
+ doi = {10.1086/175497},
+ eprint = {astro-ph/9402037},
+ journal = {\apj},
+ keywords = {Background Radiation, Cosmology, Functions (Mathematics), Infrared Windows, Microwaves, Numerical Analysis, Spectra, Variations, Astrophysics, COSMOLOGY: COSMIC MICROWAVE BACKGROUND, COSMOLOGY: THEORY, METHODS: NUMERICAL, Astrophysics},
+ month = {April},
+ pages = {6},
+ primaryclass = {astro-ph},
+ title = {{Window Functions for Cosmic Microwave Background Experiments}},
+ volume = {443},
  year = {1995}
 }
 
@@ -538,6 +761,20 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  primaryclass = {astro-ph},
  title = {{Detecting Earth-Mass Planets with Gravitational Microlensing}},
  volume = {472},
+ year = {1996}
+}
+
+@article{1996Sci...274..377B,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/1996Sci...274..377B},
+ author = {{Belton}, M.~J.~S. and {Head}, J.~W., III and {Ingersoll}, A.~P. and {Greeley}, R. and {McEwen}, A.~S. and {Klaasen}, K.~P. and {Senske}, D. and {Pappalardo}, R. and {Collins}, G. and {Vasavada}, A.~R. and {Sullivan}, R. and {Simonelli}, D. and {Geissler}, P. and {Carr}, M.~H. and {Davies}, M.~E. and {Veverka}, J. and {Gierasch}, P.~J. and {Banfield}, D. and {Bell}, M. and {Chapman}, C.~R. and {Anger}, C. and {Greenberg}, R. and {Neukum}, G. and {Pilcher}, C.~B. and {Beebe}, R.~F. and {Burns}, J.~A. and {Fanale}, F. and {Ip}, W. and {Johnson}, T.~V. and {Morrison}, D. and {Moore}, J. and {Orton}, G.~S. and {Thomas}, P. and {West}, R.~A.},
+ doi = {10.1126/science.274.5286.377},
+ journal = {Science},
+ month = {October},
+ number = {5286},
+ pages = {377-385},
+ title = {{Galileo's First Images of Jupiter and the Galilean Satellites}},
+ volume = {274},
  year = {1996}
 }
 
@@ -589,6 +826,21 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  primaryclass = {astro-ph},
  title = {{Microlensing of an Elliptical Source by a Point Mass}},
  volume = {490},
+ year = {1997}
+}
+
+@article{1997GeoRL..24.2455S,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/1997GeoRL..24.2455S},
+ author = {{Stansberry}, J.~A. and {Spencer}, J.~R. and {Howell}, R.~R. and {Dumas}, C. and {Vakil}, D.},
+ doi = {10.1029/97GL02593},
+ journal = {\grl},
+ keywords = {Thermal Emission, Extraterrestrial Environments, Volcanoes, Infrared Spectrometers, Atmospheric Temperature, Atmospheric Radiation, Astrophysics, Planetology: Solid Surface Planets: Volcanism (8450), Planetology: Solid Surface Planets: Surface materials and properties, Volcanology: General or miscellaneous, Planetology: Solid Surface Planets: General or miscellaneous},
+ month = {October},
+ number = {20},
+ pages = {2455-2458},
+ title = {{Violent silicate volcanism on Io in 1996}},
+ volume = {24},
  year = {1997}
 }
 
@@ -722,6 +974,53 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {1999}
 }
 
+@article{2000ApJ...529L..41H,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2000ApJ...529L..41H},
+ author = {{Henry}, Gregory W. and {Marcy}, Geoffrey W. and {Butler}, R. Paul and {Vogt}, Steven S.},
+ doi = {10.1086/312458},
+ journal = {\apjl},
+ keywords = {STARS: PLANETARY SYSTEMS, STARS: INDIVIDUAL: HENRY DRAPER NUMBER: HD 209458, Stars: Planetary Systems, Stars: Individual: Henry Draper Number: HD 209458},
+ month = {January},
+ number = {1},
+ pages = {L41-L44},
+ title = {{A Transiting ``51 Peg-like'' Planet}},
+ volume = {529},
+ year = {2000}
+}
+
+@article{2000ApJ...529L..45C,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2000ApJ...529L..45C},
+ archiveprefix = {arXiv},
+ author = {{Charbonneau}, David and {Brown}, Timothy M. and {Latham}, David W. and {Mayor}, Michel},
+ doi = {10.1086/312457},
+ eprint = {astro-ph/9911436},
+ journal = {\apjl},
+ keywords = {STARS: BINARIES: ECLIPSING, STARS: PLANETARY SYSTEMS, STARS: INDIVIDUAL: HENRY DRAPER NUMBER: HD 209458, TECHNIQUES: PHOTOMETRIC, TECHNIQUES: RADIAL VELOCITIES, Stars: Binaries: Eclipsing, Stars: Planetary Systems, Stars: Individual: Henry Draper Number: HD 209458, Techniques: Photometric, Techniques: Radial Velocities, Astrophysics},
+ month = {January},
+ number = {1},
+ pages = {L45-L48},
+ primaryclass = {astro-ph},
+ title = {{Detection of Planetary Transits Across a Sun-like Star}},
+ volume = {529},
+ year = {2000}
+}
+
+@article{2000Icar..148..384M,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2000Icar..148..384M},
+ author = {{Marchis}, Franck and {Prang{\'e}}, Ren{\'e}e and {Christou}, Julian},
+ doi = {10.1006/icar.2000.6506},
+ journal = {\icarus},
+ month = {December},
+ number = {2},
+ pages = {384-396},
+ title = {{Adaptive Optics Mapping of Io's Volcanism in the Thermal IR (3.8 {\ensuremath{\mu}}m)}},
+ volume = {148},
+ year = {2000}
+}
+
 @inproceedings{2001ASPC..252...21C,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
  adsurl = {https://ui.adsabs.harvard.edu/abs/2001ASPC..252...21C},
@@ -776,6 +1075,22 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {2002}
 }
 
+@article{2002GeoRL..29.1443R,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2002GeoRL..29.1443R},
+ author = {{Rathbun}, J.~A. and {Spencer}, J.~R. and {Davies}, A.~G. and {Howell}, R.~R. and {Wilson}, L.},
+ doi = {10.1029/2002GL014747},
+ eid = {1443},
+ journal = {\grl},
+ keywords = {Volcanology: Eruption mechanisms, Planetology: Solar System Objects: Jovian satellites, Planetary Sciences: Remote sensing, Planetary Sciences: Volcanism (8450), Planetary Sciences: Heat flow},
+ month = {May},
+ number = {10},
+ pages = {1443},
+ title = {{Loki, Io: A periodic volcano}},
+ volume = {29},
+ year = {2002}
+}
+
 @article{2003ApJ...586..527G,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
  adsurl = {https://ui.adsabs.harvard.edu/abs/2003ApJ...586..527G},
@@ -799,6 +1114,21 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  adsurl = {https://ui.adsabs.harvard.edu/abs/2003itil.book.....M},
  author = {{Mackay}, David J.~C.},
  title = {{Information Theory, Inference and Learning Algorithms}},
+ year = {2003}
+}
+
+@article{2003PASP..115..362R,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2003PASP..115..362R},
+ author = {{Rayner}, J.~T. and {Toomey}, D.~W. and {Onaka}, P.~M. and {Denault}, A.~J. and {Stahlberger}, W.~E. and {Vacca}, W.~D. and {Cushing}, M.~C. and {Wang}, S.},
+ doi = {10.1086/367745},
+ journal = {\pasp},
+ keywords = {Stars: Hertzsprung-Russell Diagram, Instrumentation: Detectors, Instrumentation: Spectrographs, Stars: Low-Mass, Brown Dwarfs, Stars: Wolf-Rayet},
+ month = {March},
+ number = {805},
+ pages = {362-382},
+ title = {{SpeX: A Medium-Resolution 0.8-5.5 Micron Spectrograph and Imager for the NASA Infrared Telescope Facility}},
+ volume = {115},
  year = {2003}
 }
 
@@ -834,6 +1164,39 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  title = {{Resolution of the MACHO-LMC-5 Puzzle: The Jerk-Parallax Microlens Degeneracy}},
  volume = {606},
  year = {2004}
+}
+
+@article{2005Icar..176...96M,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2005Icar..176...96M},
+ author = {{Marchis}, F. and {Le Mignant}, D. and {Chaffee}, F.~H. and {Davies}, A.~G. and {Kwok}, S.~H. and {Prang{\'e}}, R. and {de Pater}, I. and {Amico}, P. and {Campbell}, R. and {Fusco}, T. and {Goodrich}, R.~W. and {Conrad}, A.},
+ doi = {10.1016/j.icarus.2004.12.014},
+ journal = {\icarus},
+ month = {July},
+ number = {1},
+ pages = {96-122},
+ title = {{Keck AO survey of Io global volcanic activity between 2 and 5 {\ensuremath{\mu}}m}},
+ volume = {176},
+ year = {2005}
+}
+
+@article{2006GeoRL..3317201R,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2006GeoRL..3317201R},
+ archiveprefix = {arXiv},
+ author = {{Rathbun}, J.~A. and {Spencer}, J.~R.},
+ doi = {10.1029/2006GL026844},
+ eid = {L17201},
+ eprint = {astro-ph/0605240},
+ journal = {\grl},
+ keywords = {Planetary Sciences: Solid Surface Planets: Heat flow, Planetary Sciences: Solid Surface Planets: Origin and evolution, Planetary Sciences: Solid Surface Planets: Volcanism (6063, 8148, 8450), Planetary Sciences: Solid Surface Planets: Instruments and techniques, Astrophysics},
+ month = {September},
+ number = {17},
+ pages = {L17201},
+ primaryclass = {astro-ph},
+ title = {{Loki, Io: New ground-based observations and a model describing the change from periodic overturn}},
+ volume = {33},
+ year = {2006}
 }
 
 @article{2007ApJ...660..781B,
@@ -872,6 +1235,22 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {2007}
 }
 
+@article{2007astro.ph..3168S,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2007astro.ph..3168S},
+ archiveprefix = {arXiv},
+ author = {{Seon}, Kwang-Il},
+ eid = {astro-ph/0703168},
+ eprint = {astro-ph/0703168},
+ journal = {arXiv e-prints},
+ keywords = {Astrophysics},
+ month = {March},
+ pages = {astro-ph/0703168},
+ primaryclass = {astro-ph},
+ title = {{Smoothing of an All-sky Survey Map with a Fisher-von Mises Function}},
+ year = {2007}
+}
+
 @article{2007MNRAS.377.1679D,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
  adsurl = {https://ui.adsabs.harvard.edu/abs/2007MNRAS.377.1679D},
@@ -905,6 +1284,19 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  primaryclass = {astro-ph},
  title = {{A map of the day-night contrast of the extrasolar planet HD 189733b}},
  volume = {447},
+ year = {2007}
+}
+
+@incollection{2007plmo.book..299B,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2007plmo.book..299B},
+ author = {{Breuer}, D. and {Moore}, W.~B.},
+ booktitle = {Planets and Moons},
+ doi = {10.1016/B978-044452748-6.00161-9},
+ editor = {{Schubert}, Gerald},
+ pages = {299-348},
+ title = {{Dynamics and Thermal History of the Terrestrial Planets, the Moon, and Io}},
+ volume = {10},
  year = {2007}
 }
 
@@ -1014,6 +1406,38 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {2009}
 }
 
+@article{2009MNRAS.398.1601F,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2009MNRAS.398.1601F},
+ archiveprefix = {arXiv},
+ author = {{Feroz}, F. and {Hobson}, M.~P. and {Bridges}, M.},
+ doi = {10.1111/j.1365-2966.2009.14548.x},
+ eprint = {0809.3437},
+ journal = {\mnras},
+ keywords = {methods: data analysis, methods: statistical, Astrophysics},
+ month = {October},
+ number = {4},
+ pages = {1601-1614},
+ primaryclass = {astro-ph},
+ title = {{MULTINEST: an efficient and robust Bayesian inference tool for cosmology and particle physics}},
+ volume = {398},
+ year = {2009}
+}
+
+@article{2009Natur.459..957L,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2009Natur.459..957L},
+ author = {{Lainey}, Val{\'e}ry and {Arlot}, Jean-Eudes and {Karatekin}, {\"O}zg{\"u}r and {van Hoolst}, Tim},
+ doi = {10.1038/nature08108},
+ journal = {\nat},
+ month = {June},
+ number = {7249},
+ pages = {957-959},
+ title = {{Strong tidal dissipation in Io and Jupiter from astrometric observations}},
+ volume = {459},
+ year = {2009}
+}
+
 @article{2010A&A...520A..68L,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
  adsurl = {https://ui.adsabs.harvard.edu/abs/2010A&A...520A..68L},
@@ -1029,6 +1453,42 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  primaryclass = {astro-ph.EP},
  title = {{Detectability of extrasolar moons as gravitational microlenses}},
  volume = {520},
+ year = {2010}
+}
+
+@article{2010AJ....140.1370K,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2010AJ....140.1370K},
+ archiveprefix = {arXiv},
+ author = {{Kaltenegger}, L. and {Henning}, W.~G. and {Sasselov}, D.~D.},
+ doi = {10.1088/0004-6256/140/5/1370},
+ eprint = {1009.1355},
+ journal = {\aj},
+ keywords = {astrobiology, Earth, methods: observational, planets and satellites: atmospheres, planets and satellites: detection, planets and satellites: tectonics, techniques: spectroscopic, Astrophysics - Earth and Planetary Astrophysics, Astrophysics - Instrumentation and Methods for Astrophysics, Astrophysics - Solar and Stellar Astrophysics},
+ month = {November},
+ number = {5},
+ pages = {1370-1380},
+ primaryclass = {astro-ph.EP},
+ title = {{Detecting Volcanism on Extrasolar Planets}},
+ volume = {140},
+ year = {2010}
+}
+
+@article{2010ApJ...709L..95B,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2010ApJ...709L..95B},
+ archiveprefix = {arXiv},
+ author = {{Barnes}, Rory and {Raymond}, Sean N. and {Greenberg}, Richard and {Jackson}, Brian and {Kaib}, Nathan A.},
+ doi = {10.1088/2041-8205/709/2/L95},
+ eprint = {0912.1337},
+ journal = {\apjl},
+ keywords = {celestial mechanics, planets and satellites: individual: CoRoT-7b, Astrophysics - Earth and Planetary Astrophysics},
+ month = {February},
+ number = {2},
+ pages = {L95-L98},
+ primaryclass = {astro-ph.EP},
+ title = {{CoRoT-7b: Super-Earth or Super-Io?}},
+ volume = {709},
  year = {2010}
 }
 
@@ -1101,6 +1561,20 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {2010}
 }
 
+@article{2010Icar..209..625R,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2010Icar..209..625R},
+ author = {{Rathbun}, Julie A. and {Spencer}, John R.},
+ doi = {10.1016/j.icarus.2010.05.019},
+ journal = {\icarus},
+ month = {October},
+ number = {2},
+ pages = {625-630},
+ title = {{Ground-based observations of time variability in multiple active volcanoes on Io}},
+ volume = {209},
+ year = {2010}
+}
+
 @article{2010MNRAS.408.2188B,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
  adsurl = {https://ui.adsabs.harvard.edu/abs/2010MNRAS.408.2188B},
@@ -1116,6 +1590,20 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  primaryclass = {astro-ph.EP},
  title = {{Microlensing with an advanced contour integration algorithm: Green's theorem to third order, error control, optimal sampling and limb darkening}},
  volume = {408},
+ year = {2010}
+}
+
+@article{2010SolE....1....5D,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2010SolE....1....5D},
+ author = {{Davies}, J.~H. and {Davies}, D.~R.},
+ doi = {10.5194/se-1-5-2010},
+ journal = {Solid Earth},
+ month = {February},
+ number = {1},
+ pages = {5-24},
+ title = {{Earth's surface heat flux}},
+ volume = {1},
  year = {2010}
 }
 
@@ -1136,6 +1624,24 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  title = {{Binary Microlensing Event OGLE-2009-BLG-020 Gives Verifiable Mass, Distance, and Orbit Predictions}},
  volume = {738},
  year = {2011}
+}
+
+@article{2012A&A...548A.128D,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2012A&A...548A.128D},
+ archiveprefix = {arXiv},
+ author = {{de Wit}, J. and {Gillon}, M. and {Demory}, B. -O. and {Seager}, S.},
+ doi = {10.1051/0004-6361/201219060},
+ eid = {A128},
+ eprint = {1202.3829},
+ journal = {\aap},
+ keywords = {Eclipses, planets and satellites: individual: HD 189733b, techniques: photometric, Astrophysics - Earth and Planetary Astrophysics},
+ month = {December},
+ pages = {A128},
+ primaryclass = {astro-ph.EP},
+ title = {{Towards consistent mapping of distant worlds: secondary-eclipse scanning of the exoplanet HD 189733b}},
+ volume = {548},
+ year = {2012}
 }
 
 @article{2012ApJ...747L..20M,
@@ -1170,6 +1676,20 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  pages = {arXiv:1203.1034},
  primaryclass = {astro-ph.EP},
  title = {{General Complex Polynomial Root Solver and Its Further Optimization for Binary Microlenses}},
+ year = {2012}
+}
+
+@article{2012Icar..219..701V,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2012Icar..219..701V},
+ author = {{Veeder}, Glenn J. and {Davies}, Ashley Gerard and {Matson}, Dennis L. and {Johnson}, Torrence V. and {Williams}, David A. and {Radebaugh}, Jani},
+ doi = {10.1016/j.icarus.2012.04.004},
+ journal = {\icarus},
+ month = {June},
+ number = {2},
+ pages = {701-722},
+ title = {{Io: Volcanic thermal sources and global heat flow}},
+ volume = {219},
  year = {2012}
 }
 
@@ -1208,6 +1728,71 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  title = {{Inference of Inhomogeneous Clouds in an Exoplanet Atmosphere}},
  volume = {776},
  year = {2013}
+}
+
+@article{2013arXiv1312.0906B,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2013arXiv1312.0906B},
+ archiveprefix = {arXiv},
+ author = {{Betancourt}, M.~J. and {Girolami}, Mark},
+ eid = {arXiv:1312.0906},
+ eprint = {1312.0906},
+ journal = {arXiv e-prints},
+ keywords = {Statistics - Methodology},
+ month = {December},
+ pages = {arXiv:1312.0906},
+ primaryclass = {stat.ME},
+ title = {{Hamiltonian Monte Carlo for Hierarchical Models}},
+ year = {2013}
+}
+
+@article{2013PASP..125..306F,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2013PASP..125..306F},
+ archiveprefix = {arXiv},
+ author = {{Foreman-Mackey}, Daniel and {Hogg}, David W. and {Lang}, Dustin and {Goodman}, Jonathan},
+ doi = {10.1086/670067},
+ eprint = {1202.3665},
+ journal = {\pasp},
+ keywords = {Astrophysics - Instrumentation and Methods for Astrophysics, Physics - Computational Physics, Statistics - Computation},
+ month = {March},
+ number = {925},
+ pages = {306},
+ primaryclass = {astro-ph.IM},
+ title = {{emcee: The MCMC Hammer}},
+ volume = {125},
+ year = {2013}
+}
+
+@article{2014ApJ...795...64F,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2014ApJ...795...64F},
+ archiveprefix = {arXiv},
+ author = {{Foreman-Mackey}, Daniel and {Hogg}, David W. and {Morton}, Timothy D.},
+ doi = {10.1088/0004-637X/795/1/64},
+ eid = {64},
+ eprint = {1406.3020},
+ journal = {\apj},
+ keywords = {catalogs, methods: data analysis, methods: statistical, planetary systems, stars: statistics, Astrophysics - Earth and Planetary Astrophysics, Astrophysics - Instrumentation and Methods for Astrophysics},
+ month = {November},
+ number = {1},
+ pages = {64},
+ primaryclass = {astro-ph.EP},
+ title = {{Exoplanet Population Inference and the Abundance of Earth Analogs from Noisy, Incomplete Catalogs}},
+ volume = {795},
+ year = {2014}
+}
+
+@article{2014IPNPR.196C...1F,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2014IPNPR.196C...1F},
+ author = {{Folkner}, W.~M. and {Williams}, J.~G. and {Boggs}, D.~H. and {Park}, R.~S. and {Kuchynka}, P.},
+ journal = {Interplanetary Network Progress Report},
+ month = {February},
+ pages = {1-81},
+ title = {{The Planetary and Lunar Ephemerides DE430 and DE431}},
+ volume = {42-196},
+ year = {2014}
 }
 
 @article{2014MNRAS.437.4006S,
@@ -1303,27 +1888,34 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {2015}
 }
 
-@article{arviz_2019,
-    doi = {10.21105/joss.01143},
-    url = {https://doi.org/10.21105/joss.01143},
-    year = {2019},
-    publisher = {The Open Journal},
-    volume = {4},
-    number = {33},
-    pages = {1143},
-    author = {Ravin Kumar and Colin Carroll and Ari Hartikainen and Osvaldo Martin},
-    title = {ArviZ a unified library for exploratory analysis of Bayesian models in Python},
-    journal = {Journal of Open Source Software}
+@article{2015arXiv150702646V,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2015arXiv150702646V},
+ archiveprefix = {arXiv},
+ author = {{Vehtari}, Aki and {Simpson}, Daniel and {Gelman}, Andrew and {Yao}, Yuling and {Gabry}, Jonah},
+ eid = {arXiv:1507.02646},
+ eprint = {1507.02646},
+ journal = {arXiv e-prints},
+ keywords = {Statistics - Computation, Statistics - Methodology, Statistics - Machine Learning},
+ month = {July},
+ pages = {arXiv:1507.02646},
+ primaryclass = {stat.CO},
+ title = {{Pareto Smoothed Importance Sampling}},
+ year = {2015}
 }
 
-@article{vehtari2017,
-    title = {Practical Bayesian model evaluation using leave-one-out
-      cross-validation and WAIC},
-    author = {Aki Vehtari and Andrew Gelman and Jonah Gabry},
-    year = {2016},
-    journal = {Statistics and Computing},
-    doi = {10.1007/s11222-016-9696-4},
-  }
+@inproceedings{2015IAUGA..2233438J,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2015IAUGA..2233438J},
+ author = {{Jacobson}, Robert Arthur and {Brozovic}, Marina},
+ booktitle = {IAU General Assembly},
+ eid = {2233438},
+ month = {August},
+ pages = {2233438},
+ title = {{Natural Satellite Ephemerides at JPL}},
+ volume = {29},
+ year = {2015}
+}
 
 @article{2015MNRAS.448.3206B,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
@@ -1362,6 +1954,52 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {2016}
 }
 
+@article{2016Icar..280..378D,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2016Icar..280..378D},
+ author = {{de Kleer}, Katherine and {de Pater}, Imke},
+ doi = {10.1016/j.icarus.2016.06.019},
+ journal = {\icarus},
+ keywords = {Io, Volcanism, Infrared observations, Adaptive optics, Spectroscopy},
+ month = {December},
+ pages = {378-404},
+ title = {{Time variability of Io's volcanic activity from near-IR adaptive optics observations on 100 nights in 2013-2015}},
+ volume = {280},
+ year = {2016}
+}
+
+@article{2016Icar..280..405D,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2016Icar..280..405D},
+ author = {{de Kleer}, Katherine and {de Pater}, Imke},
+ doi = {10.1016/j.icarus.2016.06.018},
+ journal = {\icarus},
+ keywords = {Io, Volcanism, Infrared Observations, Adaptive Optics, Spectroscopy},
+ month = {December},
+ pages = {405-414},
+ title = {{Spatial distribution of Io's volcanic activity from near-IR adaptive optics observations on 100 nights in 2013-2015}},
+ volume = {280},
+ year = {2016}
+}
+
+@article{2016MNRAS.455.2018D,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2016MNRAS.455.2018D},
+ archiveprefix = {arXiv},
+ author = {{Demory}, Brice-Olivier and {Gillon}, Michael and {Madhusudhan}, Nikku and {Queloz}, Didier},
+ doi = {10.1093/mnras/stv2239},
+ eprint = {1505.00269},
+ journal = {\mnras},
+ keywords = {techniques: photometric, stars: individual: 55 Cnc, infrared: planetary systems, Astrophysics - Earth and Planetary Astrophysics},
+ month = {January},
+ number = {2},
+ pages = {2018-2027},
+ primaryclass = {astro-ph.EP},
+ title = {{Variability in the super-Earth 55 Cnc e}},
+ volume = {455},
+ year = {2016}
+}
+
 @article{2016MNRAS.458.3012W,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
  adsurl = {https://ui.adsabs.harvard.edu/abs/2016MNRAS.458.3012W},
@@ -1377,6 +2015,24 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  primaryclass = {astro-ph.SR},
  title = {{Black hole, neutron star and white dwarf candidates from microlensing with OGLE-III}},
  volume = {458},
+ year = {2016}
+}
+
+@article{2016MNRAS.460.4086M,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2016MNRAS.460.4086M},
+ archiveprefix = {arXiv},
+ author = {{Morgado}, B. and {Assafin}, M. and {Vieira-Martins}, R. and {Camargo}, J.~I.~B. and {Dias-Oliveira}, A. and {Gomes-J{\'u}nior}, A.~R.},
+ doi = {10.1093/mnras/stw1244},
+ eprint = {1605.06573},
+ journal = {\mnras},
+ keywords = {methods: data analysis, astrometry, planets and satellites: individual: Io, Europa, Ganymede, Callisto, Astrophysics - Earth and Planetary Astrophysics, Astrophysics - Instrumentation and Methods for Astrophysics, 85A04},
+ month = {August},
+ number = {4},
+ pages = {4086-4097},
+ primaryclass = {astro-ph.EP},
+ title = {{Astrometry of mutual approximations between natural satellites. Application to the Galilean moons}},
+ volume = {460},
  year = {2016}
 }
 
@@ -1413,6 +2069,20 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  primaryclass = {astro-ph.EP},
  title = {{A map of the large day-night temperature gradient of a super-Earth exoplanet}},
  volume = {532},
+ year = {2016}
+}
+
+@article{2016S&C....26..383B,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2016S&C....26..383B},
+ author = {{Buchner}, Johannes},
+ doi = {10.1007/s11222-014-9512-y},
+ journal = {Statistics and Computing},
+ month = {January},
+ number = {1-2},
+ pages = {383-392},
+ title = {{A statistical test for Nested Sampling algorithms}},
+ volume = {26},
  year = {2016}
 }
 
@@ -1473,6 +2143,25 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {2017}
 }
 
+@article{2017ApJ...849..152H,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2017ApJ...849..152H},
+ archiveprefix = {arXiv},
+ author = {{Hammond}, Mark and {Pierrehumbert}, Raymond T.},
+ doi = {10.3847/1538-4357/aa9328},
+ eid = {152},
+ eprint = {1710.03556},
+ journal = {\apj},
+ keywords = {planets and satellites: atmospheres, planets and satellites: terrestrial planets, Astrophysics - Earth and Planetary Astrophysics},
+ month = {November},
+ number = {2},
+ pages = {152},
+ primaryclass = {astro-ph.EP},
+ title = {{Linking the Climate and Thermal Phase Curve of 55 Cancri e}},
+ volume = {849},
+ year = {2017}
+}
+
 @article{2017JSS....76....1C,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
  adsurl = {https://ui.adsabs.harvard.edu/abs/2017JSS....76....1C},
@@ -1501,6 +2190,55 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  primaryclass = {astro-ph.EP},
  title = {{Fast computation of quadrupole and hexadecapole approximations in microlensing with a single point-source evaluation}},
  volume = {468},
+ year = {2017}
+}
+
+@article{2017NatAs...1..878K,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2017NatAs...1..878K},
+ archiveprefix = {arXiv},
+ author = {{Kislyakova}, K.~G. and {Noack}, L. and {Johnstone}, C.~P. and {Zaitsev}, V.~V. and {Fossati}, L. and {Lammer}, H. and {Khodachenko}, M.~L. and {Odert}, P. and {G{\"u}del}, M.},
+ doi = {10.1038/s41550-017-0284-0},
+ eprint = {1710.08761},
+ journal = {Nature Astronomy},
+ keywords = {Astrophysics - Earth and Planetary Astrophysics},
+ month = {October},
+ pages = {878-885},
+ primaryclass = {astro-ph.EP},
+ title = {{Magma oceans and enhanced volcanism on TRAPPIST-1 planets due to induction heating}},
+ volume = {1},
+ year = {2017}
+}
+
+@article{2017Natur.545..199D,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2017Natur.545..199D},
+ author = {{de Kleer}, K. and {Skrutskie}, M. and {Leisenring}, J. and {Davies}, A.~G. and {Conrad}, A. and {de Pater}, I. and {Resnick}, A. and {Bailey}, V. and {Defr{\`e}re}, D. and {Hinz}, P. and {Skemer}, A. and {Spalding}, E. and {Vaz}, A. and {Veillet}, C. and {Woodward}, C.~E.},
+ doi = {10.1038/nature22339},
+ journal = {\nat},
+ month = {May},
+ number = {7653},
+ pages = {199-202},
+ title = {{Multi-phase volcanic resurfacing at Loki Patera on Io}},
+ volume = {545},
+ year = {2017}
+}
+
+@article{2017PASP..129f4501B,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2017PASP..129f4501B},
+ archiveprefix = {arXiv},
+ author = {{Batalha}, Natasha E. and {Mandell}, Avi and {Pontoppidan}, Klaus and {Stevenson}, Kevin B. and {Lewis}, Nikole K. and {Kalirai}, Jason and {Earl}, Nick and {Greene}, Thomas and {Albert}, Lo{\"\i}c and {Nielsen}, Louise D.},
+ doi = {10.1088/1538-3873/aa65b0},
+ eprint = {1702.01820},
+ journal = {\pasp},
+ keywords = {Astrophysics - Instrumentation and Methods for Astrophysics, Astrophysics - Earth and Planetary Astrophysics},
+ month = {June},
+ number = {976},
+ pages = {064501},
+ primaryclass = {astro-ph.IM},
+ title = {{PandExo: A Community Tool for Transiting Exoplanet Science with JWST \& HST}},
+ volume = {129},
  year = {2017}
 }
 
@@ -1560,6 +2298,41 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {2018}
 }
 
+@article{2018ApJ...867..136H,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2018ApJ...867..136H},
+ archiveprefix = {arXiv},
+ author = {{Han}, C. and {Jung}, Y.~K. and {Udalski}, A. and {Bond}, I. and {Bozza}, V. and {Albrow}, M.~D. and {Chung}, S. -J. and {Gould}, A. and {Hwang}, K. -H. and {Kim}, D. and {Lee}, C. -U. and {Kim}, H. -W. and {Ryu}, Y. -H. and {Shin}, I. -G. and {Yee}, J.~C. and {Shvartzvald}, Y. and {Cha}, S. -M. and {Kim}, S. -L. and {Kim}, D. -J. and {Lee}, D. -J. and {Lee}, Y. and {Park}, B. -G. and {Pogge}, R.~W. and {KMTNet Collaboration} and {Szyma{\'n}ski}, M.~K. and {Mr{\'o}z}, P. and {Skowron}, J. and {Poleski}, R. and {Soszy{\'n}ski}, I. and {Koz{\l}owski}, S. and {Pietrukowicz}, P. and {Ulaczyk}, K. and {Pawlak}, M. and {OGLE Collaboration} and {Abe}, F. and {Barry}, R. and {Bennett}, D.~P. and {Bhattacharya}, A. and {Donachie}, M. and {Evans}, P. and {Fukui}, A. and {Hirao}, Y. and {Itow}, Y. and {Kawasaki}, K. and {Koshimoto}, N. and {Li}, M.~C.~A. and {Ling}, C.~H. and {Matsubara}, Y. and {Miyazaki}, S. and {Munakata}, H. and {Muraki}, Y. and {Nagakane}, M. and {Ohnishi}, K. and {Ranc}, C. and {Rattenbury}, N. and {Saito}, T. and {Sharan}, A. and {Sullivan}, D.~J. and {Sumi}, T. and {Suzuki}, D. and {Tristram}, P.~J. and {Yamada}, T. and {Yonehara}, A. and {MOA Collaboration}},
+ doi = {10.3847/1538-4357/aae536},
+ eid = {136},
+ eprint = {1809.10831},
+ journal = {\apj},
+ keywords = {binaries: general, gravitational lensing: micro, Astrophysics - Solar and Stellar Astrophysics},
+ month = {November},
+ number = {2},
+ pages = {136},
+ primaryclass = {astro-ph.SR},
+ title = {{OGLE-2017-BLG-0039: Microlensing Event with Light from a Lens Identified from Mass Measurement}},
+ volume = {867},
+ year = {2018}
+}
+
+@article{2018arXiv180308393B,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2018arXiv180308393B},
+ archiveprefix = {arXiv},
+ author = {{Betancourt}, Michael},
+ eid = {arXiv:1803.08393},
+ eprint = {1803.08393},
+ journal = {arXiv e-prints},
+ keywords = {Statistics - Methodology},
+ month = {March},
+ pages = {arXiv:1803.08393},
+ primaryclass = {stat.ME},
+ title = {{Calibrating Model-Based Inferences and Decisions}},
+ year = {2018}
+}
+
 @article{2018MNRAS.474.2094A,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
  adsurl = {https://ui.adsabs.harvard.edu/abs/2018MNRAS.474.2094A},
@@ -1574,6 +2347,21 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  pages = {2094-2108},
  primaryclass = {astro-ph.SR},
  title = {{Inferring probabilistic stellar rotation periods using Gaussian processes}},
+ volume = {474},
+ year = {2018}
+}
+
+@article{2018MNRAS.474.4730S,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2018MNRAS.474.4730S},
+ author = {{Saquet}, E. and {Emelyanov}, N. and {Robert}, V. and {Arlot}, J. -E. and {Anbazhagan}, P. and {Bailli{\'e}}, K. and {Bardecker}, J. and {Berezhnoy}, A.~A. and {Bretton}, M. and {Campos}, F. and {Capannoli}, L. and {Carry}, B. and {Castet}, M. and {Charbonnier}, Y. and {Chernikov}, M.~M. and {Christou}, A. and {Colas}, F. and {Coliac}, J. -F. and {Dangl}, G. and {Dechambre}, O. and {Delcroix}, M. and {Dias-Oliveira}, A. and {Drillaud}, C. and {Duchemin}, Y. and {Dunford}, R. and {Dupouy}, P. and {Ellington}, C. and {Fabre}, P. and {Filippov}, V.~A. and {Finnegan}, J. and {Foglia}, S. and {Font}, D. and {Gaillard}, B. and {Galli}, G. and {Garlitz}, J. and {Gasmi}, A. and {Gaspar}, H.~S. and {Gault}, D. and {Gazeas}, K. and {George}, T. and {Gorda}, S.~Y. and {Gorshanov}, D.~L. and {Gualdoni}, C. and {Guhl}, K. and {Halir}, K. and {Hanna}, W. and {Henry}, X. and {Herald}, D. and {Houdin}, G. and {Ito}, Y. and {Izmailov}, I.~S. and {Jacobsen}, J. and {Jones}, A. and {Kamoun}, S. and {Kardasis}, E. and {Karimov}, A.~M. and {Khovritchev}, M.~Y. and {Kulikova}, A.~M. and {Laborde}, J. and {Lainey}, V. and {Lavayssiere}, M. and {Le Guen}, P. and {Leroy}, A. and {Loader}, B. and {Lopez}, O.~C. and {Lyashenko}, A.~Y. and {Lyssenko}, P.~G. and {Machado}, D.~I. and {Maigurova}, N. and {Manek}, J. and {Marchini}, A. and {Midavaine}, T. and {Montier}, J. and {Morgado}, B.~E. and {Naumov}, K.~N. and {Nedelcu}, A. and {Newman}, J. and {Ohlert}, J.~M. and {Oksanen}, A. and {Pavlov}, H. and {Petrescu}, E. and {Pomazan}, A. and {Popescu}, M. and {Pratt}, A. and {Raskhozhev}, V.~N. and {Resch}, J. -M. and {Robilliard}, D. and {Roschina}, E. and {Rothenberg}, E. and {Rottenborn}, M. and {Rusov}, S.~A. and {Saby}, F. and {Saya}, L.~F. and {Selvakumar}, G. and {Signoret}, F. and {Slesarenko}, V.~Y. and {Sokov}, E.~N. and {Soldateschi}, J. and {Sonka}, A. and {Soulie}, G. and {Talbot}, J. and {Tejfel}, V.~G. and {Thuillot}, W. and {Timerson}, B. and {Toma}, R. and {Torsellini}, S. and {Trabuco}, L.~L. and {Traverse}, P. and {Tsamis}, V. and {Unwin}, M. and {Abbeel}, F. Van Den and {Vandenbruaene}, H. and {Vasundhara}, R. and {Velikodsky}, Y.~I. and {Vienne}, A. and {Vilar}, J. and {Vugnon}, J. -M. and {Wuensche}, N. and {Zeleny}, P.},
+ doi = {10.1093/mnras/stx2957},
+ journal = {\mnras},
+ keywords = {techniques: photometric, astronomical data bases: miscellaneous, eclipses, ephemerides, occultations, planets and satellites: general},
+ month = {March},
+ number = {4},
+ pages = {4730-4739},
+ title = {{The PHEMU15 catalogue and astrometric results of the Jupiter's Galilean satellite mutual occultation and eclipse observations made in 2014-2015}},
  volume = {474},
  year = {2018}
 }
@@ -1614,6 +2402,43 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {2018}
 }
 
+@article{2018RNAAS...2...31F,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2018RNAAS...2...31F},
+ archiveprefix = {arXiv},
+ author = {{Foreman-Mackey}, Daniel},
+ doi = {10.3847/2515-5172/aaaf6c},
+ eid = {31},
+ eprint = {1801.10156},
+ journal = {Research Notes of the American Astronomical Society},
+ keywords = {Astrophysics - Instrumentation and Methods for Astrophysics},
+ month = {February},
+ number = {1},
+ pages = {31},
+ primaryclass = {astro-ph.IM},
+ title = {{Scalable Backpropagation for Gaussian Processes using Celerite}},
+ volume = {2},
+ year = {2018}
+}
+
+@article{2019A&A...624A...2D,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2019A&A...624A...2D},
+ archiveprefix = {arXiv},
+ author = {{Dobos}, Vera and {Barr}, Amy C. and {Kiss}, L{\'a}szl{\'o} L.},
+ doi = {10.1051/0004-6361/201834254},
+ eid = {A2},
+ eprint = {1902.03867},
+ journal = {\aap},
+ keywords = {planets and satellites: interiors, planets and satellites: terrestrial planets, methods: numerical, astrobiology, Astrophysics - Earth and Planetary Astrophysics},
+ month = {April},
+ pages = {A2},
+ primaryclass = {astro-ph.EP},
+ title = {{Tidal heating and the habitability of the TRAPPIST-1 exoplanets}},
+ volume = {624},
+ year = {2019}
+}
+
 @article{2019AJ....157...23H,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
  adsurl = {https://ui.adsabs.harvard.edu/abs/2019AJ....157...23H},
@@ -1648,6 +2473,25 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  pages = {64},
  primaryclass = {astro-ph.IM},
  title = {{starry: Analytic Occultation Light Curves}},
+ volume = {157},
+ year = {2019}
+}
+
+@article{2019AJ....157...98G,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2019AJ....157...98G},
+ archiveprefix = {arXiv},
+ author = {{Ginsburg}, Adam and {Sip{\H{o}}cz}, Brigitta M. and {Brasseur}, C.~E. and {Cowperthwaite}, Philip S. and {Craig}, Matthew W. and {Deil}, Christoph and {Guillochon}, James and {Guzman}, Giannina and {Liedtke}, Simon and {Lian Lim}, Pey and {Lockhart}, Kelly E. and {Mommert}, Michael and {Morris}, Brett M. and {Norman}, Henrik and {Parikh}, Madhura and {Persson}, Magnus V. and {Robitaille}, Thomas P. and {Segovia}, Juan-Carlos and {Singer}, Leo P. and {Tollerud}, Erik J. and {de Val-Borro}, Miguel and {Valtchanov}, Ivan and {Woillez}, Julien and {Astroquery Collaboration} and {a subset of astropy Collaboration}},
+ doi = {10.3847/1538-3881/aafc33},
+ eid = {98},
+ eprint = {1901.04520},
+ journal = {\aj},
+ keywords = {astronomical databases: miscellaneous, virtual observatory tools, Astrophysics - Instrumentation and Methods for Astrophysics},
+ month = {March},
+ number = {3},
+ pages = {98},
+ primaryclass = {astro-ph.IM},
+ title = {{astroquery: An Astronomical Web-querying Package in Python}},
  volume = {157},
  year = {2019}
 }
@@ -1706,6 +2550,25 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  primaryclass = {astro-ph.EP},
  title = {{Triple-lens Gravitational Microlensing: Critical Curves for Arbitrary Spatial Configuration}},
  volume = {880},
+ year = {2019}
+}
+
+@article{2019ApJ...885..168O,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2019ApJ...885..168O},
+ archiveprefix = {arXiv},
+ author = {{Oza}, Apurva V. and {Johnson}, Robert E. and {Lellouch}, Emmanuel and {Schmidt}, Carl and {Schneider}, Nick and {Huang}, Chenliang and {Gamborino}, Diana and {Gebek}, Andrea and {Wyttenbach}, Aurelien and {Demory}, Brice-Olivier and {Mordasini}, Christoph and {Saxena}, Prabal and {Dubois}, David and {Moullet}, Arielle and {Thomas}, Nicolas},
+ doi = {10.3847/1538-4357/ab40cc},
+ eid = {168},
+ eprint = {1908.10732},
+ journal = {\apj},
+ keywords = {planets and satellites: atmospheres, planets and satellites: composition, planets and satellites: detection, planets and satellites: dynamical evolution and stability, planets and satellites: magnetic fields, planets and satellites: physical evolution, Astrophysics - Earth and Planetary Astrophysics, Astrophysics - Solar and Stellar Astrophysics},
+ month = {November},
+ number = {2},
+ pages = {168},
+ primaryclass = {astro-ph.EP},
+ title = {{Sodium and Potassium Signatures of Volcanic Satellites Orbiting Close-in Gas Giant Exoplanets}},
+ volume = {885},
  year = {2019}
 }
 
@@ -1782,6 +2645,39 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {2020}
 }
 
+@inproceedings{2020AGUFMP012...07H,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2020AGUFMP012...07H},
+ author = {{Hodges}, A.~L. and {Steffes}, P.~G. and {Gladstone}, R. and {Folkner}, W.~M. and {Buccino}, D. and {Bolton}, S.~J. and {Levin}, S.},
+ booktitle = {AGU Fall Meeting Abstracts},
+ eid = {P012-07},
+ keywords = {5704 Atmospheres, PLANETARY SCIENCES: FLUID PLANETS, 5724 Interiors, PLANETARY SCIENCES: FLUID PLANETS, 5737 Magnetospheres, PLANETARY SCIENCES: FLUID PLANETS, 5749 Origin and evolution, PLANETARY SCIENCES: FLUID PLANETS},
+ month = {December},
+ pages = {P012-07},
+ title = {{Simulations of Potential Radio Occultation Studies of Jupiter's Atmosphere using the Juno Spacecraft}},
+ volume = {2020},
+ year = {2020}
+}
+
+@article{2020AJ....159...51K,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2020AJ....159...51K},
+ archiveprefix = {arXiv},
+ author = {{Kilpatrick}, Brian M. and {Kataria}, Tiffany and {Lewis}, Nikole K. and {Zellem}, Robert T. and {Henry}, Gregory W. and {Cowan}, Nicolas B. and {de Wit}, Julien and {Fortney}, Jonathan J. and {Knutson}, Heather and {Seager}, Sara and {Showman}, Adam P. and {Tucker}, Gregory S.},
+ doi = {10.3847/1538-3881/ab6223},
+ eid = {51},
+ eprint = {1904.02294},
+ journal = {\aj},
+ keywords = {Exoplanet atmospheres, Exoplanet atmospheric variability, Exoplanet astronomy, Exoplanet structure, 487, 2020, 486, 495, Astrophysics - Earth and Planetary Astrophysics},
+ month = {February},
+ number = {2},
+ pages = {51},
+ primaryclass = {astro-ph.EP},
+ title = {{Evaluating Climate Variability of the Canonical Hot-Jupiters HD 189733b and HD 209458b through Multi-epoch Eclipse Observations}},
+ volume = {159},
+ year = {2020}
+}
+
 @article{2020AJ....159..123A,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
  adsurl = {https://ui.adsabs.harvard.edu/abs/2020AJ....159..123A},
@@ -1816,6 +2712,25 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  pages = {17},
  primaryclass = {astro-ph.EP},
  title = {{One Planet or Two Planets? The Ultra-sensitive Extreme-magnification Microlensing Event KMT-2019-BLG-1953}},
+ volume = {160},
+ year = {2020}
+}
+
+@article{2020AJ....160..123J,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2020AJ....160..123J},
+ archiveprefix = {arXiv},
+ author = {{Johnson}, Samson A. and {Penny}, Matthew and {Gaudi}, B. Scott and {Kerins}, Eamonn and {Rattenbury}, Nicholas J. and {Robin}, Annie C. and {Calchi Novati}, Sebastiano and {Henderson}, Calen B.},
+ doi = {10.3847/1538-3881/aba75b},
+ eid = {123},
+ eprint = {2006.10760},
+ journal = {\aj},
+ keywords = {Gravitational microlensing, Free floating planets, Space telescopes, Exoplanet detection methods, 672, 549, 1547, 489, Astrophysics - Earth and Planetary Astrophysics, Astrophysics - Astrophysics of Galaxies, Astrophysics - Instrumentation and Methods for Astrophysics, Astrophysics - Solar and Stellar Astrophysics},
+ month = {September},
+ number = {3},
+ pages = {123},
+ primaryclass = {astro-ph.EP},
+ title = {{Predictions of the Nancy Grace Roman Space Telescope Galactic Exoplanet Survey. II. Free-floating Planet Detection Rates}},
  volume = {160},
  year = {2020}
 }
@@ -1871,6 +2786,38 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  pages = {arXiv:2007.15057},
  primaryclass = {math.NA},
  title = {{Tanh-sinh quadrature for single and multiple integration using floating-point arithmetic}},
+ year = {2020}
+}
+
+@article{2020Icar..34113607M,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2020Icar..34113607M},
+ author = {{Mura}, A. and {Adriani}, A. and {Tosi}, F. and {Lopes}, R.~M.~C. and {Sindoni}, G. and {Filacchione}, G. and {Williams}, D.~A. and {Davies}, A.~G. and {Plainaki}, C. and {Bolton}, S. and {Altieri}, F. and {Cicchetti}, A. and {Grassi}, D. and {Migliorini}, A. and {Moriconi}, M.~L. and {Noschese}, R. and {Olivieri}, A. and {Piccioni}, G. and {Sordini}, R.},
+ doi = {10.1016/j.icarus.2019.113607},
+ eid = {113607},
+ journal = {\icarus},
+ month = {May},
+ pages = {113607},
+ title = {{Infrared observations of Io from Juno}},
+ volume = {341},
+ year = {2020}
+}
+
+@article{2020MNRAS.493.3132S,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2020MNRAS.493.3132S},
+ archiveprefix = {arXiv},
+ author = {{Speagle}, Joshua S.},
+ doi = {10.1093/mnras/staa278},
+ eprint = {1904.02180},
+ journal = {\mnras},
+ keywords = {methods: data analysis, methods: statistical, Astrophysics - Instrumentation and Methods for Astrophysics, Statistics - Computation},
+ month = {April},
+ number = {3},
+ pages = {3132-3158},
+ primaryclass = {astro-ph.IM},
+ title = {{DYNESTY: a dynamic nested sampling package for estimating Bayesian posteriors and evidences}},
+ volume = {493},
  year = {2020}
 }
 
@@ -1949,6 +2896,25 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {2021}
 }
 
+@article{2021AJ....162..123L,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2021AJ....162..123L},
+ archiveprefix = {arXiv},
+ author = {{Luger}, Rodrigo and {Foreman-Mackey}, Daniel and {Hedges}, Christina and {Hogg}, David W.},
+ doi = {10.3847/1538-3881/abfdb8},
+ eid = {123},
+ eprint = {2102.00007},
+ journal = {\aj},
+ keywords = {Time series analysis, Light curves, Stellar surfaces, Starspots, 1916, 918, 1632, 1572, Astrophysics - Solar and Stellar Astrophysics, Astrophysics - Instrumentation and Methods for Astrophysics},
+ month = {September},
+ number = {3},
+ pages = {123},
+ primaryclass = {astro-ph.SR},
+ title = {{Mapping Stellar Surfaces. I. Degeneracies in the Rotational Light-curve Problem}},
+ volume = {162},
+ year = {2021}
+}
+
 @article{2021AJ....162..124L,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
  adsurl = {https://ui.adsabs.harvard.edu/abs/2021AJ....162..124L},
@@ -1965,6 +2931,22 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  primaryclass = {astro-ph.SR},
  title = {{Mapping Stellar Surfaces. II. An Interpretable Gaussian Process Model for Light Curves}},
  volume = {162},
+ year = {2021}
+}
+
+@article{2021ApJ...913L..32C,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2021ApJ...913L..32C},
+ author = {{Cho}, James Y. -K. and {Skinner}, Jack W. and {Thrastarson}, Heidar Th.},
+ doi = {10.3847/2041-8213/abfd37},
+ eid = {L32},
+ journal = {\apjl},
+ keywords = {Exoplanet atmospheres, Exoplanet atmospheric variability, Exoplanets, Hydrodynamics, Hydrodynamical simulations, Planetary atmospheres, Internal waves, Exoplanet detection methods, Hot Jupiters, Planetary climates, 487, 2020, 498, 963, 767, 1244, 819, 489, 753, 2184},
+ month = {June},
+ number = {2},
+ pages = {L32},
+ title = {{Storms, Variability, and Multiple Equilibria on Hot Jupiters}},
+ volume = {913},
  year = {2021}
 }
 
@@ -2000,6 +2982,40 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  pages = {arXiv:2110.06271},
  primaryclass = {astro-ph.SR},
  title = {{Mapping stellar surfaces III: An Efficient, Scalable, and Open-Source Doppler Imaging Model}},
+ year = {2021}
+}
+
+@article{2021arXiv211105803M,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2021arXiv211105803M},
+ archiveprefix = {arXiv},
+ author = {{Metz}, Luke and {Freeman}, C. Daniel and {Schoenholz}, Samuel S. and {Kachman}, Tal},
+ eid = {arXiv:2111.05803},
+ eprint = {2111.05803},
+ journal = {arXiv e-prints},
+ keywords = {Computer Science - Machine Learning, Statistics - Machine Learning},
+ month = {November},
+ pages = {arXiv:2111.05803},
+ primaryclass = {cs.LG},
+ title = {{Gradients are Not All You Need}},
+ year = {2021}
+}
+
+@article{2021ChEG...81l5735C,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2021ChEG...81l5735C},
+ archiveprefix = {arXiv},
+ author = {{Chao}, Keng-Hsien and {deGraffenried}, Rebecca and {Lach}, Mackenzie and {Nelson}, William and {Truax}, Kelly and {Gaidos}, Eric},
+ doi = {10.1016/j.chemer.2020.125735},
+ eprint = {2012.07337},
+ journal = {Chemie der Erde / Geochemistry},
+ keywords = {Astrophysics - Earth and Planetary Astrophysics},
+ month = {May},
+ number = {2},
+ pages = {125735},
+ primaryclass = {astro-ph.EP},
+ title = {{Lava worlds: From early earth to exoplanets}},
+ volume = {81},
  year = {2021}
 }
 
@@ -2059,6 +3075,24 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {2021}
 }
 
+@article{2021MNRAS.504.5172S,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2021MNRAS.504.5172S},
+ archiveprefix = {arXiv},
+ author = {{Skinner}, J.~W. and {Cho}, J.~Y. -K.},
+ doi = {10.1093/mnras/stab971},
+ eprint = {2010.09695},
+ journal = {\mnras},
+ keywords = {hydrodynamics, turbulence, methods: numerical, planets and satellites: atmospheres, Astrophysics - Earth and Planetary Astrophysics, Physics - Fluid Dynamics},
+ month = {July},
+ number = {4},
+ pages = {5172-5187},
+ primaryclass = {astro-ph.EP},
+ title = {{Numerical convergence of hot-Jupiter atmospheric flow solutions}},
+ volume = {504},
+ year = {2021}
+}
+
 @article{2021Natur.596..583J,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
  adsurl = {https://ui.adsabs.harvard.edu/abs/2021Natur.596..583J},
@@ -2085,6 +3119,25 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  title = {{Advancing mathematics by guiding human intuition with AI}},
  volume = {600},
  year = {2021}
+}
+
+@article{2022AJ....164....4L,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2022AJ....164....4L},
+ archiveprefix = {arXiv},
+ author = {{Luger}, Rodrigo and {Agol}, Eric and {Bartoli{\'c}}, Fran and {Foreman-Mackey}, Daniel},
+ doi = {10.3847/1538-3881/ac4017},
+ eid = {4},
+ eprint = {2103.06275},
+ journal = {\aj},
+ keywords = {Exoplanets, Light curves, Occultation, Eclipses, Analytical mathematics, 498, 918, 1148, 442, 38, Astrophysics - Earth and Planetary Astrophysics, Astrophysics - Instrumentation and Methods for Astrophysics},
+ month = {July},
+ number = {1},
+ pages = {4},
+ primaryclass = {astro-ph.EP},
+ title = {{Analytic Light Curves in Reflected Light: Phase Curves, Occultations, and Non-Lambertian Scattering for Spherical Planets and Moons}},
+ volume = {164},
+ year = {2022}
 }
 
 @article{2022ApJ...925..185D,
@@ -2164,17 +3217,38 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
 
 @article{2022arXiv220306637S,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
- adsurl = {https://ui.adsabs.harvard.edu/abs/2022arXiv220306637S},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2022ApJ...937...63S},
  archiveprefix = {arXiv},
  author = {{Sugiyama}, Sunao},
- eid = {arXiv:2203.06637},
+ doi = {10.3847/1538-4357/ac8df1},
+ eid = {63},
  eprint = {2203.06637},
- journal = {arXiv e-prints},
- keywords = {Astrophysics - Instrumentation and Methods for Astrophysics, Astrophysics - Astrophysics of Galaxies},
- month = {March},
- pages = {arXiv:2203.06637},
+ journal = {\apj},
+ keywords = {Gravitational microlensing, Publicly available software, 672, 1864, Astrophysics - Instrumentation and Methods for Astrophysics, Astrophysics - Astrophysics of Galaxies},
+ month = {October},
+ number = {2},
+ pages = {63},
  primaryclass = {astro-ph.IM},
- title = {{FFT based evaluation of microlensing magnification with extended source}},
+ title = {{Fast Fourier Transformation Based Evaluation of Microlensing Magnification with Extended Source}},
+ volume = {937},
+ year = {2022}
+}
+
+@article{2022MNRAS.511.3584S,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2022MNRAS.511.3584S},
+ archiveprefix = {arXiv},
+ author = {{Skinner}, J.~W. and {Cho}, J.~Y. -K.},
+ doi = {10.1093/mnras/stab2809},
+ eprint = {2109.06568},
+ journal = {\mnras},
+ keywords = {hydrodynamics, turbulence, waves, methods: numerical, planets and satellites: atmospheres, Astrophysics - Earth and Planetary Astrophysics},
+ month = {April},
+ number = {3},
+ pages = {3584-3601},
+ primaryclass = {astro-ph.EP},
+ title = {{Modons on tidally synchronized extrasolar planets}},
+ volume = {511},
  year = {2022}
 }
 
@@ -2196,6 +3270,24 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {2022}
 }
 
+@article{2022MNRAS.514.4845K,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2022MNRAS.514.4845K},
+ archiveprefix = {arXiv},
+ author = {{Kaczmarek}, Zofia and {McGill}, Peter and {Evans}, N. Wyn and {Smith}, Leigh C. and {Wyrzykowski}, {\L}ukasz and {Howil}, Kornel and {Jab{\l}o{\'n}ska}, Maja},
+ doi = {10.1093/mnras/stac1507},
+ eprint = {2205.07922},
+ journal = {\mnras},
+ keywords = {gravitational lensing: micro, stars: neutron, white dwarfs, galaxy: bulge, galaxy: structure, Astrophysics - Astrophysics of Galaxies},
+ month = {August},
+ number = {4},
+ pages = {4845-4860},
+ primaryclass = {astro-ph.GA},
+ title = {{Dark lenses through the dust: parallax microlensing events in the VVV}},
+ volume = {514},
+ year = {2022}
+}
+
 @article{2022PSJ.....3...67B,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
  adsurl = {https://ui.adsabs.harvard.edu/abs/2022PSJ.....3...67B},
@@ -2213,6 +3305,41 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  title = {{Occultation Mapping of Io's Surface in the Near-infrared. I. Inferring Static Maps}},
  volume = {3},
  year = {2022}
+}
+
+@article{aizawa2020,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2020ApJ...896...22A},
+ archiveprefix = {arXiv},
+ author = {{Aizawa}, Masataka and {Kawahara}, Hajime and {Fan}, Siteng},
+ doi = {10.3847/1538-4357/ab8d30},
+ eid = {22},
+ eprint = {2004.03941},
+ journal = {\apj},
+ keywords = {Exoplanet astronomy, Astrobiology, Direct imaging, 486, 74, 387, Astrophysics - Earth and Planetary Astrophysics, Astrophysics - Instrumentation and Methods for Astrophysics},
+ month = {June},
+ number = {1},
+ pages = {22},
+ primaryclass = {astro-ph.EP},
+ title = {{Global Mapping of an Exo-Earth Using Sparse Modeling}},
+ volume = {896},
+ year = {2020}
+}
+
+@article{arviz_2019,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2019JOSS....4.1143K},
+ author = {{Kumar}, Ravin and {Carroll}, Colin and {Hartikainen}, Ari and {Martin}, Osvaldo},
+ doi = {10.21105/joss.01143},
+ eid = {1143},
+ journal = {The Journal of Open Source Software},
+ keywords = {Python, Visualization, Bayesian statistics, R, Probabilistic programming},
+ month = {January},
+ number = {33},
+ pages = {1143},
+ title = {{ArviZ a unified library for exploratory analysis of Bayesian models in Python}},
+ volume = {4},
+ year = {2019}
 }
 
 @article{arXiv:0809.3437,
@@ -2546,6 +3673,22 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {2017}
 }
 
+@article{arXiv:1804.05110,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2018arXiv180405110H},
+ archiveprefix = {arXiv},
+ author = {{Henning}, Wade G. and {Renaud}, Joseph P. and {Saxena}, Prabal and {Whelley}, Patrick L. and {Mandell}, Avi M. and {Matsumura}, Soko and {Glaze}, Lori S. and {Hurford}, Terry A. and {Livengood}, Timothy A. and {Hamilton}, Christopher W. and {Efroimsky}, Michael and {Makarov}, Valeri V. and {Berghea}, Ciprian T. and {Guzewich}, Scott D. and {Tsigaridis}, Kostas and {Arney}, Giada N. and {Cremons}, Daniel R. and {Kane}, Stephen R. and {Bleacher}, Jacob E. and {Kopparapu}, Ravi K. and {Kohler}, Erika and {Lee}, Yuni and {Rushby}, Andrew and {Kuang}, Weijia and {Barnes}, Rory and {Richardson}, Jacob A. and {Driscoll}, Peter and {Schmerr}, Nicholas C. and {Del Genio}, Anthony D. and {Davies}, Ashley Gerard and {Kaltenegger}, Lisa and {Elkins-Tanton}, Linda and {Fujii}, Yuka and {Schaefer}, Laura and {Ranjan}, Sukrit and {Quintana}, Elisa and {Barclay}, Thomas S. and {Hamano}, Keiko and {Petro}, Noah E. and {Kendall}, Jordan D. and {Lopez}, Eric D. and {Sasselov}, Dimitar D.},
+ eid = {arXiv:1804.05110},
+ eprint = {1804.05110},
+ journal = {arXiv e-prints},
+ keywords = {Astrophysics - Earth and Planetary Astrophysics, Physics - Atmospheric and Oceanic Physics, Physics - Geophysics},
+ month = {April},
+ pages = {arXiv:1804.05110},
+ primaryclass = {astro-ph.EP},
+ title = {{Highly Volcanic Exoplanets, Lava Worlds, and Magma Ocean Worlds: An Emerging Class of Dynamic Exoplanets of Significant Scientific Priority}},
+ year = {2018}
+}
+
 @article{arXiv:1804.06406,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
  adsurl = {https://ui.adsabs.harvard.edu/abs/2019MNRAS.483.2044H},
@@ -2596,6 +3739,22 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {2018}
 }
 
+@article{arXiv:1810.05374,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2018arXiv181005374V},
+ archiveprefix = {arXiv},
+ author = {{Vehtari}, Aki and {Simpson}, Daniel P. and {Yao}, Yuling and {Gelman}, Andrew},
+ eid = {arXiv:1810.05374},
+ eprint = {1810.05374},
+ journal = {arXiv e-prints},
+ keywords = {Statistics - Methodology, Mathematics - Statistics Theory, Statistics - Computation},
+ month = {October},
+ pages = {arXiv:1810.05374},
+ primaryclass = {stat.ME},
+ title = {{Limitations of ``Limitations of Bayesian leave-one-out cross-validation for model selection''}},
+ year = {2018}
+}
+
 @article{arXiv:1810.10559,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
  adsurl = {https://ui.adsabs.harvard.edu/abs/2018arXiv181010559B},
@@ -2628,6 +3787,22 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {2019}
 }
 
+@article{arXiv:1903.03704,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2019arXiv190303704H},
+ archiveprefix = {arXiv},
+ author = {{Hoffman}, Matthew and {Sountsov}, Pavel and {Dillon}, Joshua V. and {Langmore}, Ian and {Tran}, Dustin and {Vasudevan}, Srinivas},
+ eid = {arXiv:1903.03704},
+ eprint = {1903.03704},
+ journal = {arXiv e-prints},
+ keywords = {Statistics - Computation, Statistics - Machine Learning},
+ month = {March},
+ pages = {arXiv:1903.03704},
+ primaryclass = {stat.CO},
+ title = {{NeuTra-lizing Bad Geometry in Hamiltonian Monte Carlo Using Neural Transport}},
+ year = {2019}
+}
+
 @article{arXiv:1903.08008,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
  adsurl = {https://ui.adsabs.harvard.edu/abs/2019arXiv190308008V},
@@ -2642,24 +3817,6 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  primaryclass = {stat.CO},
  title = {{Rank-normalization, folding, and localization: An improved $\widehat{R}$ for assessing convergence of MCMC}},
  year = {2019}
-}
-
-@article{arXiv:1904.02180,
- adsnote = {Provided by the SAO/NASA Astrophysics Data System},
- adsurl = {https://ui.adsabs.harvard.edu/abs/2020MNRAS.493.3132S},
- archiveprefix = {arXiv},
- author = {{Speagle}, Joshua S.},
- doi = {10.1093/mnras/staa278},
- eprint = {1904.02180},
- journal = {\mnras},
- keywords = {methods: data analysis, methods: statistical, Astrophysics - Instrumentation and Methods for Astrophysics, Statistics - Computation},
- month = {April},
- number = {3},
- pages = {3132-3158},
- primaryclass = {astro-ph.IM},
- title = {{DYNESTY: a dynamic nested sampling package for estimating Bayesian posteriors and evidences}},
- volume = {493},
- year = {2020}
 }
 
 @article{arXiv:1910.09407,
@@ -2710,6 +3867,22 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  pages = {arXiv:1912.04232},
  primaryclass = {physics.comp-ph},
  title = {{JAX, M.D.: A Framework for Differentiable Physics}},
+ year = {2019}
+}
+
+@article{arXiv:1912.11218v2,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2019arXiv191211218Y},
+ archiveprefix = {arXiv},
+ author = {{Yao}, Yuling},
+ eid = {arXiv:1912.11218},
+ eprint = {1912.11218},
+ journal = {arXiv e-prints},
+ keywords = {Statistics - Methodology},
+ month = {December},
+ pages = {arXiv:1912.11218},
+ primaryclass = {stat.ME},
+ title = {{Bayesian Aggregation}},
  year = {2019}
 }
 
@@ -2774,6 +3947,38 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  pages = {arXiv:2006.11287},
  primaryclass = {cs.LG},
  title = {{Discovering Symbolic Models from Deep Learning with Inductive Biases}},
+ year = {2020}
+}
+
+@article{arXiv:2006.12335,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2020arXiv200612335Y},
+ archiveprefix = {arXiv},
+ author = {{Yao}, Yuling and {Vehtari}, Aki and {Gelman}, Andrew},
+ eid = {arXiv:2006.12335},
+ eprint = {2006.12335},
+ journal = {arXiv e-prints},
+ keywords = {Statistics - Methodology, Statistics - Machine Learning},
+ month = {June},
+ pages = {arXiv:2006.12335},
+ primaryclass = {stat.ME},
+ title = {{Stacking for Non-mixing Bayesian Computations: The Curse and Blessing of Multimodal Posteriors}},
+ year = {2020}
+}
+
+@article{arXiv:2008.10296,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2020arXiv200810296S},
+ archiveprefix = {arXiv},
+ author = {{Sivula}, Tuomas and {Magnusson}, M{\r{a}}ns and {Alonzo Matamoros}, Asael and {Vehtari}, Aki},
+ eid = {arXiv:2008.10296},
+ eprint = {2008.10296},
+ journal = {arXiv e-prints},
+ keywords = {Statistics - Methodology},
+ month = {August},
+ pages = {arXiv:2008.10296},
+ primaryclass = {stat.ME},
+ title = {{Uncertainty in Bayesian Leave-One-Out Cross-Validation Based Model Comparison}},
  year = {2020}
 }
 
@@ -2895,6 +4100,25 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {2021}
 }
 
+@article{arXiv:2110.08159,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2022AJ....163..117C},
+ archiveprefix = {arXiv},
+ author = {{Challener}, Ryan C. and {Rauscher}, Emily},
+ doi = {10.3847/1538-3881/ac4885},
+ eid = {117},
+ eprint = {2110.08159},
+ journal = {\aj},
+ keywords = {498, 918, 1858, 487, 753, 1889, 1900, Astrophysics - Earth and Planetary Astrophysics, Astrophysics - Instrumentation and Methods for Astrophysics},
+ month = {March},
+ number = {3},
+ pages = {117},
+ primaryclass = {astro-ph.EP},
+ title = {{ThERESA: Three-dimensional Eclipse Mapping with Application to Synthetic JWST Data}},
+ volume = {163},
+ year = {2022}
+}
+
 @article{arXiv:2205.15570,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
  adsurl = {https://ui.adsabs.harvard.edu/abs/2022arXiv220515570A},
@@ -2998,22 +4222,48 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {2019}
 }
 
-@article{deWit:2012,
+@article{carvalho2010,
+ abstract = {This paper proposes a new approach to sparsity, called the horseshoe estimator, which arises from a prior based on multivariate-normal scale mixtures. We describe the estimator's advantages over existing approaches, including its robustness, adaptivity to different sparsity patterns and analytical tractability. We prove two theorems: one that characterizes the horseshoe estimator's tail robustness and the other that demonstrates a super-efficient rate of convergence to the correct estimate of the sampling density in sparse situations. Finally, using both real and simulated data, we show that the horseshoe estimator corresponds quite closely to the answers obtained by Bayesian model averaging under a point-mass mixture prior. Copyright 2010, Oxford University Press.},
+ author = {Carvalho, Carlos M. and Polson, Nicholas G. and Scott, James G.},
+ journal = {Biometrika},
+ number = {2},
+ pages = {465-480},
+ title = {The horseshoe estimator for sparse signals},
+ url = {https://EconPapers.repec.org/RePEc:oup:biomet:v:97:y:2010:i:2:p:465-480},
+ volume = {97},
+ year = {2010}
+}
+
+@article{demory2016a,
  adsnote = {Provided by the SAO/NASA Astrophysics Data System},
- adsurl = {https://ui.adsabs.harvard.edu/abs/2012A&A...548A.128D},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2016Natur.532..207D},
  archiveprefix = {arXiv},
- author = {{de Wit}, J. and {Gillon}, M. and {Demory}, B. -O. and {Seager}, S.},
- doi = {10.1051/0004-6361/201219060},
- eid = {A128},
- eprint = {1202.3829},
- journal = {\aap},
- keywords = {Eclipses, planets and satellites: individual: HD 189733b, techniques: photometric, Astrophysics - Earth and Planetary Astrophysics},
- month = {December},
- pages = {A128},
+ author = {{Demory}, Brice-Olivier and {Gillon}, Michael and {de Wit}, Julien and {Madhusudhan}, Nikku and {Bolmont}, Emeline and {Heng}, Kevin and {Kataria}, Tiffany and {Lewis}, Nikole and {Hu}, Renyu and {Krick}, Jessica and {Stamenkovi{\'c}}, Vlada and {Benneke}, Bj{\"o}rn and {Kane}, Stephen and {Queloz}, Didier},
+ doi = {10.1038/nature17169},
+ eprint = {1604.05725},
+ journal = {\nat},
+ keywords = {Astrophysics - Earth and Planetary Astrophysics},
+ month = {April},
+ number = {7598},
+ pages = {207-209},
  primaryclass = {astro-ph.EP},
- title = {{Towards consistent mapping of distant worlds: secondary-eclipse scanning of the exoplanet HD 189733b}},
- volume = {548},
- year = {2012}
+ title = {{A map of the large day-night temperature gradient of a super-Earth exoplanet}},
+ volume = {532},
+ year = {2016}
+}
+
+@article{doi:10.1073/pnas.1712673115,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2018PNAS..115.1854Y},
+ author = {{Yang}, Ziheng and {Zhu}, Tianqi},
+ doi = {10.1073/pnas.1712673115},
+ journal = {Proceedings of the National Academy of Science},
+ month = {February},
+ number = {8},
+ pages = {1854-1859},
+ title = {{Bayesian selection of misspecified models is overconfident and may cause spurious posterior probabilities for phylogenetic trees}},
+ volume = {115},
+ year = {2018}
 }
 
 @article{dominik1999,
@@ -3090,12 +4340,87 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {2022}
 }
 
+@article{hogg2021,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2021PASP..133i3001H},
+ archiveprefix = {arXiv},
+ author = {{Hogg}, David W. and {Villar}, Soledad},
+ doi = {10.1088/1538-3873/ac20ac},
+ eid = {093001},
+ eprint = {2101.07256},
+ journal = {\pasp},
+ keywords = {Regression, Linear regression, Gaussian Processes regression, Physics - Data Analysis, Statistics and Probability, Astrophysics - Instrumentation and Methods for Astrophysics, Computer Science - Machine Learning},
+ month = {September},
+ number = {1027},
+ pages = {093001},
+ primaryclass = {physics.data-an},
+ title = {{Fitting Very Flexible Models: Linear Regression With Large Numbers of Parameters}},
+ volume = {133},
+ year = {2021}
+}
+
+@article{https://arxiv.org/abs/1005.3021,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2010MNRAS.407.1597L},
+ archiveprefix = {arXiv},
+ author = {{Lee}, C.~H. and {Seitz}, S. and {Riffeser}, A. and {Bender}, R.},
+ doi = {10.1111/j.1365-2966.2010.17049.x},
+ eprint = {1005.3021},
+ journal = {\mnras},
+ keywords = {gravitational lensing: micro, astrometry, dark matter, Astrophysics - Cosmology and Nongalactic Astrophysics, Astrophysics - Astrophysics of Galaxies},
+ month = {September},
+ number = {3},
+ pages = {1597-1608},
+ primaryclass = {astro-ph.CO},
+ title = {{Finite-source and finite-lens effects in astrometric microlensing}},
+ volume = {407},
+ year = {2010}
+}
+
+@article{https://arxiv.org/abs/2206.08199,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2022AJ....164..192Z},
+ archiveprefix = {arXiv},
+ author = {{Zhao}, Haimeng and {Zhu}, Wei},
+ doi = {10.3847/1538-3881/ac9230},
+ eid = {192},
+ eprint = {2206.08199},
+ journal = {\aj},
+ keywords = {Neural networks, Time series analysis, Gravitational microlensing exoplanet detection, Binary lens microlensing, 1933, 1916, 2147, 2136, Astrophysics - Instrumentation and Methods for Astrophysics, Astrophysics - Earth and Planetary Astrophysics, Astrophysics - Solar and Stellar Astrophysics, Computer Science - Machine Learning, Physics - Data Analysis, Statistics and Probability},
+ month = {November},
+ number = {5},
+ pages = {192},
+ primaryclass = {astro-ph.IM},
+ title = {{MAGIC: Microlensing Analysis Guided by Intelligent Computation}},
+ volume = {164},
+ year = {2022}
+}
+
 @misc{loo_package,
  author = {Aki Vehtari and Jonah Gabry and Mans Magnusson and Yuling Yao and Paul-Christian Bürkner and Topi Paananen and Andrew Gelman},
  note = {R package version 2.5.0},
  title = {loo: Efficient leave-one-out cross-validation and WAIC for Bayesian models},
  url = {https://mc-stan.org/loo/},
  year = {2022}
+}
+
+@article{luger2019a,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2019AJ....157...64L},
+ archiveprefix = {arXiv},
+ author = {{Luger}, Rodrigo and {Agol}, Eric and {Foreman-Mackey}, Daniel and {Fleming}, David P. and {Lustig-Yaeger}, Jacob and {Deitrick}, Russell},
+ doi = {10.3847/1538-3881/aae8e5},
+ eid = {64},
+ eprint = {1810.06559},
+ journal = {\aj},
+ keywords = {eclipses, methods: analytical, occultations, techniques: photometric, Astrophysics - Instrumentation and Methods for Astrophysics, Astrophysics - Earth and Planetary Astrophysics, Astrophysics - Solar and Stellar Astrophysics},
+ month = {February},
+ number = {2},
+ pages = {64},
+ primaryclass = {astro-ph.IM},
+ title = {{starry: Analytic Occultation Light Curves}},
+ volume = {157},
+ year = {2019}
 }
 
 @book{mcdougall2014,
@@ -3157,6 +4482,38 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {1704}
 }
 
+@inproceedings{pmlr-v80-yao18a,
+ abstract = {While it’s always possible to compute a variational approximation to a posterior distribution, it can be difficult to discover problems with this approximation. We propose two diagnostic algorithms to alleviate this problem. The Pareto-smoothed importance sampling (PSIS) diagnostic gives a goodness of fit measurement for joint distributions, while simultaneously improving the error in the estimate. The variational simulation-based calibration (VSBC) assesses the average performance of point estimates.},
+ author = {Yao, Yuling and Vehtari, Aki and Simpson, Daniel and Gelman, Andrew},
+ booktitle = {Proceedings of the 35th International Conference on Machine Learning},
+ editor = {Dy, Jennifer and Krause, Andreas},
+ month = {10--15 Jul},
+ pages = {5581--5590},
+ pdf = {http://proceedings.mlr.press/v80/yao18a/yao18a.pdf},
+ publisher = {PMLR},
+ series = {Proceedings of Machine Learning Research},
+ title = {Yes, but Did It Work?: Evaluating Variational Inference},
+ url = {https://proceedings.mlr.press/v80/yao18a.html},
+ volume = {80},
+ year = {2018}
+}
+
+@inproceedings{pmlr-v97-magnusson19a,
+ abstract = {Model inference, such as model comparison, model checking, and model selection, is an important part of model development. Leave-one-out cross-validation (LOO) is a general approach for assessing the generalizability of a model, but unfortunately, LOO does not scale well to large datasets. We propose a combination of using approximate inference techniques and probability-proportional-to-size-sampling (PPS) for fast LOO model evaluation for large datasets. We provide both theoretical and empirical results showing good properties for large data.},
+ author = {Magnusson, M{\aa}ns and Andersen, Michael and Jonasson, Johan and Vehtari, Aki},
+ booktitle = {Proceedings of the 36th International Conference on Machine Learning},
+ editor = {Chaudhuri, Kamalika and Salakhutdinov, Ruslan},
+ month = {09--15 Jun},
+ pages = {4244--4253},
+ pdf = {http://proceedings.mlr.press/v97/magnusson19a/magnusson19a.pdf},
+ publisher = {PMLR},
+ series = {Proceedings of Machine Learning Research},
+ title = {{B}ayesian leave-one-out cross-validation for large data},
+ url = {https://proceedings.mlr.press/v97/magnusson19a.html},
+ volume = {97},
+ year = {2019}
+}
+
 @incollection{pytorch,
  author = {Paszke, Adam and Gross, Sam and Massa, Francisco and Lerer, Adam and Bradbury, James and Chanan, Gregory and Killeen, Trevor and Lin, Zeming and Gimelshein, Natalia and Antiga, Luca and Desmaison, Alban and Kopf, Andreas and Yang, Edward and DeVito, Zachary and Raison, Martin and Tejani, Alykhan and Chilamkurthy, Sasank and Steiner, Benoit and Fang, Lu and Bai, Junjie and Chintala, Soumith},
  booktitle = {Advances in Neural Information Processing Systems 32},
@@ -3166,6 +4523,15 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  title = {PyTorch: An Imperative Style, High-Performance Deep Learning Library},
  url = {http://papers.neurips.cc/paper/9015-pytorch-an-imperative-style-high-performance-deep-learning-library.pdf},
  year = {2019}
+}
+
+@phdthesis{rajpaul2012,
+ abstract = {This dissertation presents a new algorithm that was developed to perform autonomous fitting of gravitational microlensing lightcurves. The algorithm combines features of extant evolutionary algorithms with some novel ones, and fares well on the problem of fitting  binary lens microlensing lightcurves, as well as on a number of other difficult optimisation problems. Furthermore, the new algorithm is conceptually simple, versatile and robust, and parallelises trivially.},
+ author = {Rajpaul, Vinesh},
+ publisher = {University of Cape Town},
+ title = {A novel algorithm for analysing gravitational microlensing events},
+ url = {http://hdl.handle.net/11427/11219},
+ year = {2012}
 }
 
 @book{rasmussen2006,
@@ -3181,6 +4547,22 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  year = {2006}
 }
 
+@article{rathbun2002,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2002GeoRL..29.1443R},
+ author = {{Rathbun}, J.~A. and {Spencer}, J.~R. and {Davies}, A.~G. and {Howell}, R.~R. and {Wilson}, L.},
+ doi = {10.1029/2002GL014747},
+ eid = {1443},
+ journal = {\grl},
+ keywords = {Volcanology: Eruption mechanisms, Planetology: Solar System Objects: Jovian satellites, Planetary Sciences: Remote sensing, Planetary Sciences: Volcanism (8450), Planetary Sciences: Heat flow},
+ month = {May},
+ number = {10},
+ pages = {1443},
+ title = {{Loki, Io: A periodic volcano}},
+ volume = {29},
+ year = {2002}
+}
+
 @article{Renn1997,
  abstract = {Gravitational lensing, now taken as an important astrophysical consequence of the general theory of relativity, was found even before this theory was formulated but was discarded as a speculative idea without any chance of empirical confirmation. Reconstruction of some of Einstein's research notes dating back to 1912 reveals that he explored the possibility of gravitational lensing 3 years before completing his general theory of relativity. On the basis of preliminary insights into this theory, Einstein had already derived the basic features of the lensing effect. When he finally published the very same results 24 years later, it was only in response to prodding by an amateur scientist.},
  author = {Jurgen Renn and Tilman Sauer and John Stachel},
@@ -3194,6 +4576,43 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  urldate = {2022-05-19},
  volume = {275},
  year = {1997}
+}
+
+@article{samuel2014,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2014A&A...563A.103S},
+ archiveprefix = {arXiv},
+ author = {{Samuel}, B. and {Leconte}, J. and {Rouan}, D. and {Forget}, F. and {L{\'e}ger}, A. and {Schneider}, J.},
+ doi = {10.1051/0004-6361/201321039},
+ eid = {A103},
+ eprint = {1402.6637},
+ journal = {\aap},
+ keywords = {planets and satellites: atmospheres, planet-star interactions, planets and satellites: physical evolution, planets and satellites: fundamental parameters, planets and satellites: composition, planets and satellites: surfaces, Astrophysics - Earth and Planetary Astrophysics},
+ month = {March},
+ pages = {A103},
+ primaryclass = {astro-ph.EP},
+ title = {{Constraining physics of very hot super-Earths with the James Webb Telescope. The case of CoRot-7b}},
+ volume = {563},
+ year = {2014}
+}
+
+@article{showman2020,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2020SSRv..216..139S},
+ archiveprefix = {arXiv},
+ author = {{Showman}, Adam P. and {Tan}, Xianyu and {Parmentier}, Vivien},
+ doi = {10.1007/s11214-020-00758-8},
+ eid = {139},
+ eprint = {2007.15363},
+ journal = {\ssr},
+ keywords = {Exoplanets, Giant planets, Hot Jupiters, Jupiter, Saturn, Brown dwarfs, Atmospheric dynamics, Turbulence, Astrophysics - Earth and Planetary Astrophysics, Astrophysics - Solar and Stellar Astrophysics},
+ month = {December},
+ number = {8},
+ pages = {139},
+ primaryclass = {astro-ph.EP},
+ title = {{Atmospheric Dynamics of Hot Giant Planets and Brown Dwarfs}},
+ volume = {216},
+ year = {2020}
 }
 
 @incollection{sokal1997,
@@ -3226,6 +4645,38 @@ SymPy is an open source computer algebra system written in pure Python. It is bu
  title = {{Unbound or distant planetary mass population detected by gravitational microlensing}},
  volume = {473},
  year = {2011}
+}
+
+@article{SäilynojaBürknerVehtari2022,
+ author = {Säilynoja, Teemu and Bürkner, Paul Christian and Vehtari, Aki},
+ doi = {10.1007/s11222-022-10090-6},
+ issn = {0960-3174},
+ journal = {STATISTICS AND COMPUTING},
+ keywords = {Statistics - Methodology},
+ language = {English},
+ pages = {21},
+ title = {{Graphical test for discrete uniformity and its applications in goodness-of-fit evaluation and multiple sample comparison}},
+ url = {http://urn.fi/URN:NBN:fi:aalto-202204282899},
+ volume = {Volume 32, issue 2},
+ year = {2022}
+}
+
+@article{Vehtari2002BayesianMA,
+ author = {Aki Vehtari and Jouko Lampinen},
+ journal = {Neural Computation},
+ pages = {2439-2468},
+ title = {Bayesian Model Assessment and Comparison Using Cross-Validation Predictive Densities},
+ volume = {14},
+ year = {2002}
+}
+
+@article{vehtari2017,
+ author = {Aki Vehtari and Andrew Gelman and Jonah Gabry},
+ doi = {10.1007/s11222-016-9696-4},
+ journal = {Statistics and Computing},
+ title = {Practical Bayesian model evaluation using leave-one-out
+cross-validation and WAIC},
+ year = {2016}
 }
 
 @article{wolpert1996,
