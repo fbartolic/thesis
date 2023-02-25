@@ -62,23 +62,96 @@
 \begin{document}
 
 % Title
-\title{\vspace{-15pt}\begin{center}\includegraphics[width=0.4\linewidth]{../static/misc/logo.jpg}\end{center}
-    \vspace{20pt}
-    \begin{center}
-        School of Physics \& Astronomy
-    \end{center}
-    \vspace{20pt}
-    \begin{center}
+\title{
+        \begin{center}
         \LARGE\textbf{Probabilistic modelling of astrophysical time series:
             gravitational microlensing and occultation mapping of planets and moons}
     \end{center}
-    \vspace{20pt}
+    \vspace{15pt}
     \begin{center}
-        Supervisor: Dr. Martin Dominik
+        Fran Bartoli\'{c}
     \end{center}
+    \vspace{15pt}
+\begin{center}\includegraphics[width=0.4\linewidth]{../static/misc/logo.jpg}\end{center}
+    \vspace{10pt}
+    \begin{center}
+        School of Physics \& Astronomy
+    \end{center}
+   \vspace{20pt}
+    \begin{center}\large This thesis is submitted in partial fulfilment for the degree of \end{center}
+    \begin{center}\large Doctor of Philosophy (PhD)\end{center}
+    \begin{center}\large at the University of St Andrews \end{center}
 }
 
 \maketitle
+
+\section*{Candidate's declaration}
+I, Fran Bartoli\'{c}, do hereby certify that this thesis, submitted for the degree of $\mathrm{PhD}$, which is approximately 35,461 words in length, has been written by me, and that it is the record of work carried out by me, or principally by myself in collaboration with others as acknowledged, and that it has not been submitted in any previous application for any degree. I confirm that any appendices included in my thesis contain only material permitted by the 'Assessment of Postgraduate Research Students' policy.
+\newline
+\newline
+\noindent I was admitted as a research student at the University of St Andrews in September 2017.
+\newline
+\newline
+\noindent I received funding from an organisation or institution and have acknowledged the funder(s) in the full text of my thesis.
+
+\vspace{1cm}
+\noindent \textbf{Date}: 17.11.2022 \quad\quad \textbf{Signature of candidate}: 
+
+\section*{Supervisor's declaration}
+I hereby certify that the candidate has fulfilled the conditions of the Resolution and Regulations appropriate for the degree of $\mathrm{PhD}$ in the University of St Andrews and that the candidate is qualified to submit this thesis in application for that degree. I confirm that any appendices included in the thesis contain only material permitted by the 'Assessment of Postgraduate Research Students' policy.
+\vspace{1cm}
+
+\noindent \textbf{Date}: 17.11.2022 \quad\quad \textbf{Signature of supervisor}: 
+
+
+\section*{Permission for publication}
+In submitting this thesis to the University of St Andrews we understand that we are giving permission for it to be made available for use in accordance with the regulations of the University Library for the time being in force, subject to any copyright vested in the work not being affected thereby. We also understand, unless exempt by an award of an embargo as requested below, that the title and the abstract will be published, and that a copy of the work may be made and supplied to any bona fide library or research worker, that this thesis will be electronically accessible for personal or research use and that the library has the right to migrate this thesis into new electronic forms as required to ensure continued access to the thesis.
+\newline
+\newline
+\noindent I, Fran Bartoli\'{c}, confirm that my thesis does not contain any third-party material that requires copyright clearance.
+\newline
+\newline
+\noindent The following is an agreed request by candidate and supervisor regarding the publication of this thesis:
+\section*{Printed copy}
+No embargo on print copy.
+
+\section*{Electronic copy}
+No embargo on electronic copy.
+
+\vspace{1cm}
+
+\noindent \textbf{Date}: 17.11.2022 \quad\quad \textbf{Signature of candidate}: 
+
+\vspace{1cm}
+
+\noindent \textbf{Date}: 17.11.2022 \quad\quad \textbf{Signature of supervisor}: 
+
+\newpage
+\section*{Underpinning Research Data or Digital Outputs}
+\textbf{Candidate's declaration}\newline\newline
+I, Fran Bartoli\'{c}, hereby certify that no requirements to deposit original research data or digital outputs apply to this thesis and that, where appropriate, secondary data used have been referenced in the full text of my thesis.
+
+\vspace{1cm}
+\noindent \textbf{Date}: 17.11.2022 \quad\quad \textbf{Signature of candidate}: 
+\newpage 
+
+\section*{Acknowledgements}
+I would like to thank the following people. My supervisor, Martin Dominik, for giving me the freedom to work 
+on my own ideas and for his support throughout my PhD. 
+Rodrigo Luger and Daniel Foreman-Mackey from Flatiron institute, for teaching me how 
+to write good code and solve hard problems, and for their support and encouragement.
+All the wonderful people at the St Andrews astronomy department,
+for making my time there so enjoyable, especially my fellow PhD students.
+My family, for their support and understanding.
+
+Most of all, I would like to thank Marguerite, for bringing so much joy and happiness to 
+my life which certainly helped me through the difficult times.
+\newpage
+\subsubsection{Funding}
+I acknowledge studentship funding support from the United Kingdom Science and Technology 
+Facilities Council (STFC) and the Scottish Data-Intensive Science Triangle (ScotDIST).
+
+
 \tableofcontents
 \listoffigures
 \listoftables
@@ -86,48 +159,31 @@
 % Abstract 
 \chapter*{Abstract}
 
-Scientific progress in 21st-century astronomy research often depends on the careful 
-statistical analysis of noisy time series datasets. The process describing how these data 
-were ``generated'' consists of the physical phenomenon of interest,
-for instance, an exoplanet blocking or deflecting the light of a distant star,
-the noise introduced by the measurement process, and the presence of the Earth's 
-atmosphere. The task for the astronomer is to encode that process as best as possible 
-in an approximate \emph{model} and then ``fit'' that model to data. 
-The common theme of this thesis is building
-\emph{computational and statistical infrastructure} to do statistical 
-inference with complex astrophysical models. More specifically, 
-I worked on problems in two 
-particular domains within astronomy: gravitational microlensing and occultation/eclipse
-mapping. Both of these fields are concerned with 
-measuring the brightness of distant stars as a function of time to infer
-properties of exoplanets, stars and dark compact objects such 
-as black holes and neutron stars.
-I used recent advancements in statistics, machine learning and computer science 
-to construct a new lens through which to view some well-known problems in 
-these fields. In the context of microlensing, I have developed a new open-source package 
-\ssf{caustics}\footnote{\url{https://github.com/fbartolic/caustics}}
-for computing the magnification in single, binary, and triple-lens microlensing events
-with some notable improvements over past methods. I then tackled some foundational questions
-on the statistical analysis of single-lens and multiple-lens microlensing events.
-Using a case study format, I have developed a new paradigm for modelling degenerate 
-single-lens microlensing events such as annual parallax events. 
-I have also shown that methods for analyzing multiple-lens microlensing events
-commonly used in the literature are deeply flawed because of the non-smooth nature of the 
-problem. 
-Besides microlensing, I built models for reconstructing two-dimensional 
-emission maps of spherical bodies (residing within and outside of the Solar System)
-from one-dimensional photometric occultation light curves.
-Together with collaborators, I have developed a novel method for reconstructing spatial maps of volcanic emission on Jupiter's moon Io from 
-occultation light curves.
-I then used the same method in a much more challenging regime of exoplanet eclipse 
-mapping in ordered to
-to explore the possibility of detecting weather and climate change on Hot Jupiters 
-using simulated photometric JWST eclipse 
-light curves. I found that, unfortunately, there is very little hope of inferring anything but 
-the crudest maps of the planet's dayside emission.
+The advancement of 21st-century research in astronomy is contingent on the careful statistical analysis of 
+noisy datasets. To accomplish this, we have to model the data-generating process -- a complex
+combination of the physical phenomenon of interest and the noise introduced by the measurement process.
+The goal of the astronomer is to create an approximate model which captures the essence of this process,
+and to then "fit" that model to the data.
+In this thesis, I focus on the computational and statistical infrastructure needed for all 
+aspects of this process. 
+Specifically, I worked on problems within two domains within astronomy: gravitational microlensing and 
+occultation/eclipse mapping. In both fields the aim is to infer the properties of exoplanets, stars, and dark compact 
+objects such as black holes and neutron stars by measuring the brightness of distant stars as a function of time.
+Using recent advancements in statistics, machine learning, and computer science, I developed a new open-source 
+package called \ssf{caustics}\footnote{\url{https://github.com/fbartolic/caustics}} for computing the microlensing magnification 
+in single, binary, and triple-lens microlensing events.
+ I also tackled foundational questions on the statistical analysis of single lens and multiple-lens microlensing 
+ events, developing a new paradigm for modeling degenerate single lens microlensing events and demonstrating the flaws 
+ of commonly used methods for analyzing multiple-lens microlensing events.
+In addition, I built models for reconstructing two-dimensional emission maps of spherical bodies, exoplanets, 
+and Solar System objects from one-dimensional photometric occultation light curves. 
+I developed a novel method for reconstructing spatial maps of volcanic emission on Jupiter's moon Io from 
+occultation light curves and used the same method for exoplanet eclipse mapping to explore the possibility of 
+detecting weather and climate change on Hot Jupiters using simulated photometric JWST secondary eclipse light curves. 
 
 \newpage
 \thispagestyle{empty}
+
 
 % CHAPTER 1: Introduction
 \chapter{Introduction}
@@ -195,7 +251,7 @@ Besides the incredible progress in predicting patterns in language
 and vision, deep learning has also been used in science to solve
 the protein folding problem \citep{2021Natur.596..583J} and in mathematics 
 to discover novel conjectures and theorems
-\citet{2021Natur.600...70D}. Deep learning has been less useful in physics and
+\citep{2021Natur.600...70D}. Deep learning has been less useful in physics and
 astronomy so far. However, as I will argue in this thesis, some of the technologies
 which underlie deep learning such as automatic differentiation and GPU
 computing can be very useful for processing and understanding complex datasets in physics 
@@ -203,25 +259,15 @@ and astronomy.
 
 Another revolution of sorts is happening in the physical sciences, especially in astronomy.
 In the past two decades, there has been a substantial increase in the popularity of Bayesian
-statistics. Fig~\ref{fig:ads_keyword_bayesian} shows that the number of entries in
-the NASA/ADS database containing the keyword ``Bayesian'' each year is growing at an 
-accelerating rate. 
+statistics, as opposed to frequentist statistics. 
 Most of this thesis is devoted to the application of Bayesian methods to specific 
 astrophysical problems.
-Although these methods have been around for some time, they have only become 
-popular  recently because they have been too computationally expensive.
+Although these methods have been around for a very long time, they only started to become 
+computationally feasible relatively recently.
 
-\begin{figure}
-    \begin{centering}
-        \includegraphics[width=0.8\linewidth]{figures/ads_keyword_bayesian.pdf}
-        \caption{Number of NASA/ADS entries containing the keyword ``Bayesian'' per year.}
-        \label{fig:ads_keyword_bayesian}
-        \script{chapter_1/ads_keyword_bayesian.py}
-    \end{centering}
-\end{figure}
 
 Having situated the work presented in this thesis in the present moment and pointed
-out relevant scientific and technological in recent decades, I now focus on astronomy 
+out relevant scientific and technological developments in recent decades, I now focus on astronomy 
 in particular. The kinds of questions in astronomy that
 most excite me are those which lead us closer to answering one of those two
 fundamental questions I stated at the beginning of this chapter. In particular,
@@ -232,12 +278,12 @@ confirmed\footnote{At the time of writing
     \href{https://exoplanetarchive.ipac.caltech.edu/}{NASA Exoplanet Archive}
     contains more than 5000 exoplanets.} using methods such as transits, radial
 velocity, microlensing and direct imaging. Thanks to gravitational microlensing,
-we now know \citep{2012Natur.481..167C} that there is, on average, one planet per
+we now know \citep{2012Natur.481..167C} that there is, on average, at least one planet per
 star in the Milky Way. In addition to detecting the presence of the planets and
-inferring their properties such as mass, radius, and orbital period, it is now
+inferring their properties such as mass, radius, and orbital period, 
 we can now also measure the transmission and emission spectra of their atmospheres
 and even reconstruct very crude maps of their surfaces (the subject of
-    Chapter~\ref{ch:mapping_exoplanets}).
+    Chapter~\ref{ch:mapping_exoplanets})
 \citep{2007Natur.447..183K,2012ApJ...747L..20M}. With the James Webb Space
 Telescope, we might even be able to detect biosignatures in the atmospheres of
 Earth-size planets.
@@ -247,15 +293,15 @@ molecules in this exoplanet atmosphere'' will be a very difficult task.
 It will also almost certainly not be a clear yes or no kind of answer. Rather, it will
 require a deep understanding (i.e. good \emph{models}) of the physics of
 exoplanet atmospheres, stellar variability, the response of the instrument,
-sophisticated statistical analysis of the drawing on multiple independent
-pieces of evidence and clear definitions of what it means to have detected
+sophisticated statistical analysis of the data drawing on multiple independent
+pieces of evidence, and clear definitions of what it means to have detected
 something. Building a good model for the thing we really care about requires
 understanding also things we may intrinsically care less about
 (instrumental systematics, details of stellar variability, variations in
 Earth's atmosphere etc.).
-The focus of this thesis is mostly on building methods which will enable the scientific 
-discovery of exoplanet and planetary science rather than on the discovery itself. 
-Wherever possible, I approach these problems using first principles thinking 
+The focus of this thesis building the methods and tools that will enables us to 
+get closer to answering the fundamental questions.
+Wherever possible, I approach problems using first principles thinking 
 but with a heavily computational/statistical approach and a healthy dose of pragmatism. 
 
 In the next two sections, I briefly introduce specific areas of astronomy I worked on 
@@ -267,18 +313,17 @@ and I provide an outline of the rest of the thesis.
 Much later, in 1911, even before he published his theory of General Relativity (GR), Einstein
 considered the deflection of light from a distant star passing close
 to a massive object in the foreground. He derived an expression for the deflection 
-angle of the light ray which was off by a factor of 2 relative to the correct value
+angle of the light ray which was off by a factor of 2 relative to the correct value.
 In 1916, the same year Albert Einstein published his General theory of Relativity 
 (in which he corrected his earlier mistake),
 the English physicist Sir Oliver Lodge suggested the light-bending phenomenon could produce
-a \emph{gravitational lens}. He warned that it wouldn't be a lens in the usual sense
-because it does not have a focal length.
+a \emph{gravitational lens}. 
 
 The first experimental confirmation of the deflection of light by a mass came
 in 1919 during the Solar eclipse when the astronomer Arthur Eddington famously
 measured the deflection of light from distant stars passing close to the limb
 of the Sun\footnote{He concluded that the observed deflection was in agreement
-    with GR. However, it is doubtful that the data was actually good enough to
+    with GR. However, it is doubtful that the data were actually good enough to
     distinguish between the GR prediction for the deflection of light and the
     Newtonian prediction, which is derived using the equivalence principle and is
     equal to one-half the GR value.}. Much later, in 1936, a young amateur scientist
@@ -341,12 +386,12 @@ alignment between the lens and the background star. The chance of observing
 a stellar microlensing event is roughly one-in-a-million for a typical
 star within the Milky Way. Observing a planetary signal is about an order of
 magnitude less likely than that. Hence, obtaining a decent sample of planetary
-events requires continuous monitoring on the order of $10^{8}$ stars at the
-time. Because of this, microlensing observations focus on the densest region of
-the Milky Way -- the galactic bulge. Figure~\ref{fig:crowded_field} shows a picture
+events requires continuous monitoring on the order of $10^{8}$ stars. 
+Thus, microlensing observations focus on the densest region of
+the Milky Way -- the Galactic bulge. Figure~\ref{fig:crowded_field} shows a picture
 of such a dense stellar field. Finally, in the vast majority of cases, we
-do not detect any light from the lens itself. The collected photons originate from a
-background star completely unrelated and distant from the lensing star. This is
+detect no light from the lens itself. The collected photons originate from a
+background star completely unrelated to and distant from the lensing star. This is
 very different from other exoplanet discovery methods and means that we can only
 obtain the dynamical properties of planets such as their masses and periods.
 
@@ -356,16 +401,16 @@ that they provide a unique lens on exoplanet systems.
 Relative to other methods such as transits and radial velocity, microlensing is sensitive
 to planets located at substantially greater distances, well outside our
 Solar System neighbourhood and even potentially to Milky Way's satellite
-galaxies such as the Magellanic Clouds and the nearby Andromeda galaxy (CITE).
+galaxies such as the Magellanic Clouds and the nearby Andromeda galaxy.
 Microlensing is also sensitive to very small planets and planets that 
 are further out from the star than those typically detected using transits and
 radial velocity. Microlensing surveys such as OGLE \citep{1993AcA....43..289U}
 and MOA \citep{1999PThPS.133..233M} continuously monitored crowded
-stellar fields in the Milky Way since the 90s\footnote{Initially the focus was
+stellar fields in the Milky Way since the 1990s\footnote{Initially the focus was
     on finding dark matter candidate particles -- so-called MACHOs (Massive Compact
     Halo Objects).} discovering thousands of stellar events and dozens of planetary
 events. To detect planetary deviations in the observed light curve, it is
-essential to have high-cadence observations of the source star. The way surveys campaigns
+essential to have high-cadence observations of the source star. The way survey campaigns
 traditionally work is that once a particular star starts to become
 magnified by a large factor, many additional small telescopes join in to improve 
 coverage of the key parts of the light curve. Sometimes space-based observatories 
@@ -379,7 +424,7 @@ Future surveys such as the ground-based Rubin Observatory
 \citep{2019ApJS..241....3P} and Euclid \citep{2022arXiv220209475B} will detect
 tens of thousands of events in total. Although most of the microlensing literature 
 is focused on characterising multiple-lens events, answering
-questions about \emph{populations} of objects with these new, but also existing datasets,
+questions about \emph{populations} of objects with these new, but also with existing datasets,
 requires scalable data analysis methods and a clear set of
 guidelines on how to interpret the analysis products. This is a substantial
 challenge because microlensing events are notoriously difficult to model. Even
@@ -387,7 +432,7 @@ though the datasets are relatively simple (multiple time series
 photometric light curves in different bands), the parameter space for even the
 simplest models is highly non-linear, correlated, relatively high dimensional
 and there are often near-perfect degeneracies in the solutions.
-The assumptions that existing methods for modelling microlensing events rely on
+The assumptions relied on by existing methods for modelling microlensing events 
 are often opaque and unquestioned. Discussions on model ``degeneracies''
 \citep{2014MNRAS.437.4006S,2019AJ....157...23H,2018AcA....68...43S,2009MNRAS.393..816D},
 correlated noise \citep{2015ApJ...812..136B,2019MNRAS.488.3308L}, and model
@@ -403,7 +448,7 @@ extended source magnification of single, binary, and triple-lens systems. This c
 deals with the \emph{forward modelling} problem of microlensing, i.e. computing the
 magnification of a source star as a function of time given a set of system parameters.
 The \emph{inverse problem} -- how to infer the system parameters from the observed 
-light curve -- is discussed in Chapter~\ref{ch:single_lens_models} (for single-lens events), 
+light curve -- is discussed in Chapter~\ref{ch:single_lens_models} (for single lens events), 
 and in Chapter~\ref{ch:multiple_lens_models} (for multiple-lens events).
 
 
@@ -415,7 +460,7 @@ of spherical astronomical bodies was proposed in the early 20th century.
 It  was only much later that technology caught up with the idea. In 1906,
 \citet{1906ApJ....24....1R} pointed out that certain features in light curves
 of Solar System satellites can be attributed to inhomogeneities of their
-surfaces. The key idea is as follows. Although at any given time we only observe the
+surfaces. The key idea is as follows. Although at any given time we observe only the
 total light from an unresolved satellite or planet, different portions of the
 surface are visible at different times. Thus, we may expect that some of the
 information about the light emitted or reflected from the surface 
@@ -436,7 +481,7 @@ phase curves is that occultation light curves encode more information
 about the surface because the sharp limb of the occultor sweeps over the disc of
 the occulted body and exposes its different parts. 
 Besides Pluto, occultations of another Solar System body -- the Jovian moon Io -- 
-were also analysed in the 90s. 
+were also analysed in the 1990s. 
 Starting with the work of \citet{1994Icar..107..195S}, who observed occultations 
 of Io by Europa and Jupiter, Io has been a regular target for near-infrared observations 
 using ground-based telescopes such as NASA's 
@@ -454,11 +499,11 @@ hot spot on the dayside of the planet longitudinally offset from the
 substellar point. Similarly, \citet{2014Sci...346..838S} produced temperature
 maps of the Hot Jupiter WASP-43b, \citet{2013ApJ...776L..25D} mapped the Hot
 Jupiter Kepler-7b in reflected light and \citet{2016Natur.532..207D} mapped the
-thermal emission from the Super Earth 55 Cancri e. These studies were only able
-to capture longitudinal variations in intensity. Real exoplanet atmospheres 
+thermal emission from the Super Earth 55 Cancri e. These studies were able
+to only capture longitudinal variations in intensity. Real exoplanet atmospheres 
 are certain to have three-dimensional spatial inhomogeneities in emission more
 complex than a single hot spot due to the presence of clouds, zonal jets,
-storms, waves etc. \citep{2020SSRv..216..139S}. 
+storms, waves, etc. \citep{2020SSRv..216..139S}. 
 
 In recent years there have been significant advances in the statistical modelling of
 phase curves and eclipse light curves. Most notably,
@@ -494,10 +539,10 @@ Gravitational lensing is generally divided into multiple classes depending
 on whether the effect is discernible at the level of individual objects or 
 at a level of a statistical sample of objects. 
 The primary division is between \emph{weak lensing} and \emph{strong lensing}.
-The former refers to lensing by galaxies and clusters of galaxies on cosmological
-scales, the deflection  is impossible to detect in a single background source, 
-but one can tease out the effect in a statistical sense.
-Strong lensing refers to the lensing of individual objects. It is further divided into
+The former results in a subtle distortion of the images of a background source
+that can only be teased out in a statistical sense. The latter refers 
+to the lensing of individual objects where the lensing effect is less subtle. 
+It is further divided into
 \emph{macrolensing} -- lensing of galaxies where the multiple images of the source
 are resolved, and \emph{microlensing}  -- where the images are generally not resolved
 and the observable is the total magnification of the source as a function of time (a light curve).
@@ -514,21 +559,21 @@ when passing close to a massive body. According to GR:
 \begin{itemize}
     \item The presence of mass changes the spacetime geometry from the flat (Minkowski)
           metric $\eta_{\mu\nu}$ to a curved metric, specified by the tensor $g_{\mu\nu}$.
-    \item Massless particles such as photons follow the null geodesics -- minimum
-          distance paths in curved spacetime, obtained by solving the
+    \item Massless particles such as photons follow the null geodesics, paths we can obtain by solving the
           \emph{geodesic equation}.
 \end{itemize}
 If we restrict ourselves to the regime where the metric is time-independent
-and the particles are allowed to travel at any velocity less than $c$,
+and the test particles are allowed to travel at any velocity less than $c$,
 also known as the \emph{weak field} or \emph{linearised approximation }
 of GR, the metric tensor is
 \begin{equation}
     g_{\mu\nu}=\eta_{\mu\nu}+h_{\mu\nu}
     \hquad,
 \end{equation}
-where $h_{\mu\nu}=
-    \textrm{diag}(-2\Phi,-2\Phi,-2\Phi,-2\Phi)$\footnote{Assuming the
-    the metric sign convention $(-,+,+,+)$} \citep{carroll_2019}.
+where  (assuming that the metric sign convention is $(-,+,+,+)$ and that we are working in Cartesian coordinates
+$(t, x,y,z)$) 
+$h_{\mu\nu}=
+    \textrm{diag}(-2\Phi,-2\Phi,-2\Phi,-2\Phi)$  \citep{carroll_2019}.
 The (static) Newtonian gravitational potential $\Phi$ obeys the Poisson equation
 \begin{equation}
     \nabla^2\Phi=4\pi G\rho
@@ -536,6 +581,7 @@ The (static) Newtonian gravitational potential $\Phi$ obeys the Poisson equation
 \end{equation}
 where $\rho$ is the mass density of the distribution of mass located between the observer
 and the light source.
+
 The geometry of the lensing system consists of a distant source of light, the
 observer, and distribution of mass with density $\rho$ located between the
 source and the observer are shown in Figure~\ref{fig:deflection_angle}.
@@ -549,7 +595,7 @@ source and the observer are shown in Figure~\ref{fig:deflection_angle}.
         adapted from \citet{carroll_2019}.}
     \label{fig:deflection_angle}
 \end{figure}
-A photon is deflected as it travels from a source to an observer by a
+A photon is deflected, as it travels from a source to an observer by a
 \emph{deflection angle} $\hat\alpha$, a vector in the
 plane  perpendicular to the wave vector $\vec{k}$ pointing in the direction of
 photon propagation.
@@ -566,29 +612,29 @@ For a point mass $M$, the potential is
     \Phi=- \frac{GM}{(b^2+x^2)^{1/2}}
     \hquad,
 \end{equation}
-where $x$ parametrises the straight line distance between the observer and the lens and
+where $x$ parametrises the straight line connecting the observer and the lens and
 $b$ is the impact parameter of the light ray.
 Integrating from $-\infty$ to $\infty$ (i.e. assuming that both
-the source and the observer are located far away from the deflecting mass), we obtain
+the source and the observer are located far away from the deflecting mass and that the deflection angle 
+is small), we obtain
 the deflection angle:
 \begin{equation}
     \hat\alpha= \frac{4GM}{c^2b}= \frac{2R_s}{b}
     \hquad,
+    \label{eq:deflection_angle_point_mass}
 \end{equation}
 where $R_s=2GM/c^2$ is the Schwarzschild radius.
 $\hat\alpha$ is directly proportional to the mass of the lens and
 it  is independent of the wavelength of the light. It also increases with the proximity of
 the light ray to the lensing mass which is the opposite behaviour to that of a
 classical convex lens for which the deflection angle vanishes at the centre of the lens.
-The gravitational lens does not have a focal length and so it is not a lens in the usual
-sense.
 The resulting deflection angle is very small, for example, for the Sun we have
 $GM/c^2=1.48\times 10^5\si{\centi\meter}$ (2.95 km), $R=6.96\times
     10^{10}\si{\centi\meter}$ and $\hat\alpha=1.75$ arc seconds. This is the angle
-that was claimed to have been observed by Eddington when during the 1919 total
+that was claimed to have been observed by Eddington during the 1919 total
 solar eclipse.
 
-Equation~\ref{eq:deflection_angle_general} is only valid when the linearised
+Equation~\ref{eq:deflection_angle_general} is valid when the linearised
 approximation of GR is sufficient. In this approximation, the deflection angles
 are additive, and the total deflection caused by a group of massive bodies is just
 the sum of the individual deflection angles. The linearised approximation
@@ -602,11 +648,11 @@ Consider a system consisting of an observer $O$, a point mass $M$, and a point
 light source $S$. The geometry of this system is shown in
 Figure~\ref{fig:lens_geometry}. The lens is located in the \emph{lens plane}, 
 perpendicular to the observer-lens axis, at a distance $D_L$ away from
-the source. The light source is located in the \emph{source plane}
+the observer. The light source is located in the \emph{source plane}
 perpendicular to the observer-source axis, at a distance $D_S$ away from the
-observer and the observer is in the \emph{observer plane}. The assumption that
-the location of the source, observer, and lens can be parametrised using
-angular coordinates (or Cartesian coordinates if the distance to the lens and
+observer. The observer is in the \emph{observer plane}. The assumption that
+the location of the source and the lens can be parametrised using
+angular coordinates as seen by the observer (or Cartesian coordinates if the distance to the lens and
 the source is known) in their respective planes is justifiable because the
 deflection angles involved are tiny and the distance between the observer
 and any point of interest in the lens plane is approximately constant.
@@ -625,12 +671,13 @@ and any point of interest in the lens plane is approximately constant.
 Let $\theta$ be the apparent angular position of the source in the sky with respect to the
 observer--lens axis and $\beta$ be the actual angular position of the source.
 Assuming a metric for spacetime in between the source and the observer that is
-approximately Euclidian\footnote{This is a valid assumption for galactic sources but not for
+approximately Euclidian\footnote{Which is a valid assumption for galactic sources but not for
     extragalactic sources such as quasars and galaxies require a cosmological
     model for the metric.} the distance from the lens to the
 source is $D_S-D_L$.
 
-From Figure~\ref{fig:lens_geometry} it follows that the relationship between
+From Figure~\ref{fig:lens_geometry} and using Equation~\ref{eq:deflection_angle_general} it follows 
+that the relationship between
 the observed and the actual location of the source is 
 \begin{equation}
     \beta=\theta-2 R_s \frac{D_S-D_L}{D_LD_S}
@@ -654,7 +701,7 @@ and
 \end{equation}
 is the relative lens-source parallax.
 
-The image of the source forms a ring (the Einstein ring) around the lens star
+With perfect alignment ($\beta=0$), the image of the source forms a ring (the Einstein ring) around the lens star
 with angular radius $\theta_E$ -- the \emph{Einstein radius}. $\theta_E$
 depends on the mass of the lens and the distances to the lens and the source.
 The angular Einstein radius sets the characteristic scale of a microlensing
@@ -682,7 +729,7 @@ The lens equation then takes the very simple form
     \label{eq:lens_equation_dimensionless}
 \end{equation}
 Equation~\ref{eq:lens_equation_dimensionless} is a non-linear mapping between the
-source plane $w$ and the image plane $z$.
+source plane $w$ and the lens plane $z$.
 If we solve for $z$, we obtain two solutions for the position of the images, given by
 \begin{equation}
     z_\pm= \frac{1}{2} \left( w\pm\sqrt{w^2 +4}\right)
@@ -693,9 +740,9 @@ For non zero $w$, the so-called \emph{minor image} is always located
 within the Einstein radius ($\lvert z_-\rvert<1$) while the \emph{major image}
 is located outside of it ($\lvert z_+\rvert>1$).
 
-Because gravitational lensing does not involve any additional emission or
-absorption along a deflected ray of light and the wavelength of the light
-ray does not change when it encounters the lens, the \emph{surface brightness}
+Because gravitational lensing involve no additional emission or
+absorption along a deflected ray of light and the there is no net wavelength shift 
+between the emission point and the observer,  the \emph{surface brightness}
 (flux density per unit angular area), $I$, of the source image is identical to
 the surface brightness of the unlensed source. The flux of an infinitesimal
 source is a product of the surface brightness and the solid angle $\Delta
@@ -709,8 +756,7 @@ observer. The ratio of the original and the lensed source flux, the
     \label{eq:magnification}
 \end{equation}
 where $0$ denotes the unlensed solid angle.
-Assuming that the source has infinitesimal size and it is located at angular 
- an infinitesimal source size at an angular location
+Assuming that the source has infinitesimal size and is at an angular location
 $\mathbf w \equiv (w_1,w_2)$ subtending an angle
 $\Delta (\omega)_0$, and an image of the source at location
 $\mathbf z\equiv(z_1,z_2)$ subtending an angle
@@ -773,7 +819,7 @@ Introducing polar coordinates $z_1=v\cos\phi,\;z_2=v\sin\phi$, we have
 \end{equation}
 By substituting the locations of the source images
 Equation~\ref{eq:images_location} into the
-above expression, we obtain the magnification of the source for both images
+above expression, we obtain the magnification of the source images
 \begin{equation}
     A_\pm = \frac{1}{2}\left(\frac{u^{2}+2}{u \sqrt{u^{2}+4}} \pm 1\right)
     \hquad,
@@ -799,7 +845,7 @@ away the source is from the lens.
 To evaluate Equation~\ref{eq:magnification_point_lens} in practice,
 we have to parametrise the position of the source on the sky $u$ as a function
 of time. To derive an expression for $u(t)$, we assume that the motion of the
-observer, the lens, and the source is rectilinear (acceleration can be neglected).
+observer, the lens, and the source is rectilinear (acceleration is neglected).
 We take $\vec{w}_S$ to be the angular position of the source star on the plane
 of the sky and $\boldsymbol{\mu}_L$ to be its proper motion vector. Likewise,
 for the lens. We thus have:
@@ -863,7 +909,7 @@ mathematical degeneracy between the parameters $t_0$, $u_0$ and $t_E$
 
 \subsection{Observed flux}
 The magnification $A(t)$ is not a direct observable in microlensing events. We
-can only measure the flux of the source star, which is usually contaminated by 
+can measure the flux of the source star, which is usually contaminated by 
 the flux of other nearby stars and potentially also
 with light from the lens and possible companions to the lens. The observed flux
 is then
@@ -872,7 +918,7 @@ is then
     \hquad
     \label{eq:flux_observed_micro}
 \end{equation}
-where $F_s$ is the flux of the source star and $F_B$ is the contamination flux, also
+where $F_S$ is the flux of the source star and $F_B$ is the contamination flux, also
 called the \emph{blending flux}. To quantify the strength of the blending, we can also
 define the \emph{source flux fraction} $b_S$ as the fraction of total (unmagnified)
 flux that is coming from the source star:
@@ -900,18 +946,18 @@ $u_0\gg 1$ requires good photometric sampling along the ``wings'' of the light
 curve \citep{2009MNRAS.393..816D}.
 Although the parametrisation defined in Equation~\ref{eq:flux_dominik} best maps to 
 the observable features in the light curve, I prefer to use the parametrisation which 
-uses the parameters $(F_s,F_\mathrm{base})$:
+uses the parameters $(F_S,F_\mathrm{base})$:
 \begin{equation}
-    f=F_s\left[A(t) - 1\right]+F_\mathrm{base}
+    f=F_S\left[A(t) - 1\right]+F_\mathrm{base}
     \hquad.
     \label{eq:lin_flux_parameters}
 \end{equation}
 The advantage of this parametrisation is that it still uses the baseline flux 
-$F_\mathrm{base}$ which is a direct observable, but it does not require an extra evaluation 
-of the magnification $A(t_0)$. In addition, $F_s$ is a parameter for which it easier to 
+$F_\mathrm{base}=F_S+F_B$ which is a direct observable, but it does not require an extra evaluation 
+of the magnification $A(t_0)$. In addition, $F_S$ is a parameter for which it easier to 
 set a sensible prior.
 As we shall see in Section~\ref{ssec:marginalise_linear}, the choice of parametrisation in
-this case is not so important because in the we will always marginalise (integrate out)
+this case is not so important because in end the we will always marginalise (integrate out)
 the linear parameters.
 
 \subsection{Astrometric microlensing}
@@ -930,9 +976,9 @@ the linear parameters.
 
 In addition to the photometric microlensing effect, there is also the astrometric
 microlensing effect. Astrometric microlensing refers to the relative shift in 
-the \emph{position} of the source star when it is in the vicinity of the lens.
-For a point source and a single-lens, we can
-obtain the centroid of the two images by weighting their positions
+the \emph{angular position} of the unmagnified source star when it is in the vicinity of the lens.
+For a point source and a single lens, we can
+define the light centroid of the two images by weighting their positions
 (Equation~\ref{eq:images_location}) with their magnifications
 (Equation~\ref{eq:magnification_per_image}):
 \begin{equation}
@@ -1003,7 +1049,7 @@ recently proposed by \citet{2022arXiv220306637S}.
 To illustrate the microlensing of an extended source,
 in Figure~\ref{fig:single_lens_images} I plot the magnification map and the
 images of an extended limb-darkened source (with $\rho_\star=0.15$) as it
-approaches the point caustic for a single-lens. The top panels in the figure show the
+approaches the point caustic for a single lens. The top panels in the figure show the
 magnification map in the source plane with a logarithmic scale colourmap. The
 source disc (semi-transparent grey circle) is shown at different positions
 relative to the caustic. The bottom panels show the resulting images in the
@@ -1034,7 +1080,7 @@ few key points:
           number of lens equation evaluations. Hence it is preferable to integrate in
           the image plane where the function is smooth.
     \item Decreasing the source radius $\rho_\star$ results in narrower arcs of the
-          images with smaller radial extent.
+          images with smaller radial and azimuthal extent.
 \end{itemize}
 In Chapter~\ref{ch:caustics} I discuss how things change for binary and triple lens 
 systems where the caustics are much more complex.
@@ -1221,7 +1267,7 @@ $\delta\boldsymbol \zeta(t)=
     \hquad,
 \end{align}
 where $t_E^\prime \equiv|\dot{\mathbf{u}}_0|=|\boldsymbol\mu_{LS}/\theta_E  + \pi_E\,\dot{\boldsymbol \zeta}(t_0^\prime)|$.
-The model parameters which determine the magnification $A(t)$ are 
+The model parameters that determine the magnification $A(t)$ are 
 $\left(u_0,t_0^\prime,t'_E,\pi_E,\psi\right)$. Notice that in this case, $u_0$
 can be negative.
 
@@ -1255,7 +1301,7 @@ The two components are
 \end{align}
 
 \subsubsection{$\mathbf{u}(t)$ in the $(\mathbf{\hat e}_\parallel, \mathbf{\hat e}_\bot)$ coordinates using acceleration parameters} 
-There exist another parametrisation of the trajectory in which we fit for the local
+There exists another parametrisation of the trajectory in which we fit for the local
 acceleration of the lens at $t_0^\prime$ instead of $\pi_E$ and the angle $\psi$. 
 I derive it here for completeness.
 We define the position, velocity and acceleration such that at $t=t_0^\prime$ we have
@@ -1301,7 +1347,7 @@ it is evident that the parallax
 effect depends on the apparent local acceleration of the source at time $t_0^\prime$.
 
 \subsection{Measuring the lens mass}
-Notice that the only quantity of physical interest in single-lens microlensing --
+Notice that the only quantity of physical interest in single lens microlensing --
 the lens mass $M$ -- is buried inside of the definition of the angular Einstein
 radius $\theta_E$, which, when combined with the magnitude of the relative
 proper motion $|\boldsymbol\mu_{LS}|$ forms the observable $t_E$. In practice,
@@ -1417,7 +1463,7 @@ where $j$ denotes the $j$-th image. The points in the image plane where the Jaco
 \end{equation}
 The points on the critical curve mapped to the source plane via
 the lens equation (Equation~\ref{eq:lens_equation_complex}) are the caustic curves.
-The difference compared to the single-lens lens equation is that the caustics in this case are closed curves
+The difference compared to the single lens lens equation is that the caustics in this case are closed curves
 rather than a single point. The caustic curves are comprised of concave segments called \emph{folds} which are connected
 at points called \emph{cusps}.
 Equation~\ref{eq:critical_curves_complex} can also be written as a complex polynomial of
@@ -1542,7 +1588,7 @@ highly complex.
 
 One notable feature of the binary lens is that in the limit $q\ll 1$ and
 $\lvert s-1\rvert \gg q$, the structure of the caustic curves are invariant to
-the $s\rightarrow s^{-1}$ transformation \citet{dominik1999}, which is known in
+the $s\rightarrow s^{-1}$ transformation \citep{dominik1999}, which is known in
 the literature as the \emph{close/wide degeneracy}, and it often arises for
 microlensing events involving planets. Figure~\ref{fig:close_wide_degeneracy}
 illustrates this (approximate) degeneracy. The two panels on the left show the
@@ -1561,7 +1607,7 @@ To parametrise the trajectory $\mathbf u(t)$, including the annual parallax effe
 we have to use an additional angle to specify the orientation of the axis
 containing both lenses. We can build on the work done in
 Section~\ref{ssec:single_lens_parallax}, and instead of setting the origin
-of the coordinate system as the location of the single-lens, we set it to
+of the coordinate system as the location of the single lens, we set it to
 the midpoint between the two lenses which lie on the same axis. $\mathbf u_0$
 is the point on the trajectory closest to the midpoint and $\dot{\mathbf
         u}_0$ is the velocity vector at that point. To specify the trajectory of the
@@ -1603,7 +1649,7 @@ The magnification of a binary lens is then fully parametrised by the following p
 \end{equation}
 
 \subsection{Triple lenses}
-The first detected triple lens microlensing event was OGLE-2006-BLG-109Lb,c
+The first detected triple-lens microlensing event was OGLE-2006-BLG-109Lb,c
 \citep{2008Sci...319..927G,2010ApJ...713..837B}, a system consisting of two
 massive planets and a star, similar to Jupiter and Saturn in the Solar System.
 A circumbinary planet was discovered by \citep{2016AJ....152..125B}.
@@ -1655,21 +1701,21 @@ first one but I list them below for completeness.
           trivial. This is the subject of Chapter~\ref{ch:single_lens_models}.
     \item \textbf{Multiple sources:} instead of a single source star, we could also have
           events with binary source stars \citep{1998A&A...333..893D}.  
-          These can sometimes mimic binary lens events with a single source star.
+          These can sometimes mimic binary-lens events with a single source star.
           Modelling binary source star events requires specifying the trajectory and separation of
           the binary and the total flux is then the sum of the flux from the primary and the
           secondary star.
           There is a paucity of binary source events in the microlensing literature, partly due to
           their intrinsic rarity \citep{1998MNRAS.301..231H}, and partly because there is a
-          bias towards focusing on binary lens models in the community, and
+          bias towards focusing on binary-lens models in the community, and
           simply not putting as much effort into testing binary source models as
-          often as binary lens models \citep{2017AJ....153..129J,2019MNRAS.484.5608D}.
+          often as binary-lens models \citep{2017AJ....153..129J,2019MNRAS.484.5608D}.
     \item \textbf{Orbital motion of the lenses:} if the orbital timescale of
           the lens in binary or triple-lens systems is comparable to the event timescale
           (this is true for a small subset of events) we need to take into account
           the orbital motion of the lens projected onto the plane of the sky.
           In the general case of a Keplerian orbit, five additional parameters are needed
-          in the binary lens model: the mass of the primary lens, the three components of the
+          in the binary-lens model: the mass of the primary lens, the three components of the
           secondary's velocity relative to the primary, and the projected separation
           of the secondary along the line of sight in units of $\theta_E$
           \citep{1998A&A...329..361D}. In practice, only two additional parameters
@@ -1701,7 +1747,7 @@ first one but I list them below for completeness.
           the measurement of the source stars' intensity and shape profile
           and possible planets in orbit around them. \citet{1997ApJ...490...38H} investigate
           the microlensing of elliptical sources by a single lens, as a model for oblate stars and inclined
-          accretion discs. \citet{1999ApJ...513..619G} discuss the sensitivity of binary and single-lens
+          accretion discs. \citet{1999ApJ...513..619G} discuss the sensitivity of binary and single lens
           caustic-crossing events to spatial and spectral structure of stellar atmospheres.
           \citet{2003ApJ...586..527G} focused specifically on the possibility of inferring
           the intensity and shape profiles of caustic-crossing \emph{planets} in the source plane. Deviations
@@ -1783,7 +1829,7 @@ as
     \hquad,
     \label{eq:sh_expansion}
 \end{equation}
-where $\tilde{\mathbf{y}}$ is the basis vector of spherical harmonics  arranged in
+where $\tilde{\mathbf{y}}(x,y)$ is the basis vector of spherical harmonics arranged in
 increasing order:
 \begin{align}
      & \tilde{\mathbf{y}}=\left(\begin{array}{lllll}
@@ -1795,9 +1841,9 @@ increasing order:
              \hquad,
 \end{align}
 and $\mathbf{y}$ is a vector of scalar \emph{spherical harmonic coefficients}.
-$\mathbf{y}$ is a quantity of central importance because it defines 
+$\mathbf{y}$ is a quantity of central importance because it parametrises 
 the body's \emph{map} (the specific intensity at every point).
-\citet{2019AJ....157...64L} show that we can represent $y$ in a polynomial basis (see
+\citet{2019AJ....157...64L} show that we can represent $\tilde {\vec y}$ in a polynomial basis (see
 \citet{2019AJ....157...64L} for the general expression)
 \begin{equation}
     \tilde{\boldsymbol{p}}=\left(\begin{array}{llllllllll}
@@ -2162,7 +2208,7 @@ coin tosses). An alternative to the frequentist interpretation is the
 necessarily positive numbers between zero and one. The significant advantage of the
 Bayesian interpretation is that it allows one to reason about the probability
 of one-off events such as ``person A wins the election'' or ``this microlensing
-event is a binary lens event''. The differences between the two interpretations
+event is a binary-lens event''. The differences between the two interpretations
 are not just philosophical. The choice of interpretation one subscribes to can
 determine how we approaches a particular statistical inference problem and
 which methods we use. Both approaches are commonly used within the
@@ -2427,7 +2473,7 @@ The marginalised likelihood is then
 \end{equation}
 The problem structure where where $\vec{\alpha}$ is some set of parameters
 we don't particularly care about, and $\vec{\theta}$ are the physical
-parameters of interest, is widespread in astronomy. For instance, in single-lens gravitational microlensing estimating
+parameters of interest, is widespread in astronomy. For instance, in single lens gravitational microlensing estimating
 the distribution $p(t_E)$ over the parameter of interest $t_E$ requires marginalising over
 parameters such as $F_S, F_B, t_0$ and $u_0$.
 
@@ -2949,7 +2995,7 @@ the distance between the two points.
 In other words, function values evaluated at points close to each tend to go hand in hand
 while function values evaluated at points far away from each other are practically
 independent.
-The parameters $l$ set the length scale which determines how quickly the covariance decays
+The parameters $l$ set the length scale that determines how quickly the covariance decays
 to zero with increasing distance between the two points.
 Figure~\ref{fig:gp_samples} shows samples from a GP prior with a squared exponential
 kernel function in the one-dimensional case for two choices of the length scale parameter
@@ -3451,7 +3497,7 @@ a major contraction of the prior parameter space and thus excludes certain
 parameter values.
 
 The radial velocity model in \citet{2017ApJ...837...20P} is interesting because
-structurally it very closely models the single-lens microlensing model with
+structurally it very closely models the single lens microlensing model with
 parallax effects. Both models have seven default parameters, two of
 which are linear and in both cases, the posterior can be multi-modal (see
 Chapter~\ref{ch:single_lens_models} for more on this point). In
@@ -3464,10 +3510,10 @@ microlensing light curves have a lot more data points than stellar RV
 measurements. 
 
 I have tried using rejection sampling with different versions of the
-single-lens microlensing model and I found it to be extremely inefficient. The reason is that 
+single lens microlensing model and I found it to be extremely inefficient. The reason is that 
 the posterior distribution of the RV models in \citet{2017ApJ...837...20P} is broad because 
 the data they use is extremely sparse (a few data points) but the posterior 
-distribution for a typical single-lens microlensing event is much narrower. 
+distribution for a typical single lens microlensing event is much narrower. 
 As a result, the acceptance probability tends to zero even in only three dimensions 
 ($t_0, u_0, t_E$) and the rejection sampling algorithm becomes unusable. 
 
@@ -4123,8 +4169,8 @@ astronomy problem]{2015MNRAS.448.3206B}.
 However, these methods are computationally very difficult to implement.
 
 When the models are not nested we have no choice but to do model comparison. 
-An example would be fitting a single-lens microlensing model and a binary lens 
-or a binary source star model to the same light curve. 
+An example would be fitting a single-lens microlensing model and a binary-lens 
+or a binary-source star model to the same light curve. 
 Statistics alone does not tell us what to put in the 
 abstract of a paper after we have completed the analysis for multiple competing 
 models\footnote{This is the subject of decision theory which relies on 
@@ -4463,7 +4509,7 @@ molecular dynamics simulations, \citep{arXiv:1912.04232}, cosmological simulatio
 reactors \citep{arXiv:2009.00196}, ODE and PDE solvers, etc. . It has even been 
 applied to differentiating an intermediate LLVM compiler representation of code 
 \citep{arXiv:2010.01709}.
-Because there are so many applications of of autodiff,
+Because there are so many applications of autodiff,
 the famous AI researcher Yann LeCun popularized the term 
 \emph{differentiable programming} to refer to any computer code which is 
 automatically differentiable.
@@ -4938,7 +4984,7 @@ multiple caustics, and computationally expensive\footnote{The main problem with
 Contour integration avoids the construction of 2D integration
 grids entirely by making use of Green's theorem to convert an area integral
 area into an integral over a 1D contour enclosing that area.  \ssf{VBBinaryLensing}
-\citep{2010MNRAS.408.2188B}, the most widely used code for binary lens microlensing,
+\citep{2010MNRAS.408.2188B}, the most widely used code for binary-lens microlensing,
 uses contour integration. 
 The biggest challenge in  any contour integration is constructing the contours.
 \citep{2010MNRAS.408.2188B} constructs the contours by solving the lens
@@ -4955,7 +5001,7 @@ although it has never been applied to the triple-lens case.
 triple-lensing and this method (with some important changes and adjustments)
 forms the basis for the algorithm in \ssf{caustics}.
 
-Finally, direct integration is only used for single-lens events because 
+Finally, direct integration is only used for single lens events because 
         numerically integrals over a diverging integrand are numerically unstable.
 
 
@@ -5031,7 +5077,7 @@ branches. The consequence of this constraint is that forward-mode autodiff is a 
 choice for this application than reverse-mode autodiff.
 
 The rest of this chapter is structured as follows. I start with a brief description of 
-the computation of single-lens extended source magnification in 
+the computation of single lens extended source magnification in 
 Section~\ref{sec:caustics_single_lens}.
 In Section~\ref{sec:caustics_root_solver}, I introduce the complex polynomial root solver, a
 key component needed for computing the binary and triple-lens magnification.  
@@ -5298,7 +5344,7 @@ which I will refer to as \ssf{SGroots} from now on. \ssf{SGroots} is a slight
 modification of the old \ssf{zroots} routine. It uses an explicit deflationary
 strategy. \ssf{SGroots} switches between Laguerre's method and Newton's method to improve
 performance. It also includes some optimisations tailored specifically to the
-properties of $5$th order complex polynomial derived from the binary lens equation, 
+properties of $5$th order complex polynomial derived from the binary-lens equation, 
 namely, the fact that two of the five roots are always well separated in the complex plane. 
 \citet{2012arXiv1203.1034S} claim that their algorithm is
 1.6--3 times faster than the (old) \ssf{zroots}. An  important difference between 
@@ -5380,7 +5426,7 @@ which derivatives of $h(\vec{a})$ with respect to the
 coefficients $a_i$ , evaluated at a root $z^*$. This is the derivative we need 
 to compute in order to evaluate the derivative of the magnification
 (which is a function of the roots) with respect to the physical parameters
-(which determine the polynomial coefficients). The implicit function theorem
+(that determine the polynomial coefficients). The implicit function theorem
 states that
 \begin{equation}
     \partial_{\vec a}h(\vec{a})=-\left[\partial_z\,f(z^*,\vec{a})\right]^{-1}\,\partial_{\vec a}\,f (z^*,\vec a) 
@@ -5424,14 +5470,14 @@ algorithm because  contour integration requires solving for the roots \emph{sequ
 which makes it unsuitable for parallel processors.
 \citet{mcdougall2014} implemented a \ssf{CUDA} version of the \ssf{SGroots} algorithm 
 on a GPU but they used  a (highly inaccurate) direct integration approach for 
-computing binary lens magnification which does not require solving for the roots 
+computing the binary-lens magnification which does not require solving for the roots 
 sequentially. 
 
 I have compared the CPU version of the algorithm to the implementation of \ssf{SGroots} 
 from \ssf{VBBinaryLensing} by solving a 5th order complex polynomial and found that 
 it is about 40\% slower using the default initialisation strategy and the default 
 stopping criteria for each algorithm. This difference in speed is likely due to additional 
-optimisations in \ssf{SGroots} specific to the binary lens polynomial, and perhaps also due 
+optimisations in \ssf{SGroots} specific to the binary-lens polynomial, and perhaps also due 
 to  a less stringent stopping criterion. Ultimately this difference in performance is 
 irrelevant, since, as we shall see in the following section, we only need to run the 
 root solver once  with the default initialisation strategy while all subsequent evaluations 
@@ -5439,7 +5485,7 @@ use a starting  point for the roots that is very close to the actual roots.
 Since both algorithms use Newton updates in that regime, I expect that the practical 
 difference in speed is negligible, although I have not done extensive tests.  
 Note that \citet{2022MNRAS.514.4379F} also implemented an AE solver for 
-the purpose of solving the binary lens equation and found that their implementation 
+the purpose of solving the binary-lens equation and found that their implementation 
 is about twice as fast as \ssf{SGroots}. 
 
 I have tested the validity of the root solver extensively by comparing its output to the 
@@ -5524,7 +5570,7 @@ to obtain the complex contour points (the point source images) $z_k^{(n)}$, wher
     \begin{centering}
         \includegraphics[width=0.7\linewidth]{figures/single_lens_images_and_contours.pdf}
         \caption{
-            single-lens images and closed contours (orange and blue curves) obtained by 
+            single lens images and closed contours (orange and blue curves) obtained by 
             solving the lens equation at uniformly distributed points around the source limb.
             The ordering of the contour points is displayed using progressively smaller 
             circles starting with the first one. The colour indicates
@@ -5542,7 +5588,7 @@ to obtain the complex contour points (the point source images) $z_k^{(n)}$, wher
     \end{centering}
 \end{figure}
 
-To illustrate these contours, we first consider the single-lens case where we can
+To illustrate these contours, we first consider the single lens case where we can
 simply solve for the two-point source images by evaluating 
 Equation~\ref{eq:images_single_lens} at successive points on the source limb: 
 \begin{equation}
@@ -5634,7 +5680,7 @@ as an additional parameter $N_\mathrm{iter}$, which I will describe below.
 It is fixed to 10 by default. 
 
 The output of the algorithm is a two-dimensional array with shape $(K, N_\mathrm{limb})$ containing the 
-images, where $K$ is the number of images ($K=5$ for binary lensing and $K=10$ for triple-lensing), 
+images, where $K$ is the number of images ($K=5$ for binary lensing and $K=10$ for triple lensing), 
 a binary mask indicating which of the images satisfy the lens equation, and an integer array 
 indicating the parity of each image. The threshold value used to differentiate between 
 real and false images is set to $10^{-6}$. \citet{2021MNRAS.503.6143K} used a value of 
@@ -5912,7 +5958,7 @@ I came up with the following algorithm for connecting the segments into closed c
     this distance is less than $\text{MIN\_DIST}$are marked as closed and they are not 
     considered further. Sort the remaining segments according to  their length (defined as 
     $\sum_n \left|z^{(n+1)}_j - z^{(n)}_j \right|$), in ascending order. 
-    \item Define a function which determines whether two segments $\mathbf{s}_1$ and 
+    \item Define a function that determines whether two segments $\mathbf{s}_1$ and 
     $\mathbf{s}_2$ should be connected given a specific connection type. This function
     returns \ssf{True} if both of the following conditions are met:
     \begin{enumerate}
@@ -6085,7 +6131,7 @@ each contour point.
     \begin{centering}
         \includegraphics[width=\linewidth]{figures/p_and_q_integrals.pdf}
         \caption{Visualisation of the functions defined in Equation~\ref{eq:p_and_q_functions_ld}.
-        The left panel shows a single extended image (density plot) for a single-lens with $\rho_\star=0.05$ 
+        The left panel shows a single extended image (density plot) for a single lens with $\rho_\star=0.05$ 
         located at $w_0=1.5$ with a linear limb-darkening coefficient of $u_1=0.5$. Contour points
         are shown in blue with decreasing marker size used to indicate the direction of the 
         contour. The grey cross is the geometric centre of the contour. And the two grey 
@@ -6122,7 +6168,7 @@ This definition is identical to the one in Equation~\ref{eq:limbdark_profile}
 except for $r>1$. 
 
 The (revised) surface brightness function and the integrands of the $P$ and $Q$ integrals
-for a single-lens image are shown in Figure~\ref{fig:p_and_q_integrals}. The extended image
+for a single lens image are shown in Figure~\ref{fig:p_and_q_integrals}. The extended image
 of a single lens with $\rho_\star=0.05$ located at $w_0=1.5$ with a 
 linear limb-darkening coefficient $u_1=0.5$  is shown in the panel on the left.
 The two integrand functions evaluated at a particular contour point  are shown
@@ -6536,7 +6582,7 @@ mass ratios when $q<0.01$.
     \begin{centering}
         \includegraphics[width=\linewidth]{figures/extended_source_test.pdf}
         \caption{
-            Visualization of the tests which determine whether the 
+            Visualization of the tests that determine whether the 
             hexadecapole approximation is sufficiently accurate or if the full contour 
             integration is necessary. The grey region is where the test indicates 
             that the full integration is needed and the red region is where the 
@@ -6610,7 +6656,7 @@ centroid of the unlensed source, denoted by the complex variable $z_\mathrm{cent
     \hquad.
     \label{eq:centroid_shift}
 \end{equation}
-The above equation is analogous to the equation for the astrometric shift for a single-lens 
+The above equation is analogous to the equation for the astrometric shift for a single lens 
 illuminated by a point source which we defined in 
 Equation~\ref{eq:centroid_single_lens}.
 The integral in the denominator is the one I described in the previous sections in this chapter.
@@ -6690,15 +6736,15 @@ Notable features that are still missing from \ssf{caustics} are:
     \item Sources with arbitrary brightness profiles.
 \end{itemize}
 
-% CHAPTER 4: modelling single-lens events
-\chapter{Modelling single-lens microlensing events: inference, model comparison and 
+% CHAPTER 4: modelling single lens events
+\chapter{Modelling single lens microlensing events: inference, model comparison and 
 multi-modal posteriors}
 \label{ch:single_lens_models}
 In this chapter I tackle one of the fundamental problems in microlensing -- how to 
 assess and compare different models? Since this is a very broad question which appears
 in some form in every single paper on the analysis of microlensing events, I attempt to 
-answer the question in a restricted context of single-lens events with parallax, although 
-the results should generalise to other contexts. Specifically, I use a particular single-lens 
+answer the question in a restricted context of single lens events with parallax, although 
+the results should generalise to other contexts. Specifically, I use a particular single lens 
 event which exhibits annual parallax deviations as a case study. The purpose of this 
 is to demonstrate a novel solution to the problem of fitting microlensing models with multi-modal 
 posterior distributions -- a variant of the model comaprison problem. 
@@ -6710,10 +6756,10 @@ microlensing before and have also been under-utilised in astronomy as a whole.
 
 \section{Introduction}
 Although the majority of effort dedicated to modelling microlensing events in recent 
-years has been dedicated to binary and triple-lens events, single-lens events, which are
+years has been dedicated to binary and triple-lens events, single lens events, which are
 an order of magnitude more common than multiple-lens events, exhibit many of the same 
 pathologies as binary and triple-lens events, in addition to  
-sharing common parameters. Single-lens events are also very important scientifically 
+sharing common parameters. single lens events are also very important scientifically 
 on their own for two key reasons. First, inferring the tail properties of the $t_E$ (event 
 timescale)
 distribution enables us to make predictions about the number of free-floating exoplanets
@@ -6734,7 +6780,7 @@ which result in multi-modal posterior distributions over the model parameters \c
 Multi-modal posteriors are an even bigger problem for multiple-lens events, but they are 
 easier to study in the context of single lenses. 
 
-In this chapter, I use the single-lens parallax event OGLE-2005-BLG-086 as a case study
+In this chapter, I use the single lens parallax event OGLE-2005-BLG-086 as a case study
 to demonstrate a method for fitting microlensing models with multi-modal posteriors. There are two 
 ways one could approach this problem. The first is to view it as a \emph{parameter estimation}
 problem. Seen through that lens, our goal when solving the problem is to devise a scheme 
@@ -6780,7 +6826,7 @@ compare the LOO-CV approach of weighting MCMC samples to nested sampling.
 Section~\ref{sec:search_and_computation} deals with the question of how to find 
 the different modes in the first place. I demonstrate that an optimisation approach 
 using the Laplace approximation combined with LOO-CV works well as a general solution 
-for modelling single-lens events. It is orders of magnitude faster than the alternatives.
+for modelling single lens events. It is orders of magnitude faster than the alternatives.
 Finally, in Section~\ref{sec:conclusions_single_lens}, I summarise the results, 
 and discuss future  work.
 
@@ -6793,7 +6839,7 @@ The details about the photometry pipeline used for light curve extraction from r
 was previously published in \citet{2008AcA....58...69U}.
 OGLE-2005-BLG-086 is a fairly typical single lens long-timescale event which exhibits subtle 
 deviations in the wings of the light curve because of the annual parallax effect.
-It was previously modelled by \citet{2015ApJS..216...12W} and fit with a single-lens model 
+It was previously modelled by \citet{2015ApJS..216...12W} and fit with a single lens model 
 without parallax. The inferred parameters from that analysis are shown in 
 Table~\ref{tab:lukasz_parameters}.
 
@@ -6801,13 +6847,13 @@ Table~\ref{tab:lukasz_parameters}.
 \centering
 \begin{tabular}{l c c c c} 
  \toprule
-Parameter & $t_0$ & $t_E$ & $u_0$ & $F_s$ \\
+Parameter & $t_0$ & $t_E$ & $u_0$ & $F_S$ \\
 &HJD - 2450000 (days) & (days) & & \\
  \midrule
 Value & $3628.293103_{-0.132710}^{+0.135788}$  & $102.084389_{-1.402358}^{+1.425696}$ & $0.374351_{-0.007950}^{+0.008415}$ & $0.775243_{-0.021796}^{+0.023732}$ \\
 \bottomrule
 \end{tabular}
-\caption{Inferred parameters of a single-lens model without 
+\caption{Inferred parameters of a single lens model without 
 parallax fitted to the OGLE-2005-BLG-086 light curve, from \citet{2015ApJS..216...12W}.
 The uncertainties correspond to 15 and 85\% confidence intervals.} 
 \label{tab:lukasz_parameters}
@@ -6830,7 +6876,7 @@ magnitude $m_0$ is set to 22.
 
 \section{Model}
 \label{sec:model_single_lens}
-I model the event with a single-lens point source model which includes annual parallax 
+I model the event with a single lens point source model which includes annual parallax 
 effects. It makes sense to use the annual parallax model as the default model in this case because 
 the event is bright and the width of the peak is equal to a non-negligible fraction 
 of a year. This means that there is a good chance that parallax deviations are detectable. 
@@ -7364,7 +7410,7 @@ These examples only scratch the surface of possible applications of pointwise
 LOO-CV scores and Pareto shape parameters.
 In addition to being applied for checking the relative predictive power of 
 different modes within one posterior density, LOO-CV can be applied to 
-compare completely different models, for example, comparing single-lens microlensing to 
+compare completely different models, for example, comparing single lens microlensing to 
 binary lens microlensing. In binary lens microlensing, completely different 
 physical models differ between each other only at a few critical points 
 near the caustic crossing \citep[see for example Figure 1 in ][]{2018AJ....155..259H}. 
@@ -7381,7 +7427,7 @@ However, this is an extremely
 restrictive assumption for a realistic model of a microlensing light curve. 
 A natural extension of the model would be to include a Gaussian Process (GP) as a model 
 for the off-diagonal terms in the covariance matrix. \citet{golovich2022} showed that 
-including a GP when modelling OGLE single-lens events has a significant impact on the 
+including a GP when modelling OGLE single lens events has a significant impact on the 
 on inferred  parameters, particularly the event timescale $t_E$.  
 I briefly describe how the LOO-CV score can be generalised to these kinds of models,
 although I do not use a GP in this work. 
@@ -7621,7 +7667,7 @@ the parameter space which are sampled from the prior distributions listed in
 Table~\ref{tab:intialisation_priors}. These priors are slightly different from the 
 ones used in the posterior distribution defined in Equation~\ref{eq:single_lens_posterior}.
 The idea is to maximize the chances of finding all of the 
-modes using prior knowledge about the problem. For single-lens parallax models, 
+modes using prior knowledge about the problem. For single lens parallax models, 
 this is relatively straightforward because the different modes are well separated 
 in the $u_0$ parameter. I run the BFGS optimizer for 5 iterations although it 
 reliably converges for every mode already in 1-2 iterations.  I parallelise the optimisation 
@@ -7715,7 +7761,7 @@ The mean Pareto $\hat k$ parameters seem to capture the quality of the Laplace
 approximation well because the match between the ECDFs
 for the marginal distributions worsens with increasing $\hat k$.
 
-In summary, I propose the following strategy for fitting single-lens 
+In summary, I propose the following strategy for fitting single lens 
 microlensing events:
 \begin{enumerate}
     \item Initialise the BFGS optimizer at $N_\mathrm{init}$ locations in the Parameter
@@ -7746,19 +7792,19 @@ that were previously identified in step 3.
 
 This procedure is orders of magnitude faster than alternatives. 
 In the best-case scenario where the Laplace approximation is sufficient for every event,
-we could fit 1000 single-lens light curves using a single laptop in less than 
+we could fit 1000 single lens light curves using a single laptop in less than 
 24 hours (assuming that BFGS optimisation + LOO-CV computation takes about a 
 minute per light curve). In fact, because the magnification computation and the BFGS
-optimisation for the single-lens model can be easily parallelised and executed on a
+optimisation for the single lens model can be easily parallelised and executed on a
 GPU (or multiple GPUs in parallel) using \ssf{JAX}, it is possible that we could 
 speed this up even more. 
 For a very rough comparison, \citep{golovich2022} used 1 million CPU hours (!) on a 
-Lawrence Livermore National Laboratory supercomputer to fit 10000 single-lens 
+Lawrence Livermore National Laboratory supercomputer to fit 10000 single lens 
 OGLE events. Although they also used a Gaussian Process model for the noise, which 
 increases the computational cost by an order of magnitude, they did not account 
 for the multi-modality of the posterior so in that sense the analysis is flawed.
 
-If we were to fit 10000 single-lens events with nested sampling this would also cost 
+If we were to fit 10000 single lens events with nested sampling this would also cost 
 at least a million CPU hours. For reference, the Roman telescope is expected to 
 discover over 50,000 microlensing events \citep{2020AJ....160..123J}, the vast majority 
 of which are going to be single lens events.
@@ -7855,7 +7901,7 @@ where $\alpha\in[0, 2\pi)$ is the angle between the position vector of the first
 and the source star velocity vector. This parametrisation is very common and it is also 
 used in RTModel. The magnification can then be evaluated at every point $w$ in the 
 source plane for a source star with radius $\rho_\star$. The predicted flux is given by 
-Equation~\ref{eq:flux_microlensing}, as in the case of a single-lens event. The complete 
+Equation~\ref{eq:flux_microlensing}, as in the case of a single lens event. The complete 
 model thus has 7 parameters $(s, q, u_0, \alpha, t_0, t_E, \rho_\star)$.
 
 \begin{table}[h!]
@@ -7916,11 +7962,11 @@ changes in the predicted flux and only a very small volume around a particular m
 There are several important implications of Figure~\ref{fig:binary_lens_likelihood_slices}:
 \begin{enumerate}
     \item \textbf{Likelihoods (and posteriors) for multiple-lens microlensing events have 
-    an entirely different structure than those for single-lens events.}
+    an entirely different structure than those for single lens events.}
     In the latter case, the geometry of the likelihood is smooth, even though it can also be 
     multi-modal and have high curvature. In the former case, the likelihood is non-smooth,
     highly multi-modal and has high curvature. This fundamental difference means 
-    that we should not expect that methods developed for single-lens events will work with 
+    that we should not expect that methods developed for single lens events will work with 
     multiple-lens events. 
     \item \textbf{Assumptions that the vast majority of statistical methods rely on are in
     this case almost certainly violated}. Pretty much all of statistics is designed around the assumption that the 
@@ -7999,7 +8045,7 @@ modes.
 
 
 \subsection{Current approaches to modelling multiple-lens events}
-The most common approach to fitting binary-lens events in the initial modelling stage 
+The most common approach to fitting binary lens events in the initial modelling stage 
 is to optimize the negative log-likelihood in search of the global minimum using 
 either gradient-based optimizers such as BFGS or Levenberg-Marquardt, or 
 derivative-free optimizers such 
@@ -8130,7 +8176,7 @@ In the next section, I explore an alternative approach.
 \section{The search problem and nested sampling}
 \label{sec:binary_lens_ns}
 I have introduced nested sampling (NS) in Section~\ref{ssec:sampling_methods} and I have 
-also discussed its application to single-lens microlensing events in
+also discussed its application to single lens microlensing events in
 Section~\ref{ch:single_lens_models}. Nested sampling works by exploring the parameter space 
 from the outside in. It starts by distributing a set of ``live points'' in the 
 parameter space and then iteratively removing the worst point (in terms of likelihood)
@@ -8185,9 +8231,9 @@ for sampling the likelihood constrained prior, for the purpose of generating a n
 \end{table}
 
 
-To test the performance of NS on the binary-lens problem, I first tested the region 
+To test the performance of NS on the binary lens problem, I first tested the region 
 sampler variant from \ssf{UltraNest}. This is the version of NS I used 
-in Chapter~\ref{ch:single_lens_models} to fit a single-lens microlensing event. 
+in Chapter~\ref{ch:single_lens_models} to fit a single lens microlensing event. 
 I used broad uniform priors for all parameters, as shown in Table~\ref{tab:priors_ns}.
 The estimate of the evidence
 $\ln\mathcal{Z}$ is sensitive to priors, however, since in this case we are not interested in the evidence 
@@ -8567,7 +8613,7 @@ The radius of the occulted sphere is fixed at 1 and the orientation is specified
 three angles:  the counterclockwise obliquity angle \textsf{obl} between the $\hat{y}$
  axis and the north pole of the sphere, the inclination angle \textsf{inc} which is 
  set to $90^\circ$ if the north pole is aligned with the $\hat{y}$ axis, and the 
- phase angle \textsf{theta} which determines the rotation of the sphere around the 
+ phase angle \textsf{theta} that determines the rotation of the sphere around the 
  $\hat{y}$ axis in the eastward direction.
 Expressed in terms of Horizons variables, these angles are given by 
 $\mathrm{obl}=\textsf{NP.ang}$, $\mathrm{inc}=90^\circ-\textsf{Ob-lat}$ and 
@@ -10272,7 +10318,7 @@ of the planet into a one-dimensional light curve (Section~\ref{sec:exo_nullspace
 We demonstrated 
 that there are intrinsic limits to what can be recovered from a single eclipse light curve;
 the inferred maps do not converge to the true maps even in the limit of noiseless data.
-We showed that the key factor which determines whether a given spatial feature can be 
+We showed that the key factor that determines whether a given spatial feature can be 
 recovered in a map is its contrast relative to the background. High contrast 
 features are easiest to recover because their signature is most prominent in the
 light curve during the eclipse.
@@ -10426,11 +10472,11 @@ for limb-darkened sources.
 \item  \ssf{caustics} requires only a minor modification in order to be applied to
 astrometric microlensing. This is on the roadmap for future development.
 \end{itemize}
-\subsection{Chapter 4: modelling single-lens events}
+\subsection{Chapter 4: modelling single lens events}
 \begin{itemize}
     \item The general theme of this chapter is: how can we rank different models based on their 
     ability to explain the data in a predictive sense?
-    \item Specifically, I have investigated the problem of modelling degenerate single-lens microlensing 
+    \item Specifically, I have investigated the problem of modelling degenerate single lens microlensing 
     events with annual parallax and explored different strategies for dealing with multi-modal 
     posterior probability density distributions. This problem is ubiquitous in microlensing.
     \item I used a novel method from the field of computational statistics 
@@ -10440,16 +10486,16 @@ astrometric microlensing. This is on the roadmap for future development.
     performance of each mode. To my knowledge, this is the first time this method has been applied
     in microlensing and possibly astronomy as a whole.
     \item The method is far superior to alternatives such as nested sampling both in 
-    terms of speed and correctness. It is also not in any way specific to the single-lens
+    terms of speed and correctness. It is also not in any way specific to the single lens
     microlensing model. It can be applied to other degenerate microlensing models, 
     though there are other challenges with multiple-lens models specifically (see 
     Chapter~\ref{ch:multiple_lens_models}).
     \item I have also shown a way to speed up this method using the Laplace approximation
     instead of MCMC \citep[see][]{pmlr-v97-magnusson19a}. This means that the entire inference 
-    process for a degenerate single-lens model with annual parallax can be accomplished using about 
+    process for a degenerate single lens model with annual parallax can be accomplished using about 
     1 minute of CPU time, if the model is relatively well-behaved. The faster method also 
     has built-in diagnostics which tell us when the method is likely to fail and it is necessary 
-    to switch to full MCMC. This speedup is important because the single-lens model is 
+    to switch to full MCMC. This speedup is important because the single lens model is 
     absolutely fundamental in microlensing and the availability of a fast and reliable model means enables
     us to apply it to very large datasets, and also for the purpose of finding microlensing events 
     in the first place.
@@ -10464,10 +10510,10 @@ astrometric microlensing. This is on the roadmap for future development.
 \begin{itemize}
 \item This chapter contains preliminary and incomplete work. 
 \item Whereas the guiding question in the previous chapter was how to rank different modes 
-in the posterior probability density distribution in the context of single-lens events,
+in the posterior probability density distribution in the context of single lens events,
 here, the guiding question is how to search for, and sample from the different modes 
 in the pdfs for degenerate multiple-lens events. This latter problem is straightforward 
-for single-lens events \emph{because the likelihood/posterior density is smooth}. It is 
+for single lens events \emph{because the likelihood/posterior density is smooth}. It is 
 extremely difficult for multiple-lens events \emph{because the likelihood/posterior density
 is highly non-smooth with large curvature}.
 \item I use a single OGLE light curve, with a clear signal of a binary caustic-crossing 
@@ -10476,9 +10522,9 @@ problems in the analysis of multiple-lens events: finding and exploring the diff
 (solutions) in the posterior pdf.
 \item By visualising the two-dimensional slices through the likelihood/posterior pdf, I show 
 just how different the problem of modelling caustic-crossing multiple-lens events is from 
-the problem of modelling single-lens events. The likelihood/posterior pdf is highly non-smooth
+the problem of modelling single lens events. The likelihood/posterior pdf is highly non-smooth
 and multimodal with complex non-Gaussian structure. The implication is that we should not 
-expect to be able to use the same statistical methods as for single-lens events. Because 
+expect to be able to use the same statistical methods as for single lens events. Because 
 of these properties, \emph{local information about the pdf is not helpful for finding the path
 to the global regions of interest}. This implies that the work done in 
 Chapter~\ref{ch:caustics} on making the binary and triple-lens models automatically 
@@ -10499,7 +10545,7 @@ although I have not tested this claim thoroughly.
 the use of nested sampling, a class of methods which promises to solve both the search 
 and the exploration problem for a broad class of (relatively low dimensional) inference 
 problems. Nested sampling is very popular in cosmology and I have used it in the previous 
-chapter on the analysis of single-lens events.
+chapter on the analysis of single lens events.
 \item I test two kinds of flavours of nested sampling, a region-based sampler and 
 a step sampler, both are implemented in the code \ssf{UltraNest} \citet{2021JOSS....6.3001B}.
 There are many subtly different implementations of nested sampling but \ssf{UltraNest}
@@ -10555,7 +10601,7 @@ In the chapter, we focused on mapping the blackbody surface emission rather than
 \item We fit two sets of complete occultation light curves 
 (ingress + egress) of an Io occultation by Jupiter. Both sets of observations were done 
 with the same instrument (IRTF) in near-infrared. The first set of 
-observations is from the 90s, the second is from the 2010s. 
+observations is from the 1990s, the second is from the 2010s. 
 The novel aspect of this work compared to previous efforts in occultation mapping 
 of Io's volcanic activity is that we make fewer assumptions about the structure of the
 surface map. All previous studies imposed a requirement on the number and the shape of 
@@ -10574,7 +10620,7 @@ Unfortunately, I did not manage to finish this. In Section~\ref{sec:io_nmf} I on
 this time-variable model. The key idea is to decompose the emission map at an arbitrary time
 into a linear composition of $K$ basis maps. We can then fit the spherical harmonic 
 coefficients of those basis maps simultaneously with the time-variable coefficients 
-which determine how the basis maps add together to form the emission map at any given time.
+that determine how the basis maps add together to form the emission map at any given time.
 \item Ultimately, in the context of this thesis, Chapter~\ref{ch:io} is best seen as a 
 stress test for the methods which are subsequently used in 
 Chapter~\ref{ch:mapping_exoplanets}.
@@ -10661,7 +10707,7 @@ In what follows, I will outline my vision for future microlensing research oppor
 
 \subsubsection{Multiple-lens models}
 One of the main conclusions from Chapter~\ref{ch:multiple_lens_models} is that multiple-lens 
-microlensing models are qualitatively completely different from single-lens models because 
+microlensing models are qualitatively completely different from single lens models because 
 of non-smooth and extremely degenerate likelihood surfaces. As a result, popular statistical 
 methods such as MCMC and nested sampling fail to work as intended. We can group the main challenges
 in three categories:
@@ -10672,7 +10718,7 @@ in three categories:
     the uncertainties for each ``solution''. 
 \item \textbf{The model comparison/averaging problem:} How can we compare both different 
 modes in the context of a single model (specified with a likelihood function and priors) and entirely 
-different models (single-lens vs binary lens vs triple-lens vs binary source, etc.)?
+different models (single lens vs binary lens vs triple-lens vs binary source, etc.)?
 \item \textbf{Population inference:} How to combine inferences about individual objects 
 into inferences about a population of objects?
 \end{enumerate}
@@ -10709,7 +10755,7 @@ I am not sure what the best approach is here. Here are some ideas:
     increasing the source star radius and then use NUTS or a similar sampler. 
     \item Use machine learning to train a normalising flow which transforms the target 
     distribution into a nicer form (more Gaussian-like), see \citet{arXiv:1903.03704}. 
-    I have tried this approach on the single-lens model with annual parallax and I found 
+    I have tried this approach on the single lens model with annual parallax and I found 
     that the method is very difficult to tune.
     \item Perhaps there is a way to use the multiple restart optimisation + Laplace approximation 
     strategies introduced in Chapter~\ref{ch:single_lens_models} to obtain a \emph{good enough}
@@ -10748,7 +10794,7 @@ occasionally work for analyzing individual events, but they are not scalable to 
 we can reliably answer questions about populations of objects.
 
 \subsubsection{Other models}
-Most of the problems outlined in the previous section are also relevant for single-lens 
+Most of the problems outlined in the previous section are also relevant for single lens 
 photometric and astrometric models but the key difference is that they are relatively 
 straightforward to solve. This is because in absence of binary/triple-lens caustics, 
 the likelihood is much better behaved, meaning that we can use reliable methods such 
