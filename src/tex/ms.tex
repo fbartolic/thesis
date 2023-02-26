@@ -8487,7 +8487,7 @@ of light curves is static (up to an overall amplitude), an assumption which is
 justified if the spatial structure and intensity of hotspots do not change substantially  
 between the times of observations. We leave the time-dependent case for future work.
 
-The model relies on the code \textsf{starry}(see Section~\ref{sec:occultations} 
+The model relies on the code \textsf{starry} (see Section~\ref{sec:occultations})
 which enables fast analytic computation 
 of occultation light curves and phase curves for objects whose surface features can 
 represented in terms of spherical harmonics.
@@ -8514,7 +8514,7 @@ given the forward model specifications defined in Section~\ref{sec:io_model}.
 We discuss and test the use of different priors on map features and quantify the 
 information content of the occultation light curves. 
 We then fit the model with realistic simulated data using Hamiltonian Monte Carlo (HMC).
-In Section~\ref{sec:io_resuts} we show the results for IRTF data for two separate pairs of 
+In Section~\ref{sec:io_results} we show the results for IRTF data for two separate pairs of 
 light curves, one pair observed in 1998 and another in 2017.
 We show the inferred maps and the parameters quantifying the location and intensity of 
 the hot spots, we discuss the sensitivity of the results to different choices of priors,
@@ -8591,7 +8591,7 @@ be accounted for in the model.
 
 \section{Model}
 \label{sec:io_model}
-In this section, we describe the generative model for the data presented in \S\ref{sec:data}.
+In this section, we describe the generative model for the data presented in Section~\ref{sec:io_data}.
 To simulate the observed light curves, we first need to specify the geometry of each occultation event (Section~\ref{ssec:orbital_parameters}). 
 We then need to specify what the surface emission of Io looks like in a spherical harmonic basis and compute the theoretical flux at the times of observations using \textsf{starry} (Section~\ref{ssec:model_spec}).
 Finally, we need to specify a noise model for the observed data (Section~\ref{ssec:likelihood}).
@@ -8616,8 +8616,7 @@ values so that we can evaluate them at arbitrary times.
 
 The coordinate system in \textsf{starry} is defined to be right-handed such that the 
 $\hat{z}$
-axis points towards the observer and the $\hat{x}$ axis points to the right on the 
-plane of the sky.
+axis points towards the observer and the $\hat{x}$ axis points to the East.
 The radius of the occulted sphere is fixed at 1 and the orientation is specified by 
 three angles:  the counterclockwise obliquity angle \textsf{obl} between the $\hat{y}$
  axis and the north pole of the sphere, the inclination angle \textsf{inc} which is 
@@ -8629,12 +8628,13 @@ $\mathrm{obl}=\textsf{NP.ang}$, $\mathrm{inc}=90^\circ-\textsf{Ob-lat}$ and
 $\mathrm{theta}=\textsf{Ob-lon}$.
 The occultor position relative to the occulted object is given by
 \begin{align}
-    \mathrm{xo}/\gamma&=-\Delta\alpha\,\cos\delta\\
-    \mathrm{yo}/\gamma&=\Delta\delta\\
-    \mathrm{zo}/\gamma&=1
+    x_o/\gamma&=-\Delta\alpha\,\cos\delta\\
+    y_o/\gamma&=\Delta\delta\\
+    z_o/\gamma&=1
     \hquad,
 \end{align}
-where $\Delta\alpha$ and $\Delta\delta$ are differences in right ascension and declination respectively relative to the occulted object and $\gamma$ is the angular radius of the occulted sphere.
+where $\Delta\alpha$ and $\Delta\delta$ are differences in right ascension and declination respectively 
+relative to the occulted object and $\gamma$ is the angular radius of the occulted sphere.
 
 \subsection{Jupiter's effective radius}
 \label{ssec:effective_radius}
@@ -8643,7 +8643,7 @@ kilometres, several complications arise when attempting to compute Jupiter's rad
 First, Jupiter is not spherical and its equatorial radius is greater than the polar 
 radius by thousands of kilometres. 
 Given the relatively crude resolution of our spherical harmonic maps and the small
-spatial scale Io's projected disc compared to the scale of Jupiter, we can safely
+spatial scale of Io's projected disc compared to the scale of Jupiter, we can safely
 assume that Jupiter is \emph{locally spherical} at the point of an occultation. 
 We estimate Jupiter's effective radius from the measurements of Jupiter's shape 
 done using Pioneer and Voyager radio occultation data \citep[Fig.~7 of][]{1981JGR....86.8721L}.
@@ -8675,7 +8675,7 @@ below the resolution of our maps.
 
 Finally, we have to account for the fact that the light from Io is getting significantly 
 bent at the point of half reflective intensity in Jupiter's atmosphere which results in 
-a smaller projected limb of Jupiter on the surface of Io then would be the case for 
+a smaller projected limb of Jupiter on the surface of Io than would be the case for 
 straight propagation.
 It is zero at the beginning of the disappearance of a hot spot when there is no refraction,
  increasing to one scale height $H$ at the half-intensity point and then increasing 
@@ -8734,7 +8734,7 @@ For reference, state-of-the-art inferences involving phase curves and secondary 
 instabilities kick in \citep{2019AJ....157...64L} which corresponds to a minimum 
 resolution of $9^\circ$ which means that we are not able to constrain the physical 
 size of the spot.
-We discuss the implication of this resolution limit in Section~\ref{sec:results} and Section~\ref{sec:discussion}.
+We discuss the implication of this resolution limit in Section~\ref{sec:io_results} and Section~\ref{sec:discussion}.
 
 Although \textsf{starry} was built around the idea of expanding surface features in a spherical harmonic basis in which we can compute all fluxes analytically, this basis may not be ideal for doing inference because it can be difficult to encode assumptions (priors) on what we expect the map to look like.
 For example, the most important constraint on the map we would like to incorporate in the model is that the intensity (power per unit area) of the map at any given point is positive. 
@@ -8746,7 +8746,7 @@ The issue with this procedure is that rejecting samples in this way implies a pr
 The second approach is to dispense with the spherical harmonics entirely and compute the full model using a pixelated intensity map.
 This is very difficult to do in practice because we would need a very high-resolution grid to compute the light curves accurately with minimal discretisation noise.  
 \textsf{starry} uses spherical harmonics as a basis precisely to avoid this problem.
-\emph{Instead, we opt for a hybrid approach in which we fit for a vector of pixel intensities but at each MCMC step we convert the pixels to spherical harmonic coefficients to compute the light curve.}
+Instead, we opt for a hybrid approach in which we fit for a vector of pixel intensities but at each MCMC step we convert the pixels to spherical harmonic coefficients to compute the light curve.
 
 To implement the hybrid approach we need to be able to switch back and forth between spherical harmonics and pixels.
 Given a vector of pixel intensities $\mathbf{p}$ evaluated on an equal area Mollweide grid, the transformation from spherical harmonics $\mathbf{y}$ to $\mathbf{p}$ is given by a linear operator $\mathbf{P}$:
@@ -8869,7 +8869,8 @@ An ideal set of observations would consist of phase curves together with observa
 Phase curves and occultations in reflected light are even more informative because of the 
 nonuniform illumination profile of the incident radiation and the presence of a day/night 
 terminator line \citep{2022AJ....164....4L}.
-In some cases for reflected light observations (phase curves of an inclined planet for example), there can even be no nullspace \emph{at all} low spherical harmonic degrees.
+In some cases for reflected light observations (phase curves of an inclined planet for example), 
+there can even be no nullspace \emph{at all} for low spherical harmonic degrees.
 
 We can reformulate these statements on how useful given observations are more precisely by computing a measure of their information content.
 Given that our model is linear, assuming Gaussian priors on the spherical harmonic coefficients with covariance $\boldsymbol{\Lambda}_\mathbf{y}$ and a Gaussian likelihood, the posterior can be computed analytically and its mean is given by
@@ -8951,12 +8952,13 @@ Although the model is also linear in this case, the posterior distribution for t
 As the end product of inference we save the spherical harmonic coefficients $\mathbf{y}=\mathbf{P}^\dagger\mathbf{p}$ rather than the pixels themselves.
 The coefficients $\mathbf{y}$ can then be used to evaluate the map on a pixelated grid of arbitrary resolution via the matrix $\mathbf{P}$. 
 
-To ensure that the difference in the inferred maps is not in part due to a difference in the scale of the priors, we take 5000 samples from the prior on $y$ and evaluate $\mathbf{P}\,\mathbf{y}$ for each; we then compute the standard deviation of these pixels and use that as the scale parameter in the exponential prior.
+To ensure that the difference in the inferred maps is not in part due to a difference in the scale of the priors, we take 5000 samples from the prior on $\vec y$ 
+and evaluate $\mathbf{P}\,\mathbf{y}$ for each; we then compute the standard deviation of these pixels and use that as the scale parameter in the exponential prior.
 We implement the pixel model in the probabilistic programming language \textsf{numpyro} 
 \citep{arXiv:1912.11554} which is built on top of the \textsf{JAX} 
 library, and fit it using the No-U-Turn-Sampler (NUTS).
 We run the chains for 1000 tuning steps and 2000 final steps, monitoring divergences 
-\citep{2013arXiv1312.0906B} and the R-hat  diagnostic  \citep{1992StaSc...7..457G} to 
+\citep{2013arXiv1312.0906B} and the $\hat R$ diagnostic  \citep{1992StaSc...7..457G} to 
 check for convergence.
 Since all models we fit in this paper have hundreds if not thousands of parameters, it 
 would be extremely challenging to sample the posterior  without the use of automatic 
@@ -8970,7 +8972,7 @@ differentiation and Hamiltonian Monte Carlo (at least for non-Gaussian priors).
        Each of the columns beneath the simulated map shows the (median) posterior estimate of the map (top), the data and the posterior flux samples (middle row) and the residuals (bottom row).
         The left column corresponds to a model in which we place a Gaussian prior on spherical harmonic coefficients $\mathbf{y}$ and fit for $\mathbf{y}$ while the right column corresponds to a hybrid model in which we fit for pixels $\mathbf{p}$ (with an exponential prior on pixel intensity) but we use $\mathbf{y}$ to compute the flux analytically with \textsf{starry}.
         The benefit of using pixels is that it is much easier to encode assumptions on what the map should look like in pixel space rather than spherical harmonic space, this results in a visibly more accurate inferred map.
-        The residuals for the pixel model show undesirable patterns due to ringing artefacts which are a consequence of the Exponential prior favouring more localised features, we discuss how to alleviate this issue in the text.
+        The residuals for the hybrid pixel model show undesirable patterns due to ringing artefacts which are a consequence of the Exponential prior favouring more localised features, we discuss how to alleviate this issue in the text.
     }
     \label{fig:pixels_vs_harmonics}
     \script{chapter_6/pixels_vs_harmonics.py}
@@ -9101,7 +9103,7 @@ The plot shows the simulated map (top row), the median posterior estimate of the
 The location of the simulated spots on the inferred map is marked with a grey cross (X).
 The bright spot is nearly indistinguishable from the simulated spot; the fainter spot is somewhat less well constrained but the error in position for both is at most a few degrees.
 Ringing artefacts are minimal because of the smoothing filter and there are no discernible patterns in the residuals.
-We found that without the Horseshoe priors the model was not able to capture the first step in the light curve which is due to the fainter spot coming in our out of view; it would only recover the brighter spot.
+We found that without the Horseshoe priors the model was not able to capture the first step in the light curve which is due to the fainter spot coming in or out of view; it would only recover the brighter spot.
 In Fig.~\ref{fig:ingress_egress_sim_snr_10} we show the output of the same model assuming we have data of worse quality (SNR=10). 
 In this case the model still recovers both spots but the error in the position of the spots is greater.
 
@@ -9121,7 +9123,7 @@ It is instructive to compare the model developed in the previous section to a pa
 A parametric spot model might be useful if we want to fit a small number of spots and we know what the map should look like.
 To test how the parametrised spot model compares to the model defined in Section~\ref{ssec:fitting_sim_ingress_egress} we fit it to the light curves shown in Figure~\ref{fig:ingress_egress_sim_snr_50}. 
 The model consists of 4 parameters: the latitude, longitude, amplitude and size of the spot.
-We place uniform priors on the angles and positive Gaussian priors on other parameters. 
+We place uniform priors on the angles and Half-Gaussian priors on other parameters. 
 We find that if the number of modelled spots matches the number of simulated spots the model easily converges to the true solution. 
 If the number of modelled spots is larger or smaller than the true number of spots the model does not converge to the true solution due to pathologies in the posterior distribution.
 
