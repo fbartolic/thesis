@@ -1140,11 +1140,11 @@ right-handed. The unit vectors are defined by
 \end{align}
 The two components of $\mathbf s$ projected onto the plane of the sky are then
 \begin{align}
-    \zeta_e(t;\alpha,\delta)&\equiv \mathbf s\cdot \hat{\mathbf e}_e
-    \label{eq:zeta_e_t}\\
-    \zeta_n(t;\alpha,\delta)&\equiv \mathbf s\cdot \hat{\mathbf e}_n
+    \zeta_E(t;\alpha,\delta)&\equiv \mathbf s\cdot \hat{\mathbf e}_e
+    \label{eq:zeta_E_t}\\
+    \zeta_N(t;\alpha,\delta)&\equiv \mathbf s\cdot \hat{\mathbf e}_n
     \hquad.
-    \label{eq:zeta_n_t}
+    \label{eq:zeta_N_t}
 \end{align}
 In practice, we can retrieve $\mathbf{s}(t)$ using NASA's JPL Horizons system and compute
 the projected separation at any time $t$. 
@@ -1258,12 +1258,12 @@ $\mathbf{u}(t)$ are then:
 \end{align}
 Using the definitions of the unit vectors and
 $\delta\boldsymbol \zeta(t)=
-    \delta \zeta_e(t)\,\mathbf{\hat e}_e+\delta \zeta_n(t)\,\mathbf{\hat e}_n$, we have
+    \delta \zeta_E(t)\,\mathbf{\hat e}_e+\delta \zeta_N(t)\,\mathbf{\hat e}_n$, we have
 \begin{align}
-    u_\bot(t)      & = u_0 + \pi_E\,\cos\psi\,\delta \zeta_e(t) - \pi_E\,\sin\psi\,\delta \zeta_n(t)
+    u_\bot(t)      & = u_0 + \pi_E\,\cos\psi\,\delta \zeta_E(t) - \pi_E\,\sin\psi\,\delta \zeta_N(t)
     \label{eq:u_t_parallel1}                                                                         \\
-    u_\parallel(t) & =(t-t_0^\prime)/t_E^\prime + \pi_E\,\sin\psi\,\delta \zeta_e(t) +
-    \pi_E\,\cos\psi\,\delta \zeta_n(t) \label{eq:u_t_parallel2}
+    u_\parallel(t) & =(t-t_0^\prime)/t_E^\prime + \pi_E\,\sin\psi\,\delta \zeta_E(t) +
+    \pi_E\,\cos\psi\,\delta \zeta_N(t) \label{eq:u_t_parallel2}
     \hquad,
 \end{align}
 where $t_E^\prime \equiv|\dot{\mathbf{u}}_0|=|\boldsymbol\mu_{LS}/\theta_E  + \pi_E\,\dot{\boldsymbol \zeta}(t_0^\prime)|$.
@@ -1280,9 +1280,9 @@ defining components of a ``microlensing parallax vector'' as
 \end{align}
 in which case we have
 \begin{align}
-    u_\bot(t)      & = u_0 + \pi_{E,N}\,\delta \zeta_e(t) - \pi_{E,E}\,\delta \zeta_n(t) \\
-    u_\parallel(t) & =(t-t_0^\prime)/t_E^\prime + \pi_{E,E}\,\delta\zeta_e(t) +
-    \pi_{E,N}\,\delta\zeta_n(t)
+    u_\bot(t)      & = u_0 + \pi_{E,N}\,\delta \zeta_E(t) - \pi_{E,E}\,\delta \zeta_N(t) \\
+    u_\parallel(t) & =(t-t_0^\prime)/t_E^\prime + \pi_{E,E}\,\delta\zeta_E(t) +
+    \pi_{E,N}\,\delta\zeta_N(t)
     \hquad,
 \end{align}
 and the model parameters are $\left(u_0,t_0^\prime,t_E^\prime,\pi_{E,E},\pi_{E,N}\right)$.
@@ -1293,9 +1293,9 @@ Equation~\ref{eq:ecliptic_to_parallel} and applying it to
 Equations~\ref{eq:u_t_parallel1} and \ref{eq:u_t_parallel2}. 
 The two components are 
 \begin{align}
-    u_e & =u_0\cos\psi + (t-t_0^\prime)/t_E^\prime\sin\psi + \pi_E\,\delta\zeta_e(t)  
+    u_e & =u_0\cos\psi + (t-t_0^\prime)/t_E^\prime\sin\psi + \pi_E\,\delta\zeta_E(t)  
     \label{eq:u_t_east}\\
-    u_n & =-u_0\sin\psi + (t-t_0^\prime)/t_E^\prime\cos\psi + \pi_E\,\delta\zeta_n(t)
+    u_n & =-u_0\sin\psi + (t-t_0^\prime)/t_E^\prime\cos\psi + \pi_E\,\delta\zeta_N(t)
     \hquad.
     \label{eq:u_t_north}
 \end{align}
@@ -1627,9 +1627,9 @@ Equations~\ref{eq:u_t_parallel1} and~\ref{eq:u_t_parallel2} we have
     \mathbf R(\alpha)
     \renewcommand\arraystretch{2}
     \begin{pmatrix}
-        u_0 + \pi_E\,\cos\psi\,\delta \zeta_e(t) - \pi_E\,\sin\psi\,\delta \zeta_n(t) \\
-        (t-t_0)/t_E' + \pi_E\,\sin\psi\,\delta \zeta_e(t) +
-        \pi_E\,\cos\psi\,\delta \zeta_n(t)
+        u_0 + \pi_E\,\cos\psi\,\delta \zeta_E(t) - \pi_E\,\sin\psi\,\delta \zeta_N(t) \\
+        (t-t_0)/t_E' + \pi_E\,\sin\psi\,\delta \zeta_E(t) +
+        \pi_E\,\cos\psi\,\delta \zeta_N(t)
     \end{pmatrix}
     \hquad,
 \end{equation}
@@ -1879,7 +1879,7 @@ $\mathbf{A}\equiv \mathbf{A}_1 \mathbf{A}_2$.
 To compute rotational light curves, we also need to be able to specify the
 orientation of a surface map with coefficients $\mathbf y$. We can rotate the
 map using the Wigner rotation matrix $\mathbf{R}(\mathrm{I}, \Lambda, \Theta)$
-that rotates $y$ given the body's inclination $\mathrm{I}$, obliquity $\Lambda$
+that rotates $\vec y$ given the body's inclination $\mathrm{I}$, obliquity $\Lambda$
 and rotational phase $\Theta$. The rotated map is then $\mathbf{R}(\mathrm{I},
     \Lambda, \Theta) \mathbf{y}$, and Equation~\ref{eq:intensity_poly_basis} can be
 rewritten more generally as
@@ -1977,7 +1977,7 @@ is placed symmetrically on the $+y$ axis at a distance $b$.
 Notice that Equation~\ref{eq:starry} defines a linear operation acting on a vector
 of spherical harmonic coefficients $\mathbf{y}$.
 It is trivial to generalise this expression to a case of \emph{spectral map}. In
-that case we define a matrix $Y$ whose columns are the spherical harmonic coefficients
+that case we define a matrix $\vec Y$ whose columns are the spherical harmonic coefficients
 at different wavelengths and the total flux (spectrum) is then
 \begin{equation}
     \mathbf{f} = \mathbf{s}^T\mathbf{A}\mathbf{R}'\mathbf{R}\mathbf{Y}
@@ -1986,7 +1986,7 @@ at different wavelengths and the total flux (spectrum) is then
 \end{equation}
 where $\mathbf{f}$ is a vector of fluxes, one per wavelength bin.
 
-This formalism can also be extended to account for limb-darkening, which is
+This formalism can be extended to account for limb darkening, which is
 important when modelling transits of planets across stars or the light curves of
 eclipsing binaries. \citet{2020AJ....159..123A} show how a limb-darkening
 profile that is an order $l$ polynomial function of
@@ -2009,7 +2009,8 @@ of limb-darkening.
 
 \subsubsection{Reflected light}
 The results derived in the previous section are valid only for isotropic emission
-from the occulted body. Equation~\ref{eq:starry} is a good model for stellar
+from the occulted body (except for the limb darkening which is anisotropic). 
+Equation~\ref{eq:starry} is a good model for stellar
 light curves, secondary eclipse light curves, and phase curves of planets
 observed in the mid to far infrared wavelengths where the contribution of
 scattered starlight to total flux is negligible. Modelling reflected light phase
@@ -2178,7 +2179,7 @@ now turn to statistical inference in general, and, more specifically,
 provides a straightforward and elegant theoretical framework for solving inverse
 problems of the kind we mentioned
 in Sections~\ref{sec:microlensing}  and \ref{sec:occultations}. These are problems
-where we have little data per object of interest, the data is very noisy,
+where we have little data per object of interest, the data are very noisy,
 the physical models are relatively well understood but their parameters do not
 straightforwardly map to observables, and there are multiple competing, sometimes
 physically  quite different models, which provide a good explanation for the data.
@@ -2210,8 +2211,8 @@ Bayesian interpretation is that it allows one to reason about the probability
 of one-off events such as ``person A wins the election'' or ``this microlensing
 event is a binary-lens event''. The differences between the two interpretations
 are not just philosophical. The choice of interpretation one subscribes to can
-determine how we approaches a particular statistical inference problem and
-which methods we use. Both approaches are commonly used within the
+determine how we approach a particular statistical inference problem and
+the methods we use. Both approaches are commonly used within the
 physical sciences depending on the field and the problem. For instance,
 in particle physics frequentist methods are much more common because
 particle physics experiments often involve billions of repeated experiments in
@@ -2232,7 +2233,7 @@ Now let's consider a continuous
 (pdf) $p(x)$\footnote{The notation $p(x)$ we use is somewhat overloaded. In
     statistics, the proper notation for a probability density function is
     $p_{X}(x)$, where $X$ is a random variable, and $x$ is a particular realisation
-    of that random variable.}. Since $x$ has to take on \emph{some values} within
+    of that random variable.}. Since $x$ has to take on \emph{some value} within
 its domain, we have the requirement that
 \begin{equation}
     \int p(x)\,\ud x=1
@@ -2248,9 +2249,10 @@ variables, it is always important to check that the units are correct.
 In general, we are usually dealing with several parameters at once in which
 case we are interested in \emph{joint probability distributions} over all the
 parameters. Consider random variables $x_1$ and $x_2$ with a joint probability
-density function $p(x_1,x_2)$, which, when integrated over a particular interval,
+density function $p(x_1,x_2)$, which, when integrated over a particular region of the 
+$(x_1, x_2)$ plane,
 gives the probability that both $x_1$ and $x_2$ are contained within that
-interval. These joint probabilities can be decomposed into \emph{conditional
+region. These joint probabilities can be decomposed into \emph{conditional
     probabilities} using the so-called product rule:
 \begin{align}
     p(x_1,x_2) & =p(x_1)\,p(x_2\lvert x_1) 
@@ -2262,7 +2264,7 @@ interval. These joint probabilities can be decomposed into \emph{conditional
 \end{align}
 where $p(x_2\lvert x_1)$ is a pdf for $x_2$ \emph{conditional on
     $x_1$ assuming a certain value.} $p(x_2\lvert x_1)$ is every bit as
-valid pdf as $p(x_2)$, it has the same units and has to integrate to 1.
+valid a pdf as $p(x_2)$, it has the same units and has to integrate to 1.
 Combining Equations~\ref{eq:product_rule1} and \ref{eq:product_rule2} results in the famous \emph{Bayes's theorem}:
 \begin{equation}
     p(x_1\lvert x_2)= \frac{p(x_2\lvert x_1)\,p(x_1)}{p(x_2)}
@@ -2297,8 +2299,8 @@ of flux $f_j$ measured at time $t_j$  for all measurement times $t_i,t_j$ so tha
     \hquad.
     \label{eq:likelihood_indep}
 \end{equation}
-If the pdf-s $p(f_i)$ also happen to be equal, we say that the data is independent and
-identically distributed (``iid''). If the data is independent, but not identically distributed,
+If the pdf-s $p(f_i)$ also happen to be equal, we say that the data are independent and
+identically distributed (``iid''). If the data are independent, but not identically distributed,
 we say that the uncertainties are \emph{heteroscedastic}.
 The iid assumption is not that common in astronomy because we tend to have some idea of 
 per-data-point uncertainties.
@@ -2437,7 +2439,7 @@ The best way to think about Equation~\ref{eq:bayes_theorem2} is to see it as a r
 for updating beliefs. Our prior beliefs about the parameters of the model
 $p(\mathrm{parameters})$ should be updated to posterior beliefs $
     p(\mathrm{parameters} | \mathrm{data})$ by making use of the likelihood
-$p(\mathrm{data} | \mathrm{parameters})$. If the data is useful, the likelihood is generally
+$p(\mathrm{data} | \mathrm{parameters})$. If the data are useful, the likelihood is generally
 much narrower than the prior pdf, and the choice of priors does not significantly
 influence the final results.
 
@@ -2471,9 +2473,9 @@ The marginalised likelihood is then
     p(\mathcal{D} | \vec{\theta})=\int p(\mathcal{D} | \vec{\theta}, \vec{\alpha})\,p(\vec{\alpha} |\vec{\theta}) \ud \vec{\alpha}
     \hquad.
 \end{equation}
-The problem structure where where $\vec{\alpha}$ is some set of parameters
+The problem structure where $\vec{\alpha}$ is some set of parameters
 we don't particularly care about, and $\vec{\theta}$ are the physical
-parameters of interest, is widespread in astronomy. For instance, in single lens gravitational microlensing estimating
+parameters of interest, is widespread in astronomy. For instance, in single lens gravitational microlensing, estimating
 the distribution $p(t_E)$ over the parameter of interest $t_E$ requires marginalising over
 parameters such as $F_S, F_B, t_0$ and $u_0$.
 
@@ -2498,7 +2500,7 @@ prior on the mass parameter should, first of all, exclude negative values, but
 also potentially exclude values which are nonsensically large for the problem
 at hand. There are also the so-called ``non-informative priors'', such as
 Jeffrey's prior and maximum entropy priors. Although these priors can be of use
-in some cases, in general, \emph{there no such thing as a truly non
+in some cases, in general, \emph{there is no such thing as a truly non
     informative prior}. Even if the prior for a particular parameter $\theta$ is
 uninformative in one set of coordinates, it is often ``informative'' for some
 certain transformation of the parameter $g(\theta)$. For instance, a uniform
@@ -2514,15 +2516,15 @@ case consider drawing samples from the prior $\vec{\theta}\sim
 $p(\mathcal{D}|\vec{\theta})$ and then generating mock datasets, a process
 called \emph{prior predictive checking}. This process makes it easy to spot
 priors that in combination with the likelihood yield predictions of what the
-data should like which do not match our expectations. An excellent highly
-in-depth study on choosing priors is available
-\href{https://betanalpha.github.io/assets/case_studies/prior_modelling.html}{here}.
+data should like which do not match our expectations. 
+An in-depth study on choosing priors is available 
+here\footnote{\url{https://betanalpha.github.io/assets/case_studies/prior_modelling.html}}.
 
 Depending on how informative is the data, we differentiate between two different
 regimes. We say that the inference process is \emph{data driven} if the data
 constrain the model parameters so well that the choice of the priors is
 effectively irrelevant. The other regime is said to be \emph{prior driven} -- 
-when the data is so weakly informative that the shape of the posterior pdf-s is
+when the data are so weakly informative that the shape of the posterior pdf is
 similar to the prior pdf. In general, in any statistical analysis involving
 priors, one should check the sensitivity of the scientific conclusion to
 assumptions about different priors. No statistical inference procedure is free of
@@ -2624,8 +2626,9 @@ the empirical covariance matrix
     \hat{\boldsymbol{\Sigma}}=\frac{1}{N} \sum_{n=1}^{N}\left(\boldsymbol{y}_{n}-\overline{\boldsymbol{y}}\right)\left(\boldsymbol{y}_{n}-\overline{\boldsymbol{y}}\right)^{\intercal}
     \hquad.
 \end{equation}
+It is a biased estimator of the true covariance matrix. 
 Thus, whenever we compute an empirical mean and the covariance for a given dataset, we
-are implicitly assuming that the data is normally distributed and obtaining an MLE
+are implicitly assuming that the data are normally distributed and obtaining an MLE
 estimate of that distribution.
 
 \subsection{Least squares linear regression}
@@ -2637,7 +2640,7 @@ model we have (noisy) measurements $\vec{y}\in \mathbb{R}^n$ (\emph{dependent
     variable}), an $n\times p$ matrix $\vec{M}\in \mathbb{R}^{n\times p}$ of inputs
 (\emph{design matrix} consisting of \emph{independent variables},
 \emph{covariates}, or \emph{features}) and a vector of \emph{regression
-    coefficients} or \emph{weights} $\vec{w}\in \mathbb{R}^p$. This is a very
+    coefficients} or \emph{weights} $\vec{\beta}\in \mathbb{R}^p$. This is a very
 general model because the matrix $\vec{M}$ can be composed of basis functions such
 as polynomials, spherical harmonics, Fourier modes, wavelets etc., so although
 the model is linear in the parameters (regression coefficients), it is not
@@ -2651,8 +2654,8 @@ $\vec{y}$ have Gaussian noise we can write down the likelihood of this model as
 \end{equation}
 where $\vec{C}$ is the data covariance matrix and $\mathcal{N}$ is shorthand notation for
 the multivariate normal distribution. In an astronomical application, it is usually
-assumed to be diagonal and we might have some idea of the scale of the variance
-of the diagonal elements (the ``error bars'').
+assumed to be diagonal and we might have some idea for the scale of the 
+of the diagonal elements of the matrix (the ``error bars'').
 The negative log-likelihood (NLL) is then equal to (ignoring constants)
 \begin{equation}
     \operatorname{NLL}(\vec \beta)=\frac{1}{2}(\vec{M} \vec\beta -\vec{y})^{\intercal}\vec{C}^{-1}(\vec{M} \vec\beta-\vec{y})
@@ -2664,7 +2667,7 @@ in astronomy.
 \subsubsection{Underdetermined case ($p < n$)}
 For now, let's assume that the inverse data covariance matrix $\vec{C}^{-1}$ is
 a diagonal matrix with the same variance $\sigma^2$ for every data point.
-In that case, the MLE solution for the weights $\vec{w}$ is the solution to the
+In that case, the MLE solution for the weights $\vec{\beta}$ is the solution to the
 following (convex) optimisation problem:
 \begin{equation}
     \hat{\vec\beta}=
@@ -2680,7 +2683,7 @@ is \citep{arXiv:2101.07256}:
     \hquad,
     \label{eq:ols_solution}
 \end{equation}
-under the assumption that $\vec{M}\vec{M}^\intercal$ is invertible which is usually the case.
+under the assumption that $\vec{M}^\intercal\vec{M}$ is invertible which is usually the case.
 Equation~\ref{eq:ols_solution} is called the \emph{ordinary least squares} (OLS) solution.
 For a nontrivial data covariance matrix $\vec{C}$ Equation~\ref{eq:ols_solution} generalises
 to
@@ -2695,7 +2698,7 @@ It is common to modify the least squares objective functions with the addition o
 objective (Equation~\ref{eq:ols_objective}) by adding an \emph{L2 regularisation} term:
 \begin{equation}
     \hat{\vec\beta}=
-    \underset{\vec \beta}{\operatorname{argmin}}\left|\vec{y}-\vec{M} \vec\beta\right|^{2} + \lambda \left|\vec\beta\right|^2
+    \underset{\vec \beta}{\operatorname{argmin}}\left(\left|\vec{y}-\vec{M} \vec\beta\right|^{2} + \lambda \left|\vec\beta\right|^2 \right)
     \hquad,
     \label{eq:ols_objective_l2}
 \end{equation}
@@ -2920,7 +2923,7 @@ likelihood flux parameters conditional on non-linear parameters, but rather the
 MAP values of those parameters under Gaussian priors (although, the difference
 between the MLE and MAP estimates is negligible under broad priors). The second
 caveat is that the optimisation can be cast as a linear least squares problem
-under the assumption that the covariance matrix $\vec{C}$ for the data is
+under the assumption that the covariance matrix $\vec{C}$ for the data are  
 diagonal. This is a fairly restrictive assumption because it implies that
 there is no correlated noise in the light curve which isn't true for most real-world
 microlensing datasets.
@@ -3001,18 +3004,18 @@ Figure~\ref{fig:gp_samples} shows samples from a GP prior with a squared exponen
 kernel function in the one-dimensional case for two choices of the length scale parameter
 $l$. One special property of this kernel is that it is \emph{stationary}, meaning
 that the mean and the variance of the samples from the GP prior do not depend on the
-absolute value of the input coordinate $x$, they are the same everywhere because
+input coordinate $x$, they are the same everywhere because
 the covariance only depends on the difference between any two points $x$ and
 $x^\prime$\footnote{Stationarity is also a general property of time series.
     A stationary  time series is one whose properties (mean, variance,...) do not depend
     on the time at which the series is observed. A GP with a stationary kernel is a very flexible
     model for stationary time series.}. Not all kernels are stationary. An example of
 a non-stationary kernel would be a kernel similar to the squared exponential kernel but with
-a variance which increases linearly in time.
+a variance which increases linearly in $x$.
 Kernels can be combined in any number of ways through, for example, addition and
 multiplication and the result is also a valid kernel.
-\href{https://www.cs.toronto.edu/~duvenaud/cookbook/}{This} page provides a
-nice visualisation of different kernels and their combinations.
+This\footnote{\url{https://www.cs.toronto.edu/~duvenaud/cookbook/}.} page shows
+informative visualisations of different kernels and their combinations.
 
 The key property of a GP is that for any finite subset
 $\vec{X}=\left\{\mathbf{x}_{1} \ldots \mathbf{x}_{n}\right\}$ of the domain of
@@ -3023,10 +3026,11 @@ $x$ (that is, any marginal distribution of $x$) is a multivariate Gaussian:
 \end{equation}
 where $\vec K$ is a covariance matrix of shape $n\times n$ which is constructed by
 evaluating  a kernel such as the one defined in Equation~\ref{eq:sqexp} elementwise.
-This is precisely how we plotted
-the functions in Figure~\ref{fig:gp_samples}; we simply chose a dense number of linearly
-spaced grid points, computed the covariance matrix $K$, and finally sampled the multivariate
-Gaussian distribution.
+This is precisely how I plotted
+the functions in Figure~\ref{fig:gp_samples}; I simply chose a dense number of linearly
+spaced grid points, computed the covariance matrix $K$ (assuming a squared exponential kernel), 
+and finally sampled the multivariate Gaussian distribution.
+
 \subsubsection{Predictions from posterior distribution}
 \begin{figure}[t]
     \begin{centering}
@@ -3081,7 +3085,7 @@ Equation~\ref{eq:gp_posterior} with a squared exponential kernel conditioned on
 a set of simulated observations $\vec{f}$ generated from a simple sinusoid are
 shown in the left panel of Figure~\ref{fig:gp_samples_conditioned}. Each draw
 from the distribution perfectly interpolates all the data points. The variance
-is naturally larger where the data is sparse, and it 
+is naturally larger where the data are sparse, and it 
 grows rapidly in the extrapolative regime outside of the range of
 the data. The squared exponential kernel is not a great choice here because the
 covariance rapidly decays to zero with the distance from the first and last
@@ -3198,7 +3202,7 @@ There are images consisting of $n$ pixels where each of the pixels is either
 black (0) or white (1). The number of possible images is $2^n$  and it grows
 exponentially with $n$. If each image out of the $2^n$ possible images is described by
 one of two labels, $A$, or $B$, then the total number of possible ways of
-labelling the set of images is $2^{2^n}$, a stupidly large number. If
+labelling the set of images is $2^{(2^n)}$, a stupidly large number. If
 $n=9$, the number of ways to classify the set of all 9-bit black-and-white
 images is greater than the number of atoms in the observable universe. If the
 labels do not correlate with the properties of the images, then one strategy for
@@ -3270,7 +3274,7 @@ $\hat{\mu}_\mathrm{MC}$ is consistent (it asymptotically converges toward $\mu$ 
 increasing $S$) and unbiased (the mean of the sampling distribution of the estimator
 is equal to $\mu$). If the expectation of $g^2$ is also finite the central limit
 theorem holds and the error of the simple  Monte Carlo estimator decreases as
-$\sqrt{S}$. This error is independent of the dimension!
+$1/\sqrt{S}$. This error is independent of the dimension!
 The major challenge is how to generate the samples from $p(\vec{\theta})$. This
 is usually accomplished by 
 sampling values from probability distributions that are easy to sample from
@@ -3326,7 +3330,7 @@ in the neighbourhood of the mode,
 there are many more points further away in the typical set and those are the 
 ones that contribute to the integral involved in the calculation of expectation 
 values.
-For a toy example shown in Figure~\ref{fig:typical_sets}, this fact this does not 
+For a toy example shown in Figure~\ref{fig:typical_sets}, this this does not 
 matter much because the posterior has spherical symmetry, but for non-Gaussian
 posteriors we can get very different results  when computing the mean (using
 sampling) and the MAP point (using optimisation).
@@ -3338,7 +3342,7 @@ estimating the posterior distribution $p(\vec{\theta}\lvert \mathcal{D})$ using
 optimisation algorithms.
 
 \subsubsection{The Laplace approximation}
-One of the simplest way of approximating a posterior distribution is the
+One of the simplest ways of approximating a posterior distribution is the
 \emph{Laplace approximation}. We start with the general posterior density of
 the form
 \begin{equation}
@@ -3387,7 +3391,8 @@ Laplace approximation is that we can fit any distribution we like to the
 posterior. The key idea is to model an intractable density $p(\vec{\theta}
     \lvert\mathcal{D})$ with some off-the-shelf distribution $q(\vec{\theta})$ such
 that we minimise some measure of discrepancy between the two distributions.
-We optimize for the parameters of the distribution $q(\vec{\theta}|\vec{\psi}$ which are 
+We optimize for the parameters of the distribution $q(\vec{\theta}|\vec{\psi})$. 
+These parameters are 
 called the \emph{variational parameters}. The most
 common discrepancy measure is the KL divergence
 from $q$ to $p$ (Equation~\ref{eq:kl_divergence}). 
@@ -3452,7 +3457,7 @@ distribution using the following algorithm:
 See \citet{murphy_book_2023} for a proof that this procedure produces independent samples 
 from $p(\vec \theta)$.
 If $\tilde{p}$ is a normalised target distribution the acceptance probability at
-each iteration is  $1/C$ (TODO: show this) so  $C$ should be as small as possible
+each iteration is  $1/C$  so  $C$ should be as small as possible
 while satisfying the constraint in Equation~\ref{eq:rejection_sampling_constraint}.
 In practice, if the distribution $p(\vec{\theta})$ is a posterior distribution
 $p(\vec{\theta}\lvert \mathcal{D})$ rejection sampling can be accomplished by using
@@ -3561,7 +3566,7 @@ importance weights can have a heavy right tail which results in a large,
 possibly infinite, variance of $\hat{\mu}_{\mathrm{IS}}$.
 This is especially true in high dimensions when the importance weights $w^{(s)}$ can 
 vary by several orders of magnitude and the estimator in 
-Equation~\ref{eq:importance_sampling_estimator} becomes dominated by a few draws from 
+Equation~\ref{eq:importance_sampling_estimator} becomes dominated by a few draws from the
 proposal distribution. One solution to this  problem is to fit a generalised 
 Pareto distribution\footnote{Pareto distributions are commonly used in \emph{Extreme 
 Value Analysis} (EVA). EVA is a branch of statistics which deals with heavy and fat-tailed 
@@ -3621,7 +3626,7 @@ Given a most recent sample $\vec\theta^{(s)}$, to generate the next sample
 \begin{itemize}
     \item Draw a sample $\vec{\theta}^\prime$ from a proposal distribution $q(\bm\theta^\prime\lvert\vec\theta^{(s)})$ 
     \item Draw a uniform random number $r\sim\mathcal{U}(0,1)$
-    \item If $\frac{p(\bm\theta^\prime)}{p(\vec\theta^{(k)})}$ then $\bm\theta^{(k+1)}\leftarrow \bm\theta^\prime$, else $\bm\theta^{(k+1)}\leftarrow\bm\theta^{(k)}$
+    \item If $\frac{p(\bm\theta^\prime)}{p(\vec\theta^{(k)})}>1$ then $\bm\theta^{(k+1)}\leftarrow \bm\theta^\prime$, else $\bm\theta^{(k+1)}\leftarrow\bm\theta^{(k)}$
 \end{itemize}
 The main characteristic of this algorithm is that it defines a biased random walk
 through the parameter space (usually moving in only one parameter at a time) 
@@ -3821,7 +3826,7 @@ and use NUTS to sample it which can end up being equivalent to
 RMHMC \citep{arXiv:1910.09407}.
 
 For an excellent visualisation of different MCMC samplers see 
-\href{http://chi-feng.github.io/mcmc-demo/app.html}{here}.
+here\footnote{\url{http://chi-feng.github.io/mcmc-demo/app.html.}}.
 
 \subsubsection{Diagnosing MCMC chains}
 How can we tell that our MCMC chains have converged to target density?
@@ -3838,8 +3843,10 @@ estimate of an expectation value $g(\vec\theta)$  is
     \hquad,
     \label{eq:mcmc_error_indep}
 \end{equation}
-and the standard deviation of this estimator will decrease
-$\sim 1/\sqrt{S}$ with the number of samples.
+where $\mathbb{V}_{p}$ is the sample variance of $g(\vec\theta)$ under the 
+distribution $p(\vec\theta)$.
+The standard deviation of this estimator will decrease proportional to
+$1/\sqrt{S}$ with the number of samples.
 However, samples from $p(\vec\theta)$ produced by MCMC are not truly independent.
 We measure this correlation by computing the integrated autocorrelation
 time $\tau_f$. If the samples are correlated, the variance in 
@@ -3935,7 +3942,7 @@ key properties of densities for which MCMC methods tend to fail:
     the modes and fail to jump between modes.
     \item \textbf{High dimensionality}: High dimensional problems can break pretty 
     much any algorithm, they are however less of a problem for HMC-like algorithms.
-    \item \textbf{Highly informative distributions}: If the data is particularly 
+    \item \textbf{Highly informative distributions}: If the data are particularly 
     informative the posterior occupies an extremely small portion of the total 
     prior volume and it may be challenging to discover those regions. Even HMC 
     can fail here if the posterior mass is concentrated  in a very narrow 
@@ -3963,7 +3970,7 @@ are proportional to the ratios of the evidences of the two models.
 
 In addition to estimating $\mathcal{Z}$, nested sampling can output samples 
 from posterior $p(\vec\theta\lvert \mathcal{D})$ as a sort of byproduct. 
-The major advantage of NS over MCMC methods is that acts as 
+The major advantage of NS over MCMC methods is that NS acts as 
 global search algorithm, working from the ``outside-in'', which improves its 
 performance with multi-modal distributions\footnote{
     The extent to which this claim is true is investigated in 
@@ -4071,7 +4078,7 @@ A recent paper by \citet{arXiv:1805.03924}  reframes the NS
 algorithm as a special case of \emph{Sequantial Monte Carlo}, a class of 
 algorithms that have been studied by statisticians for decades.
 
-There lots of modern and open-source implementations of NS. Examples include
+There are lots of modern and open-source implementations of NS. Examples include
 \ssf{dynesty} \citep{2020MNRAS.493.3132S}, \ssf{JAXNS} \citep{arXiv:2012.15286}
 and \ssf{UltraNest} \citep{2021JOSS....6.3001B}. 
 Out of these, \ssf{UltraNest} is the most developed. It is 
@@ -4112,9 +4119,9 @@ not be used to fit binary or triple lens microlensing models.
 
 
 \subsubsection{Other methods}
-Mhere are many, many algorithms in the literature besides the ones I have listed here. 
+There are many, many algorithms in the literature besides the ones I have listed here. 
 The vast majority of these  algorithms are variants of RHMC, HMC or  
-NS. Most of these algorithms do not have well-tested opens-source implementations, 
+NS. Most of these algorithms do not have well-tested open-source implementations, 
 the examples presented in the papers are usually low-dimensional toy 
 problems, and the algorithms require very careful tuning to work at all. This 
 is why the development of general-purpose statistical modelling 
@@ -4171,7 +4178,7 @@ However, these methods are computationally very difficult to implement.
 When the models are not nested we have no choice but to do model comparison. 
 An example would be fitting a single-lens microlensing model and a binary-lens 
 or a binary-source star model to the same light curve. 
-Statistics alone does not tell us what to put in the 
+Statistics alone do not tell us what to put in the 
 abstract of a paper after we have completed the analysis for multiple competing 
 models\footnote{This is the subject of decision theory which relies on 
 specifying \emph{utility functions} (utility function depend on our posterior beliefs) 
@@ -4185,7 +4192,7 @@ predictions
 
 Especially problematic is the fact that when multiple models equally well 
 describe the data, \emph{some models are generally more interesting to researchers than others}.
-A example, a triple-lens microlensing model of an exomoon planetary system is much more 
+As an example, a triple-lens microlensing model of an exomoon planetary system is much more 
 exciting than a binary source star model. 
 The problem is that the incentives of individual researchers 
 are not always aligned with truth-seeking. The outcome of a model 
@@ -4517,10 +4524,10 @@ automatically differentiable.
 Implementing AD for (some) astrophysical models enables the use of advanced MCMC methods such as 
 Hamiltonian Monte Carlo and much faster and more stable numerical optimisation.
 I use autodiff throughout this thesis and in 
-In Chapter~\ref{eq:caustics} I introduce an entire automatically differentiable code for 
+In Chapter~\ref{ch:caustics} I introduce an entirely automatically differentiable code for 
 computing the magnification of an extended source in binary and triple lens microlensing
 models. Although, in Chapter~\ref{ch:multiple_lens_models} I find that, unfortunately, 
-autodiff is of limited for that particular problem.
+autodiff is of limited utility for that particular problem.
 
 \subsection{Three ways of differentiating computer programs}
 There are three ways of computing derivatives:
@@ -4631,7 +4638,7 @@ for a scalar $x$ and $v$ is also a scalar, the JVP would be
 \hquad.
 \end{equation}
 Why is this useful? With a function $f\,:\,\mathbb{R}^n\rightarrow\mathbb{R}^m$
-and a \emph{one-hot} vector $\vec v=(1, 0, \ldots, 0)^\intercal$, we can use the JVP to 
+and a \emph{one-hot} encoded vector $\vec v=(1, 0, \ldots, 0)^\intercal$, we can use the JVP to 
 evaluate the Jacobian matrix one column at a time:
 \begin{equation}
     \partial f(\vec x)\,\vec v = 
@@ -4823,7 +4830,7 @@ straightforward to implement custom primitives. One of the contributions of this
 thesis is an implementation of a custom JAX primitive for computing the roots 
 of complex polynomials (see Chapter~\ref{ch:caustics} for more details).
 The process of building custom primitives involves specifying the JVP rule 
-(Equation~\ref{eq:jvp}). Interestingly, we do not not need to also specify the VJP 
+(Equation~\ref{eq:jvp}). Interestingly, we do not need to also specify the VJP 
 rule (Equation~\ref{eq:vjp}) because 
 \ssf{JAX} is able to deduce the transpose of the JVP automatically\footnote{
     This is possible because the implementation of the JVP rule 
@@ -4839,7 +4846,7 @@ which  provide a high-level API for building statistical models (usually in
 the Bayesian paradigm). 
 The key components of modern probabilistic programming languages (PPLs) include a backend
 autodiff framework, methods for initialising \emph{random variables} with 
-associated pdf or pmf distribution functions, evaluation of the (log) probability, 
+associated pdf or pmf (\emph{probability mass function}) distribution functions, evaluation of the (log) probability, 
 and finally, one or several optimizers and samplers. The idea behind these 
 frameworks is to provide an easy-to-use interface for constructing probabilistic 
 models and abstract away the inference as much as possible.
@@ -4994,7 +5001,7 @@ map to locations on the limb of the physical images in the image plane.
     contouring} which avoids solving the lens equation. Adaptive contouring
 recursively subdivides squares in the image plane using a \ssf{quadtree} data
 structure until points lying on the contours are located. The exact method used
-\citep{2010MNRAS.408.2188B} does not easily generalise to the case of triple
+by \citet{2010MNRAS.408.2188B} does not easily generalise to the case of triple
 lensing, while adaptive contouring in principle works for any number of lenses
 although it has never been applied to the triple-lens case.
 \citet{2021MNRAS.503.6143K} were the first to apply contour integration to
@@ -5044,7 +5051,7 @@ Notable features of \ssf{caustics} include the following:
 Although \ssf{caustics} is written in \ssf{Python}, at runtime JAX JIT-compiles 
 the entire code to an intermediate representation which is then
 further optimized by \ssf{XLA} (see Section~\ref{ssec:ad_libraries}). The XLA 
-compiled code is what is actually executed run the CPU. 
+compiled code is what is actually executed on the CPU. 
 This enables \ssf{JAX} code to execute at speeds comparable to, and often better 
 than compiled
 languages such as \ssf{C} and \ssf{C++}. It comes at a cost of having to
@@ -5326,7 +5333,7 @@ replaced with
     \sum_{\substack{i=1 \\ i \neq j}}^{n} \frac{1}{\left(z_{j}-z_{i}\right)} ,\quad H_{j}=-\left(\frac{p^{\prime}\left(z_{j}\right)}{p\left(z_{j}\right)}\right)^{\prime}-\sum_{\substack{i=1 \\ i \neq j}}^{n} \frac{1}{\left(z_{j}-z_{i}\right)^{2}}
     \hquad.
 \end{equation}
-The advantage of this modified Lagueerre method over the AE method is faster convergence 
+The advantage of this modified Laguerre method over the AE method is faster convergence 
 thanks to the second order Lageurre update. The drawback is thatthe Laguerre update is more 
 computationally more costly than the first-order Newton update in the AE algorithm. 
 
@@ -5339,7 +5346,7 @@ was replaced with the modified Laguerre's method from
     \ssf{C02AFF} refers to the old routine and the new one is called \ssf{C02AAF}:
     \url{https://www.nag.com/numeric/nl/nagdoc_latest/flhtml/c02/c02aaf.html}}. 
    \ssf{zroots}  has been prevalent in microlensing in the past, but now the most commonly
-used algorithm the algorithm presented in \citet{2012arXiv1203.1034S},
+used algorithm is the algorithm presented in \citet{2012arXiv1203.1034S},
 which I will refer to as \ssf{SGroots} from now on. \ssf{SGroots} is a slight
 modification of the old \ssf{zroots} routine. It uses an explicit deflationary
 strategy. \ssf{SGroots} switches between Laguerre's method and Newton's method to improve
@@ -5359,7 +5366,7 @@ in \ssf{C}\footnote{\url{https://github.com/trcameron/CompEA}}.
 Second, in contrast to \ssf{SGroots}, the AE algorithm uses implicit deflation, thus avoiding the 
 need for polishing. Third, if we have a very good initial 
 estimate for the roots (which is true if we are sequentially solving for the images at closely spaced 
-locations in the source plane) it is be cheaper than the  modified Laguerre method.
+locations in the source plane) it is cheaper than the  modified Laguerre method.
 This is because, 
 as pointed out by \citet{2012arXiv1203.1034S}, in the limit of vanishing $p(z)$ the 
 Laguerre update is identical to Newton's update while being twice as expensive.
@@ -5422,7 +5429,7 @@ polynomial coefficients to a given root $z^*$, such that
 \end{equation}
  We are interested in writing down the
 Jacobian $\partial_{\vec a} h(\vec{a})=(\partial_{a_0} h(\vec a),\ldots,\partial_{a_n} h(\vec{a}))^\intercal$ 
-which derivatives of $h(\vec{a})$ with respect to the
+which gives the derivatives of $h(\vec{a})$ with respect to the
 coefficients $a_i$ , evaluated at a root $z^*$. This is the derivative we need 
 to compute in order to evaluate the derivative of the magnification
 (which is a function of the roots) with respect to the physical parameters
@@ -5497,7 +5504,7 @@ of a nonsymmetric matrix.
 I have also tested that the gradients obtained using the implicit function theorem are 
 correct by comparing them to gradients obtained through the finite 
 difference approximation. All these tests are implemented in the directory
-\ssf{tests/test\_ehrlich\_aberth\_primitive.py}.
+\ssf{tests/test\_ehrlich\_aberth\_primitive.py} in the \ssf{caustics} repository.
 
 \section{Constructing the image contours}
 \label{sec:caustics_constructing_contours}
@@ -5541,7 +5548,7 @@ direction, we have to flip the sign of the integral to get the correct result.
 For now, we shall assume that the source brightness is uniform across the disc. 
 The magnification is then  equal to the the total area of the images
 divided by $\pi\rho_\star^2$. This means that the expression in the parenthesis
-of Equation~\ref{eq:green_theorem} has to be equal to 1, a requirement that is 
+on the right side of Equation~\ref{eq:green_theorem} has to be equal to 1, a requirement that is 
 satisfied by functions $P(z_1, z_2)\equiv -z_2/2$ and $Q(z_1, z_2)\equiv
     z_1/2$. It follows that the total magnification is
 \begin{equation}
@@ -5564,7 +5571,7 @@ form of Equation~\ref{eq:mag_green_theorem_unif} is then
 Thus, to compute the magnification of an extended uniform source at an arbitrary 
 position $w_0$ via Equation~\ref{eq:mag_green_theorem_unif_expanded}, we need
 to obtain the complex contour points (the point source images) $z_k^{(n)}$, where $n_1\dots
-    n_\mathrm{limb}$ indexes the points along the $k$-th contour. 
+    n_\mathrm{Nlimb}$ indexes the points along the $k$-th contour. 
 
 \begin{figure}[t]
     \begin{centering}
@@ -5766,10 +5773,10 @@ If there are caustic crossings,
 then a given row $k$ can have both real and false images.
 The idea to treat both false and real images on equal footing at this stage is due to 
 \citet{2021MNRAS.503.6143K}. In contrast, \citet{2010MNRAS.408.2188B} ignore the false images and 
-instead directl connects real images in each row $k$ at non-consecutive indices $n$.
+instead directly connects real images in each row $k$ at non-consecutive indices $n$.
 This is possible in the binary lens case but not in the triple-lens case. 
 
-The outcome of step 1. is visualised in Figure~\ref{fig:initial_sampling} for a triple-lens 
+The outcome of step 1 is visualised in Figure~\ref{fig:initial_sampling} for a triple-lens 
 system with parameters $a=0.698$, $z_3=-0.0197 - i0.95087$, $\epsilon_1=0.02809$, 
 $\epsilon_2=0.9687$, $\rho_\star=0.05$, and $N_\mathrm{limb}=200$. 
 Colours indicate the different rows $k$. Real images are depicted with solid markers and 
@@ -5850,10 +5857,10 @@ which contains the point source images.
 
 The final step (step 5.) is necessary to ensure the correct ordering of the images in each column 
 such that the distance between consecutive points in each row is small. 
-In the previous steps, we did not do any explicit looping over all image in each column to 
+In the previous steps, we did not do any explicit looping over all images in each column to 
 ensure that the images are sorted correctly. I found that an explicit reordering operation was 
 unnecessary at that point because the sequential initialisation of the root solver leads to 
-an that is good enough for the purpose of adding additional points in batches later on. 
+an ordering that is good enough for the purpose of adding additional points in batches later on. 
 The reordering step is necessary once we have obtained all the points,
 because for the purpose of creating contour segments (see the following section), 
 we need to ensure that the point source images are sorted into $K$ rows as best as possible. 
@@ -5923,7 +5930,7 @@ Instead, I use fixed-size arrays padded with zeros to store the segments.
 
 The final segments for the triple-lens system discussed previously are shown in the top panel 
 of Figure~\ref{fig:segments_and_contours}. Each colour indicates a different segment. 
-THe direction of the segment is encoded using the size of the markers. 
+The direction of the segment is encoded using the size of the markers. 
 The parity of the segments is not shown.
 Each segment has a \emph{head}  (the first point in the segment) 
 and a \emph{tail} (the last point in the segment).
@@ -5962,7 +5969,7 @@ I came up with the following algorithm for connecting the segments into closed c
     $\mathbf{s}_2$ should be connected given a specific connection type. This function
     returns \ssf{True} if both of the following conditions are met:
     \begin{enumerate}
-        \item The parities of the two segments if the connection type is T-H or H-T, or 
+        \item The parities of the two segments are the same if the connection type is T-H or H-T, or 
         the opposite if the connection type is H-H or T-T.
         \item The distance between the connection points
         of the two segments (a connection point is either the tail or the head of a given segment,
@@ -6010,7 +6017,7 @@ If that condition is not satisfied then we are dealing with a connection over a 
 in Figure~\ref{fig:segments_and_contours}).
 In this case, we have to be careful to avoid making a wrong connection, so we make sure that the 
 segments are pointing towards each other and that the distance between the connection points 
-is less than some large value $\text{MAX\_DIST}$, which I set $0.05$. 
+is less than some large value $\text{MAX\_DIST}$, which I set to $0.05$. 
 
 We then merge the first two segments and repeat the process for a fixed number of iterations 
 $\text{MAX\_NR\_OF\_SEGMENTS}$ which is set to 3 times the number of images, a number 
@@ -6020,9 +6027,9 @@ We repeat the process again by sorting the segments by length, selecting the sho
 segment and iterating for another $\text{MAX\_NR\_OF\_SEGMENTS}$ iterations. This ensures that
 if there are multiple contours comprised of open segments, all segments will be merged. 
 I set the value of $\text{MAX\_NR\_OF\_CONTOURS}$ to 3.
-These two loops are fixed size because of \ssf{XLA} constraints on dynamic arrays. However, 
-at each iteration, we check if there are 
-any more segments left to avoid unnecessary computation. The whole procedure is not very 
+These two loops are fixed size because of \ssf{XLA} constraints on dynamic arrays. However, to avoid unnecessary computation,
+at each iteration we check if there are any more segments left. 
+The whole procedure is not very 
 computationally expensive because we are mostly just rearranging and copying arrays containing
 the point source images.
 
@@ -6097,7 +6104,7 @@ linear limb darkening is
 \end{equation}
 where $r\equiv |w(z)-w_0|$ is the distance from the source centre, and $\frac{3}{3-u_1}$ is a 
 normalisation factor. The linear limb-darkening coefficient $u_1$
-is a real number defined on the interal $[0,1]$. Setting $u_1=0$ reduces 
+is a real number defined on the interval $[0,1]$. Setting $u_1=0$ reduces 
 Equation~\ref{eq:limbdark_profile} to the uniform brightness case.
 
 Following Equation~\ref{eq:green_theorem}, we are interested in finding 
@@ -6150,7 +6157,7 @@ This makes the function difficult to integrate numerically.
 continuation to improve the numerical stability of the integrand. They redefine 
 $I_s(r(z))$ as
 \begin{equation}
-    I_s(r(z))=C(u_1)\,\left[1-u_1\left(2-B(r)\right)\right]
+    I_s(r(z))=C(u)\,\left[1-u_1\left(2-B(r)\right)\right]
     \hquad,
 \end{equation}
 where $C(u_1)\equiv\frac{3}{3-u}$  and
@@ -6186,7 +6193,7 @@ often far away from the contour points means that the integrand
 functions are nearly constant at most locations and they vary appreciably only in a small
 interval near the limb. This problem is much worse for smaller source sizes because the 
 image shown in Figure~\ref{fig:p_and_q_integrals} becomes extremely thin for small values 
-of $\rho_\star$. As a consequence, quadrature rules which use a uniform grid are going to 
+of $\rho_\star$. As a consequence, quadrature rules which use a uniform grid 
 lead to highly inaccurate results when $\rho_\star$ is small.
 
 In these cases, adaptive integration algorithms such as the \emph{Adaptive Simpson's method}
@@ -6299,7 +6306,7 @@ is uniformly distributed in the interval $[0, 2\rho_\star]$
 and whose phase is uniformly distributed in the interval $[0, 2\pi]$. This ensures that at all 
 locations the source limb is either crossing one or multiple caustics, or it is extremely 
 close to the caustic. 
-The test points are generated for four different values of $\rho_\star$ spanning several 
+The test points are generated for 5 different values of $\rho_\star$ spanning several 
 orders of magnitude. I set the number of points on the source limb  $N_\mathrm{limb}$ to 
 $400$ and compute the magnification for a uniform brightness source at each point. The 
 relative precision parameter in \ssf{VBBinaryLensing} is set to a value of $10^{-5}$. 
@@ -6361,7 +6368,7 @@ Tests similar to the ones I have just described are executed automatically for t
     \end{centering}
 \end{figure}
 
-To compare \ssf{caustics} to other codes in terms of performance, I start by drawing a 
+To compare \ssf{caustics} to other codes in terms of performance, I start by 
 drawing a dozen points near caustics for a binary lens system with $a=0.45$ and $\epsilon_1=0.8$,
 as in the uniform-brightness test. I then compute the magnification for 
 a uniform brightness source and a limb-darkened source with $u_1=0.7$ at each point using 
@@ -6382,7 +6389,7 @@ contours become more elongated for small $\rho_\star$ so \ssf{VBBinaryLensing} a
 \ssf{Adaptive Contouring} have to allocate more points for smaller sources 
 to obtain a certain precision. \ssf{caustics} on the other hand allocates a fixed number of points,
 independent of the source radius. This is of course a major 
-drawback because it means \ssf{caustics} uses far too many points $\rho_\star$ is large so 
+drawback because it means \ssf{caustics} uses far too many points when $\rho_\star$ is large so 
 we have to set $N_\mathrm{limb}$ and $N_\mathrm{ld}$ to a value large enough to make sure 
 the error is small enough for all values of $\rho_\star$ we expect to see when fitting 
 a particular event.
@@ -6416,13 +6423,13 @@ lensing, but as mentioned previously in this section, the code does not really w
 near caustic crossings, even for binary lens events. 
 This makes it difficult to test the magnification computation for triple lenses. The 
 best solution to this problem would be to build an inverse ray shooting code and use that
-as a benchmark. Because of time constraints I have not managed to that. 
+as a benchmark. Because of time constraints I have not managed to do that. 
 However, since the exact same algorithms and functions are 
 used to compute the magnification for binary and triple-lens systems in \ssf{caustics},
 and all these functions are extensively tested, there is no reason to assume the that 
 \ssf{caustics} does not work equally well with triple lenses. 
 Regarding performance, evaluating the extended source magnification for a triple-lens system 
-is only about 2-3X slower than for a binary lens system. 
+is only about 2-3x slower than for a binary lens system. 
 For reference, \ssf{TripleLens} is 2-3 orders of magnitude slower than \ssf{caustics} for 
 triple lenses.
 
@@ -6459,14 +6466,14 @@ the point source approximation and it is orders of magnitude cheaper than the fu
 integration.
 The challenge is how to cheaply (in terms of computational cost) determine whether the approximate 
 solution is sufficient at any given point in the source plane while making use of only 
-local information.To solve this problem, \citet{2018MNRAS.479.5157B} implements a series of  
+local information.To solve this problem, \citet{2018MNRAS.479.5157B} implements a 
 series of tests to determine when a point source approximation is sufficient:
 \begin{itemize}
     \item \textbf{Quadrupole test} -- detects deviations from the point source 
     magnification approximation using 
     the quadrupole term in the multipole expansion of the (extended source) magnification.
     \item \textbf{Cusp test} -- detects proximity to cusps.
-    \item \textbf{False images test} -- detects when the source is very close the fold by computing the 
+    \item \textbf{False images test} -- detects when the source is very close to the fold by computing the 
     Taylor expansion of the Jacobian of the lens mapping, and evaluating it at the false images.
     \item \textbf{Planetary test} -- detects situations when the source is larger than 
     the planetary caustics and the lens mapping Jacobian is not sensitive to its presence.
@@ -6510,6 +6517,7 @@ detects proximity to a cusp with the following form
 \mu_\mathrm{cusp}=\frac{6\,\mathrm{Im}\left[3 (f^{\prime }(\bar{z}))^3 (f^{\prime \prime }(z))^2\right]}{(J(z))^5} \rho_\star^{2}
 \hquad.
 \end{equation}
+where where $f(z)$ is a term in the lens equation defined such that $w=z + f(\bar{z})$.
 This term is large when the tangential vector to the caustic vanishes.
 I then modify the condition in Equation~\ref{eq:condition_multipole} to 
 \begin{equation}
@@ -6525,7 +6533,7 @@ fails when a particular point is close to a caustic fold.
 The reason for this is that the point source magnification of the real images corresponding 
 to the centre of the source disc is completely insensitive to a fold approach until the 
 moment the limb of the source limb touches the fold. Although the real images
-are insensitive to the fold approach, the false image move closer together as the source 
+are insensitive to the fold approach, the false images move closer together as the source 
 approaches the fold, they then merge together and finally reappear as real images on the 
 other side of the fold. At the point of the caustic-crossing, the Jacobian determinant of 
 the lens mapping evaluated at the false images vanishes.
@@ -6558,7 +6566,7 @@ f^{\prime \prime}\left(z_0\right) f^{\prime}\left(\bar{z}_0\right) f^{\prime}
 (\tilde{z})}\right|>c_f \rho_\star
 \hquad,
 \end{equation}
-where $f(z)$ is a term in the lens equation defined such that $w=z + f(\bar{z})$, the prime
+where the prime
  denotes the  derivatives with respect to $z$, $\tilde{z}\equiv \bar{w}-f(z_0)$, 
 $\bar{\tilde{z}}\equiv w - f(\bar{z}_0)$, $\tilde{J}\equiv 1 - f^\prime(z_0)f^\prime(\tilde{z})$,
 and $c_f$ is a positive tunable constant.
@@ -6601,7 +6609,7 @@ value which I set to $10^{-4}$. This is a sort of optimisation problem where the
 the number of false negatives while also keeping the number of false positive results 
 relatively low. I find that the setting 
 \begin{equation}
-    c_m=10^{-2},\quad \gamma=0.02, c_f=4, \quad c_p=2
+    c_m=10^{-2},\quad \gamma=0.02,\quad c_f=4, \quad c_p=2
 \end{equation}
 works well enough. Figure~\ref{fig:extended_source_test} shows the application of the tests for a binary 
 system with $a=0.8$, $\epsilon_1=0.95$ and $\rho_\star=5\times 10^{-3}$. The caustic 
@@ -6619,7 +6627,7 @@ To test that automatic differentiation works as intended, I computed the derivat
 of the extended source magnification with respect to the key input parameters. 
 I then compare this with a finite-difference approximation of the derivative.
 I evaluate the derivative at points at or very close to the caustics and I found 
-that the gradients are correctly compute, as one would expect. These tests 
+that the gradients are correctly computed, as one would expect. These tests 
 are also implemented in the test suite for the code. 
 In terms of the computational cost, I find that evaluating the gradient of the likelihood
 using reverse-mode automatic differentiation is about 3-4 times slower than the 
@@ -6716,7 +6724,7 @@ The code includes the following features:
     \item Performance comparable to VBBinaryLensing for binary lens events, orders of 
     magnitude faster than existing codes for triple lens events.
     \item Novel Aberth-Ehrlich complex root solver for solving the lens equation. The 
-    root solver has an option high-precision mode which uses compensated complex number 
+    root solver has an optional high-precision mode which uses compensated complex number 
     arithmatic to effectively double the working precision at only twice the computational 
     cost.
     \item First microlensing code with full support for automatic differentiation,
@@ -6743,8 +6751,8 @@ multi-modal posteriors}
 In this chapter I tackle one of the fundamental problems in microlensing -- how to 
 assess and compare different models? Since this is a very broad question which appears
 in some form in every single paper on the analysis of microlensing events, I attempt to 
-answer the question in a restricted context of single lens events with parallax, although 
-the results should generalise to other contexts. Specifically, I use a particular single lens 
+answer the question in the context of single lens events with parallax, although 
+the results should generalise to other models. Specifically, I use a particular single lens 
 event which exhibits annual parallax deviations as a case study. The purpose of this 
 is to demonstrate a novel solution to the problem of fitting microlensing models with multi-modal 
 posterior distributions -- a variant of the model comaprison problem. 
@@ -6862,7 +6870,7 @@ The uncertainties correspond to 15 and 85\% confidence intervals.}
 \begin{figure}[!t]
     \begin{centering}
         \includegraphics[width=\linewidth]{figures/single_lens_lightcurve.pdf}
-        \caption{}
+        \caption{OGLE EWS light curve for the event OGLE-2005-BLG-086.}
             \label{fig:ogle_lightcurve}
         \script{chapter_4/single_lens_fit_plots.py}
     \end{centering}
@@ -6892,8 +6900,8 @@ of the sky whose two components are given by Equations~\ref{eq:u_t_east} and
 \ref{eq:u_t_north} (see Section~\ref{ssec:single_lens_parallax} for the derivation). I 
 repeat the equations here for convenience:
 \begin{align}
-    u_e & =u_0\cos\psi + (t-t_0^\prime)/t_E^\prime\sin\psi + \pi_E\,\delta\zeta_e(t)  \\
-    u_n & =-u_0\sin\psi + (t-t_0^\prime)/t_E^\prime\cos\psi + \pi_E\,\delta\zeta_n(t)
+    u_e & =u_0\cos\psi + (t-t_0^\prime)/t_E^\prime\sin\psi + \pi_E\,\delta\zeta_E(t)  \\
+    u_n & =-u_0\sin\psi + (t-t_0^\prime)/t_E^\prime\cos\psi + \pi_E\,\delta\zeta_N(t)
     \hquad.
 \end{align}
 Instead of the $(\pi_E, \psi)$ parametrisation for the trajectory, I use the two 
@@ -6905,8 +6913,8 @@ magnification are then $\vec\theta\equiv(t_0^\prime, t_E^\prime, u_0, \pi_{E,E},
 
 To evaluate the magnification at an arbitrary point in the parameter space, we have 
 to be able to evaluate the two components of the projected position vector of the 
-Solar System Barycentre (SSB) on the plane of the sky, $\delta\zeta_e(t)$ and 
-$\delta\zeta_n(t)$, at some time $t$. 
+Solar System Barycentre (SSB) on the plane of the sky, $\delta\zeta_E(t)$ and 
+$\delta\zeta_N(t)$, at some time $t$. 
 There are two ways we could do this. The first is to parametrise the Earth's orbit 
 as a Keplerian orbit and compute the projected position of the SSB in a geocentric 
 frame analytically. The second is to use the \ssf{JPL Horizons} ephemeris which 
@@ -6921,14 +6929,14 @@ on a grid with a time resolution of 1 day.
 The evaluation times start at the time of the first observation and end at the time of the
 last observation in the light curve. I then project the vectors onto the plane of 
 the sky (which is defined by the coordinates $(\alpha, \delta)$ of the source star) 
-using Equations~\ref{eq:zeta_e_t} and \ref{eq:zeta_n_t}, to obtain the two components 
-of the projected position $(\zeta_e(t), \zeta_n(t))$, and velocity 
-$(\dot\zeta_e(t), \dot\zeta_n(t))$ of the SSB on the plane of the sky. These arrays 
+using Equations~\ref{eq:zeta_E_t} and \ref{eq:zeta_N_t}, to obtain the two components 
+of the projected position $(\zeta_E(t), \zeta_N(t))$, and velocity 
+$(\dot\zeta_E(t), \dot\zeta_N(t))$ of the SSB on the plane of the sky. These arrays 
 are precomputed before fitting. Since the computation of the position offset of the SSB 
 relative to its position at time $t_0^\prime$ 
 (Equation~\ref{eq:relative_separation_parallax_decomposed}) depends on the parameter
 $t_0^\prime$, it is computed on the fly during the fitting process by linearly
-interpolating the values of $\zeta_e(t)$ and $\zeta_n(t)$ and their derivatives. 
+interpolating the values of $\zeta_E(t)$ and $\zeta_N(t)$ and their derivatives. 
 Only this last interpolation step is evaluated every time the likelihood is evaluated.
 I use the linear interpolation function from \ssf{JAX}, \ssf{jax.numpy.interp},
 which is automatically differentiable.
@@ -6976,9 +6984,9 @@ does not have the flexibility to capture correlated noise features in the light 
 (caused by seeing variations or stellar variability) which should be included 
 in a more realistic model, for the purposes of this chapter, is sufficient.
 In Section~\ref{ssec:generalising_to_non_seperable_likelihoods} I discuss how one can 
-extended the model so it includes a more sophisticated treatment of noise.
+extend  the model so it includes a more sophisticated treatment of noise.
 Since the data covariance matrix is assumed to be diagonal, we can infer the 
-linear flux parameters $\vec \beta$ using weighted least squares
+linear flux parameters estimate $\hat{\vec \beta}$ using weighted least squares
 at every iteration, which is faster than computing the marginalised likelihood from 
 Equation~\ref{eq:ll_marginalised_microlensing}. 
 
@@ -6996,7 +7004,7 @@ a prior centred at the time of the peak magnification eases fitting.
 \centering
 \begin{tabular}{l c c c c c} 
  \toprule
-Parameter & $\ln t_0^\prime$ & $\ln t_E^\prime$ & $u_0$ & $\pi_{E,N}$ &$\pi_{E,E}$\\
+Parameter & $\ln (t_0^\prime/d)$ & $\ln (t_E^\prime/d)$ & $u_0$ & $\pi_{E,N}$ &$\pi_{E,E}$\\
  \midrule
 Prior &$\mathcal{N}(\ln\left(t^\prime_{0,\mathrm{estimate}}\right), 2.3)$ &$\mathcal{N}(2.5, 1.5)$ &$\mathcal{N}(0,1)$ & $\mathcal{N}(0,1)$ & $\mathcal{N}(0,1)$\\
 \bottomrule
@@ -7209,7 +7217,7 @@ estimator of the true elpd.
 
 There are two fundamental assumptions behind the approximation of the elpd using 
 Equation~\ref{eq:elpd_loo} (and CV approximations of elpd in general).
-The first assumption is that existing data is a good representation
+The first assumption is that existing data are a good representation
 of new data. The second assumption is that observations or groups of observations are 
 exchangeable\footnote{Parameters $\theta_1,\theta_2,\ldots,\theta_D$ are
 exchangeable if their joint distribution $p(\vec \theta)$ is invariant under permutations
@@ -7261,7 +7269,7 @@ the LOO posterior (or the importance sampling estimate of some other distributio
 unlikely to be reliable \citep{2015arXiv150702646V}. This in turn also implies that 
 $\vec y_i$ is a highly influential observation. 
 
-Does it makes sense to apply LOO-CV to a \emph{time-series} dataset, where 
+Does it make sense to apply LOO-CV to a \emph{time-series} dataset, where 
 the data points have a specific ordering? In cases where we only care about 
 predicting future data points conditional on having observed past data points, 
 LOO-CV is not a good measure of the predictive performance of the model because it 
@@ -7322,10 +7330,10 @@ error of the LOO-CV score or the standard error for the difference in LOO-CV sco
 reliably estimated, the MCMC sampling has to have converged and the model should not be
 completely misspecified. If one model is clearly superior to all the others 
 the other models can be safely discarded, but if the LOO-CV scores are comparable,
-\citet{arXiv:2008.10296} suggests averaging over the models instead (a subject we
+then \citet{arXiv:2008.10296} suggests averaging over the models instead (a subject we
 shall cover shortly).
 As a rule of thumb, if the difference in LOO-CV scores between two models is smaller 
-then about 5, the two models have roughly the same predictive performance.
+than about 5, the two models have roughly the same predictive performance.
 This is the case for the first two modes in the inferred posterior distribution of our 
 microlensing model. The difference between the third 
 and the first mode appears to be significant, but the standard error on the difference 
@@ -7388,7 +7396,7 @@ around the tails, and the peak of the magnification.
     \begin{centering}
         \includegraphics[width=\linewidth]{figures/pointwise_loo.pdf}
         \caption{The difference in pointwise LOO-CV scores relative to most predictive 
-        mode (mode 1) (bottom panel). The top panel shows the light curve for reference.}
+        mode (Mode 1) (bottom panel). The top panel shows the light curve for reference.}
             \label{fig:pointwise_loo}
         \script{chapter_4/single_lens_fit_plots.py}
     \end{centering}
@@ -7398,12 +7406,12 @@ Even with these diagnostic tools, it is hard to spot obvious differences between
 modes in the data space. One other plot we can make is a pointwise version of the 
 difference in the LOO-CV scores with respect to the best-performing model.
 Figure~\ref{fig:pointwise_loo} shows the light curve (top) and the difference in 
-pointwise LOO-CV scores relative to the score for mode 1 (bottom). Positive values 
-indicate that the particular model is more predictive for that point than mode 1. 
+pointwise LOO-CV scores relative to the score for Mode 1 (bottom). Positive values 
+indicate that the particular model is more predictive for that point than Mode 1. 
 We see a large scatter for modes 3 and 4 in both directions and no clear sign 
-of bias in the predictive accuracy relative to mode 1. This means that modes 
+of bias in the predictive accuracy relative to Mode 1. This means that modes 
 3 and 4 are only worse than modes 1 and 2 because of a larger scatter in the pointwise 
-LOO-CV scores -- there are more points that those models predict really badly 
+LOO-CV scores -- there are more points that those models predict less accurately 
 compared to modes 1 and 2.
 
 These examples only scratch the surface of possible applications of pointwise 
@@ -7414,8 +7422,8 @@ compare completely different models, for example, comparing single lens microlen
 binary lens microlensing. In binary lens microlensing, completely different 
 physical models differ between each other only at a few critical points 
 near the caustic crossing \citep[see for example Figure 1 in ][]{2018AJ....155..259H}. 
-LOO-CV scores have the potential to completely revolutionize how we compare 
-models in microlensing.
+LOO-CV scores have the potential to substantially improve model comparison
+in microlensing.
 
 \subsection{Estimating LOO-CV with Gaussian Process models}
 \label{ssec:generalising_to_non_seperable_likelihoods}
@@ -7581,7 +7589,7 @@ separate MCMC chains were re-weighted following the procedure described in
 
 There are major differences between the different weighting schemes.
 First of all, the regular Pseudo-BMA weights, and the implicit 
-BMA weights used in nested sampling assign near zero weight to mode 3 and mode 4, 
+BMA weights used in nested sampling assign near zero weight to Mode 3 and Mode 4, 
 thus discarding the possibility of a long ($t_E\gtrsim 120$ days) event 
 timescale. The Pseudo-BMA+ weights which take into account 
 the variance in the $\mathrm{elpd}_\mathrm{psis-loo}$ estimators are more conservative. 
@@ -7607,8 +7615,8 @@ definitely something we don't want to do because it does not make sense when we
 are interested in accounting for all plausible models, rather than optimising for 
 the predictive power of some weighted sum of all models. However, it is interesting 
 that stacking does not discard mode 4 because it improves prediction performance 
-when combined with mode 1. It is an open research question whether this somehow provides 
-more credence to mode 4 relative to what the other weighting options do.
+when combined with Mode 1. It is an open research question whether this somehow provides 
+more credence to Mode 4 relative to what the other weighting options do.
 
 \section{Search and computation}
 \label{sec:search_and_computation}
@@ -7745,8 +7753,8 @@ The LOO-CV scores that were computed using the modified weights defined in
 Equation~\ref{eq:is_weights_laplace} are listed in Table~\ref{tab:loo_cv_laplace} 
 together with the mean Pareto $\hat k$ parameters for each mode which can be used 
 to judge the quality of the Laplace approximation for each mode. The mean 
-$\hat k$ parameters for modes 3 and 4 indicate that the Laplace approximation
-for those modes is likely not reliable. Nevertheless, the estimated LOO-CV scores are 
+$\hat k$ parameters for modes 2-4 is potentially not reliably (because $\hat k>0.5$).
+Nevertheless, the estimated LOO-CV scores are 
 very close to those obtained from full MCMC sampling of the true posterior 
 (see Table~\ref{tab:loo_cv}). To gain more information about the quality of the Laplace 
 approximation I also compute the empirical cumulative distribution functions (ECDF)
@@ -7764,7 +7772,7 @@ for the marginal distributions worsens with increasing $\hat k$.
 In summary, I propose the following strategy for fitting single lens 
 microlensing events:
 \begin{enumerate}
-    \item Initialise the BFGS optimizer at $N_\mathrm{init}$ locations in the Parameter
+    \item Initialise the BFGS optimizer at $N_\mathrm{init}$ locations in the parameter
     spaces sampled from a prior. 
     \item Run BFGS optimizer in parallel to discover all plausible modes in the 
     posterior. Discard obviously bad modes with completely unphysical values of 
@@ -7781,14 +7789,14 @@ microlensing events:
     \item Compute Pseudo-BMA+ weights and re-weight the samples from each mode.
 \end{enumerate}
 A few comments on the above strategy.
-In step 1. $N_\mathrm{init}$ should be sufficiently  large to minimise the chances of 
-missing a mode. In step 2. we discard duplicate solutions because Pseudo-BMA+ 
+In Step 1 $N_\mathrm{init}$ should be sufficiently  large to minimise the chances of 
+missing a mode. In Step 2 we discard duplicate solutions because Pseudo-BMA+ 
 weights would split the weight between each duplicate solution which is undesirable. 
-Step 4. is optional depending on whether we are in the exploratory modelling phase or 
-if we want publication-ready results. For optimal hardware utilisation, in step 4. 
+Step 4 is optional depending on whether we are in the exploratory modelling phase or 
+if we want publication-ready results. For optimal hardware utilisation, in Step 4 
 it makes  sense to first fit the entire sample  of events using the Laplace 
 approximation, and then afterwards run the NUTS sampling for the worst modes 
-that were previously identified in step 3.
+that were previously identified in Step 3.
 
 This procedure is orders of magnitude faster than alternatives. 
 In the best-case scenario where the Laplace approximation is sufficient for every event,
@@ -7815,7 +7823,7 @@ at all costs in those circumstances where it is not necessary} (for example if
 the Laplace approximation to the full posterior is sufficiently good, as judged by the 
 $\hat k$ diagnostic).
 
-\section{Summary \& future work}
+\section{Summary and future work}
 \label{sec:conclusions_single_lens}
 In this chapter, I studied different approaches to fitting single lens microlensing 
 events with degenerate solutions using a specific event, OGLE-2017-BLG-1190Lb, as a case study.  
@@ -7845,7 +7853,8 @@ microlensing events in a short time span, without ignoring the degenerate soluti
 Besides being useful for weighting degenerate solutions, cross-validation can be 
 used for assessing the fits of individual models. I showed how one can use pointwise 
 LOO-CV scores and the Pareto shape parameters to find influential data points in the 
-light curve and to diagnose problems with the model.
+light curve, diagnose problems with the model, and validate the validity of the Laplace approximation 
+to the true posterior distribution.
 
 
 \chapter{Modelling multiple-lens events}
@@ -7866,9 +7875,9 @@ an extended source binary lens model (including and excluding parallax) using th
 RTModel.\footnote{\url{http://www.fisica.unisa.it/gravitationAstrophysics/RTModel/2017/OB170039.htm}}
 A more complete anlysis of this event, which also used   used KMT and MOA observations in addition to OGLE,
 was published in \citet{2018ApJ...867..136H}. 
-Since the KMT and MOA data is not publicly available I only use the OGLE measurements for 
+Since the KMT and MOA data are not publicly available I only use the OGLE measurements for 
 the analysis presented in this chapter. 
-The goal is not not to focus on this particular event, but rather, to use it as a case study.
+The goal is not to focus on this particular event, but rather, to use it as a case study.
 
 \begin{figure}[!t]
     \begin{centering}
@@ -7885,16 +7894,16 @@ The goal is not not to focus on this particular event, but rather, to use it as 
 I set up the coordinate system for the binary lens model such that the origin is at 
 the centre of mass of the two lenses and the $x$-axis is aligned with the line connecting 
 the two point masses.
-The first lens with mass fraction $\epsilon_1$ is located at location $r_1=-sq/(1+q) +i0$ 
-in the source plane, and the second lens is at $r_2=s/(1+q)+i0$, where 
+The first lens with mass fraction $\epsilon_1$ is located at location $r_1=-sq/(1+q)$ 
+in the source plane, and the second lens is at $r_2=s/(1+q)$, where 
 $q\equiv \epsilon_2/\epsilon_1$ is the mass ratio
 of the two lenses, and $s\equiv 2a$ is the separation between the two lenses.
 I ignore parallax effects for simplicity and assume that the trajectory of the source 
 is a straight line. The two components of the complex source trajectory 
 $w(t)=w_1(t) + iw_2(t)$ are then 
 \begin{align}
-    w_1 &= u_0\sin\alpha - (t-t_0)/t_E\cos\alpha \\
-    w_2 &= u_0\cos\alpha + (t-t_0)/t_E\sin\alpha
+    w_1 &= u_0\sin\alpha - \frac{t-t_0}{t_E}\cos\alpha \\
+    w_2 &= u_0\cos\alpha + \frac{t-t_0}{t_E}\sin\alpha
 \hquad,
 \end{align}
 where $\alpha\in[0, 2\pi)$ is the angle between the position vector of the first lens 
@@ -7902,7 +7911,7 @@ and the source star velocity vector. This parametrisation is very common and it 
 used in RTModel. The magnification can then be evaluated at every point $w$ in the 
 source plane for a source star with radius $\rho_\star$. The predicted flux is given by 
 Equation~\ref{eq:flux_microlensing}, as in the case of a single lens event. The complete 
-model thus has 7 parameters $(s, q, u_0, \alpha, t_0, t_E, \rho_\star)$.
+model thus has 7 (non-linear) parameters $(s, q, u_0, \alpha, t_0, t_E, \rho_\star)$.
 
 \begin{table}[h!]
 \centering
@@ -8098,7 +8107,7 @@ chains and it can be seen as a warmup stage of an MCMC sampler.
 There are many issues with this approach to finding the modes in the likelihood.
 I list a few below:
 \begin{itemize}
-\item The grid search strategy is not guaranteed to find all modes in the likelihood. 
+\item The grid search strategy is not guaranteed to find all relevant modes in the likelihood. 
 Even if the likelihood is well-behaved in the parameters that are fixed during the grid search, 
 the modes of the conditional distribution are not necessarily the modes 
 in the full distribution because there are covariances between all parameters. Since 
@@ -8159,18 +8168,19 @@ mode from Figure~\ref{fig:binary_lens_modes}. The ESS stands for effective sampl
 \label{tab:emcee_diagnostics}
 \end{table}
 
-The implication of these results is that MCMC chains have not converged. That is hardly 
+The implication of these results is that MCMC chains have not converged\footnote{This is also 
+clear from looking at the posterior samples (not shown in this case).}. That is hardly 
 surprising given the highly problematic geometry of the likelihood. 
 Of course, we cannot extrapolate from this single example to the entire literature, but 
 the fact that most papers do not even report if the chains have converged or not
 is a strong indication that we should not be too confident of the published results. 
 I have also tried to sample this problem with the NUTS sampler using \ssf{caustics} 
-and I ran into similar problems. The very large curvature of the target density lead to very 
+and I ran into similar problems. The very large curvature of the target density leads to very 
 long and costly integration steps in the leapfrog integrator which caused the sampler 
 to stall. 
 
 In conclusion, it seems like doing MCMC in the context of caustic-crossing 
-microlensing events is most likely a waste of CPU time. 
+microlensing events is most likely wasteful of CPU time. 
 In the next section, I explore an alternative approach.
 
 \section{The search problem and nested sampling}
@@ -8208,7 +8218,7 @@ for sampling the likelihood constrained prior, for the purpose of generating a n
     until an approximately independent sample is obtained. This is effectively MCMC 
     sampling with a hard prior constraint. Commonly used step samplers are the slice sampler
     and the Metropolis sampler. HMC-like gradient-based samplers that 
-    ``reflect'' of the likelihood constraint can also be used.
+    ``reflect'' off of the likelihood constraint can also be used.
 \end{itemize}
 
 \begin{table}[h!]
@@ -8306,7 +8316,7 @@ to the true posterior because we do not know the true posterior.}
 Regarding the second question -- does the algorithm discover all important modes in the
 posterior -- the answer is not clear. It does appear that NS discovers the main mode around 
 $(s=1.65$, $q=0.21)$ in all three cases and the value of the likelihood 
-at this mode is larger than for modes 2, 3, 4  shown in Figure~\ref{fig:binary_lens_modes}.
+at this mode is larger than for Modes 2, 3, 4  shown in Figure~\ref{fig:binary_lens_modes}.
 However, without accurately estimating the cross-validation scores for each mode, we 
 cannot simply discard the lower likelihood modes. In fact, discarding Mode 2 from 
 Figure~\ref{fig:binary_lens_modes} would be a mistake because the solution 
@@ -8346,7 +8356,7 @@ The most common approach uses  gradient-free MCMC sampling (specifically, \ssf{e
 initialised at a local mode.
 I showed that this approach is likely flawed because \ssf{emcee} completely fails to converge even 
 with very long chains. 
-All of these problems are certainly be even worse for more complex binary lens models 
+All of these problems are likely to be even worse for more complex binary lens models 
 with higher-order effects such as parallax and orbital motion, especially for triple 
 lens events, although I did not test this hypothesis.
 
@@ -8365,16 +8375,15 @@ hours of computing time). Although these preliminary results look quite discoura
 it would be worthwhile to explore nested sampling further. 
 
 In summary, given all of the above, I believe that past results on binary and triple-lens 
-microlensing events (especially caustic-crossing events) should be taken with a grain of salt, 
-especially in the case of. 
-Although existing methods often find one or more solutions which 
+microlensing events (especially caustic-crossing events) should be taken with a grain of salt
+Although existing methods often find one or more
 ``fit the data well'', the reported uncertainties for 
 model parameters should probably not be trusted. 
 It is also not at all clear that other, 
 potentially important solutions have not been missed. Solving these problems will require 
-major changes in common modelling practices to happen and likely also a lot of computing power than 
+major changes in common modelling practices to happen and likely also a lot more computing power than 
 is commonly used today. It does
-not help that the microlensing community is very closed-off, most data is not 
+not help that the microlensing community is very closed-off, most data are not 
 publicly available, the analysis code software is rarely open-source, and the validity of 
 statistical inferences is often not tested even using the most basic tools from modern 
 computational statistics.
@@ -8416,7 +8425,7 @@ detectable in the near future with telescopes such as JWST and LUVOIR
 \citep{2010AJ....140.1370K,arXiv:1804.05110,2019ApJ...885..168O,2021ChEG...81l5735C}.
 Existing exoplanet detections of planets with potential volcanic activity include 
 CoRoT-7b \citep{2010ApJ...709L..95B}, the first rocky exoplanet discovered and one 
-which is likely heated by strong tidal forces; 55 Cancri e, whose inferred longitudinal 
+which is likely heated by strong tidal forces; 55Cancri e, whose inferred longitudinal 
 offset in peak surface emission has been attributed to (among other things) lava flows 
 on the surface \citep{2016MNRAS.455.2018D,2016Natur.532..207D,2017ApJ...849..152H}; 
 several planets in the TRAPPIST-1 system which are in a Laplace-like resonance and 
@@ -8729,7 +8738,7 @@ We discuss the implication of this resolution limit in Section~\ref{sec:results}
 
 Although \textsf{starry} was built around the idea of expanding surface features in a spherical harmonic basis in which we can compute all fluxes analytically, this basis may not be ideal for doing inference because it can be difficult to encode assumptions (priors) on what we expect the map to look like.
 For example, the most important constraint on the map we would like to incorporate in the model is that the intensity (power per unit area) of the map at any given point is positive. 
-This constraint is important not only because we want to avoid having unphysical regions in inferred maps but also because it imposes a very strong prior on the map which substantially reduces the difficulty of inference when the data is not particularly informative.
+This constraint is important not only because we want to avoid having unphysical regions in inferred maps but also because it imposes a very strong prior on the map which substantially reduces the difficulty of inference when the data are not particularly informative.
 
 There are two ways of enforcing positivity that we are aware of, both of which involve evaluating the map intensity on a fixed grid of \emph{pixels} (intensity evaluated at a fixed set of points on the sphere) and not allowing negative values of those pixels because they are unphysical.
 The first is to fit for the spherical harmonic coefficients $\mathbf{y}$, evaluate the pixel grid at each MCMC step and reject all samples of the coefficient vector $\mathbf{y}$ which result in pixels with negative intensity.
@@ -9942,7 +9951,7 @@ in or out of view during ingress or egress is comparable in scale to the noise.
 This requires features with high-intensity \emph{contrast} relative to the background.
 The reason why we were able to infer high-resolution maps  from the occultation light 
 curves of Io in Chapter~\ref{ch:io} is that these light curves show a clear 
-signature of the surface hot spots (the spots have high contrast) and the data is of 
+signature of the surface hot spots (the spots have high contrast) and the data are of 
 exceptional quality (because Io is close and most of the flux is coming from Io itself 
 rather than Jupiter).
 Observations of secondary eclipses (occultations of planets by stars) are substantially
@@ -10227,7 +10236,7 @@ The variance is so high that one could justifiably ask if there is anything usef
 could learn by looking at these maps. 
 This is partly a consequence 
 of the fact that a lot of information is lost in the null space of the design matrix,
-and partly because the data is very noisy. 
+and partly because the data are very noisy. 
 We also see that the inferred maps have higher contrast than the simulated maps 
 (especially in the SNR=15 case). 
 This is a consequence of the fact that many of the higher $l$
@@ -11030,7 +11039,7 @@ Each local scale parameter is drawn from a unit scale heavy-tailed Half Cauchy d
 The global scale parameter is also a free parameter, drawn from a Half Cauchy distribution with a scale equal to $\tau_0$.
 The Horseshoe prior is closely related to the spike-and-slab prior which is a mixture between a delta function prior at zero (\emph{spike}) and some other prior elsewhere (\emph{slab}).
 
-The Regularized Horseshoe prior adds another level to Equation~(\ref{eq:horseshoe}) in order to allow fine-tuned control of sparsity and to regularize very large values of coefficients in cases where the data is only weakly constraining.
+The Regularized Horseshoe prior adds another level to Equation~(\ref{eq:horseshoe}) in order to allow fine-tuned control of sparsity and to regularize very large values of coefficients in cases where the data are only weakly constraining.
 \citet{10.1214/17-EJS1337SI} show that the Regularized Horseshoe prior can be considered as a continuous counterpart of the spike-and-slab prior with a finite slab width $c$ whereas the Horseshoe prior resembles a spike-and-slab prior with a slab of infinite width.
 The prior is defined by
 \begin{equation}
