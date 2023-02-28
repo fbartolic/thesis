@@ -1,10 +1,3 @@
 # User configuration; see the docs for details!
 verbose: true
 
-dependencies:
-    src/figures/ads_keyword_bayesian.py:
-        - src/data/misc/ads_keyword_bayes.csv
-
-zenodo:
-    - src/data/misc/ads_keyword_bayes.csv:
-        id: 6562385
