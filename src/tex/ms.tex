@@ -3955,9 +3955,9 @@ because the likelihoods for microlensing models are highly non-Gaussian and
 multimodal. In the next section, I introduce a class of algorithms which (on paper!)
 addresses almost all of these challenges.
 
-\subsubsection{Nested sampling}
+\subsubsection{Nested Sampling}
 \label{sssec:ns}
-\emph{Nested sampling} \citep{2004AIPC..735..395S}  is fundamentally different 
+\emph{Nested Sampling} \citep{2004AIPC..735..395S}  is fundamentally different 
 from MCMC because it was designed for the purpose  of estimating the
 Bayesian evidence  $\mathcal{Z}$ (Equation~\ref{eq:evidence}), instead of drawing samples 
 from  a target distribution.
@@ -3968,19 +3968,19 @@ However, $\mathcal{Z}$  becomes important in the context of model comparison
 using \emph{Bayes factors} (see Section~\ref{ssec:model_comparison}) which
 are proportional to the ratios of the evidences of the two models. 
 
-In addition to estimating $\mathcal{Z}$, nested sampling can output samples 
+In addition to estimating $\mathcal{Z}$, Nested Sampling can output samples 
 from posterior $p(\vec\theta\lvert \mathcal{D})$ as a sort of byproduct. 
 The major advantage of NS over MCMC methods is that NS acts as 
 global search algorithm, working from the ``outside-in'', which improves its 
 performance with multi-modal distributions\footnote{
     The extent to which this claim is true is investigated in 
     Chapters~\ref{ch:single_lens_models} and \ref{ch:multiple_lens_models}.
-}. Nested sampling has been extensively used in cosmology, 
+}. Nested Sampling has been extensively used in cosmology, 
 particularly the \ssf{MultiNest} package \citep{arXiv:0809.3437}. 
-\citet{arXiv:2205.15570} is great introductory review of nested sampling methods, while 
+\citet{arXiv:2205.15570} is great introductory review of Nested Sampling methods, while 
 \citet{arXiv:2101.09675} goes into a lot more depth.
 
-What follows is a brief overview of the basic version of the nested sampling algorithm.
+What follows is a brief overview of the basic version of the Nested Sampling algorithm.
 We start by rewriting the evidence $\mathcal{Z}$ from Equation~\ref{eq:evidence}
 as 
 \begin{equation}
@@ -4005,7 +4005,7 @@ X\left(\mathcal{L}^{\star}\right)=\int_{\mathcal{L}>\mathcal{L}^{\star}} \pi(\ve
 \end{equation}
 $\mathcal{L}=\mathcal{L}^\star$ defines a contour of constant likelihood and 
 $X(\mathcal{L}^\star)$ is the prior volume enclosed by that contour.
-\emph{Nested sampling thus replaces the original problem of sampling from the posterior, 
+\emph{Nested Sampling thus replaces the original problem of sampling from the posterior, 
 to a problem of sampling from a likelihood constrained prior}.
 For a derivation of Equation~\ref{eq:nested_sampling} see \citet{arXiv:2205.15570}.
 
@@ -4306,7 +4306,7 @@ There are two major problems with Bayes' factor. The first one is the fact that,
 whereas the Bayesian evidence $\mathcal{Z}$ could often be ignored when inferring the 
 parameters of the models, it is a crucial quantity in Bayesian model comparison. 
 Computing $\mathcal{Z}$ is very computationally expensive, error-prone, and it
- requires methods such as nested sampling.
+ requires methods such as Nested Sampling.
 The other problem with Bayes
 factors is that the estimates of $\mathcal{Z}$ are particularly sensitive to the 
 width and the shape of the prior distribution for the parameters. For example, if 
@@ -4890,7 +4890,12 @@ code\footnote{\url{https://fbartolic.github.io/caustics/}.}
 for computing the magnification of extended 
 sources using a contour integration method. This work is entirely my own (although I build on 
 several papers, most notably, \citet{2021MNRAS.503.6143K}, \citet{1998A&A...333L..79D} and 
-\citet{2018MNRAS.479.5157B}). It is not published at the time of writing.
+\citet{2018MNRAS.479.5157B}). It is not published at the time of writing\footnote{
+    At the time of submission of the final version of this thesis, I have developed a \ssf{Julia}
+    version of the code (called \ssf{Caustics.jl}) which solved many of the issues I described in the chapter
+    (see \url{https://github.com/fbartolic/Caustics.jl}).
+    I am currently working on a paper which will describe the new version of the code.
+}.
 
 \section{Introduction}
 \subsection{Methods for computing the magnification of extended sources}
@@ -4951,7 +4956,7 @@ The number of points (or \emph{rays}) that land within the source disc
 divided by the total number of evaluated points is then proportional to the
 magnification. IRS works with any number of lenses and sources and
 because of this, it is widely used in quasar microlensing (where there are lots of lenses)
-and the soures have non-circular shapes.
+and the sources have non-circular shapes.
 When it comes to planetary microlensing, the drawback of IRS is that the images
 are shaped as long and thin arcs covering a vanishingly small fraction of the area of
 any rectangular grid in the image plane, thus requiring very dense and
@@ -5271,7 +5276,7 @@ updates to each of the roots.
 
 An alternative to an explicit deflation strategy is an \emph{implicit deflation}
 strategy\footnote{As far as I am aware, this strategy has not been previously mentioned in the 
-microlensing literature.} in which the polynomial stays the same but the 
+microlensing literature.} \citep{cameron2021} in which the polynomial stays the same but the 
 update rule is modified. The simplest approach to implementing implicit deflation starts with
 the application of Newton's method to a reduced polynomial $p_j(z)$:
 \begin{equation}
@@ -5334,8 +5339,8 @@ replaced with
     \hquad.
 \end{equation}
 The advantage of this modified Laguerre method over the AE method is faster convergence 
-thanks to the second order Lageurre update. The drawback is thatthe Laguerre update is more 
-computationally more costly than the first-order Newton update in the AE algorithm. 
+thanks to the second order Lageurre update. The drawback is that the Laguerre update is more 
+computationally costly than the first-order Newton update in the AE algorithm. 
 
 The two most popular implementations of complex polynomial root solver algorithms are
 the \ssf{zroots} routine from Numerical Recipes \citep{1992nrca.book.....P}, and the
@@ -5419,7 +5424,7 @@ to the iterative algorithm.
 
 Let $f(z, \vec{a})$ be the polynomial from Equation~\ref{eq:general_complex_poly}, where 
 $\vec{a}$ is a vector of coefficients $a_i$, and let $z^*$ be a particular root of the 
-polynomial which we can compute using the AE algorithm. We cannot write down an
+polynomial which we can compute using the AE algorithm. e cannot write down an
 expression for the roots in closed form, but we can say that there exists some
 implicit function $h(\vec a)\,:\,\mathbb{C}^{n+1}\rightarrow\mathbb{C}$ which maps the 
 polynomial coefficients to a given root $z^*$, such that
@@ -6256,7 +6261,7 @@ The results for the $Q$ integral are qualitatively the same.
 
 The drawback of this approach is that we do not obtain an error estimate for the integrals. 
 This is not really a significant issue because the number of points $N_\mathrm{ld}$ is a 
-simple parameter which is proportional to the true error. We set this parameter to $100$ by 
+simple parameter which is proportional to the true error. I set this parameter to $100$ by 
 default because that value is sufficient to keep the final error for the magnification 
 below $10^{-3}$ in the vast majority of cases. 
 One could also use an adaptive integrator such as the adaptive Simpson's method or 
@@ -6336,7 +6341,7 @@ is much more expensive, and because the results are similar to the uniform brigh
 (if the $P$ and $Q$ functions are computed correctly the error is still most dependent on 
 the distribution of points along the contours as in the uniform case).
 The results are shown in Figure~\ref{fig:mag_limbdark_accuracy}. The error is slightly worse
-or a given value of $\rho_\star$ than in the uniform brightness case. 
+for a given value of $\rho_\star$ than in the uniform brightness case. 
 Increasing  $\mathrm{N}_\mathrm{ld}$ would solve this problem.
 Tests similar to the ones I have just described are executed automatically for the 
 \ssf{caustics} \ssf{GitHub} repository every time there is a change to the code.
@@ -6421,8 +6426,8 @@ support triple-lensing. The \ssf{TripleLens} code \citep{2021MNRAS.503.6143K}, w
 \ssf{caustics} was partly based on, does support triple 
 lensing, but as mentioned previously in this section, the code does not really work
 near caustic crossings, even for binary lens events. 
-This makes it difficult to test the magnification computation for triple lenses. The 
-best solution to this problem would be to build an inverse ray shooting code and use that
+This makes it difficult to test the magnification computation for triple lenses. Probably 
+the best solution to this problem would be to build an inverse ray shooting code and use that
 as a benchmark. Because of time constraints I have not managed to do that. 
 However, since the exact same algorithms and functions are 
 used to compute the magnification for binary and triple-lens systems in \ssf{caustics},
@@ -6595,7 +6600,7 @@ mass ratios when $q<0.01$.
             integration is necessary. The grey region is where the test indicates 
             that the full integration is needed and the red region is where the 
             error of the hexadecapole approximation is greater than $10^{-4}$.
-            The test are sufficiently sensitive to the detect the breakdown of the 
+            The tests are sufficiently sensitive to the detect the breakdown of the 
             hexadecapole approximation.
             }
             \label{fig:extended_source_test}
@@ -6617,8 +6622,8 @@ curves are shown as black lines, the red region indicates where the (relative) e
 the hexadecapole approximation relative to a complete contour integration is greater than 
 $10^{-4}$ and the grey regions are where the tests indicate that full integration is 
 necessary. Unfortunately, the tests are far from perfect and there are large areas of the 
-source plane where the tests give a false positive result. 
-
+source plane where the tests give a false positive result (i.e. the full contour integration
+is triggered when it is not necessary). 
 As of the time of writing, I have not implemented these tests for the triple lens case.
 
 \section{Automatic differentiation}
@@ -6706,7 +6711,7 @@ and limb-darkened photometric microlensing effect we have seen in the previous s
 The following rows are the functions for the real and imaginary components of the integrand 
 in the numerator of Equation~\ref{eq:centroid_shift} for the uniform brightness and 
 limb-darkened brightness  distributions.
-We see that for the photometric microlensing effect we have to numerically estimate three 
+We see that for the astrometric microlensing effect we have to numerically estimate three 
 surface integrals in total, the one in the denominator of Equation~\ref{eq:centroid_shift} 
 and the two components of the integral in the numerator, compared to one for the photometric 
 effect. 
@@ -6806,7 +6811,7 @@ Seen through the lens of Hamiltonian Monte Carlo, a posterior distribution
 $p(\vec\theta)$ with two separated modes has a potential energy barrier between the 
 two modes (because  $U(\vec\theta)\propto -\ln p(\vec\theta)$) which decreases
 the transition probability between the modes. Methods which do not exclusively use 
-local information (such as nested sampling) are more successful at finding the different modes 
+local information (such as Nested Sampling) are more successful at finding the different modes 
 (at least for low-dimensional problems), but they are much less computationally efficient.
 
 A second approach is to view this as a \emph{model comparison} problem. Model comparison
@@ -6830,7 +6835,7 @@ specifically leave-one-out cross-validation (LOO-CV), as a method for comparing 
 different modes based on their predictive performance. I also discuss the use of LOO-CV
 as a powerful way of assessing model fit. In Section~\ref{sec:averaging_over_modes},
 I review the different options for combining the information from posterior modes and 
-compare the LOO-CV approach of weighting MCMC samples to nested sampling.
+compare the LOO-CV approach of weighting MCMC samples to Nested Sampling.
 Section~\ref{sec:search_and_computation} deals with the question of how to find 
 the different modes in the first place. I demonstrate that an optimisation approach 
 using the Laplace approximation combined with LOO-CV works well as a general solution 
@@ -7133,13 +7138,13 @@ been largely ignored in the microlensing literature. As mentioned in the introdu
 way to approach this problem is from the perspective of parameter estimation 
 where the goal is to draw independent samples from the multi-modal posterior 
 distribution $p(\vec\theta|\vec f, \mathcal{M})$. Only global exploration methods 
-such as nested sampling can reliably solve this problem (if the dimensionality 
+such as Nested Sampling can reliably solve this problem (if the dimensionality 
 of $\vec\theta$ is not too large) because local exploration methods will inevitably
 get stuck in one of the modes\footnote{
     Of course, there are many many variants of MCMC which claim to be able to jump
     between the different modes reliably. In practice, however, I have found that 
     these methods rarely work on realistic problems and if they do, they are extremely 
-    unreliable. Nested sampling, on the other hand, seems to be reasonably robust and 
+    unreliable. Nested Sampling, on the other hand, seems to be reasonably robust and 
     it is commonly used in many branches of physics and astronomy.
 }.
 The alternative is to fit each of the modes separately and then do 
@@ -7148,7 +7153,7 @@ The alternative is to fit each of the modes separately and then do
 explore the latter approach by using cross-validation to rank the different modes
 based on their predictive accuracy.
 In Section~\ref{sec:averaging_over_modes} I compare this approach to the parameter 
-estimation approach using nested sampling.
+estimation approach using Nested Sampling.
 
 \subsection{Cross validation}
 Cross-validation is one of the most popular and robust methods for model comparison 
@@ -7348,7 +7353,7 @@ Mode 4 seems to be significantly worse than all the others.
         \includegraphics[width=\linewidth]{figures/single_lens_lightcurve_fits.pdf}
         \caption{Posterior predictions for the observed flux for modes 1 and 4 in
         the posterior (first row).
-        modes. Each line is a single posterior sample for the predicted flux evaluated
+        Each line is a single posterior sample for the predicted flux evaluated
         on a dense grid in time. Predictions are similar within modes so the lines 
         are all nearly on top of each other. The second row shows the residuals with 
         respect to the median flux prediction coloured by the pointwise LOO-CV score
@@ -7481,7 +7486,7 @@ samples are faithful samples of the multi-modal posterior distribution
 This is known as \emph{Bayesian Model Averaging} (BMA) and it is equivalent to weighting 
 the different modes in proportion to the Bayesian evidences 
 $\mathcal{Z}_k\equiv  p(\vec y|\mathcal{M}_k)$ for each mode $\mathcal{M}_k$.
-It is also what we would obtain if we used nested sampling (see Section~\ref{sssec:ns})
+It is also what we would obtain if we used Nested Sampling (see Section~\ref{sssec:ns})
 to sample the multi-modal posterior. 
 
 There are many issues with BMA/Bayes weights. Most notably, they are sensitive to priors 
@@ -7532,7 +7537,7 @@ on a variety of problems.
 
 Before discussing their merits, I test each approach on the problem at hand. First, 
 to obtain samples from the true Bayesian posterior (which is equivalent to weighting 
-samples from each mode using BMA), I use the nested sampling algorithm 
+samples from each mode using BMA), I use the Nested Sampling algorithm 
 from the \ssf{UltraNest} package \citep{2021JOSS....6.3001B}. \ssf{UltraNest} is a 
 generalisation of the original NS algorithm devised by \citet{2004AIPC..735..395S}.
 It implements the \ssf{MLFriends} algorithm described in 
@@ -7589,7 +7594,7 @@ separate MCMC chains were re-weighted following the procedure described in
 
 There are major differences between the different weighting schemes.
 First of all, the regular Pseudo-BMA weights, and the implicit 
-BMA weights used in nested sampling assign near zero weight to Mode 3 and Mode 4, 
+BMA weights used in Nested Sampling assign near zero weight to Mode 3 and Mode 4, 
 thus discarding the possibility of a long ($t_E\gtrsim 120$ days) event 
 timescale. The Pseudo-BMA+ weights which take into account 
 the variance in the $\mathrm{elpd}_\mathrm{psis-loo}$ estimators are more conservative. 
@@ -7624,7 +7629,7 @@ In the previous sections, I have described a method for weighing MCMC chains stu
 in multiple modes based on the predictive performance of each mode but I have not
 mentioned how to find the modes in the first place. This problem does not have a general
 solution (see the No Free Lunch theorems described in \ref{sec:inference_practice}). 
-Nested sampling seems to do a good job at discovering the different modes on this 
+Nested Sampling seems to do a good job at discovering the different modes on this 
 problem (modes 3 and 4 are also discovered but they have negligible weights so they 
 are not visible in Figure~\ref{fig:ogle_lightcurve_fit_samples_reweighted}), but it is 
 very computationally intensive. Fitting this simple 5-parameter model takes more 
@@ -7812,7 +7817,7 @@ OGLE events. Although they also used a Gaussian Process model for the noise, whi
 increases the computational cost by an order of magnitude, they did not account 
 for the multi-modality of the posterior so in that sense the analysis is flawed.
 
-If we were to fit 10000 single lens events with nested sampling this would also cost 
+If we were to fit 10000 single lens events with Nested Sampling this would also cost 
 at least a million CPU hours. For reference, the Roman telescope is expected to 
 discover over 50,000 microlensing events \citep{2020AJ....160..123J}, the vast majority 
 of which are going to be single lens events.
@@ -7833,18 +7838,18 @@ because ignoring some of the modes leads to flawed inferences about the physical
 of interest, the parallax magnitude $\pi_E$ and the event timescale $t_E$.
 
 I considered two  different approaches to solving this problem. The first approach is to fit 
-the model using nested sampling which generates samples from the multi-modal posterior.
+the model using Nested Sampling which generates samples from the multi-modal posterior.
 The second approach involves running multiple MCMC chains in parallel, allowing each to converge 
 to one of the modes, and then combining the samples using the leave-one-out cross-validation 
 (LOO-CV) scores for each chain to re-weight the samples. 
 I argue that the latter method is superior to sampling the Bayesian posterior directly\footnote{
-    It also sort of encompasses the nested sampling approach if we use the 
+    It also sort of encompasses the Nested Sampling approach if we use the 
     non-bootstrapped Pseudo-BMA weights.
 } because it is more robust to model misspecification and situations where the posterior 
 distribution is particularly sensitive to only a few data points in the light curve.
-It is also computationally much more efficient than using nested sampling.
+It is also computationally much more efficient than using Nested Sampling.
 Fitting multiple modes with MCMC is about an order of a magnitude faster 
-than nested sampling. In cases when each of the posterior modes can be approximated 
+than Nested Sampling. In cases when each of the posterior modes can be approximated 
 with a multivariate Gaussian distribution, we can avoid doing MCMC and fit each of the modes
 using the Laplace approximation which is orders of magnitude faster still.
 The Laplace approximation method can be used to fit many thousands of 
@@ -8016,7 +8021,7 @@ trajectory and caustic structure for four different modes in the likelihood.
  These are probably not the only significant modes in the likelihood. 
 Three of the four modes (modes 2-4 in the figure) were discovered by the automated RTModel 
 system, but the fourth, highest likelihood mode (Mode 1 in Figure~\ref{fig:binary_lens_modes}) 
-was not.\footnote{I found this mode using nested sampling, the subject of the 
+was not.\footnote{I found this mode using Nested Sampling, the subject of the 
 Section~\ref{sec:binary_lens_ns}.} Figure~\ref{fig:binary_lens_modes_fluxes} 
 shows the predicted flux for each mode and the flux residuals. 
 The first mode is dominant in terms of the likelihood value but we cannot really
@@ -8183,11 +8188,11 @@ In conclusion, it seems like doing MCMC in the context of caustic-crossing
 microlensing events is most likely wasteful of CPU time. 
 In the next section, I explore an alternative approach.
 
-\section{The search problem and nested sampling}
+\section{The search problem and Nested Sampling}
 \label{sec:binary_lens_ns}
-I have introduced nested sampling (NS) in Section~\ref{ssec:sampling_methods} and I have 
+I have introduced Nested Sampling (NS) in Section~\ref{ssec:sampling_methods} and I have 
 also discussed its application to single lens microlensing events in
-Section~\ref{ch:single_lens_models}. Nested sampling works by exploring the parameter space 
+Section~\ref{ch:single_lens_models}. Nested Sampling works by exploring the parameter space 
 from the outside in. It starts by distributing a set of ``live points'' in the 
 parameter space and then iteratively removing the worst point (in terms of likelihood)
 at each iteration. The removed point is replaced by a \emph{sample from the prior}, 
@@ -8236,7 +8241,7 @@ for sampling the likelihood constrained prior, for the purpose of generating a n
     $\ln \rho_\star$ & $\mathcal{U}(\ln (5\times 10^{-4}), \ln 10^{-2})$\\
     \bottomrule
 \end{tabular}
-\caption{Priors for the parameters used in the nested sampling analysis.}
+\caption{Priors for the parameters used in the Nested Sampling analysis.}
 \label{tab:priors_ns}
 \end{table}
 
@@ -8249,7 +8254,7 @@ The estimate of the evidence
 $\ln\mathcal{Z}$ is sensitive to priors, however, since in this case we are not interested in the evidence 
 the priors are not really important.
 
-I found that the region based nested sampling strategy completely failed to converge 
+I found that the region based Nested Sampling strategy completely failed to converge 
 for this problem. After more than 200 million (!) likelihood evaluations,  $\ln\mathcal{Z}$ estimate
 was nowhere near convergence and the efficiency of the sampler declined to less than 0.01\%.
 This extremely low acceptance rate suggests that the volume of the bounded region constructed by wrapping 
@@ -8296,7 +8301,7 @@ Nr. of live points& $\ln\mathcal{Z}$& Total nr. of likelihood evaluations\\
         \caption{
             Posterior samples from the three \ssf{UltraNest} runs listed in 
             Table~\ref{tab:results_ns}. In each case the samples are visibly different,
-            indicating that nested sampling is most likely not converging to the true posterior.
+            indicating that Nested Sampling is most likely not converging to the true posterior.
         }
             \label{fig:ns_pairplot}
         \script{chapter_5/binary_lens_ns_analysis.py}
@@ -8334,8 +8339,8 @@ $p(s,q,\alpha|\vec\theta^\prime)$ and compare it with samples from a simple reje
 sampler. Rejection sampling is useless in 7 dimensions because of the curse of dimensionality,
 but it can work well in parameter spaces with up to 5 dimensions. We could then repeat this
 experiment for different subsets of parameters. If the rejection sampling results were to be  
-consistent with NS results, we would have some evidence that nested sampling 
-is converging to the true posterior.\footnote{Unless nested sampling stops sampling the true posterior
+consistent with NS results, we would have some evidence that Nested Sampling 
+is converging to the true posterior.\footnote{Unless Nested Sampling stops sampling the true posterior
 faithfully in a higher dimensional space, which is also entirely possible.}
 
 \section{Summary and future work}
@@ -8360,19 +8365,19 @@ All of these problems are likely to be even worse for more complex binary lens m
 with higher-order effects such as parallax and orbital motion, especially for triple 
 lens events, although I did not test this hypothesis.
 
-To explore a potential solution to the search and sampling problems, I tested nested sampling,
+To explore a potential solution to the search and sampling problems, I tested Nested Sampling,
 which is conceptually very different from MCMC methods.
-I used the \ssf{UltraNest} implementation of nested sampling which 
+I used the \ssf{UltraNest} implementation of Nested Sampling which 
 is more robust than alternatives because it is tuned for accuracy over speed.
 I found that the rejection sampling approach to sampling the likelihood constrained prior 
 does not work for this problem because the efficiency of the sampler tends to zero well 
 before the bulk of the posterior mass is accounted for.
-It appears that the aleternative variant of nested sampling, using the slice step sampler,
+It appears that the alternative variant of Nested Sampling, using the slice step sampler,
 does not work either.
 The sampler does not appear to converge to a stable distribution even
 after more than 100 million likelihood evaluations (which requires thousands of CPU 
 hours of computing time). Although these preliminary results look quite discouraging,
-it would be worthwhile to explore nested sampling further. 
+it would be worthwhile to explore Nested Sampling further. 
 
 In summary, given all of the above, I believe that past results on binary and triple-lens 
 microlensing events (especially caustic-crossing events) should be taken with a grain of salt
@@ -8425,7 +8430,7 @@ detectable in the near future with telescopes such as JWST and LUVOIR
 \citep{2010AJ....140.1370K,arXiv:1804.05110,2019ApJ...885..168O,2021ChEG...81l5735C}.
 Existing exoplanet detections of planets with potential volcanic activity include 
 CoRoT-7b \citep{2010ApJ...709L..95B}, the first rocky exoplanet discovered and one 
-which is likely heated by strong tidal forces; 55Cancri e, whose inferred longitudinal 
+which is likely heated by strong tidal forces; 55 Cancri e, whose inferred longitudinal 
 offset in peak surface emission has been attributed to (among other things) lava flows 
 on the surface \citep{2016MNRAS.455.2018D,2016Natur.532..207D,2017ApJ...849..152H}; 
 several planets in the TRAPPIST-1 system which are in a Laplace-like resonance and 
@@ -9019,7 +9024,7 @@ This function can be expanded in terms of spherical harmonics as
 \end{equation}
 where $B_l$ are the spherical harmonic coefficients and $\mathcal{P}_l$ are the associated Legendre polynomials.
 They depend only on $l$ because all nonzero $m$ modes vanish due to azimuthal symmetry.
-For $\sigma_s\ll 1$, $B_l$can be approximated as 
+For $\sigma_s\ll 1$, $B_l$ can be approximated as 
 \citep{2007astro.ph..3168S,1995ApJ...443....6W}
 \begin{equation}
     B_l\simeq \exp\left[-\frac{1}{2}l(l+1)\sigma_s^2\right]
@@ -9594,7 +9599,8 @@ The contour lines show the 5th, 50th, and 95th percentiles of intensity above an
 We have presented a novel method for mapping volcanic emission on Io using occultation light curves.
 The method relies on the \textsf{starry} algorithm which enables fast analytic computation of occultation light curves by expanding the surface emission map in spherical harmonics.
 Our method is different from past work because we do not assume that we know where the volcanic features are located on the surface of Io, how many there are or what they look like.
-Instead, we place weaker assumptions on the global structure of the map by requiring that the inferred map has positive intensity everywhere and most importantly, that it is \emph{sparse} \footnote{\citet{aizawa2020} also find the sparsity assumption useful in the context of exoplanet mapping.}.
+Instead, we place weaker assumptions on the global structure of the map by requiring that the inferred map has positive intensity everywhere and most importantly, that it is 
+\emph{sparse}\footnote{\citet{aizawa2020} also find the sparsity assumption useful in the context of exoplanet mapping.}.
 Besides the model for the surface map, our method also incorporates a sophisticated noise model which includes a Gaussian Process and a hierarchical model for the error bars.
 As a result of the sparsity and positivity constraints and the flexibility of the noise model,
 our model is parsimonious -- it places features on the map only if the data provide strong evidence for the existence of those features.
@@ -9759,15 +9765,15 @@ best-case-scenario inferred maps (assuming noiseless observations) for a set of 
 with different kinds of spatial features and for different impact parameters of the planet. 
 In Section~\ref{sec:exo_signal_noise} we also explore the sensitivity of the features in the light curve to variable spot parameters such
 as contrast, size and latitude. 
-In Section~\ref{sec:exo_weather} we move beyond toy models. We 
+In Section~\ref{sec:exo_weather} we move beyond toy models. I
 use the outputs of a hydrodynamics simulation of an
 atmosphere of the Hot Jupiter HD209458b to simulate semi-realistic photometric JWST light
-curves. We then fit those light curves to test what is recoverable from the data under 
+curves. I then fit those light curves to test what is recoverable from the data under 
 ideal conditions.
 Finally, in Section~\ref{sec:exo_summary} we summarise the results and discuss the  
 implications for observing strategies.
 
-We use several simplifying assumptions about the problem at hand. 
+I use several simplifying assumptions about the problem at hand. 
 First, we assume that the simulated planets are tidally locked and we ignore uncertainties in the
 orbital parameters. Second, we assume that the emission from the planet is isotropic 
 blackbody emission, and the reflected light component is negligible. Third, we ignore 
@@ -9799,7 +9805,7 @@ information content of different kinds of observations
 in emitted and reflected light and we briefly discussed the various degeneracies involved 
 in solving the inverse problem. Here we improve on that analysis by visualising the 
 nullspace in the context of exoplanet secondary eclipses. 
-We start by defining linear operators
+I start by defining linear operators
 $\mathbf{P}$ and $\mathbf{N}$ \citep[see Appendix A in][]{2021AJ....162..123L} which
 decompose the original map into a surface map that is in the \emph{preimage} of the linear mapping
 $\vec{A}$,
@@ -9862,7 +9868,7 @@ equator, a map with azimuthally symmetric bands, and a map of Earth. To compute
 $\mathbf{y}_{\bullet}$ we solve the regularized least squares problem
 (Equation~(\ref{eq:preimage_lsq})) for a Jupiter size planet in a 1-day orbit
 around a $1R_\odot$ star with a rotation period synchronous with the orbital
-period. We used the entire light curve except for the transit. 
+period. I used the entire light curve except for the transit. 
 Each row of the figure shows the preimage maps for different impact parameters $b$.
 When $b=0$, the stellar limb sweeps over the projected disk of the planet in a
 direction perpendicular to the planet's equator so that only longitudinal
@@ -9964,18 +9970,18 @@ To demonstrate this dependence of the inferred maps on feature contrast in the c
 exoplanets, we simulate a set of three maps at $l=20$ consisting
 of a single hot spot  with a radius of $30^\circ$, 
 located at $20^\circ$ latitude and $15^\circ$ longitude.
-We set the planet/star radius to $R_p/R_\star=0.1$ and assume that it is orbiting a 
+I set the planet/star radius to $R_p/R_\star=0.1$ and assume that it is orbiting a 
 Solar mass star in a circular orbit with a 1 day period. 
-We set the dayside planet star flux ratio 
+I set the dayside planet star flux ratio 
 $F_p/F_\star$ to $10^{-3}$, and vary the contrast of the spot $c$.
 The contrast $c$ is defined 
 as the fractional increase in the intensity of 
 the map at the spot's location when the spot is added while holding the 
-planet-star flux ratio constant. We then generate light curves with $5s$
+planet-star flux ratio constant. I then generate light curves with $5s$
 cadence and set the noise such that the signal-to-noise ratio for the secondary
 eclipse depth (defined as the difference between the maximum and minimum value of flux) is 15.
 
-The model we fir is nearly identical to the one described in 
+The model I fit to the data is nearly identical to the one described in 
 Section~\ref{sec:io_model} in the context of occultations of Io 
 (Equation~\ref{eq:flux_model_io}). The only difference is that the design matrix $\vec A^\prime$,
 which encodes the geometry of the eclipses, is computed for a system with different 
@@ -9993,7 +9999,7 @@ known and fixed.
 The posterior distribution is specified by Equation~\ref{eq:linear_exo_model}, and 
 a Gaussian likelihood function with a diagonal covariance matrix. 
 
-We sample the posterior using the \ssf{numpyro} implementation of the NUTS MCMC sampler 
+I sample the posterior using the \ssf{numpyro} implementation of the NUTS MCMC sampler 
 with 500 tuning steps and 500 production 
 steps, checking for convergence using the diagnostics described in previous chapters. 
 The results are shown in Figure~\ref{fig:varying_contrast_spot}. The top row
@@ -10033,14 +10039,14 @@ Looking at the binned flux it is clear that the deviation from a baseline model 
 with near uniform dayside intensity, increases with increasing spot contrast.
 Conversely, features which are too dim are drowned out by the noise. 
 Figure~\ref{fig:spot_residuals} shows the dependence of this deviation on the
-spot contrast, radius and latitude. We simulate a map with a spot at $0^\circ$
+spot contrast, radius and latitude. I simulate a map with a spot at $0^\circ$
 longitude and compute the residuals between the simulated flux at $l=20$ and
 $l=1$, showing only the egress part of the flux (for a spot at $0^\circ$
 longitude the ingress and egress are symmetric). The first panel from the left
 shows the residual flux for a spot with $30^\circ$ radius at the equator and 
 varying contrast. In the middle panel, we fix the contrast to $c=0.15$ and vary
 the radius of the spot. Finally, in the rightmost panel, we show the residual
-flux for a spot with $30^\circ$ radius and $c=-0.15$ for different latitudes. We 
+flux for a spot with $30^\circ$ radius and $c=-0.15$ for different latitudes. We
 see that the flux deviation is maximised for a large, high-contrast spot
 with large absolute values of latitude.
 
@@ -10064,7 +10070,7 @@ with large absolute values of latitude.
 
 \section{Going beyond the spot model}
 \label{sec:exo_weather}
-We showed that the ability to infer localise features in exoplanet emission maps 
+I showed that the ability to infer localise features in exoplanet emission maps 
 depends on the noise in the light curve
 and the contrast of the localised features on the observer-facing side of the planet 
 during the eclipses (the dayside in the case of tidally locked exoplanets). In this 
@@ -10129,13 +10135,13 @@ level and simulating eclipse light curves assuming a blackbody emission spectrum
 \end{figure}
 
 \subsection{Variability on orbital timescales}
-We start by taking the ``T341L20'' simulation snapshots from \citet{2021ApJ...913L..32C} 
+I start by taking the ``T341L20'' simulation snapshots from \citet{2021ApJ...913L..32C} 
 where T341 refers to the resolution of the simulation in latitude and longitude, and 
 L20 refers to the vertical resolution (20 pressure levels in this case). 
 For details on the meaning of these values see \citet{2021MNRAS.504.5172S}. 
 The orbital parameters for these simulations are set to the orbital parameters of the
 Hot Jupiter HD209458b  \citep{2000ApJ...529L..41H,2000ApJ...529L..45C}. 
-We use the temperature snapshots at a pressure of 1 bar because this pressure level very roughly 
+I use the temperature snapshots at a pressure of 1 bar because this pressure level very roughly 
 corresponds to peak emission in the near-IR.
 The first topic we explore is the variation in the spatial distribution of 
 temperature on an orbital timescale. Figure~\ref{fig:snapshots_within_orbit} shows a series 
@@ -10171,7 +10177,7 @@ on such short timescales.
 Having established that the predicted emission from a Hot Jupiter atmosphere is highly 
 dynamic on sub-orbital and orbital timescales, we now turn to the question of how this variability
 reflects in the shape of the corresponding eclipse light curves. 
-We select 30 consecutive temperature  snapshots taken at the same orbital phase, 30 orbits in 
+I select 30 consecutive temperature  snapshots taken at the same orbital phase, 30 orbits in 
 total, and compute the predicted 
 flux in the JWST F444W $4.5\mu m$ filter for each snapshot in the time range 
 $(-0.06,0.06)$ centred at mid-eclipse. The results are shown in 
@@ -10184,7 +10190,7 @@ We can think of this as the deviation from a baseline model (a quadrupole $l=2$ 
 
 Judging from the results shown in Figure~\ref{fig:flux_variation}, the variability in 
 the eclipse depth is relatively large and it should be straightforward to measure.
-Even a simle tophat signal model would be sufficient for that purpose.
+Even a simple tophat signal model would be sufficient for that purpose.
 Detecting higher-order structure in dayside emission, above the level of a 
 quadrupole map, is much harder because we need to be able to measure the shape of signals 
 with a scale of a few ppm over a relatively short time period. 
@@ -10211,18 +10217,18 @@ Next, we choose 7 consecutive temperature snapshots and generate a simulated JWS
 for each snapshot. To estimate the uncertainties for the data points, we use the
 online version of the PandExo tool
 \citep{2017PASP..129f4501B}\footnote{\url{https://exoctk.stsci.edu/pandexo/calculation/new}}. 
-In the tool, we select HD209458b as the target and the JWST F444W filter. We use the default 
+In the tool, we select HD209458b as the target and the JWST F444W filter. I use the default 
 parameters for the star and the planet suggested by PandExo and we set the ``Number of 
 groups per integration'' to 15. The output is an exposure time of $5.5s$ and a 
 signal-to-noise ratio for the eclipse depth of $\sim 15$.  This SNR roughly corresponds to 
-light curve error bars of 100 ppm.  We also generate a separate set of light curves with 
+light curve error bars of 100 ppm.  I also generate a separate set of light curves with 
 SNR=50 to test how our results would change if we had much better quality data 
 (better than JWST).
 
 
-We fit the model specified in Equation~\ref{eq:linear_exo_model} for different values of 
+I fit the model specified in Equation~\ref{eq:linear_exo_model} for different values of 
 $l$ (in the range $1,\ldots,7$) to the simulated light curves using the NUTS sampler.
-We use 500 warmup iterations and 1500 sampling iterations. All fits converge easily in 
+I use 500 warmup iterations and 1500 sampling iterations. All fits converge easily in 
 about a minute of CPU time and the effective sample size for each parameter ends up being 
 well over a thousand. The result for the first light curve, an $l=4$ map, is shown in 
 Figure~\ref{fig:single_fit} .
@@ -10251,7 +10257,7 @@ Making the maps look less contrasty would require a more sophisticated prior.
 The interpretation of the results for the first light curve is not qualitatively different 
 than the results for the other 6 light curves. In Figure~\ref{fig:single_fit} we show the 
 posterior mean maps at $l=4$ for all 7 light curves (bottom two rows).
-The simulate maps and the preimages of the simulated maps are shown in the top two rows. 
+The simulated maps and the preimages of the simulated maps are shown in the top two rows. 
 Clearly, the inferred maps do not resemble the preimages at all. Also, all inferred maps
 have a bias towards cooler temperatures in the polar regions. 
 
@@ -10280,7 +10286,7 @@ a large contrast.
             The simulated light curves were generated assuming observations with 
             the JWST F444W $4.5\mu m$ NIRCam filter and a 5.5s exposure time. The noise 
             variance was set using the PandExo tool which gives SNR=15 for the eclipse depth.
-            We also show results for SNR=50 for reference (bottom row).
+            I also show results for SNR=50 for reference (bottom row).
             The first column shows the simulated maps, the second column shows the mean 
             inferred maps, the third column shows the posterior sample maps and finally,
             the fourth column shows the median posterior flux (blue line) and the simulated
@@ -10324,12 +10330,12 @@ a large contrast.
 \label{sec:discussion}
 In this chapter, we have investigated the feasibility of using eclipse mapping to
 infer morphologically complex two-dimensional emission maps of Hot Jupiter atmospheres.
-We started by visualising the nullspace of the linear function which transforms a two-dimensional map
+I started by visualising the nullspace of the linear function which transforms a two-dimensional map
 of the planet into a one-dimensional light curve (Section~\ref{sec:exo_nullspace}). 
-We demonstrated 
+I demonstrated 
 that there are intrinsic limits to what can be recovered from a single eclipse light curve;
 the inferred maps do not converge to the true maps even in the limit of noiseless data.
-We showed that the key factor that determines whether a given spatial feature can be 
+I showed that the key factor that determines whether a given spatial feature can be 
 recovered in a map is its contrast relative to the background. High contrast 
 features are easiest to recover because their signature is most prominent in the
 light curve during the eclipse.
@@ -10347,13 +10353,13 @@ timescale. This imposes constraints on the duration of the light curve we can us
 eclipse mapping because of the fundamental assumption that the map is static in time. 
 For this reason, we only used the eclipse portion of light curves in subsequent analyses.
 
-We chose a sequence of 7 consecutive snapshots from the hydrodynamics simulation and generated two sets
+I chose a sequence of 7 consecutive snapshots from the hydrodynamics simulation and generated two sets
 of simulated eclipse light curves of the planet HD209458b using \ssf{starry}. 
 The first set of light curves were generated by setting the noise variance to match the expected 
 noise level for observations with the JWST NIRCam F444W filter and a 5.5s exposure time.
 The noise level for the second set of light curves was set to a much lower value so we could 
 get a sense of how the result would change if he had an instrument superior to JWST.
-We fit an $l=4$ map to each light curve in the two sets and find
+I fit an $l=4$ map to each light curve in the two sets and find
 that in both cases the inferred maps are not even remotely close to the simulated maps 
 (more specifically, the preimages of the simulated maps). 
 
@@ -10421,7 +10427,7 @@ to a value appropriate for LUVOIR-A. The expected SNR for LUVOIR-A eclipse obser
 HD209458b is about 50 which is why we chose that value for the noise level in the second set of
 simulated light curves from this chapter. 
 Thus, not even LUVOIR-A with its 15m diameter mirror will be sufficient
-to map the atmospheres of hot Jupiters at finer scales.
+to map the atmospheres of Hot Jupiters at finer scales.
 
 \begin{figure}[t!]
     \begin{centering}
@@ -10496,7 +10502,7 @@ astrometric microlensing. This is on the roadmap for future development.
     the multi-modal pdf independently, and then combine the results based on the predictive 
     performance of each mode. To my knowledge, this is the first time this method has been applied
     in microlensing and possibly astronomy as a whole.
-    \item The method is far superior to alternatives such as nested sampling both in 
+    \item The method is far superior to alternatives such as Nested Sampling both in 
     terms of speed and correctness. It is also not in any way specific to the single lens
     microlensing model. It can be applied to other degenerate microlensing models, 
     though there are other challenges with multiple-lens models specifically (see 
@@ -10553,31 +10559,31 @@ highly sceptical of the results of MCMC-based inference in microlensing. I belie
 result generalises to at least all caustic-crossing events if not all multiple-lens-events, 
 although I have not tested this claim thoroughly.
 \item With the goal of pursuing a more principled approach to the problem, I explore 
-the use of nested sampling, a class of methods which promises to solve both the search 
+the use of Nested Sampling, a class of methods which promises to solve both the search 
 and the exploration problem for a broad class of (relatively low dimensional) inference 
-problems. Nested sampling is very popular in cosmology and I have used it in the previous 
+problems. Nested Sampling is very popular in cosmology and I have used it in the previous 
 chapter on the analysis of single lens events.
-\item I test two kinds of flavours of nested sampling, a region-based sampler and 
+\item I test two kinds of flavours of Nested Sampling, a region-based sampler and 
 a step sampler, both are implemented in the code \ssf{UltraNest} \citet{2021JOSS....6.3001B}.
-There are many subtly different implementations of nested sampling but \ssf{UltraNest}
+There are many subtly different implementations of Nested Sampling but \ssf{UltraNest}
 is one the most well-tested and reliable ones. 
-\item I find that nested sampling with a region-based sampler is effectively useless
+\item I find that Nested Sampling with a region-based sampler is effectively useless
 without major changes to the method for constructing the geometric regions in the prior space
 (overlapping ellipsoids). The efficiency of the rejection sampler 
 grinds to a halt even after an extremely large number of likelihood evaluations (>200M, 
 requiring thousands of hours of CPU time).
 \item The alternative step sampler (a slice sampler sampling directly from the likelihood 
-constrained prior) enables the nested sampling algorithm to converge according to its 
+constrained prior) enables the Nested Sampling algorithm to converge according to its 
 internal convergence criteria (fractional threshold on the log-evidence estimate). 
 However, the resulting posterior is not stable with respect to the choice of the initial
-number of live points (a key hyperparameter in nested sampling). By fitting the same model 
+number of live points (a key hyperparameter in Nested Sampling). By fitting the same model 
 with different numbers of live points (2000, 5000, and 10000) I find that the samples 
 are not consistent with each other and it does not seem that increasing the number 
-of live points would help. Nested sampling with a step sampler is also extremely computationally 
+of live points would help. Nested Sampling with a step sampler is also extremely computationally 
 expensive, requiring thousands of hours of CPU time for the simplest binary lens model 
 and a single light curve.
-\item There are other flavours of nested sampling worth exploring but the initial experiments 
-do not look very promising. It seems nested sampling does not work for this problem, at least
+\item There are other flavours of Nested Sampling worth exploring but the initial experiments 
+do not look very promising. It seems Nested Sampling does not work for this problem, at least
 not without substantial changes to the method.
 \item In summary, the results of this chapter raise more questions than they answer.
 \end{itemize}
@@ -10643,7 +10649,7 @@ in the context of eclipse (occultation) mapping of exoplanets.
 \item The content of this chapter is as of yet unpublished work I did with several 
 collaborators.
 \item Our main research question in this work was broadly, ``what spatial features can 
-we plausibly infer from the eclipse light curves of hot Jupiters?''. This work was directly
+we plausibly infer from the eclipse light curves of Hot Jupiters?''. This work was directly
 motivated by the work presented in the previous chapter on the eclipse (occultation) mapping of Io.
 The reason we focus on Hot Jupiters as opposed to smaller planets is simply that they are far brighter targets than 
 super-Earths. 
@@ -10720,7 +10726,7 @@ In what follows, I will outline my vision for future microlensing research oppor
 One of the main conclusions from Chapter~\ref{ch:multiple_lens_models} is that multiple-lens 
 microlensing models are qualitatively completely different from single lens models because 
 of non-smooth and extremely degenerate likelihood surfaces. As a result, popular statistical 
-methods such as MCMC and nested sampling fail to work as intended. We can group the main challenges
+methods such as MCMC and Nested Sampling fail to work as intended. We can group the main challenges
 in three categories:
 \begin{enumerate}
     \item \textbf{The search problem:} Find all relevant ``modes'' (regions of high probability mass)
@@ -10743,7 +10749,7 @@ evaluations per event.
 
 Here are some ideas for potential solutions to the search problem:
 \begin{itemize}
-    \item A flavour of nested sampling or a similar algorithm (SMC, parallel tempering?).
+    \item A flavour of Nested Sampling or a similar algorithm (SMC, parallel tempering?).
     \item A machine learning model trained on a \emph{very large collection} of simulated events with 
     a non-trivial noise model and realistic observing cadence. 
     The paper by \citet{https://arxiv.org/abs/2206.08199} is a promising start.
@@ -10758,7 +10764,7 @@ be more complex than the model we are trying to fit.
 
 Assuming we have a reliable algorithm for 1), the next step is to explore the parameter 
 space in the vicinity of each mode (solution). In Chapter~\ref{ch:multiple_lens_models} I 
-have shown that neither popular MCMC methods nor nested sampling do this step reliably. 
+have shown that neither popular MCMC methods nor Nested Sampling do this step reliably. 
 I am not sure what the best approach is here. Here are some ideas:
 \begin{itemize}
     \item We could first make the likelihood smoother by blowing up the noise or raising the 
