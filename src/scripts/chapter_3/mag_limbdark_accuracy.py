@@ -53,7 +53,7 @@ s, q = 0.9, 0.2
 u1 = 0.7
 
 # 1000  points on caustic curve
-npts = 25 
+npts = 20
 critical_curves, caustic_curves = critical_and_caustic_curves(
     npts=npts, nlenses=2, s=s, q=q
 )
@@ -61,7 +61,8 @@ caustic_curves = caustic_curves.reshape(-1)
 
 # Accuracy of integration
 acc_vbb = 1e-05
-npts_limb = 400
+npts_limb = 500
+npts_ld = 150
 
 
 # Compute relative error w.r.t. VBB for different values of rho 
@@ -74,7 +75,7 @@ for rho in rho_list:
     print(f"rho = {rho}")
 
     # Generate 1000 random test points within 2 source radii away from the caustic points 
-    key = random.PRNGKey(3)
+    key = random.PRNGKey(5)
     key, subkey1, subkey2 = random.split(key, num=3)
     phi = random.uniform(subkey1, caustic_curves.shape, minval=-np.pi, maxval=np.pi)
     r = random.uniform(subkey2, caustic_curves.shape, minval=0., maxval=2*rho)
@@ -86,7 +87,7 @@ for rho in rho_list:
             for w in w_test
         ]
     )
-    mags = mag_binary(w_test, rho, s, q, u1=u1, npts_limb=npts_limb, npts_ld=npts_limb, limb_darkening=True)
+    mags = mag_binary(w_test, rho, s, q, u1=u1, npts_limb=npts_limb, npts_ld=npts_ld, limb_darkening=True)
     mags_vbb_list.append(mags_vbb)
     mags_list.append(mags)
 
