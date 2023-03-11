@@ -5,4 +5,6 @@ Progress in astronomy in the 21st century is contingent on the ability to extrac
 See Chapter 8 of the thesis for a bullet point summary of the key findings and contributions of this thesis.
 
 # Reproducibility
-There is a link to the left of each figure that points to the script (located in `src/scripts/`) that generated the figure. Unfortunately much of the data I used in the thesis is not public so I could not share it. If you are interested in reproducing the results of the thesis, please contact me. 
+There is a link to the left of each figure that points to the script (located in `src/scripts/`) that generated the figure. Unfortunately much of the data I used in the thesis is not public so I could not share it. The data I could share is available for download here: https://research-repository.st-andrews.ac.uk/handle/10023/27130
+
+If you are interested in reproducing any of the results of the thesis, please contact me. I will be happy to help.
