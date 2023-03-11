@@ -1,27 +1,8 @@
-<p align="center">
-<a href="https://github.com/rodluger/showyourwork">
-<img width = "450" src="https://raw.githubusercontent.com/rodluger/showyourwork/img/showyourwork.png" alt="showyourwork"/>
-</a>
-<br>
-<br>
-<a href="https://github.com/fbartolic/thesis/actions/workflows/showyourwork.yml">
-<img src="https://github.com/fbartolic/thesis/actions/workflows/showyourwork.yml/badge.svg" alt="Article status"/>
-</a>
-<a href="https://github.com/fbartolic/thesis/raw/main-pdf/arxiv.tar.gz">
-<img src="https://img.shields.io/badge/article-tarball-blue.svg?style=flat" alt="Article tarball"/>
-</a>
-<a href="https://github.com/fbartolic/thesis/raw/main-pdf/dag.pdf">
-<img src="https://img.shields.io/badge/article-dag-blue.svg?style=flat" alt="Article graph"/>
-</a>
-<a href="https://github.com/fbartolic/thesis/raw/main-pdf/ms.pdf">
-<img src="https://img.shields.io/badge/article-pdf-blue.svg?style=flat" alt="Read the article"/>
-</a>
-</p>
+# Abstract
+Progress in astronomy in the 21st century is contingent on the ability to extract useful information from complex and noisy datasets. This requires modeling the data-generating process – a complex combination of the physical phenomenon of interest and the “noise”. The goal is to create an approximate model that captures the essence of this process and then fit it to the data. This thesis covers the development of new methods and tools for almost all aspects of the data analysis process in two fields of astronomy: gravitational microlensing and occultation/eclipse mapping. In both fields, the objective is to infer the physical properties of exoplanets, stars, or dark compact objects by measuring the brightness variations of a light source as a function of time. Building on recent advancements in statistics, machine learning, and computer science, I developed a new open-source package called caustics for computing the microlensing magnification in single, binary, and triple-lens microlensing events. I also tackled foundational questions on the statistical analysis of single-lens and multiple-lens microlensing events, developing a new paradigm for modeling degenerate single-lens microlensing events and demonstrating the flaws of commonly used methods for analyzing multiple-lens microlensing events. Moreover, I built models for reconstructing two-dimensional emission maps of spherical bodies, exoplanets, and Solar System objects from one-dimensional photometric occultation light curves. Together with collaborators, I developed a novel method for reconstructing spatial maps of volcanic emission on Jupiter’s moon Io from occultation light curves and used the same method for exoplanet eclipse mapping to explore the possibility of detecting weather and climate change on Hot Jupiters using simulated photometric JWST secondary eclipse light curves.
 
-## You're all set!
+# Key findings and contributions
+See Chapter 8 of the thesis for a bullet point summary of the key findings and contributions of this thesis.
 
-Your new repository is set up and ready to go. Click on the badges at the top to take you to the compiled article PDF or to a tarball containing all of the manuscript files. Both the PDF and the tarball are automatically updated every time you push changes to this repo; note that builds usually take a few minutes (or more, depending on what you're doing).
-
-The first thing you might want to do is customize the `src/ms.tex` file, which is currently just filled with placeholder text. You should also delete the current placeholder figure scripts in the `src/figures` directory, and add the scripts needed to build your own figures. If your workflow has external dependencies (which it most likely will), you must add them to the `environment.yml` file so `showyourwork` can build the paper from scratch. See [here](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#managing-environments) for details. Finally, change or edit the `LICENSE` as needed and replace the text in this `README.md` with some useful information for the reader!
-
-If you run into any trouble, please check out the [showyourwork documentation](https://showyourwork.readthedocs.io). If you think you've encountered a bug, please check out the [issues page](https://github.com/rodluger/showyourwork/issues) and raise a new one if needed.
+# Reproducibility
+There is a link to the left of each figure that points to the script (located in `src/scripts/`) that generated the figure. Unfortunately much of the data I used in the thesis is not public so I could not share it. If you are interested in reproducing the results of the thesis, please contact me. 
