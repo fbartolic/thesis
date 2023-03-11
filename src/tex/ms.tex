@@ -95,13 +95,13 @@ I, Fran Bartoli\'{c}, do hereby certify that this thesis, submitted for the degr
 \noindent I received funding from an organisation or institution and have acknowledged the funder(s) in the full text of my thesis.
 
 \vspace{1cm}
-\noindent \textbf{Date}: 17.11.2022 \quad\quad \textbf{Signature of candidate}: 
+\noindent \textbf{Date}: 01.03.2023 \quad\quad \textbf{Signature of candidate}: 
 
 \section*{Supervisor's declaration}
 I hereby certify that the candidate has fulfilled the conditions of the Resolution and Regulations appropriate for the degree of $\mathrm{PhD}$ in the University of St Andrews and that the candidate is qualified to submit this thesis in application for that degree. I confirm that any appendices included in the thesis contain only material permitted by the 'Assessment of Postgraduate Research Students' policy.
 \vspace{1cm}
 
-\noindent \textbf{Date}: 17.11.2022 \quad\quad \textbf{Signature of supervisor}: 
+\noindent \textbf{Date}: 01.03.2022 \quad\quad \textbf{Signature of supervisor}: 
 
 
 \section*{Permission for publication}
@@ -120,11 +120,11 @@ No embargo on electronic copy.
 
 \vspace{1cm}
 
-\noindent \textbf{Date}: 17.11.2022 \quad\quad \textbf{Signature of candidate}: 
+\noindent \textbf{Date}: 01.03.2022 \quad\quad \textbf{Signature of candidate}: 
 
 \vspace{1cm}
 
-\noindent \textbf{Date}: 17.11.2022 \quad\quad \textbf{Signature of supervisor}: 
+\noindent \textbf{Date}: 01.03.2022 \quad\quad \textbf{Signature of supervisor}: 
 
 \newpage
 \section*{Underpinning Research Data or Digital Outputs}
@@ -136,18 +136,22 @@ I, Fran Bartoli\'{c}, hereby certify that no requirements to deposit original re
 \newpage 
 
 \section*{Acknowledgements}
-I would like to thank the following people. My supervisor, Martin Dominik, for giving me the freedom to work 
-on my own ideas and for his support throughout my PhD. 
-Rodrigo Luger and Daniel Foreman-Mackey from Flatiron institute, for teaching me how 
-to write good code and solve hard problems, and for their support and encouragement.
-All the wonderful people at the St Andrews astronomy department,
-for making my time there so enjoyable, especially my fellow PhD students.
-My family, for their support and understanding.
 
-Most of all, I would like to thank Marguerite, for bringing so much joy and happiness to 
-my life which certainly helped me through the difficult times.
+I would like to express my gratitude to the following people. My supervisor, Martin Dominik, 
+for giving me the chance and the freedom to work on my own ideas and for his helpful guidance and 
+support throughout my PhD. Rodrigo Luger and Daniel Foreman-Mackey from the Center for Computational 
+Astrophysics (CCA) at the Flatiron institute, for their useful feedback and collaboration
+and for showing me what true excellence in research on the intersection of astronomy, statistics and 
+computing looks like. 
+I also want to thank all the wonderful people at the St Andrews astronomy department, for providing a 
+stimulating and enjoyable atmosphere, especially my fellow PhD students who went through this journey 
+with me. I appreciate the support and understanding of my family, who always motivated me to follow my goals.
+
+Most of all, I would like to thank Marguerite, for bringing so much joy and happiness to my life and for being my 
+support during the difficult times.
+
 \newpage
-\subsubsection{Funding}
+\section*{Funding}
 I acknowledge studentship funding support from the United Kingdom Science and Technology 
 Facilities Council (STFC) and the Scottish Data-Intensive Science Triangle (ScotDIST).
 
@@ -158,31 +162,43 @@ Facilities Council (STFC) and the Scottish Data-Intensive Science Triangle (Scot
 
 % Abstract 
 \chapter*{Abstract}
-
-The advancement of 21st-century research in astronomy is contingent on the careful statistical analysis of 
-noisy datasets. To accomplish this, we have to model the data-generating process -- a complex
-combination of the physical phenomenon of interest and the noise introduced by the measurement process.
-The goal of the astronomer is to create an approximate model which captures the essence of this process,
-and to then "fit" that model to the data.
-In this thesis, I focus on the computational and statistical infrastructure needed for all 
-aspects of this process. 
-Specifically, I worked on problems within two domains within astronomy: gravitational microlensing and 
-occultation/eclipse mapping. In both fields the aim is to infer the properties of exoplanets, stars, and dark compact 
-objects such as black holes and neutron stars by measuring the brightness of distant stars as a function of time.
-Using recent advancements in statistics, machine learning, and computer science, I developed a new open-source 
+Progress in Astronomy in the 21st century is contingent on the ability to extract useful information 
+from complex and noisy datasets. This requires modeling the data-generating 
+process -- a complex combination of the physical phenomenon of interest and the ``noise''. 
+The goal is to create an approximate model that captures the essence of this process and 
+then fit it to the data. This thesis covers the development of new methods and tools 
+for almost all aspects of the data analysis process in two fields of astronomy: 
+gravitational microlensing and occultation/eclipse mapping. 
+In both fields, the objective is to infer the physical properties of exoplanets, stars, or dark 
+compact objects by measuring the brightness variations of a light source as a function of time. 
+Building on recent advancements in statistics, machine learning, and computer science, I developed a new open-source 
 package called \ssf{caustics}\footnote{\url{https://github.com/fbartolic/caustics}} for computing the microlensing magnification 
 in single, binary, and triple-lens microlensing events.
- I also tackled foundational questions on the statistical analysis of single lens and multiple-lens microlensing 
- events, developing a new paradigm for modeling degenerate single lens microlensing events and demonstrating the flaws 
+ I also tackled foundational questions on the statistical analysis of single-lens and multiple-lens microlensing 
+ events, developing a new paradigm for modeling degenerate single-lens microlensing events and demonstrating the flaws 
  of commonly used methods for analyzing multiple-lens microlensing events.
-In addition, I built models for reconstructing two-dimensional emission maps of spherical bodies, exoplanets, 
+Moreover, I built models for reconstructing two-dimensional emission maps of spherical bodies, exoplanets, 
 and Solar System objects from one-dimensional photometric occultation light curves. 
-I developed a novel method for reconstructing spatial maps of volcanic emission on Jupiter's moon Io from 
+Together with collaborators, I developed a novel method for reconstructing spatial maps of volcanic emission on Jupiter's moon Io from 
 occultation light curves and used the same method for exoplanet eclipse mapping to explore the possibility of 
 detecting weather and climate change on Hot Jupiters using simulated photometric JWST secondary eclipse light curves. 
 
 \newpage
 \thispagestyle{empty}
+
+\newpage
+\thispagestyle{empty}
+\section*{Reproducibility}
+All of the code used in this thesis is available at \url{https://github.com/fbartolic/thesis} 
+under a very permissive open-source license (MIT). \textbf{A special feature of this thesis 
+is that all important figures have a small clickable icon in the form of a GitHub logo in the bottom 
+left corner. Clicking on this icon will take you to the exact code used to generate that 
+figure.} I aimed to make this thesis as reproducible as possible. I initially aimed for 
+full reproducibility, but due to the complexity of the problem and the time constraints,
+I was not able to achieve this. However, I believe that the code is sufficiently well-documented
+and the figures are sufficiently well-explained that the reader can follow the steps and
+reproduce the results. 
+
 
 
 % CHAPTER 1: Introduction
